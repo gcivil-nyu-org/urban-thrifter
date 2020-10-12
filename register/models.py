@@ -13,6 +13,7 @@ class Helpseeker(models.Model):
         ('FOOD', 'Food'),
         ('PPE', 'Personal Protective Equipment'),
         ('CLOTH', 'Clothing And Covers'),
+        ('ELEC', 'Electronics'),
     ]
     
     username = models.CharField(max_length=50, unique=True, blank=False)
