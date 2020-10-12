@@ -22,7 +22,16 @@
       center: [-73.9911, 40.7051],
       zoom: 9.5
     })
-    var marker = new mapboxgl.Marker().setLngLat([-73.9911, 40.7051]).addTo(map)
+    var marker1 = new mapboxgl.Marker({
+        "color": 'red'
+      })
+      .setLngLat([-73.959, 40.795])
+      .setPopup(new mapboxgl.Popup().setHTML("<h1>Manhattan</h1><h2>New York, NY</h2>"))
+      .addTo(map)
+    var marker2 = new mapboxgl.Marker()
+      .setLngLat([-73.961, 40.648])
+      .setPopup(new mapboxgl.Popup().setHTML("<h1>Brooklyn</h1>"))
+      .addTo(map)
   </script>
 </body>
 
