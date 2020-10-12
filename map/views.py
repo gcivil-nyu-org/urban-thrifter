@@ -5,4 +5,4 @@ from django.shortcuts import render
 
 def main_map(request):
     mapbox_access_token = 'pk.' + os.environ.get('MAPBOX_KEY')
-    return render(request, 'main.html', { 'mapbox_access_token': mapbox_access_token} )
+    return render(request, 'main.html', { 'mapbox_access_token': mapbox_access_token } )
