@@ -25,13 +25,20 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = (os.environ.get('DJANGO_DEBUG_VALUE') == 'True')
+#print(SECRET_KEY)
+#DEBUG = 'True'
 
-ALLOWED_HOSTS = ['localhost', 'urban-thrifter.herokuapp.com']
+ALLOWED_HOSTS = ['localhost', 'urban-thrifter.herokuapp.com','127.0.0.1']
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    # Register custom apps to the project
+    'donation.apps.DonationConfig',
+    'crispy_forms',
+
+    # Default apps
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -120,5 +127,7 @@ USE_TZ = True
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
-
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 django_heroku.settings(locals())
