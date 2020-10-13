@@ -21,6 +21,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('donation/', include('donation.urls')),
     path('admin/', admin.site.urls),
-]
-if settings.DEBUG: # if in debug mode
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+#if settings.DEBUG: # if in debug mode
+#    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -38,11 +38,13 @@ class PostCreateView(CreateView):
             'dropoff_time_1', 'dropoff_time_2', 'dropoff_time_3',
             'dropoff_location',
             'resource_category']
+    #form.save()
+    
     def get_form(self):
         form = super().get_form()
-        form.fields['dropoff_time_1'].widget = TimePickerInput(options={"format": "hh:mm"})
-        form.fields['dropoff_time_2'].widget = TimePickerInput(options={"format": "hh:mm"})
-        form.fields['dropoff_time_3'].widget = TimePickerInput(options={"format": "hh:mm"})
+        form.fields['dropoff_time_1'].widget = TimePickerInput()
+        form.fields['dropoff_time_2'].widget = TimePickerInput()
+        form.fields['dropoff_time_3'].widget = TimePickerInput()
         return form
      
     # Overwrite form valid method

@@ -62,7 +62,7 @@ class ResourcePost(models.Model):
     description = models.TextField()
     quantity = models.IntegerField()
     #dropoff_time_1 = forms.DateTimeField(widget=DateTimePicker(options={'format': '%Y-%m-%d %H:%M','language': 'en-us'}))
-    dropoff_time_1 = models.DateTimeField(default=timezone.now)
+    dropoff_time_1 = models.TimeField(default=timezone.now)
     dropoff_time_2 = models.TimeField(blank=True)
     dropoff_time_3 = models.TimeField(blank=True)
     date_created = models.DateTimeField(default = timezone.now)
@@ -80,3 +80,16 @@ class ResourcePost(models.Model):
     def get_absolute_url(self):
         # return the path of the specific post
         return reverse('donation-detail', kwargs={'pk': self.pk})
+    
+    def save(self):
+        super().save()
+
+        path = self.image.path
+        img = Image.open(path)
+        
+        #2. resize the image to 300,300 if larger
+        if img.height > 300 or img.width > 300:
+            output_size = (300,300)
+            img = img.crop_to_aspect(300,300)
+            img.thumbnail(output_size)
+            img.save(path)
