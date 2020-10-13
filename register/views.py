@@ -1,20 +1,33 @@
 from django.shortcuts import render, redirect
-from django.contrib import messages
 from .forms import HelpseekerForm
+from .models import HelpseekerProfile
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+from django.contrib.auth.models import User
 
-# Create your views here.
+from django.contrib.sites.shortcuts import get_current_site
+from django.template.loader import render_to_string
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import force_bytes, force_text
+from register.token_generator import generate_token
+from django.core.mail import EmailMessage
+
 def register(request):
-    # Check if logged in missing
+    # Redirect to login page
     return render(request, 'register/index.html')
 
 def helpseeker_register(request):
-    # Check if logged in missing
+    if request.user.is_authenticated:
+        # Redirect to login page
+        return redirect('register:register')
     if request.method == 'POST':
         form = HelpseekerForm(request.POST)
         if form.is_valid():
-            obj = form.save(commit=False)
-            
-            # Resource parsing
+            user = form.save(commit=False)
+            user.is_active = False
+            user.save()
+            profile = HelpseekerProfile(user=user)
+            profile.borough = form.cleaned_data.get('borough')
             resources = form.cleaned_data.get('resource')
             d = {}
             for i in range(0,3):
@@ -22,20 +35,49 @@ def helpseeker_register(request):
                     d['resource{0}'.format(i)] = resources[i]
                 else:
                     d['resource{0}'.format(i)] = None
-            obj.rc_1 = d['resource0']
-            obj.rc_2 = d['resource1']
-            obj.rc_3 = d['resource2']
-            obj.save()
+            profile.rc_1 = d['resource0']
+            profile.rc_2 = d['resource1']
+            profile.rc_3 = d['resource2']
+            profile.save()
+    
+            # Email verification
+            current_site = get_current_site(request)
+            email_subject = "Activate Your Account!"
+            message = render_to_string('register/activate_account.html',
+                {
+                'user':user,
+                'domain':current_site.domain,
+                'uid':urlsafe_base64_encode(force_bytes(user.pk)),
+                'token':generate_token.make_token(user),
+                },
+            )
+            to_email = form.cleaned_data.get('email')
+            email = EmailMessage(email_subject, message, to=[to_email])
+            email.send()
             
-            username = form.cleaned_data.get('resource')
-            messages.success(request, f'Account created for {username}!')
             # Must redirect to login page (this is a placeholder)
-            return redirect('register')
+            return HttpResponseRedirect(reverse('register:email_sent'))
     else:
         form = HelpseekerForm()
     return render(request, 'register/helpseeker_register.html', {'form':form})
 
+def activate_account(request, uidb64, token):
+    try:
+        uid = force_text(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+        print(user.username)
+    except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+    if user is not None and generate_token.check_token(user, token):
+        user.is_active = True
+        user.save()       
+        return render(request, 'register/activate_confirmation.html')
+    return render(request, 'register/activate_failure.html')
+    
 def donor_register(request):
-    # Check if logged in missing
+    # Check if logged in missing (copy authenticated code from helpseeker)
     return render(request, 'register/donor_register.html')
 
+def email_sent(request):
+    if request.method == 'GET':
+        return render(request, 'register/email_sent.html')
