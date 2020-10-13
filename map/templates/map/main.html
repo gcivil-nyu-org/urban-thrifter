@@ -35,7 +35,7 @@
     new mapboxgl.Marker({ "color": 'red' })
       .setLngLat([{{ center.longitude }}, {{ center.latitude }}])
       .setPopup(new mapboxgl.Popup({ offset: 25 })
-      .setHTML("<h2>Drop-in Center</h2><h3>{{center.center_name}}</h3>"))
+      .setHTML("<p>Drop-in Center</p><h3>{{center.center_name}}</h3>"))
       .addTo(map)
   </script>
   {% endfor %}
