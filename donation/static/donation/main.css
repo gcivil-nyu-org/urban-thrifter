@@ -1,7 +1,31 @@
+@font-face {
+    font-family: DINFont;
+    src: url(d-din/D-DIN.otf) format("opentype");
+}
+/*
+@font-face {
+    font-family: DINFont;
+    font-weight: bold;
+    src: url(d-din/D-DIN-Bold.otf) format("opentype");
+}
+
+@font-face {
+    font-family: DINFont;
+    font-weight: italic;
+    src: url(d-din/D-DIN-Italic.otf) format("opentype");
+}*/
+
+
 body {
     background: #fafafa;
     color: #333333;
     margin-top: 5rem;
+}
+
+div{
+    /*font-family: Palatino,Palatino Linotype,Palatino LT STD,Book Antiqua,Georgia,serif; */
+    /*font-family: 'EB Garamond', serif;*/
+    font-family: DINFont, serif;
 }
 
 h1,

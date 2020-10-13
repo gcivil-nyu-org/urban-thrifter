@@ -5,6 +5,9 @@ from django.contrib import messages
 from django.views.generic import ( 
     ListView, CreateView, DetailView)
 from .models import ResourcePost
+from datetimepicker.widgets import DateTimePicker
+from bootstrap_datepicker_plus import DateTimePickerInput
+
 
 # Create your views here.
 def home(request):
@@ -34,9 +37,15 @@ class PostCreateView(CreateView):
     fields = ['title', 'image','description','quantity', 
             'dropoff_time_1', 'dropoff_time_2', 'dropoff_time_3',
             'dropoff_location',
-            'resource_category'
-            ]
-
+            'resource_category']
+    def get_form(self):
+        form = super().get_form()
+        form.fields['dropoff_time_1'].widget = DateTimePickerInput()
+        form.fields['dropoff_time_2'].widget = DateTimePickerInput()
+        form.fields['dropoff_time_3'].widget = DateTimePickerInput()
+        #form.fields['dropoff_time_1'].widget =DateTimePicker(options={'format': '%H:%M', 'language': 'en-us'})
+        return form
+     
     # Overwrite form valid method
     #def form_valid(self, form):
     #    form.instance.author = self.request.user

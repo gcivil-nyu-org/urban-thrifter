@@ -1,6 +1,9 @@
-{% extends 'donation/base.html' %} {% load crispy_forms_tags %} {% block content %}
+{% extends 'donation/base.html' %} 
+{% load crispy_forms_tags %} 
+{% block content %}
 <div class='content-section'>
     <!-- Need to add CSRF token, a hidden tag for security required by django -->
+    {{ form.media }}
     <form method='POST'>
         {% csrf_token %}
         <fieldset class='form-group'>

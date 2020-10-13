@@ -37,7 +37,9 @@ INSTALLED_APPS = [
     # Register custom apps to the project
     'donation.apps.DonationConfig',
     'crispy_forms',
-
+    'datetimepicker',
+    'bootstrap4',
+    'bootstrap_datepicker_plus',
     # Default apps
     'django.contrib.admin',
     'django.contrib.auth',
@@ -131,3 +133,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 django_heroku.settings(locals())
+
+BOOTSTRAP4 = {
+    'include_jquery': True,
+}
