@@ -1,0 +1,91 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+
+  <!-- Mapbox -->
+  <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+  <script src='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js'></script>
+  <link href='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css' rel='stylesheet' />
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+  <link rel="stylesheet" href="{% static 'map/main.css' %}">
+  <title>Interactive Map for Urban Thrifter</title>
+</head>
+<!-- shelter data-->
+
+<body>
+  <h1>mappymappy</h1>
+  <div id='map'></div>
+  <script>
+    mapboxgl.accessToken = '{{mapbox_access_token}}'
+    var map = new mapboxgl.Map({
+      container: 'map',
+      style: 'mapbox://styles/mapbox/streets-v11',
+      center: [-73.9911, 40.7051],
+      zoom: 9.5
+    })
+
+    var geojson = {
+      type: 'FeatureCollection',
+      features: [{
+          type: 'Feature',
+          geometry: {
+            type: 'Point',
+            coordinates: [-73.959, 40.795]
+          },
+          properties: {
+            title: 'Manhattan',
+            description: 'New York, NY'
+          }
+        },
+        {
+          type: 'Feature',
+          geometry: {
+            type: 'Point',
+            coordinates: [-73.961, 40.648]
+          },
+          properties: {
+            title: 'Brooklyn',
+            description: 'Brooklyn, NY'
+          }
+        }
+      ]
+    };
+
+    // add markers to map
+    geojson.features.forEach(function(marker) {
+
+      // create a HTML element for each feature
+      var el = document.createElement('div')
+      el.className = 'marker'
+
+      // make a marker for each feature and add to the map
+      new mapboxgl.Marker(el)
+        .setLngLat(marker.geometry.coordinates)
+        .addTo(map)
+    })
+    // var marker1 = new mapboxgl.Marker({
+    //     "color": 'red'
+    //   })
+    //   .setLngLat([-73.959, 40.795])
+    //   .setPopup(new mapboxgl.Popup().setHTML("<h1>Manhattan</h1><h2>New York, NY</h2>"))
+    //   .addTo(map)
+    // var marker2 = new mapboxgl.Marker()
+    //   .setLngLat([-73.961, 40.648])
+    //   .setPopup(new mapboxgl.Popup().setHTML("<h1>Brooklyn</h1>"))
+    //   .addTo(map)
+  </script>
+
+
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+</body>
+
+</html>
