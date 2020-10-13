@@ -6,7 +6,7 @@ from django.views.generic import (
     ListView, CreateView, DetailView)
 from .models import ResourcePost
 from datetimepicker.widgets import DateTimePicker
-from bootstrap_datepicker_plus import DateTimePickerInput
+from bootstrap_datepicker_plus import DateTimePickerInput, TimePickerInput
 
 
 # Create your views here.
@@ -40,10 +40,9 @@ class PostCreateView(CreateView):
             'resource_category']
     def get_form(self):
         form = super().get_form()
-        form.fields['dropoff_time_1'].widget = DateTimePickerInput()
-        form.fields['dropoff_time_2'].widget = DateTimePickerInput()
-        form.fields['dropoff_time_3'].widget = DateTimePickerInput()
-        #form.fields['dropoff_time_1'].widget =DateTimePicker(options={'format': '%H:%M', 'language': 'en-us'})
+        form.fields['dropoff_time_1'].widget = TimePickerInput(options={"format": "hh:mm"})
+        form.fields['dropoff_time_2'].widget = TimePickerInput(options={"format": "hh:mm"})
+        form.fields['dropoff_time_3'].widget = TimePickerInput(options={"format": "hh:mm"})
         return form
      
     # Overwrite form valid method
