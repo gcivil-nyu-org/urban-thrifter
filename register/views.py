@@ -5,7 +5,6 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.contrib.auth.models import User
 
-from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_text
@@ -41,12 +40,12 @@ def helpseeker_register(request):
             profile.save()
     
             # Email verification
-            current_site = get_current_site(request)
+            
             email_subject = "Activate Your Account!"
             message = render_to_string('register/activate_account.html',
                 {
                 'user':user,
-                'domain':current_site.domain,
+                'domain':'urban-thrifter-dev.herokuapp.com',
                 'uid':urlsafe_base64_encode(force_bytes(user.pk)),
                 'token':generate_token.make_token(user),
                 },
