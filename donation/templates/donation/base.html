@@ -1,0 +1,86 @@
+<!-- Template Inheritance -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS/JS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>  
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'donation/main.css' %}">
+
+    {% if title %}
+    <title>{{ title }}</title>
+    {% else %}
+    <title>Urban Thrifter</title>
+    {% endif %}
+    <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
+</head>
+{% load bootstrap4 %}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='full' %}
+<body>
+    <header class="site-header clearfix">
+        <nav class="navbar  bg-white navbar-expand-md fixed-top">
+            <div class="container">
+                <a class="navbar-brand mr-4" href="">Urban Thrifter</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarToggle">
+                    <div class="navbar-nav mr-auto">
+                        <a class="nav-item nav-link" href="">Home</a>
+                        <a class="nav-item nav-link" href="">About</a>
+                    </div>
+                    <!-- Navbar Right Side -->
+                    <div class="navbar-nav">
+                        <!-- Add conditional statement to present different tab dependiing on the login status -->
+                        {% if user.is_authenticated %}
+                            <a class="nav-item nav-link" href="{% url 'donation-new' %}">+</a>
+                        {% else %}
+                            <a class="nav-item nav-link" href="">Register</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="spacer">
+        &nbsp;
+    </div>
+    <main role="main" class="container">
+        <h3>Uername</h3>
+        <div class="row">
+            <div class="col col-lg-2">
+                <div class='side-bar'>
+                    <ul class="list-group">
+                        <li class="list-group-item list-group-item-light">Donations{% if user.is_authenticated %}<a class="nav-item" href="{% url 'donation-new' %}"> +</a>{% endif %}
+                        </li>
+                        <li class="list-group-item list-group-item-light">Profile</li>
+                        <li class="list-group-item list-group-item-light">Messages</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col">
+                <!-- Displage messages -->
+                {% if messages %} {% for message in messages %}
+                <div class='alert alert-{{message.tags}}'>{{ message }}</div>
+                {% endfor %} {% endif %} {% block content %}{% endblock %}
+            </div>
+        </div>
+    </main>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+</body>
+
+</html>
