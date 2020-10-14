@@ -34,7 +34,8 @@ PLACES_MARKER_OPTIONS='{"draggable": true}'
 DEBUG = (os.environ.get('DJANGO_DEBUG_VALUE') == 'True')
 #DEBUG = 'True'
 
-ALLOWED_HOSTS = ['localhost', 'urban-thrifter.herokuapp.com','127.0.0.1']
+
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -65,6 +66,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'urban_thrifter.urls'
@@ -137,6 +139,7 @@ USE_TZ = True
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
