@@ -19,3 +19,5 @@ whitenoise==5.2.0
 requests==2.23.0
 six==1.15.0
 Pillow==7.2.0
+dj-places==4.0.0
+django-bootstrap-datepicker-plus==3.0.5

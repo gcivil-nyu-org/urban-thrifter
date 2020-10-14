@@ -22,10 +22,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
+#GOOGLE_API_KEY = os.environ.get('GOOGLE_API_KEY')
+GOOGLE_MAPS_API_KEY = os.environ.get('GOOGLE_MAPS_API_KEY')
+PLACES_MAPS_API_KEY= os.environ.get('PLACES_MAPS_API_KEY')
+
+PLACES_MAP_WIDGET_HEIGHT=480
+PLACES_MAP_OPTIONS='{"center": { "lat": 38.971584, "lng": -95.235072 }, "zoom": 10}'
+PLACES_MARKER_OPTIONS='{"draggable": true}'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = (os.environ.get('DJANGO_DEBUG_VALUE') == 'True')
-# DEBUG = 'True'
 
 ALLOWED_HOSTS = ['*']
 
@@ -33,6 +39,13 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    # Register custom apps to the project
+    'donation.apps.DonationConfig',
+    'crispy_forms',
+    'bootstrap4',
+    'bootstrap_datepicker_plus',
+    'places',
+    # Default apps
     'map.apps.MapConfig',
     'register.apps.RegisterConfig',
     'django.contrib.admin',
@@ -41,9 +54,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     'complaint',
     'widget_tweaks',
 ]
+SITE_ID=1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -127,6 +142,11 @@ USE_TZ = True
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+BOOTSTRAP4 = {
+    'include_jquery': True,
+}
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

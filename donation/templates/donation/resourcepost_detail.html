@@ -1,0 +1,29 @@
+{% extends 'donation/base.html' %}
+{% block content %}
+<article class="media content-section">
+    <img class='rounded-circle article-img' src='{{ object.image.url }}'>
+    <!--  p>{{ object.image.url }}</p-->
+    <div class="media-body">
+        <div class="article-metadata">
+            <!--a class="mr-2" href="">Username</a-->
+            <h2 class="article-title">{{ object.title }}</h2>
+            <small class="text-muted">{{ object.date_created | date:'F d, Y'}}</small>
+            <!-- https://docs.djangoproject.com/en/2.0/ref/templates/builtins/#date -->
+            {% if object.author == user %}
+            <div>
+                <a class='btn btn-secondary btn-sm mt-1 mb-1' href=''>Update</a>
+                <a class='btn btn-danger btn-sm mt-1 mb-1' href=''>Delete</a>
+            </div>
+            {% endif %}
+        </div>
+        <p class="article-content">Quantity: {{ object.quantity }}</p>
+        <p class="article-content">Status: {{ object.status }}</p>
+        <p class="article-content">Location: {{ object.dropoff_location }}</p>
+        <p class="article-content">Drop-off Time: </p>
+        <button class='btn btn-outline-secondary'>{{ object.dropoff_time_1 }}</button>
+        <button class='btn btn-outline-secondary'>{{ object.dropoff_time_2 }}</button>
+        <button class='btn btn-outline-secondary'>{{ object.dropoff_time_3 }}</button>
+        <p class="article-content">{{ object.description }}</p>
+    </div>
+</article>
+{% endblock content %}
