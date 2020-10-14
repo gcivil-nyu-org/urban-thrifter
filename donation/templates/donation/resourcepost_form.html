@@ -1,5 +1,6 @@
 {% extends 'donation/base.html' %} 
 {% load crispy_forms_tags %} 
+
 {% block content %}
 <div class='content-section'>
     <!-- Need to add CSRF token, a hidden tag for security required by django -->
@@ -12,8 +13,8 @@
             {{ form|crispy }}
         </fieldset>
         <div class='form-group'>
-            <button class='btn btn-outline-info' type='submit'>
-                Post
+            <button class='btn btn-dark' type='submit'>
+                Save
             </button>
         </div>
     </form>
