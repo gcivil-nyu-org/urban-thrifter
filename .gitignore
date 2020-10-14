@@ -138,8 +138,8 @@ dmypy.json
 .pyre/
 
 # pytype static type analyzer
-*.ini
 .pytype/
 
 # Cython debug symbols
 cython_debug/
+*.ini
