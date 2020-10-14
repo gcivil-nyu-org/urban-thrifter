@@ -45,7 +45,7 @@ def helpseeker_register(request):
             message = render_to_string('register/activate_account.html',
                 {
                 'user':user,
-                'domain':'urban-thrifter-dev.herokuapp.com',
+                'domain':'urban-thrifter.herokuapp.com',
                 'uid':urlsafe_base64_encode(force_bytes(user.pk)),
                 'token':generate_token.make_token(user),
                 },
