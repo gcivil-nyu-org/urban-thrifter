@@ -1,2 +1,5 @@
-
 *.ini
+*.pyc
+db.sqlite3
+media\donation-pics\*.png
+donation\migrations\*.py

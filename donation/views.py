@@ -42,9 +42,9 @@ class PostCreateView(CreateView):
     
     def get_form(self):
         form = super().get_form()
-        form.fields['dropoff_time_1'].widget = TimePickerInput()
-        form.fields['dropoff_time_2'].widget = TimePickerInput()
-        form.fields['dropoff_time_3'].widget = TimePickerInput()
+        form.fields['dropoff_time_1'].widget = DateTimePickerInput()
+        form.fields['dropoff_time_2'].widget = DateTimePickerInput()
+        form.fields['dropoff_time_3'].widget = DateTimePickerInput()
         return form
      
     # Overwrite form valid method

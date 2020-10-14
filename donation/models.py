@@ -62,9 +62,9 @@ class ResourcePost(models.Model):
     description = models.TextField()
     quantity = models.IntegerField()
     #dropoff_time_1 = forms.DateTimeField(widget=DateTimePicker(options={'format': '%Y-%m-%d %H:%M','language': 'en-us'}))
-    dropoff_time_1 = models.TimeField(default=timezone.now)
-    dropoff_time_2 = models.TimeField(blank=True)
-    dropoff_time_3 = models.TimeField(blank=True)
+    dropoff_time_1 = models.DateTimeField(default=timezone.now)
+    dropoff_time_2 = models.DateTimeField(blank=True,null=True)
+    dropoff_time_3 = models.DateTimeField(blank=True,null=True)
     date_created = models.DateTimeField(default = timezone.now)
     # donor_id = models.ForeignKey(User, on_delete=models.CASCADE) # 1:n relationship
     dropoff_location = models.TextField()
