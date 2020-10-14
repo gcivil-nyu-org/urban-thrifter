@@ -2,12 +2,13 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.shortcuts import render,redirect
 from django.contrib import messages
+from django.conf import settings
 from django.views.generic import ( 
     ListView, CreateView, DetailView)
 from .models import ResourcePost
-from datetimepicker.widgets import DateTimePicker
+#from datetimepicker.widgets import DateTimePicker
 from bootstrap_datepicker_plus import DateTimePickerInput, TimePickerInput
-
+#from django_google_maps.widgets import GoogleMapsAddressWidget
 
 # Create your views here.
 def home(request):
@@ -37,8 +38,7 @@ class PostCreateView(CreateView):
     fields = ['title', 'image','description','quantity', 
             'dropoff_time_1', 'dropoff_time_2', 'dropoff_time_3',
             'dropoff_location',
-            'resource_category']
-    #form.save()
+            'resource_category']     
     
     def get_form(self):
         form = super().get_form()

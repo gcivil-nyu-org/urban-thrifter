@@ -22,10 +22,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
+#GOOGLE_API_KEY = os.environ.get('GOOGLE_API_KEY')
+GOOGLE_MAPS_API_KEY = "AIzaSyCnXWivRtuCd70vv3Mflc5VdgWukypRvIs"
+PLACES_MAPS_API_KEY="AIzaSyCnXWivRtuCd70vv3Mflc5VdgWukypRvIs"
+
+PLACES_MAP_WIDGET_HEIGHT=480
+PLACES_MAP_OPTIONS='{"center": { "lat": 38.971584, "lng": -95.235072 }, "zoom": 10}'
+PLACES_MARKER_OPTIONS='{"draggable": true}'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = (os.environ.get('DJANGO_DEBUG_VALUE') == 'True')
-#print(SECRET_KEY)
 #DEBUG = 'True'
 
 ALLOWED_HOSTS = ['localhost', 'urban-thrifter.herokuapp.com','127.0.0.1']
@@ -37,9 +43,9 @@ INSTALLED_APPS = [
     # Register custom apps to the project
     'donation.apps.DonationConfig',
     'crispy_forms',
-    'datetimepicker',
     'bootstrap4',
     'bootstrap_datepicker_plus',
+    'places',
     # Default apps
     'django.contrib.admin',
     'django.contrib.auth',
@@ -47,7 +53,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
 ]
+SITE_ID=1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

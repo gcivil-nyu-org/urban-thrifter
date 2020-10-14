@@ -7,6 +7,7 @@ from django import forms
 from django.urls import reverse
 from PIL import Image
 from django.contrib.auth.models import User
+from places.fields import PlacesField
 
 # Create your models here.
 class _Image(Image.Image):
@@ -67,7 +68,8 @@ class ResourcePost(models.Model):
     dropoff_time_3 = models.DateTimeField(blank=True,null=True)
     date_created = models.DateTimeField(default = timezone.now)
     # donor_id = models.ForeignKey(User, on_delete=models.CASCADE) # 1:n relationship
-    dropoff_location = models.TextField()
+    dropoff_location = PlacesField(blank=True,null=True)
+    #dropoff_geolocation = 
     resource_category = models.CharField(max_length=100,choices=RESROUCE_CATEGORY_CHOICES)
     image = models.ImageField(default ='donation-pics/default.jpg', upload_to='donation-pics',blank=True)
     status = models.CharField(max_length=100, choices = STATUS_CHOICES, default='Available')
