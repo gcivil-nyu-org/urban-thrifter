@@ -17,11 +17,20 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from complaint import views
+
 
 urlpatterns = [
     path('donation/', include('donation.urls')),
     path('admin/', admin.site.urls),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    path('map/', include('map.urls')),
+    path('', views.home, name='home'),
+    path('issue_complaint', views.issue_complaint, name='issue_complaint'),
+    path('register/', include('register.urls')),
+]
 
-#if settings.DEBUG: # if in debug mode
-#    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+if settings.DEBUG:
+        urlpatterns += static(settings.MEDIA_URL,
+                              document_root=settings.MEDIA_ROOT)
+

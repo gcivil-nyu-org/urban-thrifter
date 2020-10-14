@@ -23,8 +23,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 #GOOGLE_API_KEY = os.environ.get('GOOGLE_API_KEY')
-GOOGLE_MAPS_API_KEY = "AIzaSyCnXWivRtuCd70vv3Mflc5VdgWukypRvIs"
-PLACES_MAPS_API_KEY="AIzaSyCnXWivRtuCd70vv3Mflc5VdgWukypRvIs"
+GOOGLE_MAPS_API_KEY = os.environ.get('GOOGLE_MAPS_API_KEY')
+PLACES_MAPS_API_KEY= os.environ.get('PLACES_MAPS_API_KEY')
 
 PLACES_MAP_WIDGET_HEIGHT=480
 PLACES_MAP_OPTIONS='{"center": { "lat": 38.971584, "lng": -95.235072 }, "zoom": 10}'
@@ -32,8 +32,6 @@ PLACES_MARKER_OPTIONS='{"draggable": true}'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = (os.environ.get('DJANGO_DEBUG_VALUE') == 'True')
-#DEBUG = 'True'
-
 
 ALLOWED_HOSTS = ['*']
 
@@ -48,6 +46,8 @@ INSTALLED_APPS = [
     'bootstrap_datepicker_plus',
     'places',
     # Default apps
+    'map.apps.MapConfig',
+    'register.apps.RegisterConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -55,6 +55,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+    'complaint',
+    'widget_tweaks',
 ]
 SITE_ID=1
 
@@ -140,11 +142,18 @@ USE_TZ = True
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = '/media/'
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
-django_heroku.settings(locals())
 
 BOOTSTRAP4 = {
     'include_jquery': True,
 }
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+
+django_heroku.settings(locals())
