@@ -22,3 +22,4 @@ Pillow==7.2.0
 dj-places==4.0.0
 django-bootstrap-datepicker-plus==3.0.5
 django-crispy-forms==1.9.2
+django-bootstrap4==2.3.0
