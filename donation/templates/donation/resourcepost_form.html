@@ -5,7 +5,7 @@
 <div class='content-section'>
     <!-- Need to add CSRF token, a hidden tag for security required by django -->
     {{ form.media }}
-    <form method='POST'>
+    <form method='POST' enctype='multipart/form-data'>
         {% csrf_token %}
         <fieldset class='form-group'>
             <legend class='border-bottom mb-4'>Create Donation</legend>
@@ -13,7 +13,7 @@
             {{ form|crispy }}
         </fieldset>
         <div class='form-group'>
-            <button class='btn btn-dark' type='submit'>
+            <button class='btn btn-dark wide-btn' type='submit'>
                 Save
             </button>
         </div>
