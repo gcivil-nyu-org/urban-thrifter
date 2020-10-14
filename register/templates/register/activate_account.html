@@ -1,0 +1,8 @@
+{% autoescape off %}
+
+Hi {{ user.username }}!
+Please click this link below to verify your account!
+
+http://{{ domain }}{% url 'register:activate' uidb64=uid token=token %}
+
+{% endautoescape %}
