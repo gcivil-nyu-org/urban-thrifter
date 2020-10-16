@@ -6,7 +6,6 @@ from django.shortcuts import render
 
 def main_map(request):
     mapbox_access_token = 'pk.' + os.environ.get('MAPBOX_KEY')
-    # mapbox_access_token = 'pk.eyJ1Ijoiamdpbm1iNyIsImEiOiJja2cybXpuNzAwMXFzMnFqdDFzbXBmNGszIn0.6UJeoJW2FwSS9LAOZN_QBw'
 
     # Drop-in Center API GET
     drop_in_center_URL = "https://data.cityofnewyork.us/resource/bmxf-3rd4.json"
