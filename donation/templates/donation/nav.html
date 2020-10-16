@@ -24,14 +24,8 @@
 {% bootstrap_javascript jquery='full' %}
 <body>
     {% include "donation/header.html" %}
-    {% if user.is_authenticated %}
-    <section class="container">
-        <h3>Uername</h3>
-    </section>
-    {% endif %}
     <section role="main" class="container">
         <div class="row">
-            {% include "donation/sidebar.html" %}
             <div class="col">
                 {% block content %}{% endblock %}
             </div>
