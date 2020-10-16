@@ -37,6 +37,12 @@ li{
     font-family: DINFont, serif;
 }
 
+#map {
+  position: absolute;
+  width: 100%;
+  height: 600px;
+}
+
 h1,
 h2,
 h3,

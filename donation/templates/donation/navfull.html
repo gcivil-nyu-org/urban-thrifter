@@ -1,24 +1,16 @@
 <!-- Template Inheritance -->
 {% load static %}
-<!DOCTYPE html>
-<html lang="en", dir="ltr">
+<!DOCTYPE html, dir="ltr">
+<html lang="en">
 {% include "donation/head.html" %}
 {% load bootstrap4 %}
 {% bootstrap_css %}
 {% bootstrap_javascript jquery='full' %}
 <body>
     {% include "donation/header.html" %}
-    {% if user.is_authenticated %}
-    <section class="container">
-        <h3>Uername</h3>
-    </section>
-    {% endif %}
-    <section role="main" class="container">
+    <section role="main">
         <div class="row">
-            {% include "donation/sidebar.html" %}
-            <div class="col">
-                {% block content %}{% endblock %}
-            </div>
+            {% block content %}{% endblock %}
         </div>
     </section>
 
