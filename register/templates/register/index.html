@@ -1,6 +1,10 @@
+{% extends 'donation/nav.html' %}
+{% block content %}
+
 <h1>Choose user</h1>
 
 <form>
-	<button formaction="{% url 'register:helpseeker_register' %}">Help Seeker</button>
-	<button formaction="{% url 'register:donor_register' %}">Donor</button>
+	<button class="btn btn-dark btn-wide" formaction="{% url 'register:helpseeker_register' %}">Help Seeker</button>
+	<button class="btn btn-dark btn-wide" formaction="{% url 'register:donor_register' %}">Donor</button>
 </form>
+{% endblock content %}
