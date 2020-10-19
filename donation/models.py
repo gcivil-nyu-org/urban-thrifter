@@ -62,14 +62,12 @@ class ResourcePost(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField()
     quantity = models.IntegerField()
-    #dropoff_time_1 = forms.DateTimeField(widget=DateTimePicker(options={'format': '%Y-%m-%d %H:%M','language': 'en-us'}))
     dropoff_time_1 = models.DateTimeField(default=timezone.now)
     dropoff_time_2 = models.DateTimeField(blank=True,null=True)
     dropoff_time_3 = models.DateTimeField(blank=True,null=True)
     date_created = models.DateTimeField(default = timezone.now)
     # donor_id = models.ForeignKey(User, on_delete=models.CASCADE) # 1:n relationship
     dropoff_location = PlacesField(blank=True,null=True)
-    #dropoff_geolocation = 
     resource_category = models.CharField(max_length=100,choices=RESROUCE_CATEGORY_CHOICES)
     image = models.ImageField(default ='donation-pics/default.jpg', upload_to='donation-pics',blank=True)
     status = models.CharField(max_length=100, choices = STATUS_CHOICES, default='Available')

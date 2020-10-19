@@ -160,6 +160,12 @@ a.article-title:hover {
 .form-group input, .form-group textarea{
     background: #e6e6e6;
     border: none;
+    border-radius: 5px;
+    padding: .375rem .75rem;
+}
+
+.form-group input:focus {
+    outline:none;
 }
 .form-group input[name='image']{
     background: #fff;

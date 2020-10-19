@@ -39,16 +39,18 @@ class PostCreateView(CreateView):
             'dropoff_time_1', 'dropoff_time_2', 'dropoff_time_3',
             'dropoff_location',
             'resource_category']     
+
     
     def get_form(self):
         form = super().get_form()
         form.fields['dropoff_time_1'].widget = DateTimePickerInput()
         form.fields['dropoff_time_2'].widget = DateTimePickerInput()
         form.fields['dropoff_time_3'].widget = DateTimePickerInput()
+        #form.fields['dropoff_geolocation'] = 
         return form
      
     # Overwrite form valid method
-    #def form_valid(self, form):
+    # def form_valid(self, form):
     #    form.instance.author = self.request.user
     #    return super().form_valid(form)
 
