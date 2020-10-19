@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .forms import HelpseekerForm
+from .forms import HelpseekerForm, HelpseekerUpdateForm
 from .models import HelpseekerProfile
 from django.http import HttpResponseRedirect
 from django.urls import reverse
@@ -10,7 +10,8 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_text
 from register.token_generator import generate_token
 from django.core.mail import EmailMessage
-
+from django.contrib import messages
+from django.views.generic import (ListView, CreateView, DetailView, UpdateView)
 def register(request):
     # Redirect to login page
     return render(request, 'register/index.html')
@@ -65,7 +66,7 @@ def activate_account(request, uidb64, token):
         uid = force_text(urlsafe_base64_decode(uidb64))
         user = User.objects.get(pk=uid)
         print(user.username)
-    except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+    except (TypeError, ValueError, OverflowError, user.DoesNotExist):
         user = None
     if user is not None and generate_token.check_token(user, token):
         user.is_active = True
@@ -80,3 +81,46 @@ def donor_register(request):
 def email_sent(request):
     if request.method == 'GET':
         return render(request, 'register/email_sent.html')
+
+def helpseeker_edit_profile(request):
+    if request.method == 'POST':
+        # instance=request.user can prefill the existing information in the form
+        hs_form = HelpseekerUpdateForm(request.POST, instance=request.user)
+        
+        if hs_form.is_valid() :
+            hs_form.save()
+        messages.success(request, f'Account updated successfully.')
+        return redirect('home')
+    else:
+        hs_form = HelpseekerUpdateForm(instance=request.user)
+
+    context = {
+        'hs_form': hs_form
+    }
+    return render(request, 'register/helpseekerprofile_form.html', context)
+
+# Donation Detail View
+class HelpseekerProfileDetailView(DetailView):
+    # Basic detail view
+    model = HelpseekerProfile
+
+class HelpseekerUpdateView(
+                    #LoginRequiredMixin, UserPassesTestMixin, 
+                    UpdateView):
+    # Basic create view
+    model = HelpseekerProfile
+    fields = ['rc_1']
+
+    # Overwrite form valid method
+    # def form_valid(self, form):
+    #     form.instance.author = self.request.user
+    #     return super().form_valid(form)
+    
+    # Make sure the post owner can update the post
+    # def test_func(self):
+    #     # Retrieve the current post
+    #     post = self.get_object()
+    #     # Check if the current user is the author of the post
+    #     if self.request.user == post.author:
+    #         return True
+    #     return False

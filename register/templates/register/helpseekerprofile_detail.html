@@ -1,0 +1,30 @@
+{% extends 'donation/base.html' %}
+{% block content %}
+<article class="media content-section">
+    <div class="media-body">
+        <div class="article-metadata">
+            <!--a class="mr-2" href="">Username</a-->
+            <h2 class="article-title">{{ object.user.username }}</h2>
+            <!--small class="text-muted">{{ object.date_created | date:'F d, Y'}}</small-->
+            <!-- https://docs.djangoproject.com/en/2.0/ref/templates/builtins/#date -->
+            {% if object.author == user %}
+            <div>
+                <a class='btn btn-secondary btn-sm mt-1 mb-1' href="/edit">Update</a>
+                <a class='btn btn-danger btn-sm mt-1 mb-1' href=''>Delete</a>
+            </div>
+            {% else %}
+            <div>
+                <a class='btn btn-secondary btn-sm mt-1 mb-1' href="{% url 'register:helpseeker_edit' %}">Update</a>
+                <a class='btn btn-danger btn-sm mt-1 mb-1' href=''>Delete</a>
+            </div>
+            {% endif %}
+        </div>
+        <p class="article-content">Email: {{ object.user.email }}</p>
+        <p class="article-content">Borough: {{ object.borough }}</p>
+        <p class="article-content">I'm looking for: </p>
+        <button class='btn btn-outline-secondary'>{{ object.rc_1 }}</button>
+        <button class='btn btn-outline-secondary'>{{ object.rc_2 }}</button>
+        <button class='btn btn-outline-secondary'>{{ object.rc_3 }}</button>
+    </div>
+</article>
+{% endblock content %}
