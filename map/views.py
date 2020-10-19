@@ -25,5 +25,13 @@ def main_map(request):
     #   'bin': '2006002',
     #   'bbl': '2027400100',
     #   'nta': 'Hunts Point'},
-
+    for center in drop_in_centers:
+        new_address = ""
+        for part in center["address"].split():
+            new_address = new_address + " " + part
+            if new_address[-1] == ";" or new_address[-2:] ==".,":
+                center["address"] = new_address[:-1]
+                break
+            else:
+                continue
     return render(request, 'map/main.html', { 'mapbox_access_token': mapbox_access_token, 'drop_in_centers': drop_in_centers } )
