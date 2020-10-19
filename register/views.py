@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
-from .forms import HelpseekerForm
-from .models import HelpseekerProfile
+from .forms import HelpseekerForm, DonorForm
+from .models import HelpseekerProfile, DonorProfile
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.contrib.auth.models import User
@@ -60,6 +60,41 @@ def helpseeker_register(request):
         form = HelpseekerForm()
     return render(request, 'register/helpseeker_register.html', {'form':form})
 
+def donor_register(request):
+    if request.user.is_authenticated:
+        # Redirect to login page
+        return redirect('register:register')
+    if request.method == 'POST':
+        form = DonorForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.is_active = False
+            user.save()
+            profile = DonorProfile(user=user)
+            # get dropoff_location data
+            profile.save()
+    
+            # Email verification
+            
+            email_subject = "Activate Your Account!"
+            message = render_to_string('register/activate_account.html',
+                {
+                'user':user,
+                'domain':'127.0.0.1:8000',
+                'uid':urlsafe_base64_encode(force_bytes(user.pk)),
+                'token':generate_token.make_token(user),
+                },
+            )
+            to_email = form.cleaned_data.get('email')
+            email = EmailMessage(email_subject, message, to=[to_email])
+            email.send()
+            
+            # Must redirect to login page (this is a placeholder)
+            return HttpResponseRedirect(reverse('register:email_sent'))
+    else:
+        form = DonorForm()
+    return render(request, 'register/donor_register.html', {'form':form})
+
 def activate_account(request, uidb64, token):
     try:
         uid = force_text(urlsafe_base64_decode(uidb64))
@@ -73,10 +108,6 @@ def activate_account(request, uidb64, token):
         return render(request, 'register/activate_confirmation.html')
     return render(request, 'register/activate_failure.html')
     
-def donor_register(request):
-    # Check if logged in missing (copy authenticated code from helpseeker)
-    return render(request, 'register/donor_register.html')
-
 def email_sent(request):
     if request.method == 'GET':
         return render(request, 'register/email_sent.html')

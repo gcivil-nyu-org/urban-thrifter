@@ -45,5 +45,22 @@ class HelpseekerForm(UserCreationForm):
 
     field_order = ['username', 'email', 'password1', 'password2', 'borough', 'resource']
 
+class DonorForm(UserCreationForm):
+    username = forms.CharField(label='Username', min_length=4, max_length=50, required=True)
+    email = forms.EmailField(label='Email', max_length=60, required=True)
+    password1 = forms.CharField(label='Password', max_length=30, widget=forms.PasswordInput, required=True)
+    password2 = forms.CharField(label='Confirm Password', max_length=30, widget=forms.PasswordInput, required=True)
+    # time field here
     
-    
+    def clean_email(self):
+        email = self.cleaned_data['email'].lower()
+        holder = User.objects.filter(email=email)
+        if holder.count():
+            raise ValidationError("Email already exists")
+        return email
+
+    class Meta:
+        model = User
+        fields = ('username', 'password1', 'email')
+
+    field_order = ['username', 'email', 'password1', 'password2', 'dropoff_location']
