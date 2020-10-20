@@ -19,7 +19,6 @@ from django.conf import settings
 from django.conf.urls.static import static
 from complaint import views
 
-
 urlpatterns = [
     path('donation/', include('donation.urls')),
     path('admin/', admin.site.urls),
@@ -27,6 +26,7 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('issue_complaint', views.issue_complaint, name='issue_complaint'),
     path('register/', include('register.urls')),
+    
 ]
 
 

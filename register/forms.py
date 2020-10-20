@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import AuthenticationForm
 
 BOROUGH_CHOICES=[
     ('MAN', 'Manhattan'),
@@ -45,5 +46,8 @@ class HelpseekerForm(UserCreationForm):
 
     field_order = ['username', 'email', 'password1', 'password2', 'borough', 'resource']
 
+'''class LoginForm(forms.Form):
+    email = forms.EmailField(label='Email', max_length=60, required=True)
+    password = forms.CharField(label='Password', max_length=30, widget=forms.PasswordInput, required=True)'''    
     
-    
+
