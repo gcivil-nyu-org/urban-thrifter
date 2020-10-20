@@ -4,6 +4,7 @@ from .models import HelpseekerProfile, DonorProfile
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.contrib.auth.models import User
+import os
 
 from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
@@ -35,7 +36,7 @@ def helpseeker_register(request):
             message = render_to_string('register/activate_account.html',
                 {
                 'user':user,
-                'domain': '127.0.0.1:8000',
+                'domain':os.environ.get('DOMAIN_NAME'),
                 'uid':urlsafe_base64_encode(force_bytes(user.pk)),
                 'token':generate_token.make_token(user),
                 },
@@ -69,7 +70,7 @@ def donor_register(request):
             message = render_to_string('register/activate_account.html',
                 {
                 'user':user,
-                'domain':'127.0.0.1:8000',
+                'domain':os.environ.get('DOMAIN_NAME'),
                 'uid':urlsafe_base64_encode(force_bytes(user.pk)),
                 'token':generate_token.make_token(user),
                 },
