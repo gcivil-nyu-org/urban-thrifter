@@ -8,5 +8,4 @@ urlpatterns = [
     path('all/',PostListView.as_view(), name='donation-all'),
     path('new/', PostCreateView.as_view(), name='donation-new'),
     path('post/<int:pk>', PostDetailView.as_view(), name='donation-detail'),
-    # path('user/<str:username>', PostListView.as_view(), name='donation-all'),
 ]

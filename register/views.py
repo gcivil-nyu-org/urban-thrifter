@@ -90,7 +90,7 @@ def helpseeker_edit_profile(request):
         if hs_form.is_valid() :
             hs_form.save()
         messages.success(request, f'Account updated successfully.')
-        return redirect('home')
+        return redirect('donation-home')
     else:
         hs_form = HelpseekerUpdateForm(instance=request.user)
 
@@ -103,24 +103,3 @@ def helpseeker_edit_profile(request):
 class HelpseekerProfileDetailView(DetailView):
     # Basic detail view
     model = HelpseekerProfile
-
-class HelpseekerUpdateView(
-                    #LoginRequiredMixin, UserPassesTestMixin, 
-                    UpdateView):
-    # Basic create view
-    model = HelpseekerProfile
-    fields = ['rc_1']
-
-    # Overwrite form valid method
-    # def form_valid(self, form):
-    #     form.instance.author = self.request.user
-    #     return super().form_valid(form)
-    
-    # Make sure the post owner can update the post
-    # def test_func(self):
-    #     # Retrieve the current post
-    #     post = self.get_object()
-    #     # Check if the current user is the author of the post
-    #     if self.request.user == post.author:
-    #         return True
-    #     return False

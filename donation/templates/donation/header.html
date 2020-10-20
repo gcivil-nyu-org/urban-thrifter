@@ -1,20 +1,21 @@
 <header class="site-header clearfix">
-    <nav class="navbar  bg-white navbar-expand-md fixed-top">
+    <nav class="navbar fixed-top bg-white navbar-expand-md">
         <div class="container">
-            <a class="navbar-brand mr-4" href="">Urban Thrifter</a>
+            <a class="navbar-brand mr-4" href="{% url 'homepage' %}"><i class="fab fa-hubspot"></i></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarToggle">
                 <div class="navbar-nav mr-auto">
-                    <a class="nav-item nav-link" href="">Home</a>
+                    <a class="nav-item nav-link" href="{% url 'homepage' %}">Home</a>
                     <a class="nav-item nav-link" href="">About</a>
                 </div>
                 <!-- Navbar Right Side -->
                 <div class="navbar-nav">
                     <!-- Add conditional statement to present different tab dependiing on the login status -->
                     {% if user.is_authenticated %}
-                        <a class="nav-item nav-link" href="{% url 'donation-new' %}">Account Management</a>
+                        <a class="nav-item nav-link" href="{% url 'register:helpseeker_profile' user.id %}"><i class="fas fa-user-circle"></i></a>
+                        <a class="nav-item nav-link" href="{% url 'main_map' %}"><i class="fas fa-map-marker-alt"></i></a>
                     {% else %}
                         <a class="nav-item nav-link" href="/edit">Register</a>
                     {% endif %}
@@ -23,4 +24,3 @@
         </div>
     </nav>
 </header>
-<div class="spacer"></div>
