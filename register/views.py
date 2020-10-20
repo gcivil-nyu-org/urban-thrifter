@@ -27,16 +27,6 @@ def helpseeker_register(request):
             user.save()
             profile = HelpseekerProfile(user=user)
             profile.borough = form.cleaned_data.get('borough')
-            resources = form.cleaned_data.get('resource')
-            d = {}
-            for i in range(0,3):
-                if 0 <= i < len(resources):
-                    d['resource{0}'.format(i)] = resources[i]
-                else:
-                    d['resource{0}'.format(i)] = None
-            profile.rc_1 = d['resource0']
-            profile.rc_2 = d['resource1']
-            profile.rc_3 = d['resource2']
             profile.save()
     
             # Email verification
@@ -45,7 +35,7 @@ def helpseeker_register(request):
             message = render_to_string('register/activate_account.html',
                 {
                 'user':user,
-                'domain':'urban-thrifter.herokuapp.com',
+                'domain': '127.0.0.1:8000',
                 'uid':urlsafe_base64_encode(force_bytes(user.pk)),
                 'token':generate_token.make_token(user),
                 },
@@ -71,7 +61,6 @@ def donor_register(request):
             user.is_active = False
             user.save()
             profile = DonorProfile(user=user)
-            # get dropoff_location data
             profile.save()
     
             # Email verification

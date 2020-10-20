@@ -10,21 +10,13 @@ BOROUGH_CHOICES=[
     ('BRX', 'The Bronx'),
     ('STN', 'Staten Island'),
 ]
-RESOURCE_CATEGORY_CHOICES=[
-    ('FOOD', 'Food'),
-    ('MDCL', 'Medical/ PPE'),
-    ('CLTH', 'Clothing/ Covers'),
-    ('ELEC', 'Electronics'),
-    ('OTHR', 'Others'),
-]
 
 class HelpseekerForm(UserCreationForm):
     username = forms.CharField(label='Username', min_length=4, max_length=50, required=True)
     email = forms.EmailField(label='Email', max_length=60, required=True)
     password1 = forms.CharField(label='Password', max_length=30, widget=forms.PasswordInput, required=True)
     password2 = forms.CharField(label='Confirm Password', max_length=30, widget=forms.PasswordInput, required=True)
-    borough = forms.CharField(label='Borough', widget=forms.RadioSelect(choices=BOROUGH_CHOICES), required=True)
-    resource = forms.MultipleChoiceField(label='Resources (select up to 3)', widget=forms.CheckboxSelectMultiple, choices=RESOURCE_CATEGORY_CHOICES, required=False)
+    borough = forms.CharField(label='Borough', widget=forms.RadioSelect(choices=BOROUGH_CHOICES), required=True)   
 
     def clean_email(self):
         email = self.cleaned_data['email'].lower()
@@ -32,25 +24,18 @@ class HelpseekerForm(UserCreationForm):
         if holder.count():
             raise ValidationError("Email already exists")
         return email
-    def clean_resource(self):
-        resource = self.cleaned_data['resource']
-        resource_length = len(resource)
-        if resource_length > 3:
-            raise ValidationError("Select up to 3 resources")
-        return resource
 
     class Meta:
         model = User
         fields = ('username', 'password1', 'email')
 
-    field_order = ['username', 'email', 'password1', 'password2', 'borough', 'resource']
+    field_order = ['username', 'email', 'password1', 'password2', 'borough']
 
 class DonorForm(UserCreationForm):
     username = forms.CharField(label='Username', min_length=4, max_length=50, required=True)
     email = forms.EmailField(label='Email', max_length=60, required=True)
     password1 = forms.CharField(label='Password', max_length=30, widget=forms.PasswordInput, required=True)
     password2 = forms.CharField(label='Confirm Password', max_length=30, widget=forms.PasswordInput, required=True)
-    # time field here
     
     def clean_email(self):
         email = self.cleaned_data['email'].lower()
@@ -63,4 +48,4 @@ class DonorForm(UserCreationForm):
         model = User
         fields = ('username', 'password1', 'email')
 
-    field_order = ['username', 'email', 'password1', 'password2', 'dropoff_location']
+    field_order = ['username', 'email', 'password1', 'password2']
