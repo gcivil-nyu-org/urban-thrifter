@@ -1,6 +1,5 @@
 from django.urls import path
 from . import views
-from .views import (HelpseekerProfileDetailView)
 from django.contrib.auth import views as auth_views
 
 app_name="register"
@@ -11,9 +10,8 @@ urlpatterns = [
     path('activate/<uidb64>/<token>', views.activate_account, name="activate"),
     path('email_sent', views.email_sent, name="email_sent"),
     # path('helpseeker/<int:pk>/edit', HelpseekerUpdateView.as_view(), name='helpseeker_edit'),
-    path('helpseeker/edit', views.helpseeker_edit_profile, name='helpseeker_edit'),
     path('helpseeker/profile/', views.helpseeker_edit_profile, name='helpseeker_profile'),
-    #path('donor/<int:pk>', HelpseekerProfileDetailView.as_view(), name='donor_profile'),
+    #path('donor/<int:pk>', .as_view(), name='donor_profile'),
     path('login/', auth_views.LoginView.as_view(template_name='register/login.html'), name="login"),
     
      # Password reset links (ref: https://github.com/django/django/blob/master/django/contrib/auth/views.py)

@@ -1,15 +1,22 @@
 {% extends 'donation/nav.html' %}
+{% load crispy_forms_tags %}
 {% block content %}
-<h1>User Login</h1>
-<h2>{{ note }}</h2>
-    <div class="container">
-        <form method="POST">
-        {% csrf_token %}
+<div class="text-center">
+  <p><i class="far fa-user-circle fa-5x mb-5"></i></p>
+  <h2>{{ note }}</h2>
+  <div class="container">
+    <form method="POST">
+      {% csrf_token %}
       <fieldset class="form-group">
         {{form.as_p}}
+        <small class="text-muted">
+          Forget Password?<a class="ml-2" href="{% url 'register:password_reset' %}">Reset Password</a>
+        </small>
       </fieldset>
-            <button style="background-color:#F4EB16; color:blue" class="btn btn-outline-info" type="submit">Login</button>
-        </form>
-        Don't have an account? <a href="/register" target="blank"><strong>register here</strong></a>!
-    </div>
+      
+      <button class="btn btn-dark btn-wide mb-3" type="submit">Login</button>
+      <p><a class="btn btn-outline-dark btn-wide" href="/register" target="blank">Register</a></p>
+    </form>
+  </div>
+</div>
 {% endblock %}

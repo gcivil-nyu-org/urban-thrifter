@@ -4,6 +4,7 @@ from .models import HelpseekerProfile
 from django.core.exceptions import ValidationError
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import AuthenticationForm
+from crispy_forms.helper import FormHelper
 
 BOROUGH_CHOICES=[
     ('MAN', 'Manhattan'),
@@ -40,7 +41,7 @@ class HelpseekerForm(UserCreationForm):
         if resource_length > 3:
             raise ValidationError("Select up to 3 resources")
         return resource
-
+    
     class Meta:
         model = User
         fields = ('username', 'password1', 'email')
@@ -50,6 +51,11 @@ class HelpseekerForm(UserCreationForm):
 # Model form allow you to work with a specific database model
 class HelpseekerUpdateForm(forms.ModelForm):
     # Keep configuration in one place
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper(self)
+        self.helper.form_show_labels = False
+    
     class Meta:
         model = HelpseekerProfile
         # field on the form

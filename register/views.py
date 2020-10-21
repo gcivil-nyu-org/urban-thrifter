@@ -90,25 +90,20 @@ def email_sent(request):
 def helpseeker_edit_profile(request):
     if request.method == 'POST':
         # instance=request.user can prefill the existing information in the form
-        hs_form = HelpseekerUpdateForm(request.POST, instance=request.user)
+        hs_form = HelpseekerUpdateForm(request.POST, instance=request.user.helpseekerprofile)
         
         if hs_form.is_valid() :
             hs_form.save()
         messages.success(request, f'Account updated successfully.')
         return redirect('register:helpseeker_profile')
     else:
-        hs_form = HelpseekerUpdateForm(instance=request.user)
+        hs_form = HelpseekerUpdateForm(instance=request.user.helpseekerprofile)
 
     context = {
         'hs_form': hs_form
     }
     return render(request, 'register/helpseekerprofile_form.html', context)
 
-# Donation Detail View
-@login_required
-class HelpseekerProfileDetailView(DetailView):
-    # Basic detail view
-    model = HelpseekerProfile
 
 '''def login(request):
     form = AuthenticationForm()
