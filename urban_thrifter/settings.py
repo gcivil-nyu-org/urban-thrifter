@@ -29,6 +29,8 @@ PLACES_MAPS_API_KEY= os.environ.get('PLACES_MAPS_API_KEY')
 PLACES_MAP_WIDGET_HEIGHT=480
 PLACES_MAP_OPTIONS='{"center": { "lat": 40.7831, "lng": -73.9712 }, "zoom": 9}'
 PLACES_MARKER_OPTIONS='{"draggable": true}'
+DOMAIN_NAME = os.environ.get('DOMAIN_NAME:q')
+MAPBOX_KEY = os.environ.get('MAPBOX_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = (os.environ.get('DJANGO_DEBUG_VALUE') == 'True')
