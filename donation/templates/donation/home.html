@@ -8,12 +8,19 @@
         <div class='container'>
             <div class="row text-center">
                 <div class="col">
-                    <p class="text-muted">{{ post.dropoff_time_1 | date:'F d, Y'}}</p>
+                    <p>Title</p>
+                    <p><a href="{% url 'donation-detail' post.id %}">{{ post.title }}</a></p>
                 </div>
                 <div class="col">
+                    <p>Quantity</p>
+                    <p>{{ post.quantity }}</p>
+                </div>
+                <div class="col">
+                    <p>Category</p>
                     <p>{{ post.resource_category }}</p>
                 </div>
                 <div class="col">
+                    <p>Status</p>
                     <p>{{ post.status }}</p>
                 </div>
             </div>
@@ -23,10 +30,15 @@
         <div class='container'>
             <div class="row">
                 <div class="col-2">
-                    <p class="article-img img-circle img-thumbnail"><img src='{{post.image.url}}'></i></p>
+                    <p class="article-img img-circle"><img class="img-thumbnail" src='{{post.image.url}}'></i></p>
                 </div>
                 <div class="col-5">
-                    <p><a href="{% url 'donation-detail' post.id %}">{{ post.title }}</a></p>
+                    <p>Available Dropoff Time: </p>
+                    <ul class="pl-3">
+                        <li>{{ post.dropoff_time_1 | date:'F d, Y H:m'}}</li>
+                        <li>{{ post.dropoff_time_2 | date:'F d, Y H:m'}}</li>
+                        <li>{{ post.dropoff_time_3 | date:'F d, Y H:m'}}</li>
+                    </ul>
                     <p>{{ post.dropoff_location.place}}</p>
                 </div>
                 <div class="col-5">

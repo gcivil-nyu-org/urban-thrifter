@@ -238,3 +238,11 @@ a.article-title:hover {
     max-height: 100px;
     max-width: 100px;
 }
+
+.donation-card .card-header {
+    padding: 3px 0;
+}
+.donation-card .card-header p {
+    margin: 0;
+    padding: 0;
+}

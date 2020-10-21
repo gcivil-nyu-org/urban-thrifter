@@ -2,7 +2,7 @@
 {% extends 'donation/base.html' %} {% load crispy_forms_tags %} {% block content %}
 {% include "register/profile_nav.html" %}
 <div class="content-section">
-    <h4 class="font-weight-bold">Account Details</h4>
+    <legend class="mb-3 font-weight-bold">Account Details</legend>
     <div class="media-body">
         <label>Username:</label>
         <p class="graybox">{{ user.username }}</p>
