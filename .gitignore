@@ -60,10 +60,6 @@ cover/
 # Django stuff:
 *.log
 local_settings.py
-<<<<<<< HEAD
-=======
-db.sqlite3-journal
->>>>>>> 3d97eac0f3e7bf1a303eb5efc72166e505541055
 
 # Flask stuff:
 instance/
