@@ -1,5 +1,6 @@
 {% extends 'donation/base.html' %}
 {% block content %}
+{% include "donation/reservation_status_nav.html" %}
 <article class="media content-section">
     <img class='rounded-circle article-img' src='{{ object.image.url }}'>
     <!--  p>{{ object.image.url }}</p-->
@@ -18,7 +19,8 @@
         </div>
         <p class="article-content">Quantity: {{ object.quantity }}</p>
         <p class="article-content">Status: {{ object.status }}</p>
-        <p class="article-content">Location: {{ object.dropoff_location }}</p>
+        <p class="article-content">Category: {{ object.resource_category }}</p>
+        <p class="article-content">Location: {{ object.dropoff_location.place }}</p>
         <p class="article-content">Drop-off Time: </p>
         <button class='btn btn-outline-secondary'>{{ object.dropoff_time_1 }}</button>
         <button class='btn btn-outline-secondary'>{{ object.dropoff_time_2 }}</button>

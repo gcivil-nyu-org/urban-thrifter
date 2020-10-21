@@ -5,14 +5,18 @@ from django.contrib import messages
 from django.conf import settings
 from django.views.generic import ( 
     ListView, CreateView, DetailView)
-from .models import ResourcePost
-#from datetimepicker.widgets import DateTimePicker
+from .models import ResourcePost, User
 from bootstrap_datepicker_plus import DateTimePickerInput, TimePickerInput
-#from django_google_maps.widgets import GoogleMapsAddressWidget
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 # Create your views here.
 def home(request):
-    return HttpResponse('<p>Hi!</p><a href="/donation/new">New Donation</a>')
+    context = {
+        'posts': ResourcePost.objects.all()
+    }
+
+    #context is the argument pass into the html
+    return render(request, 'donation/home.html', context)
 
 # All Donations View
 class PostListView(ListView):
@@ -20,7 +24,7 @@ class PostListView(ListView):
     model = ResourcePost
     # Assign tempalte otherwise it would look for post_list.html 
     # as default template
-    template_name = 'donation/donation_all.html' 
+    template_name = 'donation/home.html' 
 
     # Set context_attribute to post object
     context_object_name = 'posts'
@@ -32,7 +36,7 @@ class PostListView(ListView):
     paginate_by = 5
 
 # Post Donation View
-class PostCreateView(CreateView):
+class PostCreateView(LoginRequiredMixin, CreateView):
     # Basic create view
     model = ResourcePost
     fields = ['title', 'image','description','quantity', 
@@ -48,7 +52,7 @@ class PostCreateView(CreateView):
         return form
      
     # Overwrite form valid method
-    #def form_valid(self, form):
+    # def form_valid(self, form):
     #    form.instance.author = self.request.user
     #    return super().form_valid(form)
 
