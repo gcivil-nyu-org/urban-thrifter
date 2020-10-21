@@ -27,6 +27,7 @@ urlpatterns = [
     path('', user_view.register, name='homepage' ),
     path('issue_complaint', views.issue_complaint, name='issue_complaint'),
     path('register/', include('register.urls')),
+    
 ]
 
 

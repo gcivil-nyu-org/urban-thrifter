@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from .models import HelpseekerProfile
 from django.core.exceptions import ValidationError
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import AuthenticationForm
 
 BOROUGH_CHOICES=[
     ('MAN', 'Manhattan'),
@@ -54,3 +55,7 @@ class HelpseekerUpdateForm(forms.ModelForm):
         model = HelpseekerProfile
         # field on the form
         fields = ['borough', 'rc_1', 'rc_2', 'rc_3']
+'''class LoginForm(forms.Form):
+    email = forms.EmailField(label='Email', max_length=60, required=True)
+    password = forms.CharField(label='Password', max_length=30, widget=forms.PasswordInput, required=True)'''    
+    

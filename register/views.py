@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from .forms import HelpseekerForm, HelpseekerUpdateForm
+#from .forms import LoginForm
 from .models import HelpseekerProfile
 from django.http import HttpResponseRedirect
 from django.urls import reverse
@@ -12,6 +13,8 @@ from register.token_generator import generate_token
 from django.core.mail import EmailMessage
 from django.contrib import messages
 from django.views.generic import (ListView, CreateView, DetailView, UpdateView)
+from django.contrib.auth.forms import AuthenticationForm
+
 def register(request):
     # Redirect to login page
     return render(request, 'register/index.html')
@@ -103,3 +106,35 @@ def helpseeker_edit_profile(request):
 class HelpseekerProfileDetailView(DetailView):
     # Basic detail view
     model = HelpseekerProfile
+
+'''def login(request):
+    form = AuthenticationForm()
+    return render(request = request,
+                  template_name = "register/login.html",
+                  context={"form":form})'''
+
+
+'''def login(request):
+    if request.method=='POST':
+        form=LoginForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('email')
+            password = form.cleaned_data.get('password')
+            user = obj.authenticate_by_username_or_email(username=username, password=password)
+            if user is not None:
+                #login(request, user)
+                note="You are now logged in"
+                #messages.info(request, f"You are now logged in as {username}")
+                return redirect('/')
+            else:
+                note="Invalid username or password"
+                #messages.error(request, "Invalid username or password.")
+        else:
+            note="Invalid username or password"
+            #messages.error(request, "Invalid username or password.")
+
+    form = LoginForm()
+    return render(request,
+                  template_name = "register/login.html",
+                  context={"form":form})'''
+

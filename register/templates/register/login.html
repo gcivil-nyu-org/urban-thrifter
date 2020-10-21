@@ -1,0 +1,15 @@
+{% extends 'donation/nav.html' %}
+{% block content %}
+<h1>User Login</h1>
+<h2>{{ note }}</h2>
+    <div class="container">
+        <form method="POST">
+        {% csrf_token %}
+      <fieldset class="form-group">
+        {{form.as_p}}
+      </fieldset>
+            <button style="background-color:#F4EB16; color:blue" class="btn btn-outline-info" type="submit">Login</button>
+        </form>
+        Don't have an account? <a href="/register" target="blank"><strong>register here</strong></a>!
+    </div>
+{% endblock %}
