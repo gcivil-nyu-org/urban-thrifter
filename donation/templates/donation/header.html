@@ -14,8 +14,10 @@
                 <div class="navbar-nav">
                     <!-- Add conditional statement to present different tab dependiing on the login status -->
                     {% if user.is_authenticated %}
+                        <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
                         <a class="nav-item nav-link" href="{% url 'donation-new' %}">Account Management</a>
                     {% else %}
+                        <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
                         <a class="nav-item nav-link" href="{% url 'register:register' %}">Register</a>
                     {% endif %}
                 </div>

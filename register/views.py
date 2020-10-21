@@ -20,9 +20,9 @@ def register(request):
     return render(request, 'register/index.html')
 
 def helpseeker_register(request):
-    if request.user.is_authenticated:
+    #if request.user.is_authenticated:
         # Redirect to login page
-        return redirect('register:register')
+        #return redirect('register:register')
     if request.method == 'POST':
         form = HelpseekerForm(request.POST)
         if form.is_valid():
@@ -85,34 +85,4 @@ def email_sent(request):
     if request.method == 'GET':
         return render(request, 'register/email_sent.html')
 
-'''def login(request):
-    form = AuthenticationForm()
-    return render(request = request,
-                  template_name = "register/login.html",
-                  context={"form":form})'''
-
-
-'''def login(request):
-    if request.method=='POST':
-        form=LoginForm(request.POST)
-        if form.is_valid():
-            username = form.cleaned_data.get('email')
-            password = form.cleaned_data.get('password')
-            user = obj.authenticate_by_username_or_email(username=username, password=password)
-            if user is not None:
-                #login(request, user)
-                note="You are now logged in"
-                #messages.info(request, f"You are now logged in as {username}")
-                return redirect('/')
-            else:
-                note="Invalid username or password"
-                #messages.error(request, "Invalid username or password.")
-        else:
-            note="Invalid username or password"
-            #messages.error(request, "Invalid username or password.")
-
-    form = LoginForm()
-    return render(request,
-                  template_name = "register/login.html",
-                  context={"form":form})'''
 
