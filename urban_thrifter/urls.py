@@ -18,6 +18,7 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from complaint import views
+from register import views as user_view
 
 from django.contrib.auth import views as auth_views
 
@@ -25,7 +26,7 @@ urlpatterns = [
     path('donation/', include('donation.urls')),
     path('admin/', admin.site.urls),
     path('map/', include('map.urls')),
-    path('', views.home, name='home'),
+    path('', user_view.register, name='home' ),
     path('issue_complaint', views.issue_complaint, name='issue_complaint'),
     path('register/', include('register.urls')),
     path('login/', auth_views.LoginView.as_view(template_name='register/login.html'), name="login"),
