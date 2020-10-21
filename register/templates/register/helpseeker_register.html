@@ -1,6 +1,6 @@
-<h1>Help Seeker Registration</h1>
-
+{% extends 'donation/nav.html' %}
 {% block content %}
+<h1>Help Seeker Registration</h1>
 	<div class="content-section">
 		<form method="POST">
 			{% csrf_token %}
@@ -14,8 +14,7 @@
 		</form>
 		<div class="border-top pt-3">
 			<small class="text-muted">
-				Already Have An Account? <a class="ml-2" href="#">Sign In</a>
+				Already Have An Account? <a class="ml-2" href="{% url 'login' %}">Sign In</a>
 			</small>
-		</div>
-	</div>	
+	</div></div>
 {% endblock content %}

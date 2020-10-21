@@ -9,10 +9,12 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
+
 import os
 from pathlib import Path
 import django_heroku
 
+import datetime
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -22,13 +24,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
-#GOOGLE_API_KEY = os.environ.get('GOOGLE_API_KEY')
 GOOGLE_MAPS_API_KEY = os.environ.get('GOOGLE_MAPS_API_KEY')
 PLACES_MAPS_API_KEY= os.environ.get('PLACES_MAPS_API_KEY')
-
 PLACES_MAP_WIDGET_HEIGHT=480
-PLACES_MAP_OPTIONS='{"center": { "lat": 38.971584, "lng": -95.235072 }, "zoom": 10}'
+PLACES_MAP_OPTIONS='{"center": { "lat": 40.7831, "lng": -73.9712 }, "zoom": 9}'
 PLACES_MARKER_OPTIONS='{"draggable": true}'
+DOMAIN_NAME = os.environ.get('DOMAIN_NAME:q')
+MAPBOX_KEY = os.environ.get('MAPBOX_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = (os.environ.get('DJANGO_DEBUG_VALUE') == 'True')
@@ -57,6 +59,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'complaint',
     'widget_tweaks',
+    'axes',
 ]
 SITE_ID=1
 
@@ -69,6 +72,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
+    'axes.middleware.AxesMiddleware',
 ]
 
 ROOT_URLCONF = 'urban_thrifter.urls'
@@ -156,7 +160,26 @@ EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 
+
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_USE_TLS = True
+
+LOGIN_REDIRECT_URL = "home"
+
+AXES_FAILURE_LIMIT = 5
+AXES_COOLOFF_TIME = datetime.timedelta(minutes=10)
+AXES_ONLY_USER_FAILURES = True
+AXES_LOCK_OUT_BY_COMBINATION_USER_AND_IP = True
+
+AUTHENTICATION_BACKENDS = [
+    # AxesBackend should be the first backend in the AUTHENTICATION_BACKENDS list.
+    'axes.backends.AxesBackend',
+
+    # Django ModelBackend is the default authentication backend.
+    'django.contrib.auth.backends.ModelBackend',
+]
+
+
+
+
 
 django_heroku.settings(locals())

@@ -1,52 +1,45 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-
-<head>
-  <meta charset="utf-8">
-
-  <!-- Mapbox -->
-  <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
-  <script src='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js'></script>
-  <link href='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css' rel='stylesheet' />
-
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-  <link rel="stylesheet" href="{% static 'map/main.css' %}">
-  <title>Interactive Map for Urban Thrifter</title>
-</head>
+{% extends 'donation/navfull.html' %}
+{% block content %}
 <!-- shelter data-->
+<div id='map'></div>
+<script>
+  mapboxgl.accessToken = '{{ mapbox_access_token }}'
+  var map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/jginmb7/ckgg1lsi02e2m1ao7bk8ov89z',
+    center: [-73.935242, 40.730610],
+    zoom: 9.5
+  })
+</script>
 
-<body>
-  <h1>mappymappy</h1>
-  <div id='map'></div>
-
-  <script>
-    mapboxgl.accessToken = '{{ mapbox_access_token }}'
-    var map = new mapboxgl.Map({
-      container: 'map',
-      style: 'mapbox://styles/mapbox/streets-v11',
-      center: [-73.9911, 40.7051],
-      zoom: 9.5
-    })
-  </script>
-
-  {% for center in drop_in_centers %}
-  <script>
-    new mapboxgl.Marker({ "color": 'red' })
-      .setLngLat([{{ center.longitude }}, {{ center.latitude }}])
-      .setPopup(new mapboxgl.Popup({ offset: 25 })
-      .setHTML("<p>Drop-in Center</p><h3>{{center.center_name}}</h3>"))
-      .addTo(map)
-  </script>
-  {% endfor %}
+{% for post in post_context %}
+<script>
+  new mapboxgl.Marker({ "color": 'blue' })
+    .setLngLat([{{ post.dropoff_location.longitude }},
+    {{ post.dropoff_location.latitude }}])
+    .setPopup(new mapboxgl.Popup({ offset: 25 })
+      .setHTML("<p>Resource Post</p>\n" +
+      "<h3>{{ post.title }}</h3>\n" +
+      "<h3>{{ post.description }}</h3>" +
+      "<h3>{{ post.quantity }}</h3>\n" +
+      "<div class='form-group'>\n" +
+          "<button class='btn btn-dark btn-small' type='submit'>\n" +
+              "Reserve\n" +
+          "</button>\n" +
+      "</div>"))
+    .addTo(map)
+</script>
+{% endfor %}
 
 
-  <!-- Optional JavaScript -->
-  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
-</body>
-
-</html>
+{% for center in drop_in_centers %}
+<script>
+  new mapboxgl.Marker({ "color": 'red' })
+    .setLngLat([{{ center.longitude }}, {{ center.latitude }}])
+    .setPopup(new mapboxgl.Popup({ offset: 50 })
+      .setHTML("<p>Drop-in Center: <strong>{{center.center_name}}</strong></p><p>Address: <strong>{{center.address}}</strong></p><p>Borough: <strong>{{center.borough}}</strong></p><p>Zip: <strong>{{center.postcode}}</strong></p><p>Comments: <strong>{{center.comments}}</strong></p>"
+        ))
+    .addTo(map)
+</script>
+{% endfor %}
+{% endblock content %}
