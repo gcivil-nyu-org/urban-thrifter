@@ -28,6 +28,16 @@ def helpseeker_register(request):
             user.save()
             profile = HelpseekerProfile(user=user)
             profile.borough = form.cleaned_data.get('borough')
+            resources = form.cleaned_data.get('resource')
+            d = {}
+            for i in range(0,3):
+                if 0 <= i < len(resources):
+                    d['resource{0}'.format(i)] = resources[i]
+                else:
+                    d['resource{0}'.format(i)] = None
+            profile.rc_1 = d['resource0']
+            profile.rc_2 = d['resource1']
+            profile.rc_3 = d['resource2']
             profile.save()
     
             # Email verification
