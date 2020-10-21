@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
-from .forms import HelpseekerForm
+from .forms import HelpseekerForm, HelpseekerUpdateForm
+#from .forms import LoginForm
 from .models import HelpseekerProfile
 from django.http import HttpResponseRedirect
 from django.urls import reverse
@@ -10,15 +11,19 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_text
 from register.token_generator import generate_token
 from django.core.mail import EmailMessage
+from django.contrib import messages
+from django.views.generic import (ListView, CreateView, DetailView, UpdateView)
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.decorators import login_required
 
 def register(request):
     # Redirect to login page
     return render(request, 'register/index.html')
 
 def helpseeker_register(request):
-    if request.user.is_authenticated:
+    #if request.user.is_authenticated:
         # Redirect to login page
-        return redirect('register:register')
+        #return redirect('register:register')
     if request.method == 'POST':
         form = HelpseekerForm(request.POST)
         if form.is_valid():
@@ -65,7 +70,7 @@ def activate_account(request, uidb64, token):
         uid = force_text(urlsafe_base64_decode(uidb64))
         user = User.objects.get(pk=uid)
         print(user.username)
-    except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+    except (TypeError, ValueError, OverflowError, user.DoesNotExist):
         user = None
     if user is not None and generate_token.check_token(user, token):
         user.is_active = True
@@ -80,3 +85,25 @@ def donor_register(request):
 def email_sent(request):
     if request.method == 'GET':
         return render(request, 'register/email_sent.html')
+
+@login_required
+def helpseeker_edit_profile(request):
+    if request.method == 'POST':
+        # instance=request.user can prefill the existing information in the form
+        hs_form = HelpseekerUpdateForm(request.POST, instance=request.user.helpseekerprofile)
+        
+        if hs_form.is_valid() :
+            hs_form.save()
+        messages.success(request, f'Account updated successfully.')
+        return redirect('register:helpseeker_profile')
+    else:
+        hs_form = HelpseekerUpdateForm(instance=request.user.helpseekerprofile)
+
+    context = {
+        'hs_form': hs_form
+    }
+    return render(request, 'register/helpseekerprofile_form.html', context)
+
+
+
+

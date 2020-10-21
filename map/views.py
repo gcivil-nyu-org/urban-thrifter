@@ -1,10 +1,16 @@
 import os
 import requests
 from django.shortcuts import render
+from django.apps import apps
 
 # Create your views here.
 
 def main_map(request):
+    resource_post_model = apps.get_model('donation', 'ResourcePost') #getting model from donation app
+    post_context = {
+        'resource_posts': resource_post_model.objects.all()
+    }
+
     mapbox_access_token = 'pk.' + os.environ.get('MAPBOX_KEY')
 
     # Drop-in Center API GET
@@ -25,6 +31,7 @@ def main_map(request):
     #   'bin': '2006002',
     #   'bbl': '2027400100',
     #   'nta': 'Hunts Point'},
+<<<<<<< HEAD
     for center in drop_in_centers:
         new_address = ""
         for part in center["address"].split():
@@ -35,3 +42,7 @@ def main_map(request):
             else:
                 continue
     return render(request, 'map/main.html', { 'mapbox_access_token': mapbox_access_token, 'drop_in_centers': drop_in_centers } )
+=======
+
+    return render(request, 'map/main.html', { 'mapbox_access_token': mapbox_access_token, 'drop_in_centers': drop_in_centers, 'post_context': post_context["resource_posts"] } )
+>>>>>>> 37b590f64128e30e70e5af3b5cdfb37e16635a69
