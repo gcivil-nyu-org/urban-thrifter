@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
-from .forms import HelpseekerForm
+from .forms import HelpseekerForm, HelpseekerUpdateForm
+#from .forms import LoginForm
 from .models import HelpseekerProfile
 from django.http import HttpResponseRedirect
 from django.urls import reverse
@@ -10,6 +11,10 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_text
 from register.token_generator import generate_token
 from django.core.mail import EmailMessage
+from django.contrib import messages
+from django.views.generic import (ListView, CreateView, DetailView, UpdateView)
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.decorators import login_required
 
 def register(request):
     # Redirect to login page
@@ -65,7 +70,7 @@ def activate_account(request, uidb64, token):
         uid = force_text(urlsafe_base64_decode(uidb64))
         user = User.objects.get(pk=uid)
         print(user.username)
-    except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+    except (TypeError, ValueError, OverflowError, user.DoesNotExist):
         user = None
     if user is not None and generate_token.check_token(user, token):
         user.is_active = True
@@ -80,3 +85,54 @@ def donor_register(request):
 def email_sent(request):
     if request.method == 'GET':
         return render(request, 'register/email_sent.html')
+
+@login_required
+def helpseeker_edit_profile(request):
+    if request.method == 'POST':
+        # instance=request.user can prefill the existing information in the form
+        hs_form = HelpseekerUpdateForm(request.POST, instance=request.user.helpseekerprofile)
+        
+        if hs_form.is_valid() :
+            hs_form.save()
+        messages.success(request, f'Account updated successfully.')
+        return redirect('register:helpseeker_profile')
+    else:
+        hs_form = HelpseekerUpdateForm(instance=request.user.helpseekerprofile)
+
+    context = {
+        'hs_form': hs_form
+    }
+    return render(request, 'register/helpseekerprofile_form.html', context)
+
+
+'''def login(request):
+    form = AuthenticationForm()
+    return render(request = request,
+                  template_name = "register/login.html",
+                  context={"form":form})'''
+
+
+'''def login(request):
+    if request.method=='POST':
+        form=LoginForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('email')
+            password = form.cleaned_data.get('password')
+            user = obj.authenticate_by_username_or_email(username=username, password=password)
+            if user is not None:
+                #login(request, user)
+                note="You are now logged in"
+                #messages.info(request, f"You are now logged in as {username}")
+                return redirect('/')
+            else:
+                note="Invalid username or password"
+                #messages.error(request, "Invalid username or password.")
+        else:
+            note="Invalid username or password"
+            #messages.error(request, "Invalid username or password.")
+
+    form = LoginForm()
+    return render(request,
+                  template_name = "register/login.html",
+                  context={"form":form})'''
+

@@ -18,15 +18,16 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from complaint import views
-
+from register import views as user_view
 
 urlpatterns = [
     path('donation/', include('donation.urls')),
     path('admin/', admin.site.urls),
     path('map/', include('map.urls')),
-    path('', views.home, name='home'),
+    path('', user_view.register, name='home' ),
     path('issue_complaint', views.issue_complaint, name='issue_complaint'),
     path('register/', include('register.urls')),
+    
 ]
 
 
