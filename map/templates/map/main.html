@@ -7,11 +7,7 @@
   var map = new mapboxgl.Map({
     container: 'map',
     style: 'mapbox://styles/jginmb7/ckgg1lsi02e2m1ao7bk8ov89z',
-<<<<<<< HEAD
-    center: [-73.9911, 40.7051],
-=======
     center: [-73.935242, 40.730610],
->>>>>>> 37b590f64128e30e70e5af3b5cdfb37e16635a69
     zoom: 9.5
   })
 </script>
@@ -40,14 +36,9 @@
 <script>
   new mapboxgl.Marker({ "color": 'red' })
     .setLngLat([{{ center.longitude }}, {{ center.latitude }}])
-<<<<<<< HEAD
     .setPopup(new mapboxgl.Popup({ offset: 50 })
       .setHTML("<p>Drop-in Center: <strong>{{center.center_name}}</strong></p><p>Address: <strong>{{center.address}}</strong></p><p>Borough: <strong>{{center.borough}}</strong></p><p>Zip: <strong>{{center.postcode}}</strong></p><p>Comments: <strong>{{center.comments}}</strong></p>"
         ))
-=======
-    .setPopup(new mapboxgl.Popup({ offset: 25 })
-      .setHTML("<p>Drop-in Center</p><h3>{{ center.center_name }}</h3>"))
->>>>>>> 37b590f64128e30e70e5af3b5cdfb37e16635a69
     .addTo(map)
 </script>
 {% endfor %}
