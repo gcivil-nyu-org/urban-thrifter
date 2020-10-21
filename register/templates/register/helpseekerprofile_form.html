@@ -5,9 +5,9 @@
     <h4 class="font-weight-bold">Account Details</h4>
     <div class="media-body">
         <label>Username:</label>
-        <p>{{ user.username }}</p>
+        <p class="graybox">{{ user.username }}</p>
         <label>Email:</label>
-        <p>{{ user.email }}</p>
+        <p class="graybox">{{ user.email }}</p>
     </div>
     <form method='POST' enctype='multipart/form-data'>
         {% csrf_token %}

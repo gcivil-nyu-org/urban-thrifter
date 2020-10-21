@@ -64,6 +64,11 @@ p, a, li, input, label, textarea {
     width: 200px;
 }
 
+.graybox {
+    background: #e6e6e6;
+    border-radius: 5px;
+    padding: .375rem .75rem;
+}
 .btn-dark:hover {
     background-color: #fff !important;
     color: #333 !important;
