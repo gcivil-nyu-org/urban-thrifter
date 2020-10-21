@@ -1,5 +1,6 @@
 <!-- Can extend the template from another app as long as they are in the same project -->
 {% extends 'donation/base.html' %} {% load crispy_forms_tags %} {% block content %}
+{% include "register/profile_nav.html" %}
 <div class="content-section">
     <legend class='border-bottom mb-4'>Update Your Profile</legend>
     <!-- Add special encoding type to pass the image data -->

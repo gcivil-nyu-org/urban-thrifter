@@ -1,4 +1,7 @@
-{% extends 'donation/base.html' %} {% block content %} {% for post in posts %}
+{% extends 'donation/base.html' %} 
+{% block content %} 
+{% include "donation/reservation_status_nav.html" %}
+{% for post in posts %}
 <article class="media content-section">
     <!-- <img class='rounded-circle article-img' src='{{ post.author.profile.image.url }}' > -->
     <div class="media-body">

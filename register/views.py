@@ -14,6 +14,7 @@ from django.core.mail import EmailMessage
 from django.contrib import messages
 from django.views.generic import (ListView, CreateView, DetailView, UpdateView)
 from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.decorators import login_required
 
 def register(request):
     # Redirect to login page
@@ -85,6 +86,7 @@ def email_sent(request):
     if request.method == 'GET':
         return render(request, 'register/email_sent.html')
 
+@login_required
 def helpseeker_edit_profile(request):
     if request.method == 'POST':
         # instance=request.user can prefill the existing information in the form
@@ -93,7 +95,7 @@ def helpseeker_edit_profile(request):
         if hs_form.is_valid() :
             hs_form.save()
         messages.success(request, f'Account updated successfully.')
-        return redirect('donation-home')
+        return redirect('register:helpseeker_profile')
     else:
         hs_form = HelpseekerUpdateForm(instance=request.user)
 
@@ -103,6 +105,7 @@ def helpseeker_edit_profile(request):
     return render(request, 'register/helpseekerprofile_form.html', context)
 
 # Donation Detail View
+@login_required
 class HelpseekerProfileDetailView(DetailView):
     # Basic detail view
     model = HelpseekerProfile

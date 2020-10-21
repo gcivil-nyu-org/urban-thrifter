@@ -24,7 +24,7 @@ urlpatterns = [
     path('donation/', include('donation.urls')),
     path('admin/', admin.site.urls),
     path('map/', include('map.urls')),
-    path('', user_view.register, name='homepage' ),
+    path('', user_view.register, name='home' ),
     path('issue_complaint', views.issue_complaint, name='issue_complaint'),
     path('register/', include('register.urls')),
     

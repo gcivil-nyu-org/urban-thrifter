@@ -138,13 +138,17 @@ select option:hover, select option:focus, select option:active {
     opacity: 1;
     right: 10px;
 }
-.status-nav {
+.button-nav {
     padding-bottom: 10px;
     display: flex;
 }
-.status-nav .btn {
+.button-nav .btn {
     flex-grow: 1;
+    margin-right: 3px;
 }
+    .button-nav .btn:last-child{
+        margin-right: 0;
+    }
 
 .content-section {
     background: #ffffff;
