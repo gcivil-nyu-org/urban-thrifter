@@ -82,7 +82,7 @@ select option:hover, select option:focus, select option:active {
 }
 
 .site-header{
-    height: 66px;
+    height: 86px;
 }
 .site-header .navbar-brand, .site-header .navbar-nav .nav-link {
     color: #333;
