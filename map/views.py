@@ -40,4 +40,6 @@ def main_map(request):
                 break
             else:
                 continue
-    return render(request, 'map/main.html', { 'mapbox_access_token': mapbox_access_token, 'drop_in_centers': drop_in_centers } )
+    return render(request, 'map/main.html', { 'mapbox_access_token': mapbox_access_token, 'drop_in_centers': drop_in_centers, 'post_context': post_context['resource_posts'] } )
+
+    

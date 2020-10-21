@@ -27,7 +27,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('map/', include('map.urls')),
     path('', user_view.register, name='home' ),
-    path('issue_complaint', views.issue_complaint, name='issue_complaint'),
+    path('issue_complaint/', views.issue_complaint, name='issue_complaint'),
     path('register/', include('register.urls')),
     path('login/', auth_views.LoginView.as_view(template_name='register/login.html'), name="login"),
     path('logout/', auth_views.LogoutView.as_view(template_name='register/logout.html'), name="logout"),
