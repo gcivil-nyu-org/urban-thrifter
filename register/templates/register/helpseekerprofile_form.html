@@ -1,0 +1,26 @@
+<!-- Can extend the template from another app as long as they are in the same project -->
+{% extends 'donation/base.html' %} {% load crispy_forms_tags %} {% block content %}
+{% include "register/profile_nav.html" %}
+<div class="content-section">
+    <legend class="mb-3 font-weight-bold">Account Details</legend>
+    <div class="media-body">
+        <label>Username:</label>
+        <p class="graybox">{{ user.username }}</p>
+        <label>Email:</label>
+        <p class="graybox">{{ user.email }}</p>
+    </div>
+    <form method='POST' enctype='multipart/form-data'>
+        {% csrf_token %}
+        <fieldset class='form-group'>
+            <!-- Crispy filter to style the form -->
+            {{ hs_form |crispy }}
+        </fieldset>
+        <div class='form-group'>
+            <button class='btn btn-dark btn-wide' type='submit'>
+                Save
+            </button>
+        </div>
+    </form>
+</div>
+
+{% endblock content %}
