@@ -22,7 +22,16 @@ body {
     margin-top: 5rem;
 }
 
-div, h1, h2, h3, h4, h5, h6, p, a, li {
+div,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+a,
+li{
     /*font-family: Palatino,Palatino Linotype,Palatino LT STD,Book Antiqua,Georgia,serif; */
     /*font-family: 'EB Garamond', serif;*/
     font-family: DINFont, serif;
