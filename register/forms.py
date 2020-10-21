@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
+from .models import HelpseekerProfile
 from django.core.exceptions import ValidationError
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import AuthenticationForm
@@ -46,8 +47,15 @@ class HelpseekerForm(UserCreationForm):
 
     field_order = ['username', 'email', 'password1', 'password2', 'borough', 'resource']
 
+# Model form allow you to work with a specific database model
+class HelpseekerUpdateForm(forms.ModelForm):
+        
+    # Keep configuration in one place
+    class Meta:
+        model = HelpseekerProfile
+        # field on the form
+        fields = ['borough', 'rc_1', 'rc_2', 'rc_3']
 '''class LoginForm(forms.Form):
     email = forms.EmailField(label='Email', max_length=60, required=True)
     password = forms.CharField(label='Password', max_length=30, widget=forms.PasswordInput, required=True)'''    
     
-
