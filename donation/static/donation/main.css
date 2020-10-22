@@ -69,6 +69,12 @@ p, a, li, input, label, textarea {
 
 /********** Common Element *************/
 
+.btn:focus {
+    box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+    outline: none;
+}
+
 .btn-wide {
     width: 200px;
 }
