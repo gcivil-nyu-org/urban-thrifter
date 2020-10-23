@@ -11,6 +11,7 @@ from django.utils.encoding import force_bytes, force_text
 from register.token_generator import generate_token
 from django.core.mail import EmailMessage
 from django.contrib import messages
+
 # from django.views.generic import ListView, CreateView, DetailView, UpdateView
 # from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
