@@ -85,6 +85,11 @@ p, a, li, input, label, textarea {
     border-radius: 5px;
     padding: .375rem .75rem;
 }
+
+.gray-bg {
+    background: #f9f9f9;
+}
+
 .btn-dark:hover {
     background-color: #fff !important;
     color: #333 !important;

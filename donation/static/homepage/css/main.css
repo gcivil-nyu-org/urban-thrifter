@@ -48,6 +48,10 @@ ul li {
   list-style: none;
 }
 
+ol li {
+  list-style-type: decimal;
+}
+
 a:hover, a:focus {
   text-decoration: none;
   outline: none;
@@ -547,6 +551,7 @@ button:focus {
 #about .services-item {
   padding: 60px 30px;
   border: 1px solid #ddd;
+  border-radius: 5px;
   -moz-transition: all .8s ease;
   -webkit-transition: all .8s ease;
   transition: all .8s ease;
@@ -614,9 +619,13 @@ button:focus {
   margin-bottom: 25px;
 }
 
-#how-to-share .business-item-info p {
-  font-size: 16px;
-  margin-bottom: 20px;
+#how-to-share .business-item-info ol {
+  padding-inline-start:15px;
+}
+#how-to-share .business-item-info ol li {
+  font-size: 18px;
+  padding-left: 5px;
+  line-height: 32px;
 }
 
 .business-item-img {
@@ -626,10 +635,6 @@ button:focus {
 /* ==========================================================================
    Features 
    ========================================================================== */
-
-#resource {
-  background: #f9f9f9;
-}
 
 #resource .featured-bg {
   background: #fff;
@@ -995,6 +1000,7 @@ button:focus {
 #testimonial #client-testimonial {
   background-color: #fff;
   padding: 54px;
+  border-radius: 5px;
   -webkit-box-shadow: 0px 0px 25px 0px rgba(95, 95, 95, 0.24);
   -moz-box-shadow: 0px 0px 25px 0px rgba(95, 95, 95, 0.24);
   box-shadow: 0px 0px 25px 0px rgba(95, 95, 95, 0.24);
@@ -1221,6 +1227,7 @@ button:focus {
 
 #team .single-team {
   border: 1px solid #ddd;
+  border-radius: 5px;
   position: relative;
   -moz-transition: all .8s ease;
   -webkit-transition: all .8s ease;
@@ -1701,7 +1708,8 @@ button:focus {
    ========================================================================== */
 
 #footer-Content {
-  padding-top: 130px;
+  padding-top: 50px;
+  padding-bottom: 50px;
   background: #180e29;
 }
 
@@ -1735,6 +1743,7 @@ button:focus {
   color: #e2e2e2;
   font-size: 16px;
   line-height: 32px;
+  margin-bottom: 0;
 }
 
 #footer-Content .widget .subscribe-area {
@@ -1770,7 +1779,7 @@ button:focus {
   color: #fff;
   font-size: 20px;
   font-weight: 600;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 }
 
 #footer-Content ul.menu li a {
