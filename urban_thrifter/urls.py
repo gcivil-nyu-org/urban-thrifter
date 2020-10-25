@@ -27,7 +27,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('map/', include('map.urls')),
     path('', user_view.register, name='home' ),
-    path('issue_complaint/', views.issue_complaint, name='issue_complaint'),
+    path('issue-complaint/', views.issue_complaint, name='issue-complaint'),
     path('register/', include('register.urls')),
     path('login/', auth_views.LoginView.as_view(template_name='register/login.html'), name="login"),
     path('logout/', auth_views.LogoutView.as_view(template_name='register/logout.html'), name="logout"),
@@ -37,26 +37,25 @@ urlpatterns = [
          auth_views.PasswordResetView.as_view(
              template_name='register/password_reset.html'
          ),
-         name='password_reset'),
+         name='password-reset'),
     path('password-reset/done/',
          auth_views.PasswordResetDoneView.as_view(
              template_name='register/password_reset_done.html'
          ),
-         name='password_reset_done'),
+         name='password-reset_done'),
     path('password-reset-confirm/<uidb64>/<token>/',
          auth_views.PasswordResetConfirmView.as_view(
              template_name='register/password_reset_confirm.html'
          ),
-         name='password_reset_confirm'),
+         name='password-reset-confirm'),
     path('password-reset-complete/',
          auth_views.PasswordResetCompleteView.as_view(
              template_name='register/password_reset_complete.html'
          ),
-         name='password_reset_complete'),
+         name='password-reset-complete'),
 ]
 
 
 if settings.DEBUG:
         urlpatterns += static(settings.MEDIA_URL,
                               document_root=settings.MEDIA_ROOT)
-
