@@ -10,13 +10,19 @@ from bootstrap_datepicker_plus import DateTimePickerInput, TimePickerInput
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 # Create your views here.
+
+def homepage(request):
+    # Redirect to login page
+    return render(request, 'donation/homepage.html')
+
+
 def home(request):
     context = {
         'posts': ResourcePost.objects.all()
     }
 
     #context is the argument pass into the html
-    return render(request, 'donation/home.html', context)
+    return render(request, 'donation/donation_all.html', context)
 
 # All Donations View
 class PostListView(ListView):

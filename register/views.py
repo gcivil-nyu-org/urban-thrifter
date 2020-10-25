@@ -18,7 +18,7 @@ from django.contrib.auth.decorators import login_required
 
 def register(request):
     # Redirect to login page
-    return render(request, 'register/index.html')
+    return render(request, 'register/register_main.html')
 
 def helpseeker_register(request):
     #if request.user.is_authenticated:
