@@ -143,11 +143,11 @@ def donor_edit_profile(request):
         if hs_form.is_valid() :
             hs_form.save()
         messages.success(request, f'Account updated successfully.')
-        return redirect('register:donor-profile')
+        return redirect('register:donor_profile')
     else:
         donor_form = DonorUpdateForm(instance=request.user.donorprofile)
 
     context = {
         'donor_form': donor_form
     }
-    return render(request, 'register/donorprofile-form.html', context)
+    return render(request, 'register/donorprofile_form.html', context)
