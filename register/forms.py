@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from .models import HelpseekerProfile
+from .models import HelpseekerProfile, DonorProfile
 from django.core.exceptions import ValidationError
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import AuthenticationForm
@@ -26,9 +26,9 @@ class HelpseekerForm(UserCreationForm):
     email = forms.EmailField(label='Email', max_length=60, required=True)
     password1 = forms.CharField(label='Password', max_length=30, widget=forms.PasswordInput, required=True)
     password2 = forms.CharField(label='Confirm Password', max_length=30, widget=forms.PasswordInput, required=True)
-    borough = forms.CharField(label='Borough', widget=forms.RadioSelect(choices=BOROUGH_CHOICES), required=True)   
+    borough = forms.CharField(label='Borough', widget=forms.RadioSelect(choices=BOROUGH_CHOICES), required=True)
     resource = forms.MultipleChoiceField(label='Resources (Optional, select up to 3)', widget=forms.CheckboxSelectMultiple, choices=RESOURCE_CATEGORY_CHOICES, required=False)
-    
+
     def clean_email(self):
         email = self.cleaned_data['email'].lower()
         holder = User.objects.filter(email=email)
@@ -41,7 +41,7 @@ class HelpseekerForm(UserCreationForm):
         if resource_length > 3:
             raise ValidationError("Select up to 3 resources")
         return resource
-    
+
     class Meta:
         model = User
         fields = ('username', 'password1', 'email')
@@ -54,7 +54,7 @@ class DonorForm(UserCreationForm):
     email = forms.EmailField(label='Email', max_length=60, required=True)
     password1 = forms.CharField(label='Password', max_length=30, widget=forms.PasswordInput, required=True)
     password2 = forms.CharField(label='Confirm Password', max_length=30, widget=forms.PasswordInput, required=True)
-    
+
     def clean_email(self):
         email = self.cleaned_data['email'].lower()
         holder = User.objects.filter(email=email)
@@ -75,9 +75,20 @@ class HelpseekerUpdateForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper(self)
         self.helper.form_show_labels = False
-    
+
     class Meta:
         model = HelpseekerProfile
         # field on the form
         fields = ['borough', 'rc_1', 'rc_2', 'rc_3']
 
+class DonorUpdateForm(forms.ModelForm):
+    # Keep configuration in one place
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper(self)
+        self.helper.form_show_labels = False
+
+    class Meta:
+        model = DonorProfile
+        # field on the form
+        fields = ['dropoff_location']

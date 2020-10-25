@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .forms import HelpseekerForm, DonorForm, HelpseekerUpdateForm
+from .forms import HelpseekerForm, DonorForm, HelpseekerUpdateForm, DonorUpdateForm
 from .models import HelpseekerProfile, DonorProfile
 from django.http import HttpResponseRedirect
 from django.urls import reverse
@@ -43,9 +43,9 @@ def helpseeker_register(request):
             profile.rc_2 = d['resource1']
             profile.rc_3 = d['resource2']
             profile.save()
-    
+
             # Email verification
-            
+
             email_subject = "Activate Your Account!"
             message = render_to_string('register/activate_account.html',
                 {
@@ -58,7 +58,7 @@ def helpseeker_register(request):
             to_email = form.cleaned_data.get('email')
             email = EmailMessage(email_subject, message, to=[to_email])
             email.send()
-            
+
             # Must redirect to login page (this is a placeholder)
             return HttpResponseRedirect(reverse('register:email_sent'))
     else:
@@ -77,9 +77,9 @@ def donor_register(request):
             user.save()
             profile = DonorProfile(user=user)
             profile.save()
-    
+
             # Email verification
-            
+
             email_subject = "Activate Your Account!"
             message = render_to_string('register/activate_account.html',
                 {
@@ -92,7 +92,7 @@ def donor_register(request):
             to_email = form.cleaned_data.get('email')
             email = EmailMessage(email_subject, message, to=[to_email])
             email.send()
-            
+
             # Must redirect to login page (this is a placeholder)
             return HttpResponseRedirect(reverse('register:email_sent'))
     else:
@@ -108,10 +108,10 @@ def activate_account(request, uidb64, token):
         user = None
     if user is not None and generate_token.check_token(user, token):
         user.is_active = True
-        user.save()       
+        user.save()
         return render(request, 'register/activate_confirmation.html')
     return render(request, 'register/activate_failure.html')
-    
+
 def email_sent(request):
     if request.method == 'GET':
         return render(request, 'register/email_sent.html')
@@ -121,7 +121,7 @@ def helpseeker_edit_profile(request):
     if request.method == 'POST':
         # instance=request.user can prefill the existing information in the form
         hs_form = HelpseekerUpdateForm(request.POST, instance=request.user.helpseekerprofile)
-        
+
         if hs_form.is_valid() :
             hs_form.save()
         messages.success(request, f'Account updated successfully.')
@@ -134,6 +134,20 @@ def helpseeker_edit_profile(request):
     }
     return render(request, 'register/helpseekerprofile_form.html', context)
 
+@login_required
+def donor_edit_profile(request):
+    if request.method == 'POST':
+        # instance=request.user can prefill the existing information in the form
+        donor_form = DonorUpdateForm(request.POST, instance=request.user.donorprofile)
 
+        if hs_form.is_valid() :
+            hs_form.save()
+        messages.success(request, f'Account updated successfully.')
+        return redirect('register:donor-profile')
+    else:
+        donor_form = DonorUpdateForm(instance=request.user.donorprofile)
 
-
+    context = {
+        'donor_form': donor_form
+    }
+    return render(request, 'register/donorprofile-form.html', context)
