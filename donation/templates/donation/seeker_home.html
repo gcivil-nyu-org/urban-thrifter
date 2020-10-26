@@ -1,0 +1,69 @@
+{% extends 'donation/base.html' %}
+{% block content %}
+{% include "donation/reservation_landingnav.html" %}
+<article class="card donation-card mb-2">
+    <!-- <img class='rounded-circle article-img' src='{{ post.author.profile.image.url }}' > -->
+    <div class="card-header">
+        <div class='container'>
+            <div class="row text-center">
+                <div class="col">
+                    <p>Pickup Time</p>
+                    <p><a href="">12:30 10/08/2020</a></p>
+                </div>
+                <div class="col">
+                    <p>Title</p>
+                    <p>Fruits</p>
+                </div>
+                <div class="col">
+                    <p>From</p>
+                    <p>Antony</p>
+                </div>
+                <div class="col">
+                    <p>Order #11312234565</p>
+                    <p>Order Details</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-body ">
+        <div class='container'>
+            <div class="row">
+                <div class="col-2">
+                    <p class="article-img img-circle"><img class="img-thumbnail" src='https://homepages.cae.wisc.edu/~ece533/images/fruits.png'></i></p>
+                </div>
+                <div class="col-5">
+                    <p>Fruits </p>
+                    <p>6 metrotech center, Brooklyn</p>
+                    <p>Pending</p>
+                </div>
+                <div class="col-5">
+                    <button class='btn btn-outline-dark btn-wide mb-1 float-right'>Edit</button>
+                    <button class='btn btn-outline-warning mb-1 btn-wide float-right'><a href="{% url 'issue_complaint' %}">Complaint</a></button>
+                    <button class='btn btn-danger btn-wide float-right'>Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</article>
+
+<!-- Add Pagination Logic -->
+{% if is_paginated %}
+{% if page_obj.has_previous %}
+<a class='btn btn-outline-info mb-4' href='?page=1'>First</a>
+<a class='btn btn-outline-info mb-4' href='{{ page_obj.previous_page_number }}'> Prev </a>
+{% endif %}
+
+{% for page_num in page_obj.paginator.page_range %}
+{% if page_obj.number == page_num%}
+<a class='btn btn-info mb-4' href='?page={{ page_num }}'>{{ page_num }}</a>
+{% elif page_num > page_obj.number|add:'-3' and page_num < page_obj.number|add:'3' %}
+<a class='btn btn-outline-info mb-4' href='?page={{ page_num }}'>{{ page_num }}</a>
+{% endif %}
+{% endfor %}
+
+{% if page_obj.has_next %}
+<a class='btn btn-outline-info mb-4' href='?page={{ page_obj.next_page_number }}'> Next </a>
+<a class='btn btn-outline-info mb-4' href='?page={{ page_obj.paginator.num_pages }}'>End</a>
+{% endif %}
+{% endif %}
+{% endblock content %}
