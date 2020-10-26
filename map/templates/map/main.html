@@ -48,7 +48,7 @@
   new mapboxgl.Marker({ "color": 'yellow', "scale":0.25 })
     .setLngLat([{{ center.longitude }}, {{ center.latitude }}])
     .setPopup(new mapboxgl.Popup({ offset: 50 })
-      .setHTML("<p>Internet Center: <strong>{{center.name}}</strong></p><p><strong>{{center.provider}}</strong></p>"))
+      .setHTML("<p>Internet Center: <strong>{{center.name}}</strong></p><p>Provider:<strong>{{center.provider}}</strong></p><p>Location:<strong>{{center.location}}</strong></p><p>Borough:<strong>{{center.boroname}}</strong></p><p>Type:<strong>{{center.type}}</strong></p><p>Remarks:<strong>{{center.remarks}}</strong></p>"))
     .addTo(map)
 </script>
 {% endfor %}
