@@ -20,6 +20,8 @@ def home(request):
     # context is the argument pass into the html
     return render(request, "donation/home.html", context)
 
+def reservation(request):
+    return render(request, "donation/reservation.html")
 
 # All Donations View
 class PostListView(ListView):
