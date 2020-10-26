@@ -41,6 +41,42 @@ def main_map(request):
                 break
             else:
                 continue
+
+    # Internet spots API GET
+    internet_center_URL = "https://data.cityofnewyork.us/api/views/yjub-udmw/rows.json"
+    internet_center_r = requests.get(url=internet_center_URL)
+    internet_centers = internet_center_r.json()
+    # Information in JSON
+    # [{'center_name': 'Living Room',
+    #   'borough': 'Bronx',
+    #   'address': '800 Barretto Street; Bronx, NY\n10474',
+    #   'comments': 'Open 24 hours',
+    #   'postcode': '10474',
+    #   'latitude': '40.816615',
+    #   'longitude': '-73.889883',
+    #   'community_board': '202',
+    #   'council_district': '17',
+    #   'census_tract': '93',
+    #   'bin': '2006002',
+    #   'bbl': '2027400100',
+    #   'nta': 'Hunts Point'},
+    for center in drop_in_centers:
+        new_address = ""
+        for part in center["address"].split():
+            new_address = new_address + " " + part
+            if new_address[-1] == ";" or new_address[-2:] == ".,":
+                center["address"] = new_address[:-1]
+                break
+            else:
+                continue
+
+
+
+
+
+
+
+
     return render(
         request,
         "map/main.html",
