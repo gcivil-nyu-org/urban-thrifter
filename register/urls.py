@@ -10,6 +10,6 @@ urlpatterns = [
     path('activate/<uidb64>/<token>', views.activate_account, name="activate"),
     path('email-sent', views.email_sent, name="email-sent"),
     path('helpseeker/profile/', views.helpseeker_edit_profile, name='helpseeker-profile'),
-    path('donor/profile/', views.donor_edit_profile, name='helpseeker-profile'),
+    path('donor/profile/', views.donor_edit_profile, name='donor-profile'),
 
 ]

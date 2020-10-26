@@ -60,7 +60,7 @@ def helpseeker_register(request):
             email.send()
 
             # Must redirect to login page (this is a placeholder)
-            return HttpResponseRedirect(reverse('register:email_sent'))
+            return HttpResponseRedirect(reverse('register:email-sent'))
     else:
         form = HelpseekerForm()
     return render(request, 'register/helpseeker_register.html', {'form':form})
@@ -94,7 +94,7 @@ def donor_register(request):
             email.send()
 
             # Must redirect to login page (this is a placeholder)
-            return HttpResponseRedirect(reverse('register:email_sent'))
+            return HttpResponseRedirect(reverse('register:email-sent'))
     else:
         form = DonorForm()
     return render(request, 'register/donor_register.html', {'form':form})
@@ -125,7 +125,7 @@ def helpseeker_edit_profile(request):
         if hs_form.is_valid() :
             hs_form.save()
         messages.success(request, f'Account updated successfully.')
-        return redirect('register:helpseeker_profile')
+        return redirect('register:helpseeker-profile')
     else:
         hs_form = HelpseekerUpdateForm(instance=request.user.helpseekerprofile)
 
@@ -143,7 +143,7 @@ def donor_edit_profile(request):
         if hs_form.is_valid() :
             hs_form.save()
         messages.success(request, f'Account updated successfully.')
-        return redirect('register:donor_profile')
+        return redirect('register:donor-profile')
     else:
         donor_form = DonorUpdateForm(instance=request.user.donorprofile)
 

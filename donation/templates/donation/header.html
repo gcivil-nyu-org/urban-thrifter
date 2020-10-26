@@ -14,10 +14,14 @@
         <div class="navbar-nav">
           <!-- Add conditional statement to present different tab dependiing on the login status -->
           {% if user.is_authenticated %}
+          <script>
+            alert("{{user}}")
+          </script>
 
           <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
+          <a class="nav-item nav-link" href="{% url 'register:donor-profile' %}"><i class="fas fa-user-circle"></i></a>
           <a class="nav-item nav-link" href="{% url 'register:helpseeker-profile' %}"><i class="fas fa-user-circle"></i></a>
-          <a class="nav-item nav-link" href="{% url 'main_map' %}"><i class="fas fa-map-marker-alt"></i></a>
+          <a class="nav-item nav-link" href="{% url 'main-map' %}"><i class="fas fa-map-marker-alt"></i></a>
           {% else %}
           <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
           <a class="nav-item nav-link" href="{% url 'register:register' %}">Register</a>
