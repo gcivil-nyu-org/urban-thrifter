@@ -15,8 +15,13 @@
           <!-- Add conditional statement to present different tab dependiing on the login status -->
           {% if user.is_authenticated %}
           <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
+
+          {% if user.donorprofile %}
           <a class="nav-item nav-link" href="{% url 'register:donor-profile' %}"><i class="fas fa-user-circle"></i></a>
+          {% else %}
           <a class="nav-item nav-link" href="{% url 'register:helpseeker-profile' %}"><i class="fas fa-user-circle"></i></a>
+          {% endif %}
+
           <a class="nav-item nav-link" href="{% url 'main-map' %}"><i class="fas fa-map-marker-alt"></i></a>
           {% else %}
           <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>

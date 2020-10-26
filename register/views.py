@@ -122,7 +122,7 @@ def helpseeker_edit_profile(request):
         # instance=request.user can prefill the existing information in the form
         hs_form = HelpseekerUpdateForm(request.POST, instance=request.user.helpseekerprofile)
 
-        if hs_form.is_valid() :
+        if hs_form.is_valid():
             hs_form.save()
         messages.success(request, f'Account updated successfully.')
         return redirect('register:helpseeker-profile')
@@ -140,8 +140,8 @@ def donor_edit_profile(request):
         # instance=request.user can prefill the existing information in the form
         donor_form = DonorUpdateForm(request.POST, instance=request.user.donorprofile)
 
-        if hs_form.is_valid() :
-            hs_form.save()
+        if donor_form.is_valid():
+            donor_form.save()
         messages.success(request, f'Account updated successfully.')
         return redirect('register:donor-profile')
     else:
