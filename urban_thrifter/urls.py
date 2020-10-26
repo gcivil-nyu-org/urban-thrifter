@@ -26,11 +26,11 @@ urlpatterns = [
     path('donation/', include('donation.urls')),
     path('admin/', admin.site.urls),
     path('map/', include('map.urls')),
-    path('', user_view.register, name='home' ),
+    path('', user_view.register, name='home'),
     path('issue-complaint/', views.issue_complaint, name='issue-complaint'),
     path('register/', include('register.urls')),
-    path('login/', auth_views.LoginView.as_view(template_name='register/login.html'), name="login"),
-    path('logout/', auth_views.LogoutView.as_view(template_name='register/logout.html'), name="logout"),
+    path('login/', auth_views.LoginView.as_view(template_name='register/login.html'), name='login'),
+    path('logout/', auth_views.LogoutView.as_view(template_name='register/logout.html'), name='logout'),
 
     # Password reset links (ref: https://github.com/django/django/blob/master/django/contrib/auth/views.py)
     path('password-reset/',

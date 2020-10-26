@@ -1,5 +1,5 @@
-from django.shortcuts import render, redirect
-from .forms import HelpseekerForm, DonorForm, HelpseekerUpdateForm, DonorUpdateForm
+from django.shortcuts import render, redirect, get_object_or_404
+from .forms import HelpseekerForm, DonorForm, HelpseekerUpdateForm
 from .models import HelpseekerProfile, DonorProfile
 from django.http import HttpResponseRedirect
 from django.urls import reverse
@@ -15,6 +15,9 @@ from django.contrib import messages
 from django.views.generic import (ListView, CreateView, DetailView, UpdateView)
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.http import Http404
+
 
 def register(request):
     # Redirect to login page
@@ -134,20 +137,31 @@ def helpseeker_edit_profile(request):
     }
     return render(request, 'register/helpseekerprofile_form.html', context)
 
-@login_required
-def donor_edit_profile(request):
-    if request.method == 'POST':
-        # instance=request.user can prefill the existing information in the form
-        donor_form = DonorUpdateForm(request.POST, instance=request.user.donorprofile)
 
-        if donor_form.is_valid():
-            donor_form.save()
-        messages.success(request, f'Account updated successfully.')
-        return redirect('register:donor-profile')
-    else:
-        donor_form = DonorUpdateForm(instance=request.user.donorprofile)
+class DonorUpdateView(LoginRequiredMixin, UpdateView):
+    model = DonorProfile
+    fields = ['dropoff_location']
 
-    context = {
-        'donor_form': donor_form
-    }
-    return render(request, 'register/donorprofile_form.html', context)
+    def get_object(self, **kwargs):
+        username = self.kwargs.get("username")
+        if username is None:
+            raise Http404
+        return get_object_or_404(DonorProfile, user__username__iexact=username)
+
+# @login_required
+# def donor_edit_profile(request):
+#     if request.method == 'POST':
+#         # instance=request.user can prefill the existing information in the form
+#         donor_form = DonorUpdateForm(request.POST, instance=request.user.donorprofile)
+#
+#         if donor_form.is_valid():
+#             donor_form.save()
+#         messages.success(request, f'Account updated successfully.')
+#         return redirect('register:donor-profile')
+#     else:
+#         donor_form = DonorUpdateForm(instance=request.user.donorprofile)
+#
+#     context = {
+#         'donor_form': donor_form
+#     }
+#     return render(request, 'register/donorprofile_form.html', context)

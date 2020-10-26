@@ -80,15 +80,3 @@ class HelpseekerUpdateForm(forms.ModelForm):
         model = HelpseekerProfile
         # field on the form
         fields = ['borough', 'rc_1', 'rc_2', 'rc_3']
-
-class DonorUpdateForm(forms.ModelForm):
-    # Keep configuration in one place
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.helper = FormHelper(self)
-        self.helper.form_show_labels = False
-
-    class Meta:
-        model = DonorProfile
-        # field on the form
-        fields = ['dropoff_location']
