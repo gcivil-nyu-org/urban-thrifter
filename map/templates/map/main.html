@@ -45,7 +45,7 @@
 
 {% for center1 in internet_centers %}
 <script>
-  new mapboxgl.Marker({ "color": 'yellow' })
+  new mapboxgl.Marker({ "color": 'yellow', "scale":0.25 })
     .setLngLat([{{ center1.longitude }}, {{ center1.latitude }}])
     .setPopup(new mapboxgl.Popup({ offset: 50 })
       .setHTML("<p>Internet Center: <strong>{{center1.latitude}}</strong></p><p><strong>{{center1.longitude}}</p>"))
