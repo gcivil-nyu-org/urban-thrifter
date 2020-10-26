@@ -2,6 +2,7 @@
 {% block content %}
 <!-- shelter data-->
 <div id='map'></div>
+<nav id="filter-group" class="filter-group"></nav>
 <script>
   mapboxgl.accessToken = '{{ mapbox_access_token }}'
   var map = new mapboxgl.Map({
@@ -18,15 +19,17 @@
     .setLngLat([{{ post.dropoff_location.longitude }},
     {{ post.dropoff_location.latitude }}])
     .setPopup(new mapboxgl.Popup({ offset: 25 })
-      .setHTML("<p>Resource Post</p>\n" +
-      "<h3>{{ post.title }}</h3>\n" +
-      "<h3>{{ post.description }}</h3>" +
-      "<h3>{{ post.quantity }}</h3>\n" +
-      "<div class='form-group'>\n" +
-          "<button class='btn btn-dark btn-small' type='submit'>\n" +
-              "Reserve\n" +
-          "</button>\n" +
-      "</div>"))
+      .setHTML(
+        "<p>Resource Post</p>\n" +
+        "<h3>{{ post.title }}</h3>\n" +
+        "<h3>{{ post.description }}</h3>" +
+        "<h3>{{ post.quantity }}</h3>\n" +
+        "<div class='form-group'>\n" +
+        "<button class='btn btn-dark btn-small' type='submit'>\n" +
+        "Reserve\n" +
+        "</button>\n" +
+        "</div>"
+      ))
     .addTo(map)
 </script>
 {% endfor %}
@@ -37,8 +40,13 @@
   new mapboxgl.Marker({ "color": 'red' })
     .setLngLat([{{ center.longitude }}, {{ center.latitude }}])
     .setPopup(new mapboxgl.Popup({ offset: 50 })
-      .setHTML("<p>Drop-in Center: <strong>{{center.center_name}}</strong></p><p>Address: <strong>{{center.address}}</strong></p><p>Borough: <strong>{{center.borough}}</strong></p><p>Zip: <strong>{{center.postcode}}</strong></p><p>Comments: <strong>{{center.comments}}</strong></p>"
-        ))
+      .setHTML(
+        "<p>Drop-in Center: <strong>{{center.center_name}}</strong></p>\n" +
+        "<p>Address: <strong>{{center.address}}</strong></p>\n" +
+        "<p>Borough: <strong>{{center.borough}}</strong></p>\n" +
+        "<p>Zip: <strong>{{center.postcode}}</strong></p>\n" +
+        "<p>Comments: <strong>{{center.comments}}</strong></p>"
+      ))
     .addTo(map)
 </script>
 {% endfor %}
