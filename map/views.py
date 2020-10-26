@@ -78,10 +78,6 @@ def main_map(request):
     #":@computed_region_efsh_h5xi":"17214",":@computed_region_f5dn_yrer":"45",":@computed_region_yeji_bk3q":"2",":@computed_region_92fq_4b7q":"25",":@computed_region_sbqj_enih":"47"}]
 
 
-
-
-
-
     return render(
         request,
         "map/main.html",
