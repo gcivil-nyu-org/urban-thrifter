@@ -19,6 +19,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from complaint import views
 from register import views as user_view
+from donation import views as donation_view
 
 from django.contrib.auth import views as auth_views
 
@@ -69,6 +70,8 @@ urlpatterns = [
         ),
         name="password_reset_complete",
     ),
+
+    path("reservation/",donation_view.reservation, name="reservation")
 ]
 
 
