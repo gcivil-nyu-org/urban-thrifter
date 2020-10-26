@@ -71,7 +71,7 @@ urlpatterns = [
         name="password_reset_complete",
     ),
 
-    path("reservation/",donation_view.reservation, name="seeker_home"),
+    path("reservation/",donation_view.reservation, name="reservation"),
 ]
 
 
