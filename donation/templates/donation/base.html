@@ -17,7 +17,11 @@
     {% endif %}
     <div role="main" class="container">
         <div class="row">
+            {% if user.is_helpseeker %}
+            {% include "donation/sidebar_helpseeker.html" %}
+            {% else %}
             {% include "donation/sidebar_donor.html" %}
+            {% endif %}
             <div class="col">
                 {% block content %}{% endblock %}
             </div>
