@@ -43,12 +43,12 @@
 </script>
 {% endfor %}
 
-{% for center1 in internet_centers %}
+{% for center in internet_centers %}
 <script>
   new mapboxgl.Marker({ "color": 'yellow', "scale":0.25 })
-    .setLngLat([{{ center1.longitude }}, {{ center1.latitude }}])
+    .setLngLat([{{ center.longitude }}, {{ center.latitude }}])
     .setPopup(new mapboxgl.Popup({ offset: 50 })
-      .setHTML("<p>Internet Center: <strong>{{center1.latitude}}</strong></p><p><strong>{{center1.longitude}}</p>"))
+      .setHTML("<p>Internet Center: <strong>{{center.name}}</strong></p><p><strong>{{center.provider}}</strong></p>"))
     .addTo(map)
 </script>
 {% endfor %}
