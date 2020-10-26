@@ -5,7 +5,6 @@ from django.apps import apps
 
 # Create your views here.
 
-
 def main_map(request):
     resource_post_model = apps.get_model(
         "donation", "ResourcePost"
@@ -76,7 +75,6 @@ def main_map(request):
     #"doitt_id":"217",
     #"location_lat_long":{"latitude":"40.658385","longitude":"-73.8875829994"},
     #":@computed_region_efsh_h5xi":"17214",":@computed_region_f5dn_yrer":"45",":@computed_region_yeji_bk3q":"2",":@computed_region_92fq_4b7q":"25",":@computed_region_sbqj_enih":"47"}]
-
 
     return render(
         request,
