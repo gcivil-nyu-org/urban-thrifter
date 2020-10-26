@@ -15,7 +15,7 @@ from django.contrib import messages
 from django.views.generic import (ListView, CreateView, DetailView, UpdateView)
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import Http404
 
 
