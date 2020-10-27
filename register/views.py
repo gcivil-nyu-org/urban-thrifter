@@ -142,7 +142,7 @@ class DonorUpdateView(LoginRequiredMixin, UpdateView):
     model = DonorProfile
     fields = ['dropoff_location']
 
-    def get_object(self, **kwargs):
+    def get_object(self, **kwargs): #dkajfdfsaofadsnkjfdsnokjpdsnokpdfsanoikpsdfankopidfaopijdfapoidafijo이거봐봐봐봐
         username = self.kwargs.get("username")
         if username is None:
             raise Http404

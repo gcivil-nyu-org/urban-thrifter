@@ -1,9 +1,18 @@
-<!-- Can extend the template from another app as long as they are in the same project -->
-{% extends 'donation/base.html' %} {% load crispy_forms_tags %} {% block content %}
+{% extends 'donation/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
 {% include "register/profile_nav.html" %}
 <div class="content-section">
     <legend class="mb-3 font-weight-bold">Account Details</legend>
     <div class="media-body">
+      {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+          {{ message }}
+        </div>
+        {% endfor %}
+      {% endif %}
         <label>Username:</label>
         <p class="graybox">{{ user.username }}</p>
         <label>Email:</label>
