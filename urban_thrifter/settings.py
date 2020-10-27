@@ -28,7 +28,7 @@ SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY")
 GOOGLE_MAPS_API_KEY = os.environ.get("GOOGLE_MAPS_API_KEY")
 PLACES_MAPS_API_KEY = os.environ.get("PLACES_MAPS_API_KEY")
 PLACES_MAP_WIDGET_HEIGHT = 480
-PLACES_MAP_OPTIONS = '{"center":{"lat": 40.7831,"lng": -73.9712 }, "zoom": 9}'
+PLACES_MAP_OPTIONS = '{"center": { "lat": 40.7831, "lng": -73.9712 }, "zoom": 9}'
 PLACES_MARKER_OPTIONS = '{"draggable": true}'
 DOMAIN_NAME = os.environ.get("DOMAIN_NAME:q")
 MAPBOX_KEY = os.environ.get("MAPBOX_KEY")
@@ -174,6 +174,7 @@ AXES_LOCK_OUT_BY_COMBINATION_USER_AND_IP = True
 AUTHENTICATION_BACKENDS = [
     # AxesBackend should be the first backend in the
     # AUTHENTICATION_BACKENDS list.
+
     "axes.backends.AxesBackend",
     # Django ModelBackend is the default authentication backend.
     "django.contrib.auth.backends.ModelBackend",

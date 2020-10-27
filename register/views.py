@@ -11,16 +11,14 @@ from django.utils.encoding import force_bytes, force_text
 from register.token_generator import generate_token
 from django.core.mail import EmailMessage
 from django.contrib import messages
-
-# from django.views.generic import ListView, CreateView, DetailView, UpdateView
-# from django.contrib.auth.forms import AuthenticationForm
+from django.views.generic import ListView, CreateView, DetailView, UpdateView
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 
 
 def register(request):
     # Redirect to login page
-    return render(request, "register/index.html")
-
+    return render(request, "register/register_main.html")
 
 def helpseeker_register(request):
     # if request.user.is_authenticated:
@@ -127,14 +125,16 @@ def email_sent(request):
 @login_required
 def helpseeker_edit_profile(request):
     if request.method == "POST":
-        # instance=request.user prefill the existing information in the form
+        # instance=request.user can prefill the existing information in the form
         hs_form = HelpseekerUpdateForm(
             request.POST, instance=request.user.helpseekerprofile
         )
 
         if hs_form.is_valid():
             hs_form.save()
-        messages.success(request, f'{"Account updated successfully."}')
+            
+        messages.success(request, "Account updated successfully.")
+
         return redirect("register:helpseeker_profile")
     else:
         hs_form = HelpseekerUpdateForm(instance=request.user.helpseekerprofile)
