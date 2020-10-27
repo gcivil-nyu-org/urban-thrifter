@@ -16,6 +16,7 @@ from django.views.generic import (ListView, CreateView, DetailView, UpdateView)
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.messages.views import SuccessMessageMixin
 from django.http import Http404
 
 
@@ -138,30 +139,13 @@ def helpseeker_edit_profile(request):
     return render(request, 'register/helpseekerprofile_form.html', context)
 
 
-class DonorUpdateView(LoginRequiredMixin, UpdateView):
+class DonorUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     model = DonorProfile
     fields = ['dropoff_location']
+    success_message = "Account updated successfully."
 
-    def get_object(self): #, **kwargs   dkajfdfsaofadsnkjfdsnokjpdsnokpdfsanoikpsdfankopidfaopijdfapoidafijo이거봐봐봐봐
+    def get_object(self): #https://stackoverflow.com/questions/48795289/django-updateview-profile-save-data-no-work
         username = self.kwargs.get("username")
         if username is None:
             raise Http404
         return get_object_or_404(DonorProfile, user__username__iexact=username)
-
-# @login_required
-# def donor_edit_profile(request):
-#     if request.method == 'POST':
-#         # instance=request.user can prefill the existing information in the form
-#         donor_form = DonorUpdateForm(request.POST, instance=request.user.donorprofile)
-#
-#         if donor_form.is_valid():
-#             donor_form.save()
-#         messages.success(request, f'Account updated successfully.')
-#         return redirect('register:donor-profile')
-#     else:
-#         donor_form = DonorUpdateForm(instance=request.user.donorprofile)
-#
-#     context = {
-#         'donor_form': donor_form
-#     }
-#     return render(request, 'register/donorprofile_form.html', context)
