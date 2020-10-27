@@ -140,4 +140,6 @@ dmypy.json
 # Cython debug symbols
 cython_debug/
 *.ini
-db.sqlite3
+
+# Database
+*.sqlite3
