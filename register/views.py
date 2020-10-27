@@ -127,8 +127,8 @@ def helpseeker_edit_profile(request):
 
         if hs_form.is_valid():
             hs_form.save()
-        messages.success(request, 'Account updated successfully.')
-        return redirect('register:helpseeker-profile')
+            messages.success(request, 'Account updated successfully.')
+            return redirect('register:helpseeker-profile')
     else:
         hs_form = HelpseekerUpdateForm(instance=request.user.helpseekerprofile)
 
