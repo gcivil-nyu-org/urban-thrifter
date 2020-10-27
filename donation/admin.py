@@ -1,12 +1,12 @@
 from django.contrib import admin
 from .models import ResourcePost
-import json
+# import json
 from django.conf import settings
-
 
 
 # Register your models here.
 admin.site.register(ResourcePost)
+
 
 class ResourcePostAdmin(admin.ModelAdmin):
     list_display = ('position_map', 'dropoff_location')
@@ -26,7 +26,7 @@ class ResourcePostAdmin(admin.ModelAdmin):
                 'zoom': 9,
                 'width': 100,
                 'height': 100,
-                'scale': 2,
-                'map_id':'3215ae039708a60f'
+                'scale': 2
+                # 'map_id':'3215ae039708a60f'
             }
     position_map.allow_tags = True

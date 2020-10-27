@@ -16,7 +16,7 @@ html {
 
 p {
   font-size: 14px;
-  color: #5e629c;
+  color: #333;
   line-height: 26px;
   margin-bottom: 0;
 }
@@ -103,7 +103,7 @@ a:not([href]):not([tabindex]):focus, a:not([href]):not([tabindex]):hover {
 
 .section-header .desc-text p {
   font-size: 18px;
-  color: #5e629c;
+  color: #333;
   line-height: 26px;
   margin-bottom: 0;
 }
@@ -356,8 +356,7 @@ button:focus {
   cursor: pointer;
   text-align: center;
   border-radius: 4px;
-  background: #3F3D56;
-  background: #A0D3D6;
+  background: #8CC9CE;
   box-shadow: 0px 8px 9px 0px rgba(96, 94, 94, 0.17);
   z-index: 9999999;
 }
@@ -445,6 +444,10 @@ button:focus {
   color: #fff;
 }
 
+.navbar-brand img {
+  max-width: 50px;
+}
+
 .navbar-expand-md .navbar-nav .nav-link:focus, .navbar-expand-md .navbar-nav .nav-link:hover, .navbar-expand-md .navbar-nav .nav-link:hover:before {
   color: #ffffff;
 }
@@ -522,7 +525,7 @@ button:focus {
 
 .hero-area .contents h2 {
   color: #fff;
-  font-size: 38px;
+  font-size: 50px;
   font-weight: 600;
   line-height: 60px;
   margin-bottom: 20px;
@@ -550,7 +553,6 @@ button:focus {
 
 #about .services-item {
   padding: 60px 30px;
-  border: 1px solid #ddd;
   border-radius: 5px;
   -moz-transition: all .8s ease;
   -webkit-transition: all .8s ease;
@@ -558,7 +560,6 @@ button:focus {
 }
 
 #about .services-item:hover {
-  border: 1px solid #333;
   box-shadow: 0px 0px 25px 0px rgba(95, 95, 95, 0.24);
   -moz-transition: all .4s ease;
   -webkit-transition: all .4s ease;
@@ -597,7 +598,7 @@ button:focus {
 #about .services-item p {
   font-size: 16px;
   margin-bottom: 10px;
-  color: #5e629c;
+  color: #333;
 }
 
 /* ==========================================================================
@@ -640,19 +641,6 @@ button:focus {
   background: #fff;
 }
 
-#resource .featured-border1 {
-  border-bottom: 1px solid #ededed;
-  border-right: 1px solid #ededed;
-}
-
-#resource .featured-border2 {
-  border-bottom: 1px solid #ededed;
-}
-
-#resource .featured-border3 {
-  border-right: 1px solid #ededed;
-}
-
 #resource .feature-item {
   padding: 30px;
   overflow: hidden;
@@ -676,7 +664,6 @@ button:focus {
   border-radius: 50%;
   position: relative;
   margin-right: 30px;
-  border: 1px solid #333;
   margin-top: 12px;
 }
 
@@ -696,6 +683,7 @@ button:focus {
 }
 
 #resource .feature-item p {
+  max-width: 300px;
   font-size: 16px;
   display: block;
 }
@@ -708,7 +696,7 @@ button:focus {
 }
 
 #resource .feature-item:hover .feature-icon {
-  background: #333;
+  background: #8CC9CE;
   -moz-transition: all .8s ease;
   -webkit-transition: all .8s ease;
   transition: all .8s ease;
@@ -843,7 +831,7 @@ button:focus {
 
 #download-app .download-statatics p {
   font-size: 18px;
-  color: #5e629c;
+  color: #333;
 }
 
 /* ==========================================================================
@@ -1008,7 +996,7 @@ button:focus {
 
 #testimonial #client-testimonial .content-inner p {
   font-size: 24px;
-  color: #5e629c;
+  color: #333;
   font-style: italic;
   line-height: 35px;
 }
@@ -1025,7 +1013,7 @@ button:focus {
 
 #testimonial #client-testimonial h5 span {
   font-size: 16px;
-  color: #5e629c;
+  color: #333;
   font-style: italic;
 }
 
@@ -1208,7 +1196,7 @@ button:focus {
 #pricing .pricing-table ul li {
   font-size: 16px;
   font-weight: 400;
-  color: #5e629c;
+  color: #333;
   display: block;
   line-height: 33px;
 }
@@ -1304,7 +1292,7 @@ button:focus {
 
 #team .single-team .team-details p {
   font-size: 12px;
-  color: #5e629c;
+  color: #333;
 }
 
 /* ==========================================================================
@@ -1390,7 +1378,7 @@ button:focus {
 }
 
 #blog .blog-item-wrapper span.name a {
-  color: #5e629c;
+  color: #333;
   font-size: 14px;
 }
 
@@ -1400,7 +1388,7 @@ button:focus {
 }
 
 #blog .blog-item-wrapper span.date a {
-  color: #5e629c;
+  color: #333;
   font-size: 14px;
 }
 
@@ -1479,7 +1467,7 @@ button:focus {
 }
 
 #blog2 .blog-item-wrapper span.name a {
-  color: #5e629c;
+  color: #333;
   font-size: 14px;
 }
 
@@ -1489,7 +1477,7 @@ button:focus {
 }
 
 #blog2 .blog-item-wrapper span.date a {
-  color: #5e629c;
+  color: #333;
   font-size: 14px;
 }
 
@@ -1687,20 +1675,19 @@ button:focus {
   min-height: 52px;
   padding: 0px 0 0 28px;
   font-size: 16px;
-  color: #5e629c;
+  color: #333;
 }
 
 #contact form#contactForm textarea {
   padding: 15px 0 0 28px;
   font-size: 16px;
-  color: #5e629c;
+  color: #333;
 }
 
 #contact form#contactForm .form-control:focus {
-  border: 1px solid #3F3D56;
   outline: none;
   box-shadow: none;
-  background: #e5fff3;
+  background: #DBEFF0;
 }
 
 /* ==========================================================================

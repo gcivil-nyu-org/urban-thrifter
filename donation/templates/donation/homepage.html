@@ -15,7 +15,7 @@
 		</div>
 		<nav class="navbar navbar-expand-md bg-inverse fixed-top scrolling-navbar">
 			<div class="container">
-				<a href="index.html" class="navbar-brand"><img src="{% static 'homepage/img/logo.png' %}" alt=""></a>
+				<a href="/" class="navbar-brand"><img src="{% static 'homepage/img/logo.png' %}" alt=""></a>
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
 					aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
 					<i class="lni-menu"></i>
@@ -84,7 +84,8 @@
 							<li>Get notified and confirm donation when you have a reservation request.</li>
 							<li>Get reminder when reservation time is up. And happy giving!</li>
 						</ol>
-						<a class="btn btn-dark btn-wide" href="{% url 'register:register' %}">Join Us</a>
+						<a class="btn btn-dark btn-wide" href="{% url 'register:helpseeker_register' %}">Join as
+							Helpseeker</a>
 					</div>
 				</div>
 				<!-- End Col -->
@@ -104,7 +105,7 @@
 								donation.</li>
 							<li>That's it. Happy thrifting!</li>
 						</ol>
-						<a class="btn btn-dark btn-wide" href="{% url 'register:register' %}">Join Us</a>
+						<a class="btn btn-dark btn-wide" href="{% url 'register:donor_register' %}">Join as Donor</a>
 					</div>
 				</div>
 				<!-- End Col -->
@@ -179,7 +180,6 @@
 						</div>
 					</div>
 				</div>
-
 			</div>
 			<!-- End Row -->
 			<!-- Start Row -->
@@ -193,29 +193,29 @@
 						</div>
 						<div class="feature-info float-left">
 							<h4>Food</h4>
-							<p></p>
+							<p>Personal and organizational donation welcomed.</p>
 						</div>
 					</div>
 					<!-- End Fetatures -->
 				</div>
 				<!-- End Col -->
-
 				<!-- Start Col -->
 				<div class="col-lg-6 col-md-6 col-xs-12 p-0">
 					<!-- Start Fetatures -->
-					<div class="feature-item featured-border2">
+					<div class="feature-item featured-border3">
 						<div class="feature-icon float-left">
-							<i class="fas fa-house-user"></i>
+							<i class="fas fa-tshirt"></i>
 						</div>
 						<div class="feature-info float-left">
-							<h4>Shelter</h4>
-							<p>NYC Open Data</p>
+							<h4>Clothes / Covers</h4>
+							<p>Personal and organizational donation welcomed.</p>
 						</div>
 					</div>
 					<!-- End Fetatures -->
 				</div>
 				<!-- End Col -->
-
+			</div>
+			<div class="row featured-bg">
 				<!-- Start Col -->
 				<div class="col-lg-6 col-md-6 col-xs-12 p-0">
 					<!-- Start Fetatures -->
@@ -225,8 +225,7 @@
 						</div>
 						<div class="feature-info float-left">
 							<h4>Medical / PPE</h4>
-							<p>Producing long lasting organic SEO results for <br> brand of different kinds for more
-								than a decade,<br> we understand that’s your.</p>
+							<p>Personal and organizational donation welcomed.</p>
 						</div>
 					</div>
 					<!-- End Fetatures -->
@@ -242,31 +241,30 @@
 						</div>
 						<div class="feature-info float-left">
 							<h4>Restroom</h4>
-							<p>Producing long lasting organic SEO results for <br> brand of different kinds for more
-								than a decade,<br> we understand that’s your.</p>
+							<p>Directory of Toilets in Public Parks by Department of Parks and Recreation (DPR).</p>
 						</div>
 					</div>
 					<!-- End Fetatures -->
 				</div>
 				<!-- End Col -->
-
+			</div>
+			<div class="row featured-bg">
 				<!-- Start Col -->
 				<div class="col-lg-6 col-md-6 col-xs-12 p-0">
 					<!-- Start Fetatures -->
-					<div class="feature-item featured-border3">
+					<div class="feature-item featured-border2">
 						<div class="feature-icon float-left">
-							<i class="fas fa-tshirt"></i>
+							<i class="fas fa-house-user"></i>
 						</div>
 						<div class="feature-info float-left">
-							<h4>Clothes / Covers</h4>
-							<p>Producing long lasting organic SEO results for <br> brand of different kinds for more
-								than a decade,<br> we understand that’s your.</p>
+							<h4>Shelter</h4>
+							<p>List of centers where homeless people are provided with hot meals, showers, medical help
+								and a place to sleep. Data provided by Department of Homeless Services (DHS).</p>
 						</div>
 					</div>
 					<!-- End Fetatures -->
 				</div>
 				<!-- End Col -->
-
 				<!-- Start Col -->
 				<div class="col-lg-6 col-md-6 col-xs-12 p-0">
 					<!-- Start Fetatures -->
@@ -276,13 +274,15 @@
 						</div>
 						<div class="feature-info float-left">
 							<h4>Electronics</h4>
-							<p>Producing long lasting organic SEO results for <br> brand of different kinds for more
-								than a decade,<br> we understand that’s your.</p>
+							<p>List of public facilities offering computers with internet access, according to
+								administrative data collected by the Mayor's Office of the Chief Technology Officer.</p>
 						</div>
 					</div>
 					<!-- End Fetatures -->
 				</div>
 				<!-- End Col -->
+			</div>
+			<div class="row featured-bg">
 				<!-- Start Col -->
 				<div class="col-lg-6 col-md-6 col-xs-12 p-0">
 					<!-- Start Fetatures -->
@@ -292,8 +292,9 @@
 						</div>
 						<div class="feature-info float-left">
 							<h4>Internet Access</h4>
-							<p>Producing long lasting organic SEO results for <br> brand of different kinds for more
-								than a decade,<br> we understand that’s your.</p>
+							<p>NYC Wi-Fi Hotspot provided by Downtown Brooklyn Wi-Fi, Transit Wireless, New York Public
+								Library and many more. Data provided Department of Information Technology &
+								Telecommunications (DoITT).</p>
 						</div>
 					</div>
 					<!-- End Fetatures -->
@@ -308,17 +309,17 @@
 						</div>
 						<div class="feature-info float-left">
 							<h4>Reducation</h4>
-							<p>Producing long lasting organic SEO results for <br> brand of different kinds for more
-								than a decade,<br> we understand that’s your.</p>
+							<p>Facilities that offer after-school programs for runaway and homeless youth, including
+								street outreach programs, drop-in centers, crisis shelters, and transitional independent
+								living (TIL) programs.</p>
 						</div>
 					</div>
 					<!-- End Fetatures -->
 				</div>
 				<!-- End Col -->
-
-
 			</div>
-			<!-- End Row -->
+		</div>
+		<!-- End Row -->
 		</div>
 	</section>
 	<!-- Cool Fetatures Section End -->
@@ -432,7 +433,8 @@
 							<div class="team-social-icons">
 								<ul class="social-list">
 									<li><a href="mailto:ml6589@nyu.edu"><i class="far fa-envelope"></i></a></li>
-									<li><a href="https://www.linkedin.com/in/lynn-li/"><i class="fab fa-linkedin-in"></i></a></li>
+									<li><a href="https://www.linkedin.com/in/lynn-li/"><i
+												class="fab fa-linkedin-in"></i></a></li>
 								</ul>
 							</div>
 							<div class="team-inner text-center">
