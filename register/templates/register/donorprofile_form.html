@@ -18,11 +18,12 @@
     <label>Email:</label>
     <p class="graybox">{{ user.email }}</p>
   </div>
+  {{ form.media }}
   <form method='POST' enctype='multipart/form-data'>
     {% csrf_token %}
     <fieldset class='form-group'>
       <!-- Crispy filter to style the form -->
-      {{ hs_form |crispy }}
+      {{ form |crispy }}
     </fieldset>
     <div class='form-group'>
       <button class='btn btn-dark btn-wide' type='submit'>

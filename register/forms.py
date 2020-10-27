@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from .models import HelpseekerProfile
+from .models import HelpseekerProfile, DonorProfile
 from django.core.exceptions import ValidationError
 from django.contrib.auth.forms import UserCreationForm
 

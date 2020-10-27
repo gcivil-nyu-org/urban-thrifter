@@ -3,10 +3,12 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.conf import settings
-from django.views.generic import ListView, CreateView, DetailView
+from django.views.generic import (
+    ListView, CreateView, DetailView)
 from .models import ResourcePost, User
 from bootstrap_datepicker_plus import DateTimePickerInput, TimePickerInput
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
+# , UserPassesTestMixin
 
 
 # Create your views here.
@@ -26,6 +28,7 @@ def home(request):
 
 def reservation(request):
     return render(request, "donation/reservation.html")
+
 
 # All Donations View
 class PostListView(ListView):

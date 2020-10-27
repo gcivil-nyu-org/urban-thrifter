@@ -3,7 +3,7 @@
         <ul class="list-group">
             <li class="list-group-item list-group-item-light"><a href="{% url 'donation-home' %}">Donations</a></li>
             {% if user.is_authenticated %}
-            <li class="list-group-item list-group-item-light"><a href="{% url 'register:helpseeker_profile' %}">Profile</a></li>
+            <li class="list-group-item list-group-item-light"><a href="{% url 'register:helpseeker-profile' %}">Profile</a></li>
             {% endif %}
             <li class="list-group-item list-group-item-light"><a href="">Messages</a></li>
         </ul>
