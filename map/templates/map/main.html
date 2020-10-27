@@ -37,7 +37,7 @@
 
 {% for center in drop_in_centers %}
 <script>
-  new mapboxgl.Marker({ "color": 'red' })
+  new mapboxgl.Marker({ "color": "#EB984E" })
     .setLngLat([{{ center.longitude }}, {{ center.latitude }}])
     .setPopup(new mapboxgl.Popup({ offset: 50 })
       .setHTML(
@@ -53,7 +53,7 @@
 
 {% for center in internet_centers %}
 <script>
-  new mapboxgl.Marker({ "color": '#7DCEA0' })
+  new mapboxgl.Marker({ "color": "#7DCEA0" })
     .setLngLat([{{ center.longitude }}, {{ center.latitude }}])
     .setPopup(new mapboxgl.Popup({ offset: 50 })
       .setHTML("<p>Internet Center: <strong>{{center.name}}</strong></p><p>Provider: <strong>{{center.provider}}</strong></p><p>Location: <strong>{{center.location}}</strong></p><p>Borough: <strong>{{center.boroname}}</strong></p><p>Type: <strong>{{center.type}}</strong></p><p>Remarks: <strong>{{center.remarks}}</strong></p>"))
