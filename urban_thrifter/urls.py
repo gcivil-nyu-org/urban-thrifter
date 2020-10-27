@@ -26,7 +26,7 @@ urlpatterns = [
     path("donation/", include("donation.urls")),
     path("admin/", admin.site.urls),
     path("map/", include("map.urls")),
-    path("", user_view.register, name="home"),
+    path("", donation_view.homepage, name="home"),
     path("issue-complaint/", views.issue_complaint, name="issue-complaint"),
     path("register/", include("register.urls")),
     path(
