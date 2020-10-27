@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.conf import settings
 from django.views.generic import (
     ListView, CreateView, DetailView)
-from .models import ResourcePost, User
+from .models import ResourcePost
 from bootstrap_datepicker_plus import DateTimePickerInput, TimePickerInput
 from django.contrib.auth.mixins import LoginRequiredMixin
 # , UserPassesTestMixin
