@@ -1,1 +1,1 @@
-# Team Project repo
+# Team Project repo [![Build Status](https://travis-ci.com/gcivil-nyu-org/urban-thrifter.svg?branch=main)](https://travis-ci.com/gcivil-nyu-org/urban-thrifter) 
