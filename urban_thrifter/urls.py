@@ -19,7 +19,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from complaint import views
 from register import views as user_view
-
+from donation import views as donation_view
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [

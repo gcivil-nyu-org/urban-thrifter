@@ -3,17 +3,20 @@ import requests
 from django.shortcuts import render
 from django.apps import apps
 
-def main_map(request):
-    resource_post_model = apps.get_model('donation', 'ResourcePost') #getting model from donation app
-    post_context = {
-        'resource_posts': resource_post_model.objects.all()
-    }
+# Create your views here.
 
-    mapbox_access_token = 'pk.' + os.environ.get('MAPBOX_KEY')
+
+def main_map(request):
+    resource_post_model = apps.get_model(
+        "donation", "ResourcePost"
+    )  # getting model from donation app
+    post_context = {"resource_posts": resource_post_model.objects.all()}
+
+    mapbox_access_token = "pk." + os.environ.get("MAPBOX_KEY")
 
     # Drop-in Center API GET
     drop_in_center_URL = "https://data.cityofnewyork.us/resource/bmxf-3rd4.json"
-    drop_in_center_r = requests.get(url = drop_in_center_URL)
+    drop_in_center_r = requests.get(url=drop_in_center_URL)
     drop_in_centers = drop_in_center_r.json()
 
     for center in drop_in_centers:
@@ -40,3 +43,21 @@ def main_map(request):
     #   'bin': '2006002',
     #   'bbl': '2027400100',
     #   'nta': 'Hunts Point'},
+    for center in drop_in_centers:
+        new_address = ""
+        for part in center["address"].split():
+            new_address = new_address + " " + part
+            if new_address[-1] == ";" or new_address[-2:] == ".,":
+                center["address"] = new_address[:-1]
+                break
+            else:
+                continue
+    return render(
+        request,
+        "map/main.html",
+        {
+            "mapbox_access_token": mapbox_access_token,
+            "drop_in_centers": drop_in_centers,
+            "post_context": post_context["resource_posts"],
+        },
+    )

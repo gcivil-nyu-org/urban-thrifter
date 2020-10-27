@@ -4,8 +4,18 @@ from django.contrib.auth.models import User
 from django.contrib.auth.admin import UserAdmin
 from django.conf import settings
 
+
 class MyUserAdmin(UserAdmin):
-    list_display = ("id", "username", "password", "email", "is_active","date_joined", "last_login")
+    list_display = (
+        "id",
+        "username",
+        "password",
+        "email",
+        "is_active",
+        "date_joined",
+        "last_login",
+    )
+
 
 # Register your models here.
 admin.site.register(HelpseekerProfile)

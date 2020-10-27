@@ -3,7 +3,7 @@ from . import views
 from django.contrib.auth import views as auth_views
 from .views import DonorUpdateView
 
-app_name="register"
+app_name = "register"
 urlpatterns = [
     path('', views.register, name="register"),
     path('helpseeker', views.helpseeker_register, name="helpseeker-register"),

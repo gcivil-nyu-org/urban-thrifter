@@ -21,6 +21,7 @@ body {
   margin-top: 5rem;
 }
 
+body,
 div,
 h1,
 h2,
@@ -67,6 +68,13 @@ p, a, li, input, label, textarea {
 }
 
 /********** Common Element *************/
+
+.btn:focus {
+    box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+    outline: none;
+}
+
 .btn-wide {
   width: 200px;
 }
@@ -75,6 +83,10 @@ p, a, li, input, label, textarea {
   background: #e6e6e6;
   border-radius: 5px;
   padding: .375rem .75rem;
+}
+
+.gray-bg {
+    background: #f9f9f9;
 }
 
 .btn-dark:hover {

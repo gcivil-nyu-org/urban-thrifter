@@ -1,18 +1,17 @@
 from django.shortcuts import render, redirect, get_object_or_404
+import os
 from .forms import HelpseekerForm, DonorForm, HelpseekerUpdateForm
 from .models import HelpseekerProfile, DonorProfile
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.contrib.auth.models import User
-import os
-
 from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_text
 from register.token_generator import generate_token
 from django.core.mail import EmailMessage
 from django.contrib import messages
-from django.views.generic import (ListView, CreateView, DetailView, UpdateView)
+from django.views.generic import ListView, CreateView, DetailView, UpdateView
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -20,46 +19,48 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.http import Http404
 
 
+
 def register(request):
     # Redirect to login page
-    return render(request, 'register/index.html')
+    return render(request, "register/register_main.html")
 
 def helpseeker_register(request):
-    #if request.user.is_authenticated:
-        # Redirect to login page
-        #return redirect('register:register')
-    if request.method == 'POST':
+    # if request.user.is_authenticated:
+    # Redirect to login page
+    # return redirect('register:register')
+    if request.method == "POST":
         form = HelpseekerForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
             user.is_active = False
             user.save()
             profile = HelpseekerProfile(user=user)
-            profile.borough = form.cleaned_data.get('borough')
-            resources = form.cleaned_data.get('resource')
+            profile.borough = form.cleaned_data.get("borough")
+            resources = form.cleaned_data.get("resource")
             d = {}
-            for i in range(0,3):
+            for i in range(0, 3):
                 if 0 <= i < len(resources):
-                    d['resource{0}'.format(i)] = resources[i]
+                    d["resource{0}".format(i)] = resources[i]
                 else:
-                    d['resource{0}'.format(i)] = None
-            profile.rc_1 = d['resource0']
-            profile.rc_2 = d['resource1']
-            profile.rc_3 = d['resource2']
+                    d["resource{0}".format(i)] = None
+            profile.rc_1 = d["resource0"]
+            profile.rc_2 = d["resource1"]
+            profile.rc_3 = d["resource2"]
             profile.save()
 
             # Email verification
 
             email_subject = "Activate Your Account!"
-            message = render_to_string('register/activate_account.html',
+            message = render_to_string(
+                "register/activate_account.html",
                 {
-                'user':user,
-                'domain':os.environ.get('DOMAIN_NAME'),
-                'uid':urlsafe_base64_encode(force_bytes(user.pk)),
-                'token':generate_token.make_token(user),
+                    "user": user,
+                    "domain": os.environ.get("DOMAIN_NAME"),
+                    "uid": urlsafe_base64_encode(force_bytes(user.pk)),
+                    "token": generate_token.make_token(user),
                 },
             )
-            to_email = form.cleaned_data.get('email')
+            to_email = form.cleaned_data.get("email")
             email = EmailMessage(email_subject, message, to=[to_email])
             email.send()
 
@@ -67,13 +68,14 @@ def helpseeker_register(request):
             return HttpResponseRedirect(reverse('register:email-sent'))
     else:
         form = HelpseekerForm()
-    return render(request, 'register/helpseeker_register.html', {'form':form})
+    return render(request, "register/helpseeker_register.html", {"form": form})
+
 
 def donor_register(request):
     if request.user.is_authenticated:
         # Redirect to login page
-        return redirect('register:register')
-    if request.method == 'POST':
+        return redirect("register:register")
+    if request.method == "POST":
         form = DonorForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
@@ -85,15 +87,16 @@ def donor_register(request):
             # Email verification
 
             email_subject = "Activate Your Account!"
-            message = render_to_string('register/activate_account.html',
+            message = render_to_string(
+                "register/activate_account.html",
                 {
-                'user':user,
-                'domain':os.environ.get('DOMAIN_NAME'),
-                'uid':urlsafe_base64_encode(force_bytes(user.pk)),
-                'token':generate_token.make_token(user),
+                    "user": user,
+                    "domain": os.environ.get("DOMAIN_NAME"),
+                    "uid": urlsafe_base64_encode(force_bytes(user.pk)),
+                    "token": generate_token.make_token(user),
                 },
             )
-            to_email = form.cleaned_data.get('email')
+            to_email = form.cleaned_data.get("email")
             email = EmailMessage(email_subject, message, to=[to_email])
             email.send()
 
@@ -101,7 +104,8 @@ def donor_register(request):
             return HttpResponseRedirect(reverse('register:email-sent'))
     else:
         form = DonorForm()
-    return render(request, 'register/donor_register.html', {'form':form})
+    return render(request, "register/donor_register.html", {"form": form})
+
 
 def activate_account(request, uidb64, token):
     try:
@@ -113,16 +117,18 @@ def activate_account(request, uidb64, token):
     if user is not None and generate_token.check_token(user, token):
         user.is_active = True
         user.save()
-        return render(request, 'register/activate_confirmation.html')
-    return render(request, 'register/activate_failure.html')
+        return render(request, "register/activate_confirmation.html")
+    return render(request, "register/activate_failure.html")
+
 
 def email_sent(request):
-    if request.method == 'GET':
-        return render(request, 'register/email_sent.html')
+    if request.method == "GET":
+        return render(request, "register/email_sent.html")
+
 
 @login_required
 def helpseeker_edit_profile(request):
-    if request.method == 'POST':
+    if request.method == "POST":
         # instance=request.user can prefill the existing information in the form
         hs_form = HelpseekerUpdateForm(request.POST, instance=request.user.helpseekerprofile)
 
