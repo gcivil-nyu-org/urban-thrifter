@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+
 # Import reverse
 from django.urls import reverse
 from PIL import Image
@@ -37,6 +38,7 @@ class _Image(Image.Image):
         )
         return img
 
+
 Image.Image.crop_to_aspect = _Image.crop_to_aspect
 
 # User Models save database specifically for USERS
@@ -62,7 +64,7 @@ class ResourcePost(models.Model):
     dropoff_time_2 = models.DateTimeField(blank=True, null=True)
     dropoff_time_3 = models.DateTimeField(blank=True, null=True)
     date_created = models.DateTimeField(default=timezone.now)
-    
+
     # donor_id = models.ForeignKey(User, on_delete=models.CASCADE)
     # 1:n relationship
 
@@ -76,7 +78,6 @@ class ResourcePost(models.Model):
     status = models.CharField(
         max_length=100, choices=STATUS_CHOICES, default="Available"
     )
-
 
     # Dunder (abbr. for Double Under)/Magic str method
     # define how the object is printed
