@@ -8,4 +8,5 @@ urlpatterns = [
     path("new/", PostCreateView.as_view(), name="donation-new"),
     path("post/<int:pk>", PostDetailView.as_view(), name="donation-detail"),
     path("reservation/", views.reservation, name="reservation"),
+
 ]
