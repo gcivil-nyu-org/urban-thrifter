@@ -52,4 +52,4 @@ class DonorProfile(models.Model):
     complaint_count = models.IntegerField(default=0, blank=False)
 
     def get_absolute_url(self):
-        return reverse('register:donor-profile', kwargs={'username': self.user})
+        return reverse("register:donor-profile", kwargs={"username": self.user})

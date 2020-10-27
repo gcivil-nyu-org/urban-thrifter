@@ -19,10 +19,10 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.http import Http404
 
 
-
 def register(request):
     # Redirect to login page
     return render(request, "register/register_main.html")
+
 
 def helpseeker_register(request):
     # if request.user.is_authenticated:
@@ -65,7 +65,7 @@ def helpseeker_register(request):
             email.send()
 
             # Must redirect to login page (this is a placeholder)
-            return HttpResponseRedirect(reverse('register:email-sent'))
+            return HttpResponseRedirect(reverse("register:email-sent"))
     else:
         form = HelpseekerForm()
     return render(request, "register/helpseeker_register.html", {"form": form})
@@ -101,7 +101,7 @@ def donor_register(request):
             email.send()
 
             # Must redirect to login page (this is a placeholder)
-            return HttpResponseRedirect(reverse('register:email-sent'))
+            return HttpResponseRedirect(reverse("register:email-sent"))
     else:
         form = DonorForm()
     return render(request, "register/donor_register.html", {"form": form})
@@ -130,27 +130,29 @@ def email_sent(request):
 def helpseeker_edit_profile(request):
     if request.method == "POST":
         # instance=request.user can prefill the existing information in the form
-        hs_form = HelpseekerUpdateForm(request.POST, instance=request.user.helpseekerprofile)
+        hs_form = HelpseekerUpdateForm(
+            request.POST, instance=request.user.helpseekerprofile
+        )
 
         if hs_form.is_valid():
             hs_form.save()
-            messages.success(request, 'Account updated successfully.')
-            return redirect('register:helpseeker-profile')
+            messages.success(request, "Account updated successfully.")
+            return redirect("register:helpseeker-profile")
     else:
         hs_form = HelpseekerUpdateForm(instance=request.user.helpseekerprofile)
 
-    context = {
-        'hs_form': hs_form
-    }
-    return render(request, 'register/helpseekerprofile_form.html', context)
+    context = {"hs_form": hs_form}
+    return render(request, "register/helpseekerprofile_form.html", context)
 
 
 class DonorUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     model = DonorProfile
-    fields = ['dropoff_location']
+    fields = ["dropoff_location"]
     success_message = "Account updated successfully."
 
-    def get_object(self): #https://stackoverflow.com/questions/48795289/django-updateview-profile-save-data-no-work
+    def get_object(
+        self,
+    ):  # https://stackoverflow.com/questions/48795289/django-updateview-profile-save-data-no-work
         username = self.kwargs.get("username")
         if username is None:
             raise Http404
