@@ -39,7 +39,10 @@ urlpatterns = [
         auth_views.LogoutView.as_view(template_name="register/logout.html"),
         name="logout",
     ),
-    # Password reset links (ref: https://github.com/django/django/blob/master/django/contrib/auth/views.py)
+  
+    # Password reset ref links
+    # https://github.com/django/django/blob/master/django/contrib/auth/views.py)
+
     path(
         "password-reset/",
         auth_views.PasswordResetView.as_view(

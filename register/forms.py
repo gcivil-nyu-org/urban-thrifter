@@ -3,7 +3,8 @@ from django.contrib.auth.models import User
 from .models import HelpseekerProfile
 from django.core.exceptions import ValidationError
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.forms import AuthenticationForm
+
+# from django.contrib.auth.forms import AuthenticationForm
 from crispy_forms.helper import FormHelper
 
 BOROUGH_CHOICES = [

@@ -1,11 +1,10 @@
+import os
 from django.shortcuts import render, redirect
 from .forms import HelpseekerForm, DonorForm, HelpseekerUpdateForm
 from .models import HelpseekerProfile, DonorProfile
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.contrib.auth.models import User
-import os
-
 from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_text
@@ -20,7 +19,6 @@ from django.contrib.auth.decorators import login_required
 def register(request):
     # Redirect to login page
     return render(request, "register/register_main.html")
-
 
 def helpseeker_register(request):
     # if request.user.is_authenticated:
@@ -134,7 +132,9 @@ def helpseeker_edit_profile(request):
 
         if hs_form.is_valid():
             hs_form.save()
-        messages.success(request, f"Account updated successfully.")
+            
+        messages.success(request, "Account updated successfully.")
+
         return redirect("register:helpseeker_profile")
     else:
         hs_form = HelpseekerUpdateForm(instance=request.user.helpseekerprofile)

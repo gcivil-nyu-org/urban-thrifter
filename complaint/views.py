@@ -1,7 +1,6 @@
 from django.shortcuts import render
-
 from .forms import ComplaintForm
-from .models import Complaint
+
 
 # Create your views here.
 def home(request):
@@ -13,7 +12,8 @@ def issue_complaint(request):
         filled_form = ComplaintForm(request.POST, request.FILES)
         if filled_form.is_valid():
             note = (
-                "Your complaint about %s has been received. We will look into it!!"
+                "Your complaint about %s has been received. \
+                    We will look into it!!"
                 % (filled_form.cleaned_data["subject"],)
             )
             new_form = ComplaintForm

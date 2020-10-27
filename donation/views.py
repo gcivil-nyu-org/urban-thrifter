@@ -8,6 +8,7 @@ from .models import ResourcePost, User
 from bootstrap_datepicker_plus import DateTimePickerInput, TimePickerInput
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
+
 # Create your views here.
 
 
@@ -20,8 +21,11 @@ def home(request):
     context = {"posts": ResourcePost.objects.all()}
 
     # context is the argument pass into the html
+
     return render(request, "donation/donation_all.html", context)
 
+def reservation(request):
+    return render(request, "donation/reservation.html")
 
 # All Donations View
 class PostListView(ListView):

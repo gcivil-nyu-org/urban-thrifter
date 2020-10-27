@@ -1,6 +1,5 @@
 from django.urls import path
 from . import views
-from django.contrib.auth import views as auth_views
 
 app_name = "register"
 urlpatterns = [
@@ -11,5 +10,5 @@ urlpatterns = [
     path("email_sent", views.email_sent, name="email_sent"),
     path(
         "helpseeker/profile/", views.helpseeker_edit_profile, name="helpseeker_profile"
-    ),
+    )
 ]
