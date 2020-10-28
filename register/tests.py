@@ -100,3 +100,63 @@ class HelpseekerRegistrationTests(TestCase):
             }
         )
         self.assertFalse(form.is_valid())
+
+    def test_form_username_missing(self):
+        form = HelpseekerForm(
+            data={
+                "email": "ponathanjun@gmail.com",
+                "password1": "peaches12",
+                "password2": "peaches12",
+                "borough": "MAN",
+                "resource": ["FOOD", "MDCL"],
+            }
+        )
+        self.assertFalse(form.is_valid())
+
+    def test_form_email_missing(self):
+        form = HelpseekerForm(
+            data={
+                "username": "Jonathan",
+                "password1": "peaches12",
+                "password2": "peaches12",
+                "borough": "MAN",
+                "resource": ["FOOD", "MDCL"],
+            }
+        )
+        self.assertFalse(form.is_valid())
+
+    def test_form_password1_missing(self):
+        form = HelpseekerForm(
+            data={
+                "username": "Jonathan",
+                "email": "ponathanjun@gmail.com",
+                "password2": "peaches12",
+                "borough": "MAN",
+                "resource": ["FOOD", "MDCL"],
+            }
+        )
+        self.assertFalse(form.is_valid())
+
+    def test_form_password2_missing(self):
+        form = HelpseekerForm(
+            data={
+                "username": "Jonathan",
+                "email": "ponathanjun@gmail.com",
+                "password1": "peaches12",
+                "borough": "MAN",
+                "resource": ["FOOD", "MDCL"],
+            }
+        )
+        self.assertFalse(form.is_valid())
+
+    def test_form_borough_missing(self):
+        form = HelpseekerForm(
+            data={
+                "username": "Jonathan",
+                "email": "ponathanjun@gmail.com",
+                "password1": "peaches12",
+                "password2": "peaches12",
+                "resource": ["FOOD", "MDCL"],
+            }
+        )
+        self.assertFalse(form.is_valid())
