@@ -1,13 +1,17 @@
 from django.test import TestCase
-from .models import HelpseekerProfile
-from .forms import HelpseekerForm
+from .models import HelpseekerProfile, DonorProfile
+from .forms import HelpseekerForm, DonorForm
 from django.contrib.auth.models import User
 
 
 class HelpseekerRegistrationTests(TestCase):
-    def test_first_name_label(self):
+    def test_username_label(self):
         form = HelpseekerForm()
         self.assertTrue(form.fields["username"].label == "Username")
+
+    def test_email_label(self):
+        form = HelpseekerForm()
+        self.assertTrue(form.fields["email"].label == "Email")
 
     def test_password_label(self):
         form = HelpseekerForm()
@@ -274,4 +278,187 @@ class HelpseekerProfileTests(TestCase):
         form.save()
         user = User.objects.filter(id="1").first()
         profile = HelpseekerProfile(user=user)
+        self.assertTrue(profile.complaint_count == 0)
+
+
+class DonorRegistrationTests(TestCase):
+    def test_username_label(self):
+        form = DonorForm()
+        self.assertTrue(form.fields["username"].label == "Username")
+
+    def test_email_label(self):
+        form = DonorForm()
+        self.assertTrue(form.fields["email"].label == "Email")
+
+    def test_password_label(self):
+        form = DonorForm()
+        self.assertTrue(form.fields["password1"].label == "Password")
+
+    def test_password2_label(self):
+        form = DonorForm()
+        self.assertTrue(form.fields["password2"].label == "Confirm Password")
+
+    def test_form_working(self):
+        form = DonorForm(
+            data={
+                "username": "Jonathan",
+                "email": "ponathanjun@gmail.com",
+                "password1": "peaches12",
+                "password2": "peaches12",
+            }
+        )
+        self.assertTrue(form.is_valid())
+
+    def test_form_username_wrong(self):
+        form = DonorForm(
+            data={
+                "username": "jon",
+                "email": "ponathanjun@gmail.com",
+                "password1": "peaches12",
+                "password2": "peaches12",
+            }
+        )
+        self.assertFalse(form.is_valid())
+
+    def test_form_email_wrong(self):
+        form = DonorForm(
+            data={
+                "username": "Jonathan",
+                "email": "ponathanjun",
+                "password1": "peaches12",
+                "password2": "peaches12",
+            }
+        )
+        self.assertFalse(form.is_valid())
+
+    def test_form_password_wrong(self):
+        form = DonorForm(
+            data={
+                "username": "Jonathan",
+                "email": "ponathanjun@gmail.com",
+                "password1": "dog",
+                "password2": "dog",
+            }
+        )
+        self.assertFalse(form.is_valid())
+
+    def test_form_password_match_wrong(self):
+        form = DonorForm(
+            data={
+                "username": "Jonathan",
+                "email": "ponathanjun@gmail.com",
+                "password1": "peaches12",
+                "password2": "peaches13",
+            }
+        )
+        self.assertFalse(form.is_valid())
+
+    def test_form_username_missing(self):
+        form = DonorForm(
+            data={
+                "email": "ponathanjun@gmail.com",
+                "password1": "peaches12",
+                "password2": "peaches12",
+            }
+        )
+        self.assertFalse(form.is_valid())
+
+    def test_form_email_missing(self):
+        form = DonorForm(
+            data={
+                "username": "Jonathan",
+                "password1": "peaches12",
+                "password2": "peaches12",
+            }
+        )
+        self.assertFalse(form.is_valid())
+
+    def test_form_password1_missing(self):
+        form = DonorForm(
+            data={
+                "username": "Jonathan",
+                "email": "ponathanjun@gmail.com",
+                "password2": "peaches12",
+            }
+        )
+        self.assertFalse(form.is_valid())
+
+    def test_form_password2_missing(self):
+        form = DonorForm(
+            data={
+                "username": "Jonathan",
+                "email": "ponathanjun@gmail.com",
+                "password1": "peaches12",
+            }
+        )
+        self.assertFalse(form.is_valid())
+
+    def test_username_taken(self):
+        form = DonorForm(
+            data={
+                "username": "Jonathan",
+                "email": "ponathanjun@gmail.com",
+                "password1": "peaches12",
+                "password2": "peaches12",
+            }
+        )
+        form.save()
+        duplicate = DonorForm(
+            data={
+                "username": "Jonathan",
+                "email": "jonathanpun@gmail.com",
+                "password1": "peaches12",
+                "password2": "peaches12",
+            }
+        )
+        self.assertFalse(duplicate.is_valid())
+
+    def test_email_taken(self):
+        form = DonorForm(
+            data={
+                "username": "Jonathan",
+                "email": "ponathanjun@gmail.com",
+                "password1": "peaches12",
+                "password2": "peaches12",
+            }
+        )
+        form.save()
+        duplicate = DonorForm(
+            data={
+                "username": "Brian",
+                "email": "ponathanjun@gmail.com",
+                "password1": "peaches12",
+                "password2": "peaches12",
+            }
+        )
+        self.assertFalse(duplicate.is_valid())
+
+
+class DonorProfileTests(TestCase):
+    def test_donor_profile_donation_count(self):
+        form = DonorForm(
+            data={
+                "username": "Jonathan",
+                "email": "ponathanjun@gmail.com",
+                "password1": "peaches12",
+                "password2": "peaches12",
+            }
+        )
+        form.save()
+        user = User.objects.filter(id="1").first()
+        profile = DonorProfile(user=user)
+        self.assertTrue(profile.donation_count == 0)
+
+    def test_donor_profile_complaint_count(self):
+        form = DonorForm(
+            data={
+                "username": "Jonathan",
+                "email": "ponathanjun@gmail.com",
+                "password1": "peaches12",
+                "password2": "peaches12",
+            }
+        )
+        form.save()
+        user = User.objects.filter(id="1").first()
+        profile = DonorProfile(user=user)
         self.assertTrue(profile.complaint_count == 0)
