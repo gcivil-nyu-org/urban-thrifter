@@ -1,6 +1,6 @@
 {% extends 'donation/nav.html' %}
 {% block content %}
-
+{% if user.is_authenticated == False %}
 <div class="text-center">
 	<p><i class="far fa-user-circle fa-5x mb-5 mt-5"></i></p>
 	<h2 class="mb-3">Are you a _______?</h2>
@@ -12,5 +12,21 @@
 		</form>
 	</div>
 </div>
-
+{% else %}
+<html>
+   <head>
+      <script type = "text/javascript">
+         <!-- 
+            function Back() {
+               history.back();
+            }            
+            setTimeout('Back()', 0);
+         //-->
+      </script>
+   </head>
+   
+   <body>
+   </body>
+</html>
+{% endif %}
 {% endblock content %}

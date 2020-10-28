@@ -1,5 +1,6 @@
 {% extends 'donation/base.html' %}
 {% block content %}
+{% if user.is_authenticated and user.donorprofile %}
 {% include "donation/reservation_status_nav.html" %}
 {% for post in posts %}
 <article class="card donation-card mb-2">
@@ -70,5 +71,22 @@
 <a class='btn btn-outline-info mb-4' href='?page={{ page_obj.next_page_number }}'> Next </a>
 <a class='btn btn-outline-info mb-4' href='?page={{ page_obj.paginator.num_pages }}'>End</a>
 {% endif %}
+{% endif %}
+{% elif user.helpseekerprofile %}
+<html>
+   <head>
+      <script type = "text/javascript">
+         <!-- 
+            function Redirect() {
+               window.location = "{{DOMAIN_NAME}}" + "/donation/reservation/";
+            }            
+            setTimeout('Redirect()', 0);
+         //-->
+      </script>
+   </head>
+   
+   <body>
+   </body>
+</html>
 {% endif %}
 {% endblock content %}
