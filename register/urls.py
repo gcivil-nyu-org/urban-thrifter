@@ -15,5 +15,4 @@ urlpatterns = [
     path(
         "donor/profile/<str:username>", DonorUpdateView.as_view(), name="donor-profile"
     ),
-    # path('donor/profile/', views.donor_edit_profile, name='donor-profile'),
 ]
