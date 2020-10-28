@@ -5,7 +5,7 @@
     <h1>Issue Complaint</h1></br>
     <h2>{{ note }}</h2>
 
-    <form enctype="multipart/form-data" {% url 'issue_complaint' %}" method="POST">
+    <form enctype="multipart/form-data" {% url 'issue-complaint' %}" method="POST">
       {% csrf_token %}
       {% for field in complaintform  %}
       <div class="form-group">
