@@ -160,3 +160,51 @@ class HelpseekerRegistrationTests(TestCase):
             }
         )
         self.assertFalse(form.is_valid())
+
+    def test_username_taken(self):
+        form = HelpseekerForm(
+            data={
+                "username": "Jonathan",
+                "email": "ponathanjun@gmail.com",
+                "password1": "peaches12",
+                "password2": "peaches12",
+                "borough": "MAN",
+                "resource": ["FOOD", "MDCL"],
+            }
+        )
+        form.save()
+        duplicate = HelpseekerForm(
+            data={
+                "username": "Jonathan",
+                "email": "jonathanpun@gmail.com",
+                "password1": "peaches12",
+                "password2": "peaches12",
+                "borough": "MAN",
+                "resource": ["FOOD", "MDCL"],
+            }
+        )
+        self.assertFalse(duplicate.is_valid())
+
+    def test_email_taken(self):
+        form = HelpseekerForm(
+            data={
+                "username": "Jonathan",
+                "email": "ponathanjun@gmail.com",
+                "password1": "peaches12",
+                "password2": "peaches12",
+                "borough": "MAN",
+                "resource": ["FOOD", "MDCL"],
+            }
+        )
+        form.save()
+        duplicate = HelpseekerForm(
+            data={
+                "username": "Brian",
+                "email": "ponathanjun@gmail.com",
+                "password1": "peaches12",
+                "password2": "peaches12",
+                "borough": "MAN",
+                "resource": ["FOOD", "MDCL"],
+            }
+        )
+        self.assertFalse(duplicate.is_valid())
