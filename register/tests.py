@@ -296,3 +296,58 @@ class DonorProfileTests(TestCase):
     def test_password2_label(self):
         form = DonorForm()
         self.assertTrue(form.fields["password2"].label == "Confirm Password")
+        
+    def test_form_working(self):
+        form = DonorForm(
+            data={
+                "username": "Jonathan",
+                "email": "ponathanjun@gmail.com",
+                "password1": "peaches12",
+                "password2": "peaches12"
+            }
+        )
+        self.assertTrue(form.is_valid())
+
+    def test_form_username_wrong(self):
+        form = DonorForm(
+            data={
+                "username": "jon",
+                "email": "ponathanjun@gmail.com",
+                "password1": "peaches12",
+                "password2": "peaches12"
+            }
+        )
+        self.assertFalse(form.is_valid())
+
+    def test_form_email_wrong(self):
+        form = DonorForm(
+            data={
+                "username": "Jonathan",
+                "email": "ponathanjun",
+                "password1": "peaches12",
+                "password2": "peaches12"
+            }
+        )
+        self.assertFalse(form.is_valid())
+
+    def test_form_password_wrong(self):
+        form = DonorForm(
+            data={
+                "username": "Jonathan",
+                "email": "ponathanjun@gmail.com",
+                "password1": "dog",
+                "password2": "dog"
+            }
+        )
+        self.assertFalse(form.is_valid())
+
+    def test_form_password_match_wrong(self):
+        form = DonorForm(
+            data={
+                "username": "Jonathan",
+                "email": "ponathanjun@gmail.com",
+                "password1": "peaches12",
+                "password2": "peaches13"
+            }
+        )
+        self.assertFalse(form.is_valid())
