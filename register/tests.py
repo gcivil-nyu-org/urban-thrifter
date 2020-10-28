@@ -1,4 +1,5 @@
 from django.test import TestCase
+from django.urls import reverse
 from .models import HelpseekerProfile
 from .forms import HelpseekerForm
 from django.contrib.auth.models import User
@@ -275,3 +276,30 @@ class HelpseekerProfileTests(TestCase):
         user = User.objects.filter(id="1").first()
         profile = HelpseekerProfile(user=user)
         self.assertTrue(profile.complaint_count == 0)
+
+class RegisterUrlTests(TestCase):
+
+    def test_register_def(self):
+        response = self.client.get(reverse("login"))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response,"register/login.html")
+
+    def test_register_def(self):
+        response = self.client.get(reverse("logout"))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response,"register/logout.html")
+
+    def test_register_def(self):
+        response = self.client.get(reverse("password-reset"))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response,"register/password_reset.html")
+
+    def test_register_def(self):
+        response = self.client.get(reverse("password-reset/done"))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response,"register/password_reset_done.html")
+    
+    def test_register_def(self):
+        response = self.client.get(reverse("password-reset-complete"))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response,"register/password_reset_complete.html")
