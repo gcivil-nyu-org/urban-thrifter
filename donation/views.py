@@ -36,7 +36,7 @@ class PostListView(ListView):
     model = ResourcePost
     # Assign tempalte otherwise it would look for post_list.html
     # as default template
-    template_name = "donation/home.html"
+    template_name = "donation/donation_all.html"
 
     # Set context_attribute to post object
     context_object_name = "posts"

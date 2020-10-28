@@ -1,10 +1,17 @@
 {% extends 'donation/nav.html' %}
 {% block content %}
 {% if user.is_authenticated == False %}
-<form>
-	<button class="btn btn-dark btn-wide" formaction="{% url 'register:helpseeker-register' %}">Help Seeker</button>
-	<button class="btn btn-dark btn-wide" formaction="{% url 'register:donor-register' %}">Donor</button>
-</form>
+<div class="text-center">
+	<p><i class="far fa-user-circle fa-5x mb-5 mt-5"></i></p>
+	<h2 class="mb-3">Are you a _______?</h2>
+	<div class="container">
+		<form>
+			<button class="btn btn-dark btn-wide" formaction="{% url 'register:helpseeker-register' %}">Help
+				Seeker</button>
+			<button class="btn btn-dark btn-wide" formaction="{% url 'register:donor-register' %}">Donor</button>
+		</form>
+	</div>
+</div>
 {% else %}
 <html>
    <head>
@@ -23,4 +30,3 @@
 </html>
 {% endif %}
 {% endblock content %}
-
