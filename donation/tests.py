@@ -17,7 +17,7 @@ class ResourcePostCreateViewTests(TestCase):
             dropoff_time_3=timezone.now(),
             date_created=timezone.now(),
             resource_category="FOOD",
-            status="AVAILABLE"
+            status="AVAILABLE",
         )
         self.assertFalse(create_post.check_quantity())
 
@@ -31,7 +31,7 @@ class ResourcePostCreateViewTests(TestCase):
             dropoff_time_3=timezone.now(),
             date_created=timezone.now(),
             resource_category="FOOD",
-            status="AVAILABLE"
+            status="AVAILABLE",
         )
         self.assertFalse(create_post.check_quantity())
 
@@ -43,7 +43,7 @@ class ResourcePostCreateViewTests(TestCase):
             dropoff_time_1=timezone.now(),
             date_created=timezone.now(),
             resource_category="FOOD",
-            status="AVAILABLE"
+            status="AVAILABLE",
         )
         self.assertTrue(create_post.check_quantity())
 
@@ -55,7 +55,7 @@ class ResourcePostListViewTests(TestCase):
         """
         response = self.client.get(reverse("donation-all"))
         self.assertEqual(response.status_code, 200)
-    
+
     def test_donation_home(self):
         """
         If no post exist, an appropriate message is displayed.
@@ -88,7 +88,7 @@ class ResourcePostDetailViewTests(TestCase):
             dropoff_time_3=timezone.now(),
             date_created=timezone.now(),
             resource_category="FOOD",
-            status="AVAILABLE"
+            status="AVAILABLE",
         )
         create_resource_post.save()
         url = reverse("donation-detail", args=(create_resource_post.pk,))
