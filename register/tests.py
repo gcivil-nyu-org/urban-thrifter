@@ -1,6 +1,6 @@
 from django.test import TestCase
-from .forms import HelpseekerForm
 from .models import HelpseekerProfile
+from .forms import HelpseekerForm
 from django.contrib.auth.models import User
 
 
