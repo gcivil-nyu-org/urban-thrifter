@@ -21,15 +21,18 @@
     {{ post.dropoff_location.latitude }}])
     .setPopup(new mapboxgl.Popup({ offset: 25 })
       .setHTML(
-        "<p>Resource Post</p>\n" +
-        "<h3>{{ post.title }}</h3>\n" +
-        "<h3>{{ post.description }}</h3>" +
-        "<h3>{{ post.quantity }}</h3>\n" +
-        "<div class='form-group'>\n" +
-        "<button class='btn btn-dark btn-small' type='submit'>\n" +
-        "Reserve\n" +
-        "</button>\n" +
-        "</div>"
+        "<div class='container'>"+
+        "<h5><b>{{ post.title }}</b> * {{ post.quantity }}</h5>" +
+        "<div class='row'>" +
+        "<div class='col'>" +
+        "<p>{{ post.description }}</p>" +
+        "</div><div class='col'>" +
+        "<p>{{ post.dropoff_time_1 }}</p>" +
+        "<p>{{ post.dropoff_time_2 }}</p>" +
+        "<p>{{ post.dropoff_time_3 }}</p>" +
+        "</div></div>"+
+        "<a href='/' class='btn btn-dark btn-small' type='submit'>" +
+        "Detail</button></a>"
       ))
     .addTo(map)
 </script>
@@ -42,11 +45,16 @@
     .setLngLat([{{ center.longitude }}, {{ center.latitude }}])
     .setPopup(new mapboxgl.Popup({ offset: 50 })
       .setHTML(
-        "<p>Drop-in Center: <strong>{{center.center_name}}</strong></p>\n" +
-        "<p>Address: <strong>{{center.address}}</strong></p>\n" +
-        "<p>Borough: <strong>{{center.borough}}</strong></p>\n" +
-        "<p>Zip: <strong>{{center.postcode}}</strong></p>\n" +
-        "<p>Comments: <strong>{{center.comments}}</strong></p>"
+        "<div class='container'>"+
+        "<h5><b>{{center.center_name}}</b></h5>" +
+        "<div class='row'>" +
+        "<div class='col'>" +
+        "<p>Address: <b>{{center.address}}</b></p>" +
+        "<p>Borough: <b>{{center.borough}}</b></p>" +
+        "</div><div class='col'>" +
+        "<p>Zip: <b>{{center.postcode}}</b></p>" +
+        "<p>Hours: <b>{{center.comments}}</b></p>" +
+        "</div></div></div>"
       ))
     .addTo(map)
 </script>
@@ -57,26 +65,37 @@
   new mapboxgl.Marker({ "color": "#7DCEA0" })
     .setLngLat([{{ center.longitude }}, {{ center.latitude }}])
     .setPopup(new mapboxgl.Popup({ offset: 50 })
-      .setHTML("<p>Internet Center: <strong>{{center.name}}</strong></p><p>Provider: <strong>{{center.provider}}</strong></p><p>Location: <strong>{{center.location}}</strong></p><p>Borough: <strong>{{center.boroname}}</strong></p><p>Type: <strong>{{center.type}}</strong></p><p>Remarks: <strong>{{center.remarks}}</strong></p>"))
+      .setHTML(
+        "<div class='container'>"+
+        "<h5><b>{{center.name}}</b></h5>" +
+        "<div class='row'>" +
+        "<div class='col'>" +
+        "<p>Provider: <b>{{center.provider}}</b></p>" +
+        "<p>Location: <b>{{center.location}}</b></p>" +
+        "</div><div class='col'>" +
+        "<p>Borough: <strong>{{center.boroname}}</b></p>" +
+        "<p>Type: <b>{{center.type}}</strong></p>" +
+        "<p>Remarks: <b>{{center.remarks}}</b></p>"+
+        "</div></div></div>"
+      ))
     .addTo(map)
 </script>
 {% endfor %}
 {% elif user.donorprofile %}
 <html>
-   <head>
-      <script type = "text/javascript">
-         <!-- 
-            function Redirect() {
-               window.location = "{{DOMAIN_NAME}}" + "/donation/";
-            }            
-            setTimeout('Redirect()', 0);
-         //-->
-      </script>
-   </head>
-   
-   <body>
-   </body>
+
+<head>
+  <script type="text/javascript">
+    function Redirect() {
+      window.location = "{{DOMAIN_NAME}}" + "/donation/";
+    }
+    setTimeout('Redirect()', 0);
+  </script>
+</head>
+
+<body>
+</body>
+
 </html>
 {% endif %}
 {% endblock content %}
-

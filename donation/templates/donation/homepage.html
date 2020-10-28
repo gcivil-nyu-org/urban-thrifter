@@ -4,12 +4,10 @@
 <html>
    <head>
       <script type = "text/javascript">
-         <!-- 
             function Redirect() {
                window.location = "{{DOMAIN_NAME}}" + "/map/";
             }            
             setTimeout('Redirect()', 0);
-         //-->
       </script>
    </head>
    
@@ -22,12 +20,26 @@
 <html>
    <head>
       <script type = "text/javascript">
-         <!-- 
             function Redirect() {
                window.location = "{{DOMAIN_NAME}}" + "/donation/";
             }            
             setTimeout('Redirect()', 0);
-         //-->
+      </script>
+   </head>
+   
+   <body>
+   </body>
+</html>
+
+{% elif user.is_authenticated %}
+<!DOCTYPE html>
+<html>
+   <head>
+      <script type = "text/javascript">
+            function Redirect() {
+               window.location = "{{DOMAIN_NAME}}" + "/admin/";
+            }            
+            setTimeout('Redirect()', 0);
       </script>
    </head>
    

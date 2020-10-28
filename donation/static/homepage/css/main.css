@@ -4,7 +4,7 @@
 
 body {
   color: #a0a6ad;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 400;
   background: #fff;
   overflow-x: hidden;
@@ -15,7 +15,7 @@ html {
 }
 
 p {
-  font-size: 14px;
+  font-size: 16px;
   color: #333;
   line-height: 26px;
   margin-bottom: 0;
@@ -229,7 +229,7 @@ button:focus {
   text-transform: uppercase;
   font-weight: 700;
   margin-bottom: 20px;
-  font-size: 14px;
+  font-size: 16px;
 }
 
 .clear {

@@ -59,6 +59,16 @@ li {
   outline: 0;
 }
 
+.mapboxgl-popup {
+  min-width: 500px;
+}
+
+.mapboxgl-popup-close-button {
+  font-size: 24px;
+  padding: 4px;
+}
+
+
 h1, h2, h3, h4, h5, h6, .article-title {
   color: #333;
 }
