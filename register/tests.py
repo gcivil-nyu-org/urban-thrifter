@@ -1,5 +1,7 @@
 from django.test import TestCase
 from .forms import HelpseekerForm
+from .models import HelpseekerProfile
+from django.contrib.auth.models import User
 
 class HelpseekerRegistrationTests(TestCase):
     def test_first_name_label(self):
@@ -208,3 +210,65 @@ class HelpseekerRegistrationTests(TestCase):
             }
         )
         self.assertFalse(duplicate.is_valid())
+
+class HelpseekerProfileTests(TestCase):
+    def test_helpseeker_profile_borough(self):
+        form = HelpseekerForm(
+            data={
+                "username": "Jonathan",
+                "email": "ponathanjun@gmail.com",
+                "password1": "peaches12",
+                "password2": "peaches12",
+                "borough": "MAN",
+                "resource": ["FOOD", "MDCL"],
+            }
+        )
+        form.save()
+        user = User.objects.filter(id="1").first()
+        profile = HelpseekerProfile(user=user)
+        profile.borough = form.cleaned_data.get("borough")
+        self.assertTrue(profile.borough == "MAN")
+
+    def test_helpseeker_profile_resource(self):
+        form = HelpseekerForm(
+            data={
+                "username": "Jonathan",
+                "email": "ponathanjun@gmail.com",
+                "password1": "peaches12",
+                "password2": "peaches12",
+                "borough": "MAN",
+                "resource": ["FOOD", "MDCL", "OTHR"],
+            }
+        )
+        form.save()
+        user = User.objects.filter(id="1").first()
+        profile = HelpseekerProfile(user=user)
+        resources = form.cleaned_data.get("resource")
+        d = {}
+        for i in range(0, 3):
+            if 0 <= i < len(resources):
+                d["resource{0}".format(i)] = resources[i]
+            else:
+                d["resource{0}".format(i)] = None
+        profile.rc_1 = d["resource0"]
+        profile.rc_2 = d["resource1"]
+        profile.rc_3 = d["resource2"]
+        self.assertTrue(
+            profile.rc_1 == "FOOD" and profile.rc_2 == "MDCL" and profile.rc_3 == "OTHR"
+        )
+
+    def test_helpseeker_profile_complaint_count(self):
+        form = HelpseekerForm(
+            data={
+                "username": "Jonathan",
+                "email": "ponathanjun@gmail.com",
+                "password1": "peaches12",
+                "password2": "peaches12",
+                "borough": "MAN",
+                "resource": ["FOOD", "MDCL"],
+            }
+        )
+        form.save()
+        user = User.objects.filter(id="1").first()
+        profile = HelpseekerProfile(user=user)
+        self.assertTrue(profile.complaint_count == 0)
