@@ -3,6 +3,7 @@ from .forms import HelpseekerForm
 from .models import HelpseekerProfile
 from django.contrib.auth.models import User
 
+
 class HelpseekerRegistrationTests(TestCase):
     def test_first_name_label(self):
         form = HelpseekerForm()
@@ -23,7 +24,8 @@ class HelpseekerRegistrationTests(TestCase):
     def test_resource_label(self):
         form = HelpseekerForm()
         self.assertTrue(
-            form.fields["resource"].label == "Resources (Optional, select up to 3)")
+            form.fields["resource"].label == "Resources (Optional, select up to 3)"
+        )
 
     def test_form_working(self):
         form = HelpseekerForm(
@@ -210,6 +212,7 @@ class HelpseekerRegistrationTests(TestCase):
             }
         )
         self.assertFalse(duplicate.is_valid())
+
 
 class HelpseekerProfileTests(TestCase):
     def test_helpseeker_profile_borough(self):
