@@ -1,14 +1,18 @@
 from django.test import TestCase
 from .models import HelpseekerProfile
-from .forms import HelpseekerForm
+from .forms import HelpseekerForm, DonorForm
 from django.contrib.auth.models import User
 
 
 class HelpseekerRegistrationTests(TestCase):
-    def test_first_name_label(self):
+    def test_username_label(self):
         form = HelpseekerForm()
         self.assertTrue(form.fields["username"].label == "Username")
-
+    
+    def test_email_label(self):
+        form = HelpseekerForm()
+        self.assertTrue(form.fields["email"].label == "Email")
+    
     def test_password_label(self):
         form = HelpseekerForm()
         self.assertTrue(form.fields["password1"].label == "Password")
@@ -275,3 +279,20 @@ class HelpseekerProfileTests(TestCase):
         user = User.objects.filter(id="1").first()
         profile = HelpseekerProfile(user=user)
         self.assertTrue(profile.complaint_count == 0)
+        
+class DonorProfileTests(TestCase):
+    def test_username_label(self):
+        form = DonorForm()
+        self.assertTrue(form.fields["username"].label == "Username")
+    
+    def test_email_label(self):
+        form = DonorForm()
+        self.assertTrue(form.fields["email"].label == "Email")
+    
+    def test_password_label(self):
+        form = DonorForm()
+        self.assertTrue(form.fields["password1"].label == "Password")
+
+    def test_password2_label(self):
+        form = DonorForm()
+        self.assertTrue(form.fields["password2"].label == "Confirm Password")
