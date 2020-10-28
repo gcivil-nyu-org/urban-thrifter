@@ -3,19 +3,18 @@ from django.urls import reverse
 from .models import ResourcePost
 from django.utils import timezone
 from django.core.files.uploadedfile import SimpleUploadedFile
-from PIL import Image
 import tempfile
 from django.test import override_settings
 
+# from PIL import Image
 # Create your tests here.
 
-
-def get_temporary_image(temp_file):
-    size = (200, 200)
-    color = (255, 0, 0, 0)
-    image = Image.new("RGB", size, color)
-    image.save(temp_file, "jpeg")
-    return temp_file
+# def get_temporary_image(temp_file):
+#     size = (200, 200)
+#     color = (255, 0, 0, 0)
+#     image = Image.new("RGB", size, color)
+#     image.save(temp_file, "jpeg")
+#     return temp_file
 
 
 class ResourcePostCreateViewTests(TestCase):
