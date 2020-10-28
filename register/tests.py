@@ -283,7 +283,7 @@ class HelpseekerProfileTests(TestCase):
 
 class HelpseekerViewTests(TestCase):
     def test_successful_post_request(self):
-        return self.client.post(
+        holder = self.client.post(
             reverse("register:helpseeker-register"),
             data={
                 "username": "Jonathan",
@@ -294,9 +294,11 @@ class HelpseekerViewTests(TestCase):
                 "resource": ["FOOD", "MDCL"]
             },
         )
+        self.assertEqual(holder.status_code, 302)
+        self.assertEqual(holder['Location'], "/register/email-sent")
         
     def test_bad_username_post_request(self):
-        return self.client.post(
+        holder = self.client.post(
             reverse("register:helpseeker-register"),
             data={
                 "username": "jon",
@@ -307,9 +309,10 @@ class HelpseekerViewTests(TestCase):
                 "resource": ["FOOD", "MDCL"]
             },
         )
+        self.assertEqual(holder.status_code, 200)
     
     def test_bad_email_post_request(self):
-        return self.client.post(
+        holder = self.client.post(
             reverse("register:helpseeker-register"),
             data={
                 "username": "Jonathan",
@@ -320,9 +323,10 @@ class HelpseekerViewTests(TestCase):
                 "resource": ["FOOD", "MDCL"]
             },
         )
+        self.assertEqual(holder.status_code, 200)
     
     def test_bad_password_post_request(self):
-        return self.client.post(
+        holder = self.client.post(
             reverse("register:helpseeker-register"),
             data={
                 "username": "Jonathan",
@@ -333,9 +337,10 @@ class HelpseekerViewTests(TestCase):
                 "resource": ["FOOD", "MDCL"]
             },
         )
+        self.assertEqual(holder.status_code, 200)
     
-    def test_msimatch_password_post_request(self):
-        return self.client.post(
+    def test_mismatch_password_post_request(self):
+        holder = self.client.post(
             reverse("register:helpseeker-register"),
             data={
                 "username": "Jonathan",
@@ -346,6 +351,7 @@ class HelpseekerViewTests(TestCase):
                 "resource": ["FOOD", "MDCL"]
             },
         )
+        self.assertEqual(holder.status_code, 200)
 
 class DonorRegistrationTests(TestCase):
     def test_username_label(self):
