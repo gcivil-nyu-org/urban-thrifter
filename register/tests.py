@@ -1,5 +1,5 @@
 from django.test import TestCase
-from .models import HelpseekerProfile
+from .models import HelpseekerProfile, DonorProfile
 from .forms import HelpseekerForm, DonorForm
 from django.contrib.auth.models import User
 
@@ -280,7 +280,7 @@ class HelpseekerProfileTests(TestCase):
         profile = HelpseekerProfile(user=user)
         self.assertTrue(profile.complaint_count == 0)
         
-class DonorProfileTests(TestCase):
+class DonorRegistrationTests(TestCase):
     def test_username_label(self):
         form = DonorForm()
         self.assertTrue(form.fields["username"].label == "Username")
@@ -431,3 +431,32 @@ class DonorProfileTests(TestCase):
             }
         )
         self.assertFalse(duplicate.is_valid())
+        
+class DonorProfileTests(TestCase):
+    def test_donor_profile_donation_count(self):
+        form = DonorForm(
+            data={
+                "username": "Jonathan",
+                "email": "ponathanjun@gmail.com",
+                "password1": "peaches12",
+                "password2": "peaches12"
+            }
+        )
+        form.save()
+        user = User.objects.filter(id="1").first()
+        profile = DonorProfile(user=user)
+        self.assertTrue(profile.donation_count == 0)
+
+    def test_donor_profile_complaint_count(self):
+        form = DonorForm(
+            data={
+                "username": "Jonathan",
+                "email": "ponathanjun@gmail.com",
+                "password1": "peaches12",
+                "password2": "peaches12"
+            }
+        )
+        form.save()
+        user = User.objects.filter(id="1").first()
+        profile = DonorProfile(user=user)
+        self.assertTrue(profile.complaint_count == 0)
