@@ -14,6 +14,7 @@ import os
 from pathlib import Path
 import django_heroku
 import datetime
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -178,4 +179,4 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 
-django_heroku.settings(locals())
+django_heroku.settings(locals(), test_runner=False)

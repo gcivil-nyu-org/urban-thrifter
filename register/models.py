@@ -45,10 +45,10 @@ class HelpseekerProfile(models.Model):
     )
 
     def has_borough(self):
-        if self.borough==None:
+        if self.borough is None:
             return False
         return True
-        
+
 
 class DonorProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)

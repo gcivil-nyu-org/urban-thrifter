@@ -25,7 +25,7 @@ admin.site.register(User, MyUserAdmin)
 
 
 class DonorProfileAdmin(admin.ModelAdmin):
-    list_display = ('position_map', 'dropoff_location')
+    list_display = ("position_map", "dropoff_location")
 
     def position_map(self, instance):
         if instance.dropoff_location is not None:
@@ -36,13 +36,13 @@ class DonorProfileAdmin(admin.ModelAdmin):
                     sensor=false&visual_refresh=true&scale=%(scale)s& \
                     key=%(key)s" \
                     width="%(width)s" height="%(height)s">' % {
-                'latitude': instance.dropoff_location.latitude,
-                'longitude': instance.dropoff_location.longitude,
-                'key': getattr(settings, 'PLACES_MAPS_API_KEY'),
-                'zoom': 9,
-                'width': 100,
-                'height': 100,
-                'scale': 2,
-                'map_id':'3215ae039708a60f'
+                "latitude": instance.dropoff_location.latitude,
+                "longitude": instance.dropoff_location.longitude,
+                "key": getattr(settings, "PLACES_MAPS_API_KEY"),
+                "zoom": 9,
+                "width": 100,
+                "height": 100,
+                "scale": 2,
             }
+
     position_map.allow_tags = True

@@ -26,7 +26,7 @@ def main_map(request):
             if new_address[-1] == ";" or new_address[-2:] == ".,":
                 center["address"] = new_address[:-1]
                 break
-                
+
     # Internet spots API GET
     internet_center_URL = "https://data.cityofnewyork.us/resource/yjub-udmw.json"
     internet_center_r = requests.get(url=internet_center_URL)

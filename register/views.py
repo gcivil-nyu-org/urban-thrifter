@@ -11,8 +11,7 @@ from django.utils.encoding import force_bytes, force_text
 from register.token_generator import generate_token
 from django.core.mail import EmailMessage
 from django.contrib import messages
-from django.views.generic import ListView, CreateView, DetailView, UpdateView
-from django.contrib.auth.forms import AuthenticationForm
+from django.views.generic import UpdateView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
@@ -27,7 +26,7 @@ def register(request):
 def helpseeker_register(request):
     if request.user.is_authenticated:
         # Redirect to login page
-        return redirect('home')
+        return redirect("home")
     if request.method == "POST":
         form = HelpseekerForm(request.POST)
         if form.is_valid():
@@ -152,7 +151,7 @@ class DonorUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
 
     def get_object(
         self,
-    ):  # https://stackoverflow.com/questions/48795289/django-updateview-profile-save-data-no-work
+    ):
         username = self.kwargs.get("username")
         if username is None:
             raise Http404

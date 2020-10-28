@@ -91,13 +91,13 @@ class ResourcePost(models.Model):
         return reverse("donation-detail", kwargs={"pk": self.pk})
 
     def check_quantity(self):
-        if type(self.quantity)!=int:
+        if type(self.quantity) != int:
             return False
         elif self.quantity <= 0:
             return False
         else:
             return True
-        
+
     def save(self):
         super().save()
 

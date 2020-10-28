@@ -18,7 +18,6 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from complaint import views
-from register import views as user_view
 from donation import views as donation_view
 from django.contrib.auth import views as auth_views
 
@@ -39,7 +38,7 @@ urlpatterns = [
         auth_views.LogoutView.as_view(template_name="register/logout.html"),
         name="logout",
     ),
-    # Password reset links (ref: https://github.com/django/django/blob/master/django/contrib/auth/views.py)
+    # Password reset links
     path(
         "password-reset/",
         auth_views.PasswordResetView.as_view(
