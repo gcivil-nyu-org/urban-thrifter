@@ -16,24 +16,24 @@
 
 {% for post in post_context %}
 <script>
-  new mapboxgl.Marker({ "color": 'blue' })
-    .setLngLat([{{ post.dropoff_location.longitude }},
-    {{ post.dropoff_location.latitude }}])
-    .setPopup(new mapboxgl.Popup({ offset: 25 })
-      .setHTML(
-        "<div class='container'>"+
-        "<h5><b>{{ post.title }}</b> * {{ post.quantity }}</h5>" +
+  personal_donation_html = "<div class='container donation-popup'>"+
+        "<h5 class='mb-3'><b>{{ post.title }}</b> * {{ post.quantity }}</h5>" +
         "<div class='row'>" +
         "<div class='col'>" +
         "<p>{{ post.description }}</p>" +
+        "<p><img src='{{ post.image.url }}' /></p>" +
         "</div><div class='col'>" +
         "<p>{{ post.dropoff_time_1 }}</p>" +
         "<p>{{ post.dropoff_time_2 }}</p>" +
         "<p>{{ post.dropoff_time_3 }}</p>" +
         "</div></div>"+
-        "<a href='/' class='btn btn-dark btn-small' type='submit'>" +
+        "<a href='/' class='btn btn-dark btn-wide' type='submit'>" +
         "Detail</button></a>"
-      ))
+  new mapboxgl.Marker({ "color": 'blue' })
+    .setLngLat([{{ post.dropoff_location.longitude }},
+    {{ post.dropoff_location.latitude }}])
+    .setPopup(new mapboxgl.Popup({ offset: 25 })
+      .setHTML(personal_donation_html))
     .addTo(map)
 </script>
 {% endfor %}
@@ -46,7 +46,7 @@
     .setPopup(new mapboxgl.Popup({ offset: 50 })
       .setHTML(
         "<div class='container'>"+
-        "<h5><b>{{center.center_name}}</b></h5>" +
+        "<h5 class='mb-3'><b>{{center.center_name}}</b></h5>" +
         "<div class='row'>" +
         "<div class='col'>" +
         "<p>Address: <b>{{center.address}}</b></p>" +
@@ -67,14 +67,14 @@
     .setPopup(new mapboxgl.Popup({ offset: 50 })
       .setHTML(
         "<div class='container'>"+
-        "<h5><b>{{center.name}}</b></h5>" +
+        "<h5 class='mb-3'><b>{{center.name}}</b></h5>" +
         "<div class='row'>" +
         "<div class='col'>" +
         "<p>Provider: <b>{{center.provider}}</b></p>" +
         "<p>Location: <b>{{center.location}}</b></p>" +
         "</div><div class='col'>" +
-        "<p>Borough: <strong>{{center.boroname}}</b></p>" +
-        "<p>Type: <b>{{center.type}}</strong></p>" +
+        "<p>Borough: <b>{{center.boroname}}</b></p>" +
+        "<p>Type: <b>{{center.type}}</b></p>" +
         "<p>Remarks: <b>{{center.remarks}}</b></p>"+
         "</div></div></div>"
       ))

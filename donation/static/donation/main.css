@@ -68,6 +68,9 @@ li {
   padding: 4px;
 }
 
+.donation-popup img {
+  max-width: 100px;
+}
 
 h1, h2, h3, h4, h5, h6, .article-title {
   color: #333;
