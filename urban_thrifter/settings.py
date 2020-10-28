@@ -162,6 +162,7 @@ EMAIL_PORT = 587
 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 
+LOGIN_REDIRECT_URL = "home"
 
 AXES_FAILURE_LIMIT = 5
 AXES_COOLOFF_TIME = datetime.timedelta(minutes=10)
