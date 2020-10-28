@@ -1,4 +1,42 @@
 <!-- Template Inheritance -->
+{% if user.is_authenticated and user.helpseekerprofile %}
+<!DOCTYPE html>
+<html>
+   <head>
+      <script type = "text/javascript">
+         <!-- 
+            function Redirect() {
+               window.location = "{{DOMAIN_NAME}}" + "/map/";
+            }            
+            setTimeout('Redirect()', 0);
+         //-->
+      </script>
+   </head>
+   
+   <body>
+   </body>
+</html>
+
+{% elif user.is_authenticated and user.donorprofile %}
+<!DOCTYPE html>
+<html>
+   <head>
+      <script type = "text/javascript">
+         <!-- 
+            function Redirect() {
+               window.location = "{{DOMAIN_NAME}}" + "/donation/";
+            }            
+            setTimeout('Redirect()', 0);
+         //-->
+      </script>
+   </head>
+   
+   <body>
+   </body>
+</html>
+
+{% else %}
+
 {% load static %}
 <!DOCTYPE html, dir="ltr">
 <html lang="en">
@@ -6,7 +44,6 @@
 {% load bootstrap4 %}
 {% bootstrap_css %}
 {% bootstrap_javascript jquery='full' %}
-
 <body>
 	<header id="home" class="hero-area">
 		<div class="overlay">
@@ -48,9 +85,9 @@
 						<h2 class="head-title">Urban Thrifter</h2>
 						<p>Connect the resource to the people in need.</p>
 						<div class="header-button">
-							<a href="{% url 'register:register' %}" rel="nofollow" target="_blank"
+							<a href="{% url 'register:register' %}" rel="nofollow"
 								class="btn btn-dark btn-wide">Join Us</a>
-							<a href="{% url 'login' %}" rel="nofollow" target="_blank"
+							<a href="{% url 'login' %}" rel="nofollow"
 								class="btn btn-dark btn-wide">Login</a>
 						</div>
 					</div>
@@ -188,7 +225,7 @@
 				<div class="col-lg-6 col-md-6 col-xs-12 p-0">
 					<!-- Start Fetatures -->
 					<div class="feature-item featured-border1">
-						<div class="feature-icon float-left">
+						<div class="feature-icon food-icon float-left">
 							<i class="fas fa-apple-alt"></i>
 						</div>
 						<div class="feature-info float-left">
@@ -203,7 +240,7 @@
 				<div class="col-lg-6 col-md-6 col-xs-12 p-0">
 					<!-- Start Fetatures -->
 					<div class="feature-item featured-border3">
-						<div class="feature-icon float-left">
+						<div class="feature-icon cloth-icon float-left">
 							<i class="fas fa-tshirt"></i>
 						</div>
 						<div class="feature-info float-left">
@@ -220,7 +257,7 @@
 				<div class="col-lg-6 col-md-6 col-xs-12 p-0">
 					<!-- Start Fetatures -->
 					<div class="feature-item featured-border1">
-						<div class="feature-icon float-left">
+						<div class="feature-icon ppe-icon float-left">
 							<i class="fas fa-head-side-mask"></i>
 						</div>
 						<div class="feature-info float-left">
@@ -236,7 +273,7 @@
 				<div class="col-lg-6 col-md-6 col-xs-12 p-0">
 					<!-- Start Fetatures -->
 					<div class="feature-item featured-border2">
-						<div class="feature-icon float-left">
+						<div class="feature-icon restroom-icon float-left">
 							<i class="fas fa-restroom"></i>
 						</div>
 						<div class="feature-info float-left">
@@ -253,7 +290,7 @@
 				<div class="col-lg-6 col-md-6 col-xs-12 p-0">
 					<!-- Start Fetatures -->
 					<div class="feature-item featured-border2">
-						<div class="feature-icon float-left">
+						<div class="feature-icon shelter-icon float-left">
 							<i class="fas fa-house-user"></i>
 						</div>
 						<div class="feature-info float-left">
@@ -269,7 +306,7 @@
 				<div class="col-lg-6 col-md-6 col-xs-12 p-0">
 					<!-- Start Fetatures -->
 					<div class="feature-item">
-						<div class="feature-icon float-left">
+						<div class="feature-icon electronics-icon float-left">
 							<i class="fas fa-mobile-alt"></i>
 						</div>
 						<div class="feature-info float-left">
@@ -287,7 +324,7 @@
 				<div class="col-lg-6 col-md-6 col-xs-12 p-0">
 					<!-- Start Fetatures -->
 					<div class="feature-item">
-						<div class="feature-icon float-left">
+						<div class="feature-icon wifi-icon float-left">
 							<i class="fas fa-wifi"></i>
 						</div>
 						<div class="feature-info float-left">
@@ -304,11 +341,11 @@
 				<div class="col-lg-6 col-md-6 col-xs-12 p-0">
 					<!-- Start Fetatures -->
 					<div class="feature-item">
-						<div class="feature-icon float-left">
+						<div class="feature-icon reeducation-icon float-left">
 							<i class="fas fa-book-open"></i>
 						</div>
 						<div class="feature-info float-left">
-							<h4>Reducation</h4>
+							<h4>Re-education</h4>
 							<p>Facilities that offer after-school programs for runaway and homeless youth, including
 								street outreach programs, drop-in centers, crisis shelters, and transitional independent
 								living (TIL) programs.</p>
@@ -716,3 +753,4 @@
 </body>
 
 </html>
+{% endif %}

@@ -1,6 +1,13 @@
+{% if user.is_authenticated %}
 <div class="form-inline button-nav">
-    <a class="btn align-middle btn-outline-dark" type="button" href=''>Reserved</a>
+	{% if user.donorprofile %}
+    <a class="btn align-middle btn-outline-dark" type="button" href='{% url "donation-home" %}'>Reserved</a>
     <a class="btn align-middle btn-outline-dark" type="button" href='{% url "donation-new" %}'>New</a>
-    <a class="btn align-middle btn-outline-dark" type="button" href='{% url "donation-all" %}'>Available</a>
-    <a class="btn align-middle btn-outline-dark" type="button" href=''>Closed</a>
+    <a class="btn align-middle btn-outline-dark" type="button" href='{% url "donation-home" %}'>Available</a>
+    <a class="btn align-middle btn-outline-dark" type="button" href='{% url "donation-home" %}'>Closed</a>
+    {% elif user.helpseekerprofile %}
+    <a class="btn align-middle btn-outline-dark" type="button" href='{% url "reservation" %}'>Pending</a>
+    <a class="btn align-middle btn-outline-dark" type="button" href='{% url "reservation" %}'>Closed</a>
+    {% endif %}
 </div>
+{% endif %}

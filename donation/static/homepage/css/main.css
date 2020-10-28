@@ -696,10 +696,40 @@ button:focus {
 }
 
 #resource .feature-item:hover .feature-icon {
-  background: #8CC9CE;
   -moz-transition: all .8s ease;
   -webkit-transition: all .8s ease;
   transition: all .8s ease;
+}
+#resource .feature-item:hover .food-icon {
+  background: #EC7063;
+}
+
+#resource .feature-item:hover .shelter-icon {
+  background: #EB984E;
+}
+
+#resource .feature-item:hover .ppe-icon {
+  background: #A0D3D6;
+}
+
+#resource .feature-item:hover .electronics-icon {
+  background: #8E9AD7;
+}
+
+#resource .feature-item:hover .cloth-icon {
+  background: #F1C40F  ;
+}
+
+#resource .feature-item:hover .restroom-icon {
+  background: #5499C7;
+}
+
+#resource .feature-item:hover .wifi-icon {
+  background: #7DCEA0;
+}
+
+#resource .feature-item:hover .reeducation-icon {
+  background: #57788A;
 }
 
 #resource .feature-item:hover .feature-icon i {

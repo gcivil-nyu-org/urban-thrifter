@@ -26,22 +26,7 @@ def main_map(request):
             if new_address[-1] == ";" or new_address[-2:] == ".,":
                 center["address"] = new_address[:-1]
                 break
-
-    # Information in drop_in_centers
-    # [{'center_name': 'Living Room',
-    #   'borough': 'Bronx',
-    #   'address': '800 Barretto Street; Bronx, NY\n10474',
-    #   'comments': 'Open 24 hours',
-    #   'postcode': '10474',
-    #   'latitude': '40.816615',
-    #   'longitude': '-73.889883',
-    #   'community_board': '202',
-    #   'council_district': '17',
-    #   'census_tract': '93',
-    #   'bin': '2006002',
-    #   'bbl': '2027400100',
-    #   'nta': 'Hunts Point'},
-
+                
     # Internet spots API GET
     internet_center_URL = "https://data.cityofnewyork.us/resource/yjub-udmw.json"
     internet_center_r = requests.get(url=internet_center_URL)
