@@ -2,6 +2,7 @@ from django.test import TestCase
 from .models import HelpseekerProfile, DonorProfile
 from .forms import HelpseekerForm, DonorForm
 from django.contrib.auth.models import User
+from django.urls import reverse
 
 
 class HelpseekerRegistrationTests(TestCase):
@@ -280,6 +281,71 @@ class HelpseekerProfileTests(TestCase):
         profile = HelpseekerProfile(user=user)
         self.assertTrue(profile.complaint_count == 0)
 
+class HelpseekerViewTests(TestCase):
+    def test_successful_post_request(self):
+        return self.client.post(
+            reverse("register:helpseeker-register"),
+            data={
+                "username": "Jonathan",
+                "email": "ponathanjun@gmail.com",
+                "password1": "peaches12",
+                "password2": "peaches12",
+                "borough": "MAN",
+                "resource": ["FOOD", "MDCL"]
+            },
+        )
+        
+    def test_bad_username_post_request(self):
+        return self.client.post(
+            reverse("register:helpseeker-register"),
+            data={
+                "username": "jon",
+                "email": "ponathanjun@gmail.com",
+                "password1": "peaches12",
+                "password2": "peaches12",
+                "borough": "MAN",
+                "resource": ["FOOD", "MDCL"]
+            },
+        )
+    
+    def test_bad_email_post_request(self):
+        return self.client.post(
+            reverse("register:helpseeker-register"),
+            data={
+                "username": "Jonathan",
+                "email": "ponathanjun",
+                "password1": "peaches12",
+                "password2": "peaches12",
+                "borough": "MAN",
+                "resource": ["FOOD", "MDCL"]
+            },
+        )
+    
+    def test_bad_password_post_request(self):
+        return self.client.post(
+            reverse("register:helpseeker-register"),
+            data={
+                "username": "Jonathan",
+                "email": "ponathanjun@gmail.com",
+                "password1": "dog",
+                "password2": "dog",
+                "borough": "MAN",
+                "resource": ["FOOD", "MDCL"]
+            },
+        )
+    
+    def test_msimatch_password_post_request(self):
+        return self.client.post(
+            reverse("register:helpseeker-register"),
+            data={
+                "username": "Jonathan",
+                "email": "ponathanjun@gmail.com",
+                "password1": "peaches12",
+                "password2": "peaches13",
+                "borough": "MAN",
+                "resource": ["FOOD", "MDCL"]
+            },
+        )
 
 class DonorRegistrationTests(TestCase):
     def test_username_label(self):
