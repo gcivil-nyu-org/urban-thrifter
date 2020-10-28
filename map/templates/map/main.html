@@ -1,7 +1,9 @@
 {% extends 'donation/navfull.html' %}
 {% block content %}
+{% if user.is_authenticated and user.helpseekerprofile %}
 <!-- shelter data-->
 <div id='map'></div>
+<nav id="filter-group" class="filter-group"></nav>
 <script>
   mapboxgl.accessToken = '{{ mapbox_access_token }}'
   var map = new mapboxgl.Map({
@@ -18,15 +20,17 @@
     .setLngLat([{{ post.dropoff_location.longitude }},
     {{ post.dropoff_location.latitude }}])
     .setPopup(new mapboxgl.Popup({ offset: 25 })
-      .setHTML("<p>Resource Post</p>\n" +
-      "<h3>{{ post.title }}</h3>\n" +
-      "<h3>{{ post.description }}</h3>" +
-      "<h3>{{ post.quantity }}</h3>\n" +
-      "<div class='form-group'>\n" +
-          "<button class='btn btn-dark btn-small' type='submit'>\n" +
-              "Reserve\n" +
-          "</button>\n" +
-      "</div>"))
+      .setHTML(
+        "<p>Resource Post</p>" +
+        "<h3>{{ post.title }}</h3>" +
+        "<h3>{{ post.description }}</h3>" +
+        "<h3>{{ post.quantity }}</h3>" +
+        "<div class='form-group'>" +
+        "<button class='btn btn-dark btn-small' type='submit'>" +
+        "Reserve" +
+        "</button>" +
+        "</div>"
+      ))
     .addTo(map)
 </script>
 {% endfor %}
@@ -34,12 +38,49 @@
 
 {% for center in drop_in_centers %}
 <script>
-  new mapboxgl.Marker({ "color": 'red' })
+  new mapboxgl.Marker({ "color": "#EB984E" })
     .setLngLat([{{ center.longitude }}, {{ center.latitude }}])
     .setPopup(new mapboxgl.Popup({ offset: 50 })
-      .setHTML("<p>Drop-in Center: <strong>{{center.center_name}}</strong></p><p>Address: <strong>{{center.address}}</strong></p><p>Borough: <strong>{{center.borough}}</strong></p><p>Zip: <strong>{{center.postcode}}</strong></p><p>Comments: <strong>{{center.comments}}</strong></p>"
-        ))
+      .setHTML(
+        "<p>Drop-in Center: <strong>{{center.center_name}}</strong></p>" +
+        "<p>Address: <strong>{{center.address}}</strong></p>" +
+        "<p>Borough: <strong>{{center.borough}}</strong></p>" +
+        "<p>Zip: <strong>{{center.postcode}}</strong></p>" +
+        "<p>Comments: <strong>{{center.comments}}</strong></p>"
+      ))
     .addTo(map)
 </script>
 {% endfor %}
+
+{% for center in internet_centers %}
+<script>
+  new mapboxgl.Marker({ "color": "#7DCEA0" })
+    .setLngLat([{{ center.longitude }}, {{ center.latitude }}])
+    .setPopup(new mapboxgl.Popup({ offset: 50 })
+      .setHTML("<p>Internet Center: <strong>{{center.name}}</strong></p>" +
+      "<p>Provider: <strong>{{center.provider}}</strong></p>" +
+      "<p>Location: <strong>{{center.location}}</strong></p>" +
+      "<p>Borough: <strong>{{center.boroname}}</strong></p>" +
+      "<p>Type: <strong>{{center.type}}</strong></p>" +
+      "<p>Remarks: <strong>{{center.remarks}}</strong></p>"))
+    .addTo(map)
+</script>
+{% endfor %}
+{% elif user.donorprofile %}
+<html>
+   <head>
+      <script type = "text/javascript">
+         <!-- 
+            function Redirect() {
+               window.location = "{{DOMAIN_NAME}}" + "/donation/";
+            }            
+            setTimeout('Redirect()', 0);
+         //-->
+      </script>
+   </head>
+   
+   <body>
+   </body>
+</html>
+{% endif %}
 {% endblock content %}

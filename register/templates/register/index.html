@@ -1,8 +1,0 @@
-{% extends 'donation/nav.html' %}
-{% block content %}
-
-<form>
-	<button class="btn btn-dark btn-wide" formaction="{% url 'register:helpseeker_register' %}">Help Seeker</button>
-	<button class="btn btn-dark btn-wide" formaction="{% url 'register:donor_register' %}">Donor</button>
-</form>
-{% endblock content %}

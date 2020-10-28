@@ -1,0 +1,768 @@
+<!-- Template Inheritance -->
+{% if user.is_authenticated and user.helpseekerprofile %}
+<!DOCTYPE html>
+<html>
+   <head>
+      <script type = "text/javascript">
+            function Redirect() {
+               window.location = "{{DOMAIN_NAME}}" + "/map/";
+            }            
+            setTimeout('Redirect()', 0);
+      </script>
+   </head>
+   
+   <body>
+   </body>
+</html>
+
+{% elif user.is_authenticated and user.donorprofile %}
+<!DOCTYPE html>
+<html>
+   <head>
+      <script type = "text/javascript">
+            function Redirect() {
+               window.location = "{{DOMAIN_NAME}}" + "/donation/";
+            }            
+            setTimeout('Redirect()', 0);
+      </script>
+   </head>
+   
+   <body>
+   </body>
+</html>
+
+{% elif user.is_authenticated %}
+<!DOCTYPE html>
+<html>
+   <head>
+      <script type = "text/javascript">
+            function Redirect() {
+               window.location = "{{DOMAIN_NAME}}" + "/admin/";
+            }            
+            setTimeout('Redirect()', 0);
+      </script>
+   </head>
+   
+   <body>
+   </body>
+</html>
+
+{% else %}
+
+{% load static %}
+<!DOCTYPE html, dir="ltr">
+<html lang="en">
+{% include "donation/head.html" %}
+{% load bootstrap4 %}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='full' %}
+<body>
+	<header id="home" class="hero-area">
+		<div class="overlay">
+			<span></span>
+			<span></span>
+		</div>
+		<nav class="navbar navbar-expand-md bg-inverse fixed-top scrolling-navbar">
+			<div class="container">
+				<a href="/" class="navbar-brand"><img src="{% static 'homepage/img/logo.png' %}" alt=""></a>
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+					aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+					<i class="lni-menu"></i>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarCollapse">
+					<ul class="navbar-nav mr-auto w-100 justify-content-end">
+						<li class="nav-item">
+							<a class="nav-link page-scroll" href="#home">Home</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link page-scroll" href="#how-to-share">How to Share</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link page-scroll" href="#resource">Resources</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link page-scroll" href="#team">Team</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link page-scroll" href="#contact">Contact</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+		<div class="container">
+			<div class="row space-100">
+				<div class="col-lg-6 col-md-12 col-xs-12">
+					<div class="contents">
+						<h2 class="head-title">Urban Thrifter</h2>
+						<p>Connect the resource to the people in need.</p>
+						<div class="header-button">
+							<a href="{% url 'register:register' %}" rel="nofollow"
+								class="btn btn-dark btn-wide">Join Us</a>
+							<a href="{% url 'login' %}" rel="nofollow"
+								class="btn btn-dark btn-wide">Login</a>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-6 col-md-12 col-xs-12 p-0">
+					<div class="intro-img">
+						<img src="{% static 'homepage/img/intro.png' %}" alt="">
+					</div>
+				</div>
+			</div>
+		</div>
+	</header>
+
+	<!-- How to Share Section Start -->
+	<section id="how-to-share">
+		<div class="container mb-5 pt-70">
+			<div class="row">
+				<!-- Start Col -->
+				<div class="col-lg-6 col-md-12 pl-0 pr-5">
+					<div class="business-item-img">
+						<img src="{% static 'homepage/img/business/business-img.jpg' %}" class="img-fluid" alt="">
+					</div>
+				</div>
+				<!-- End Col -->
+				<!-- Start Col -->
+				<div class="col-lg-6 col-md-12 pl-4 pt-5">
+					<div class="business-item-info">
+						<h3>How to Give</h3>
+						<ol>
+							<li>List your donation. Snap a photo. Set the drop-off time.</li>
+							<li>Get notified and confirm donation when you have a reservation request.</li>
+							<li>Get reminder when reservation time is up. And happy giving!</li>
+						</ol>
+						<a class="btn btn-dark btn-wide" href="{% url 'register:helpseeker-register' %}">Join as
+							Helpseeker</a>
+					</div>
+				</div>
+				<!-- End Col -->
+			</div>
+		</div>
+		<div class="container">
+			<div class="row">
+				<!-- Start Col -->
+				<div class="col-lg-6 col-md-12 pl-5">
+					<div class="business-item-info">
+						<h3>How to Reserve</h3>
+						<ol>
+							<li>View/ filter the resource map to look for things you need.</li>
+							<li>Click on the mark to see more detail about the donation.</li>
+							<li>Select pick up time and send reservation request.</li>
+							<li>Once confirmed by the donor, please show up on time or you may risk losing your
+								donation.</li>
+							<li>That's it. Happy thrifting!</li>
+						</ol>
+						<a class="btn btn-dark btn-wide" href="{% url 'register:donor-register' %}">Join as Donor</a>
+					</div>
+				</div>
+				<!-- End Col -->
+				<!-- Start Col -->
+				<div class="col-lg-6 col-md-12 pl-4">
+					<div class="business-item-img">
+						<img src="{% static 'homepage/img/business/business-img_4.jpg' %}" class="img-fluid" alt="">
+					</div>
+				</div>
+				<!-- End Col -->
+			</div>
+		</div>
+	</section>
+	<!-- How to Share Section End -->
+
+	<!-- Feature Section Start -->
+	<section id="about" class="section">
+		<div class="container">
+			<div class="row">
+				<!-- Start Col -->
+				<div class="col-lg-4 col-md-6 col-xs-12">
+					<div class="services-item text-center">
+						<div class="icon">
+							<i class="fas fa-people-arrows"></i>
+						</div>
+						<h4>Worry Free</h4>
+						<p>No contact exchange keep you safe during pandemic.</p>
+					</div>
+				</div>
+				<!-- End Col -->
+				<!-- Start Col -->
+				<div class="col-lg-4 col-md-6 col-xs-12">
+					<div class="services-item text-center">
+						<div class="icon">
+							<i class="fas fa-wind"></i>
+						</div>
+						<h4>Easy Breezy</h4>
+						<p>List your donation and we will take care of the rest.</p>
+					</div>
+				</div>
+				<!-- End Col -->
+				<!-- Start Col -->
+				<div class="col-lg-4 col-md-6 col-xs-12">
+					<div class="services-item text-center">
+						<div class="icon">
+							<i class="far fa-hand-spock"></i>
+						</div>
+						<h4>Hassle Free</h4>
+						<p>Community guideline ensure we address every single complaint with heart.</p>
+					</div>
+				</div>
+				<!-- End Col -->
+
+			</div>
+		</div>
+	</section>
+	<!-- Feature Section End -->
+
+
+	<!-- Cool Fetatures Section Start -->
+	<section id="resource" class="section gray-bg">
+		<div class="container">
+			<!-- Start Row -->
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="features-text section-header text-center">
+						<div>
+							<h2 class="section-title">Turn the Cluster into Treasure</h2>
+							<div class="desc-text">
+								<p>Connect you to the resource you need.</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- End Row -->
+			<!-- Start Row -->
+			<div class="row featured-bg">
+				<!-- Start Col -->
+				<div class="col-lg-6 col-md-6 col-xs-12 p-0">
+					<!-- Start Fetatures -->
+					<div class="feature-item featured-border1">
+						<div class="feature-icon food-icon float-left">
+							<i class="fas fa-apple-alt"></i>
+						</div>
+						<div class="feature-info float-left">
+							<h4>Food</h4>
+							<p>Personal and organizational donation welcomed.</p>
+						</div>
+					</div>
+					<!-- End Fetatures -->
+				</div>
+				<!-- End Col -->
+				<!-- Start Col -->
+				<div class="col-lg-6 col-md-6 col-xs-12 p-0">
+					<!-- Start Fetatures -->
+					<div class="feature-item featured-border3">
+						<div class="feature-icon cloth-icon float-left">
+							<i class="fas fa-tshirt"></i>
+						</div>
+						<div class="feature-info float-left">
+							<h4>Clothes / Covers</h4>
+							<p>Personal and organizational donation welcomed.</p>
+						</div>
+					</div>
+					<!-- End Fetatures -->
+				</div>
+				<!-- End Col -->
+			</div>
+			<div class="row featured-bg">
+				<!-- Start Col -->
+				<div class="col-lg-6 col-md-6 col-xs-12 p-0">
+					<!-- Start Fetatures -->
+					<div class="feature-item featured-border1">
+						<div class="feature-icon ppe-icon float-left">
+							<i class="fas fa-head-side-mask"></i>
+						</div>
+						<div class="feature-info float-left">
+							<h4>Medical / PPE</h4>
+							<p>Personal and organizational donation welcomed.</p>
+						</div>
+					</div>
+					<!-- End Fetatures -->
+				</div>
+				<!-- End Col -->
+
+				<!-- Start Col -->
+				<div class="col-lg-6 col-md-6 col-xs-12 p-0">
+					<!-- Start Fetatures -->
+					<div class="feature-item featured-border2">
+						<div class="feature-icon restroom-icon float-left">
+							<i class="fas fa-restroom"></i>
+						</div>
+						<div class="feature-info float-left">
+							<h4>Restroom</h4>
+							<p>Directory of Toilets in Public Parks by Department of Parks and Recreation (DPR).</p>
+						</div>
+					</div>
+					<!-- End Fetatures -->
+				</div>
+				<!-- End Col -->
+			</div>
+			<div class="row featured-bg">
+				<!-- Start Col -->
+				<div class="col-lg-6 col-md-6 col-xs-12 p-0">
+					<!-- Start Fetatures -->
+					<div class="feature-item featured-border2">
+						<div class="feature-icon shelter-icon float-left">
+							<i class="fas fa-house-user"></i>
+						</div>
+						<div class="feature-info float-left">
+							<h4>Shelter</h4>
+							<p>List of centers where homeless people are provided with hot meals, showers, medical help
+								and a place to sleep. Data provided by Department of Homeless Services (DHS).</p>
+						</div>
+					</div>
+					<!-- End Fetatures -->
+				</div>
+				<!-- End Col -->
+				<!-- Start Col -->
+				<div class="col-lg-6 col-md-6 col-xs-12 p-0">
+					<!-- Start Fetatures -->
+					<div class="feature-item">
+						<div class="feature-icon electronics-icon float-left">
+							<i class="fas fa-mobile-alt"></i>
+						</div>
+						<div class="feature-info float-left">
+							<h4>Electronics</h4>
+							<p>List of public facilities offering computers with internet access, according to
+								administrative data collected by the Mayor's Office of the Chief Technology Officer.</p>
+						</div>
+					</div>
+					<!-- End Fetatures -->
+				</div>
+				<!-- End Col -->
+			</div>
+			<div class="row featured-bg">
+				<!-- Start Col -->
+				<div class="col-lg-6 col-md-6 col-xs-12 p-0">
+					<!-- Start Fetatures -->
+					<div class="feature-item">
+						<div class="feature-icon wifi-icon float-left">
+							<i class="fas fa-wifi"></i>
+						</div>
+						<div class="feature-info float-left">
+							<h4>Internet Access</h4>
+							<p>NYC Wi-Fi Hotspot provided by Downtown Brooklyn Wi-Fi, Transit Wireless, New York Public
+								Library and many more. Data provided Department of Information Technology &
+								Telecommunications (DoITT).</p>
+						</div>
+					</div>
+					<!-- End Fetatures -->
+				</div>
+				<!-- End Col -->
+				<!-- Start Col -->
+				<div class="col-lg-6 col-md-6 col-xs-12 p-0">
+					<!-- Start Fetatures -->
+					<div class="feature-item">
+						<div class="feature-icon reeducation-icon float-left">
+							<i class="fas fa-book-open"></i>
+						</div>
+						<div class="feature-info float-left">
+							<h4>Re-education</h4>
+							<p>Facilities that offer after-school programs for runaway and homeless youth, including
+								street outreach programs, drop-in centers, crisis shelters, and transitional independent
+								living (TIL) programs.</p>
+						</div>
+					</div>
+					<!-- End Fetatures -->
+				</div>
+				<!-- End Col -->
+			</div>
+		</div>
+		<!-- End Row -->
+		</div>
+	</section>
+	<!-- Cool Fetatures Section End -->
+
+	<!-- Client Testimoninals Section Start -->
+	<section id="testimonial" class="section">
+		<div class="container right-position">
+			<!-- Start Row -->
+			<div class="row">
+				<div class="col-md-12 col-sm-12">
+					<div class="video-promo-content text-center">
+						<a id="play-video" class="video-play-button" href="https://www.youtube.com/embed/i8xwLWb0lLY"
+							target='blank'>
+							<span></span>
+						</a>
+					</div>
+				</div>
+			</div>
+			<!-- End Row -->
+			<!-- Start Row -->
+			<div class="row justify-content-center testimonial-area">
+				<div class="col-lg-10 col-md-12 col-sm-12 col-xs-12 pr-20 pl-20"
+					style="overflow: hidden;padding-bottom: 60px">
+					<div id="client-testimonial" class="text-center owl-carousel">
+						<div class="item">
+							<div class="testimonial-item">
+								<div class="content-inner">
+									<p class="description">For many who experience homelessness, housing insecurity is
+										only a symptom of an even greater underlying problem. Projects that address both
+										the shelter and support needs of those experiencing homelessness are at the
+										vanguard of our efforts to ensure all New Yorkers have a safe, stable place to
+										live.
+									</p>
+									<div class="author-info">
+										<h5>Andrew Cuomo</br><span>Governor of New York</span></h5>
+									</div>
+								</div>
+								<div class="client-thumb">
+									<img src="{% static 'homepage/img/testimonial/01.png' %}" alt="">
+								</div>
+							</div>
+						</div>
+						<div class="item">
+							<div class="testimonial-item">
+								<div class="content-inner">
+									<p class="description">In August 2020, there were 57,660 homeless people, including
+										12,866 homeless families with 19,006 homeless children, sleeping each night in
+										the New York City municipal shelter system. Families make up two-thirds of the
+										homeless shelter population.</p>
+									<div class="author-info">
+										<h5>Coalition for the Homeless</h5>
+									</div>
+								</div>
+								<div class="client-thumb">
+									<img src="{% static 'homepage/img/testimonial/02.png' %}" alt="">
+								</div>
+							</div>
+						</div>
+						<div class="item">
+							<div class="testimonial-item">
+								<div class="content-inner">
+									<p class="description">New York's large food scraps generators-supermarkets,
+										restaurants, colleges, and hospitals-generate more than 250,000 tons of wasted
+										food and food scraps each year, some of which is edible food. If just five
+										percent of this material were donated, food banks would see an increase of 20
+										percent in the amount of food available for consumption by those in need.</p>
+									<div class="author-info">
+										<h5>Department of Environmental Conservation</br><span>New York State</span>
+										</h5>
+									</div>
+								</div>
+								<div class="client-thumb">
+									<img src="{% static 'homepage/img/testimonial/03.png' %}" alt="">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- End Row -->
+		</div>
+	</section>
+	<!-- Client Testimoninals Section End -->
+	<!-- Team section Start -->
+	<section id="team" class="section gray-bg">
+		<div class="container">
+			<!-- Start Row -->
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="team-text section-header text-center">
+						<div>
+							<h2 class="section-title">We are Django_Unchained</h2>
+							<div class="desc-text">
+								<p>From New York University Tandon School of Engineering</p>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+			<!-- End Row -->
+			<!-- Start Row -->
+			<div class="row">
+				<!-- Start Col -->
+				<div class="col">
+					<div class="single-team">
+						<div class="team-thumb">
+							<img src="{% static 'homepage/img/team/01.jpg' %}" class="img-fluid" alt="">
+						</div>
+						<div class="team-details">
+							<div class="team-social-icons">
+								<ul class="social-list">
+									<li><a href="mailto:ml6589@nyu.edu"><i class="far fa-envelope"></i></a></li>
+									<li><a href="https://www.linkedin.com/in/lynn-li/"><i
+												class="fab fa-linkedin-in"></i></a></li>
+								</ul>
+							</div>
+							<div class="team-inner text-center">
+								<h5 class="team-title">Lynn Li</h5>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- Start Col -->
+
+				<!-- Start Col -->
+				<div class="col">
+					<div class="single-team">
+						<div class="team-thumb">
+							<img src="{% static 'homepage/img/team/02.jpg' %}" class="img-fluid" alt="">
+						</div>
+
+						<div class="team-details">
+							<div class="team-social-icons">
+								<ul class="social-list">
+									<li><a href="#"><i class="far fa-envelope"></i></a></li>
+									<li><a href="#"><i class="fab fa-linkedin-in"></i></a></li>
+								</ul>
+							</div>
+							<div class="team-inner text-center">
+								<h5 class="team-title">Sesha Sai Sreevani Kappagantula</h5>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- Start Col -->
+
+				<!-- Start Col -->
+				<div class="col">
+					<div class="single-team">
+						<div class="team-thumb">
+							<img src="{% static 'homepage/img/team/03.jpg' %}" class="img-fluid" alt="">
+						</div>
+
+						<div class="team-details">
+							<div class="team-social-icons">
+								<ul class="social-list">
+									<li><a href="#"><i class="far fa-envelope"></i></a></li>
+									<li><a href="#"><i class="fab fa-linkedin-in"></i></a></li>
+								</ul>
+							</div>
+							<div class="team-inner text-center">
+								<h5 class="team-title">Jin Gyu Lee</h5>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- Start Col -->
+
+				<!-- Start Col -->
+				<div class="col">
+					<div class="single-team">
+						<div class="team-thumb">
+							<img src="{% static 'homepage/img/team/04.jpg' %}" class="img-fluid" alt="">
+						</div>
+
+						<div class="team-details">
+							<div class="team-social-icons">
+								<ul class="social-list">
+									<li><a href="#"><i class="far fa-envelope"></i></a></li>
+									<li><a href="#"><i class="fab fa-linkedin-in"></i></a></li>
+								</ul>
+							</div>
+							<div class="team-inner text-center">
+								<h5 class="team-title">Rahul Garg</h5>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- Start Col -->
+				<div class="col">
+					<div class="single-team">
+						<div class="team-thumb">
+							<img src="{% static 'homepage/img/team/05.jpg' %}" class="img-fluid" alt="">
+						</div>
+
+						<div class="team-details">
+							<div class="team-social-icons">
+								<ul class="social-list">
+									<li><a href="#"><i class="far fa-envelope"></i></a></li>
+									<li><a href="#"><i class="fab fa-linkedin-in"></i></a></li>
+								</ul>
+							</div>
+							<div class="team-inner text-center">
+								<h5 class="team-title">Jonathan Pun</h5>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- End Row -->
+		</div>
+	</section>
+	<!-- Team section End -->
+	<!-- Contact Us Section -->
+	<section id="contact" class="section">
+		<!-- Container Starts -->
+		<div class="container">
+			<!-- Start Row -->
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="contact-text section-header text-center">
+						<div>
+							<h2 class="section-title">Get In Touch</h2>
+							<div class="desc-text">
+								<p>We Would Love To Hear Your Feedback!</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- End Row -->
+			<!-- Start Row -->
+			<div class="row">
+				<!-- Start Col -->
+				<div class="col-lg-6 col-md-12">
+					<form id="contactForm">
+						<div class="row">
+							<div class="col-md-6">
+								<div class="form-group">
+									<input type="text" class="form-control" id="name" name="name" placeholder="Name"
+										required data-error="Please enter your name">
+									<div class="help-block with-errors"></div>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<input type="text" placeholder="Subject" id="msg_subject" class="form-control"
+										name="msg_subject" required data-error="Please enter your subject">
+									<div class="help-block with-errors"></div>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<input type="text" class="form-control" id="email" name="email" placeholder="Email"
+										required data-error="Please enter your Email">
+									<div class="help-block with-errors"></div>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<input type="text" placeholder="Budget" id="budget" class="form-control"
+										name="budget" required data-error="Please enter your Budget">
+									<div class="help-block with-errors"></div>
+								</div>
+							</div>
+							<div class="col-md-12">
+								<div class="form-group">
+									<textarea class="form-control" id="message" name="message"
+										placeholder="Write Message" rows="4" data-error="Write your message"
+										required></textarea>
+									<div class="help-block with-errors"></div>
+								</div>
+								<div class="submit-button">
+									<button class="btn btn-wide btn-dark" id="submit" type="submit">Submit</button>
+									<div id="msgSubmit" class="h3 hidden"></div>
+									<div class="clearfix"></div>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+				<!-- End Col -->
+				<!-- Start Col -->
+				<div class="col-lg-1">
+
+				</div>
+				<!-- End Col -->
+				<!-- Start Col -->
+				<div class="col-lg-4 col-md-12">
+					<div class="contact-img">
+						<img src="{% static 'homepage/img/contact/02.jpg' %}" class="img-fluid" alt="">
+					</div>
+				</div>
+				<!-- End Col -->
+				<!-- Start Col -->
+				<div class="col-lg-1">
+				</div>
+				<!-- End Col -->
+
+			</div>
+			<!-- End Row -->
+		</div>
+	</section>
+	<!-- Contact Us Section End -->
+	<!-- Footer Section Start -->
+	<footer>
+		<!-- Footer Area Start -->
+		<section id="footer-Content">
+			<div class="container">
+				<!-- Start Row -->
+				<div class="row">
+
+					<!-- Start Col -->
+					<div class="col-lg-3 col-md-6 col-sm-6 col-xs-6 col-mb-12">
+
+						<div class="footer-logo">
+							<img src="{% static 'homepage/img/footer-logo.png' %}" alt="">
+						</div>
+					</div>
+					<!-- End Col -->
+					<!-- Start Col -->
+					<div class="col-lg-3 col-md-6 col-sm-6 col-xs-6 col-mb-12">
+						<div class="widget">
+							<h3 class="block-title">NYC Open Data Source</h3>
+							<ul class="menu">
+								<li><a
+										href="https://data.cityofnewyork.us/Social-Services/Directory-Of-Homeless-Drop-In-Centers/bmxf-3rd4">-
+										Shelter</a></li>
+								<li><a
+										href="https://data.cityofnewyork.us/City-Government/NYC-Wi-Fi-Hotspot-Locations/yjub-udmw">-
+										Wi-Fi Spot</a></li>
+								<li><a
+										href="https://data.cityofnewyork.us/Social-Services/Citywide-Public-Computer-Centers/cuzb-dmcd">-
+										Computer Center</a></li>
+								<li><a
+										href="https://data.cityofnewyork.us/Social-Services/DYCD-after-school-programs-Runaway-And-Homeless-Yo/ujsc-un6m">-
+										After School Program</a></li>
+							</ul>
+						</div>
+					</div>
+					<!-- Start Col -->
+					<div class="col-lg-3 col-md-6 col-sm-6 col-xs-6 col-mb-12">
+						<div class="widget">
+							<h3 class="block-title">Related Projects</h3>
+							<ul class="menu">
+								<li><a href="https://olioex.com/">- Olio</a></li>
+								<li><a href="https://www.ourcalling.org/">- OurCalling</a></li>
+								<li><a href="https://toogoodtogo.com/en-us/">- Too Good To Go</a></li>
+							</ul>
+						</div>
+					</div>
+					<!-- End Col -->
+					<!-- Start Col -->
+					<div class="col-lg-3 col-md-6 col-sm-6 col-xs-6 col-mb-12">
+						<div class="widget">
+							<h3 class="block-title">New York University</h3>
+							<p>Copyright © 2020</p>
+							<p>Urban Thrifter</p>
+							<p>All Rights Reserved.</p>
+						</div>
+					</div>
+					<!-- End Col -->
+				</div>
+				<!-- End Row -->
+			</div>
+		</section>
+		<!-- Footer area End -->
+
+	</footer>
+	<!-- Footer Section End -->
+	<!-- Go To Top Link -->
+	<a href="#home" class="back-to-top">
+		<i class="lni-chevron-up"></i>
+	</a>
+
+	<!-- Preloader -->
+	<div id="preloader">
+		<div class="loader" id="loader-1"></div>
+	</div>
+	<!-- End Preloader -->
+
+	<!-- jQuery first, then Tether, then Bootstrap JS. -->
+	<script type="text/javascript" src="{% static 'js/jquery-min.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/popper.min.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/owl.carousel.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/jquery.nav.js' %}"></script>
+	<script src="https://unpkg.com/scrollnav@3.0.1/dist/scrollnav.min.umd.js"></script>
+	<script type="text/javascript" src="{% static 'js/jquery.easing.min.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/nivo-lightbox.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/main.js' %}"></script>
+</body>
+
+</html>
+{% endif %}
