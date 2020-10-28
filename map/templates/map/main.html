@@ -1,5 +1,6 @@
 {% extends 'donation/navfull.html' %}
 {% block content %}
+{% if user.is_authenticated and user.helpseekerprofile %}
 <!-- shelter data-->
 <div id='map'></div>
 <nav id="filter-group" class="filter-group"></nav>
@@ -60,4 +61,22 @@
     .addTo(map)
 </script>
 {% endfor %}
+{% elif user.donorprofile %}
+<html>
+   <head>
+      <script type = "text/javascript">
+         <!-- 
+            function Redirect() {
+               window.location = "{{DOMAIN_NAME}}" + "/donation/";
+            }            
+            setTimeout('Redirect()', 0);
+         //-->
+      </script>
+   </head>
+   
+   <body>
+   </body>
+</html>
+{% endif %}
 {% endblock content %}
+
