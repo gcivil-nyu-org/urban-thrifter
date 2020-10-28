@@ -391,3 +391,43 @@ class DonorProfileTests(TestCase):
             }
         )
         self.assertFalse(form.is_valid())
+        
+    def test_username_taken(self):
+        form = DonorForm(
+            data={
+                "username": "Jonathan",
+                "email": "ponathanjun@gmail.com",
+                "password1": "peaches12",
+                "password2": "peaches12"
+            }
+        )
+        form.save()
+        duplicate = DonorForm(
+            data={
+                "username": "Jonathan",
+                "email": "jonathanpun@gmail.com",
+                "password1": "peaches12",
+                "password2": "peaches12"
+            }
+        )
+        self.assertFalse(duplicate.is_valid())
+
+    def test_email_taken(self):
+        form = DonorForm(
+            data={
+                "username": "Jonathan",
+                "email": "ponathanjun@gmail.com",
+                "password1": "peaches12",
+                "password2": "peaches12"
+            }
+        )
+        form.save()
+        duplicate = DonorForm(
+            data={
+                "username": "Brian",
+                "email": "ponathanjun@gmail.com",
+                "password1": "peaches12",
+                "password2": "peaches12"
+            }
+        )
+        self.assertFalse(duplicate.is_valid())
