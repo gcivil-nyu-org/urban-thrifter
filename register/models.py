@@ -45,8 +45,6 @@ class HelpseekerProfile(models.Model):
     )
 
 
-
-
 class DonorProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     dropoff_location = PlacesField(blank=True, null=True)
