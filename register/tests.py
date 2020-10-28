@@ -8,11 +8,11 @@ class HelpseekerRegistrationTests(TestCase):
     def test_username_label(self):
         form = HelpseekerForm()
         self.assertTrue(form.fields["username"].label == "Username")
-    
+
     def test_email_label(self):
         form = HelpseekerForm()
         self.assertTrue(form.fields["email"].label == "Email")
-    
+
     def test_password_label(self):
         form = HelpseekerForm()
         self.assertTrue(form.fields["password1"].label == "Password")
@@ -279,16 +279,17 @@ class HelpseekerProfileTests(TestCase):
         user = User.objects.filter(id="1").first()
         profile = HelpseekerProfile(user=user)
         self.assertTrue(profile.complaint_count == 0)
-        
+
+
 class DonorRegistrationTests(TestCase):
     def test_username_label(self):
         form = DonorForm()
         self.assertTrue(form.fields["username"].label == "Username")
-    
+
     def test_email_label(self):
         form = DonorForm()
         self.assertTrue(form.fields["email"].label == "Email")
-    
+
     def test_password_label(self):
         form = DonorForm()
         self.assertTrue(form.fields["password1"].label == "Password")
@@ -296,14 +297,14 @@ class DonorRegistrationTests(TestCase):
     def test_password2_label(self):
         form = DonorForm()
         self.assertTrue(form.fields["password2"].label == "Confirm Password")
-        
+
     def test_form_working(self):
         form = DonorForm(
             data={
                 "username": "Jonathan",
                 "email": "ponathanjun@gmail.com",
                 "password1": "peaches12",
-                "password2": "peaches12"
+                "password2": "peaches12",
             }
         )
         self.assertTrue(form.is_valid())
@@ -314,7 +315,7 @@ class DonorRegistrationTests(TestCase):
                 "username": "jon",
                 "email": "ponathanjun@gmail.com",
                 "password1": "peaches12",
-                "password2": "peaches12"
+                "password2": "peaches12",
             }
         )
         self.assertFalse(form.is_valid())
@@ -325,7 +326,7 @@ class DonorRegistrationTests(TestCase):
                 "username": "Jonathan",
                 "email": "ponathanjun",
                 "password1": "peaches12",
-                "password2": "peaches12"
+                "password2": "peaches12",
             }
         )
         self.assertFalse(form.is_valid())
@@ -336,7 +337,7 @@ class DonorRegistrationTests(TestCase):
                 "username": "Jonathan",
                 "email": "ponathanjun@gmail.com",
                 "password1": "dog",
-                "password2": "dog"
+                "password2": "dog",
             }
         )
         self.assertFalse(form.is_valid())
@@ -347,7 +348,7 @@ class DonorRegistrationTests(TestCase):
                 "username": "Jonathan",
                 "email": "ponathanjun@gmail.com",
                 "password1": "peaches12",
-                "password2": "peaches13"
+                "password2": "peaches13",
             }
         )
         self.assertFalse(form.is_valid())
@@ -357,7 +358,7 @@ class DonorRegistrationTests(TestCase):
             data={
                 "email": "ponathanjun@gmail.com",
                 "password1": "peaches12",
-                "password2": "peaches12"
+                "password2": "peaches12",
             }
         )
         self.assertFalse(form.is_valid())
@@ -367,7 +368,7 @@ class DonorRegistrationTests(TestCase):
             data={
                 "username": "Jonathan",
                 "password1": "peaches12",
-                "password2": "peaches12"
+                "password2": "peaches12",
             }
         )
         self.assertFalse(form.is_valid())
@@ -377,7 +378,7 @@ class DonorRegistrationTests(TestCase):
             data={
                 "username": "Jonathan",
                 "email": "ponathanjun@gmail.com",
-                "password2": "peaches12"
+                "password2": "peaches12",
             }
         )
         self.assertFalse(form.is_valid())
@@ -387,18 +388,18 @@ class DonorRegistrationTests(TestCase):
             data={
                 "username": "Jonathan",
                 "email": "ponathanjun@gmail.com",
-                "password1": "peaches12"
+                "password1": "peaches12",
             }
         )
         self.assertFalse(form.is_valid())
-        
+
     def test_username_taken(self):
         form = DonorForm(
             data={
                 "username": "Jonathan",
                 "email": "ponathanjun@gmail.com",
                 "password1": "peaches12",
-                "password2": "peaches12"
+                "password2": "peaches12",
             }
         )
         form.save()
@@ -407,7 +408,7 @@ class DonorRegistrationTests(TestCase):
                 "username": "Jonathan",
                 "email": "jonathanpun@gmail.com",
                 "password1": "peaches12",
-                "password2": "peaches12"
+                "password2": "peaches12",
             }
         )
         self.assertFalse(duplicate.is_valid())
@@ -418,7 +419,7 @@ class DonorRegistrationTests(TestCase):
                 "username": "Jonathan",
                 "email": "ponathanjun@gmail.com",
                 "password1": "peaches12",
-                "password2": "peaches12"
+                "password2": "peaches12",
             }
         )
         form.save()
@@ -427,11 +428,12 @@ class DonorRegistrationTests(TestCase):
                 "username": "Brian",
                 "email": "ponathanjun@gmail.com",
                 "password1": "peaches12",
-                "password2": "peaches12"
+                "password2": "peaches12",
             }
         )
         self.assertFalse(duplicate.is_valid())
-        
+
+
 class DonorProfileTests(TestCase):
     def test_donor_profile_donation_count(self):
         form = DonorForm(
@@ -439,7 +441,7 @@ class DonorProfileTests(TestCase):
                 "username": "Jonathan",
                 "email": "ponathanjun@gmail.com",
                 "password1": "peaches12",
-                "password2": "peaches12"
+                "password2": "peaches12",
             }
         )
         form.save()
@@ -453,7 +455,7 @@ class DonorProfileTests(TestCase):
                 "username": "Jonathan",
                 "email": "ponathanjun@gmail.com",
                 "password1": "peaches12",
-                "password2": "peaches12"
+                "password2": "peaches12",
             }
         )
         form.save()
