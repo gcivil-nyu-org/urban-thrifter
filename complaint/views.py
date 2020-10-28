@@ -2,11 +2,6 @@ from django.shortcuts import render
 from .forms import ComplaintForm
 
 
-# Create your views here.
-def home(request):
-    return render(request, "complaint/home.html")
-
-
 def issue_complaint(request):
     if request.method == "POST":
         filled_form = ComplaintForm(request.POST, request.FILES)
