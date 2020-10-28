@@ -25,9 +25,9 @@ def register(request):
 
 
 def helpseeker_register(request):
-    # if request.user.is_authenticated:
-    # Redirect to login page
-    # return redirect('register:register')
+    if request.user.is_authenticated:
+        # Redirect to login page
+        return redirect('home')
     if request.method == "POST":
         form = HelpseekerForm(request.POST)
         if form.is_valid():
@@ -74,7 +74,7 @@ def helpseeker_register(request):
 def donor_register(request):
     if request.user.is_authenticated:
         # Redirect to login page
-        return redirect("register:register")
+        return redirect("home")
     if request.method == "POST":
         form = DonorForm(request.POST)
         if form.is_valid():
