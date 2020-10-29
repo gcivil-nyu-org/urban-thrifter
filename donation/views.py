@@ -23,10 +23,6 @@ def home(request):
     return render(request, "donation/donation_all.html", context)
 
 
-def reservation(request):
-    return render(request, "donation/reservation.html")
-
-
 # All Donations View
 class PostListView(ListView):
     # Basic list view

@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     "places",
     # Default apps
     "map.apps.MapConfig",
+    "reservation.apps.ReservationConfig",
     "register.apps.RegisterConfig",
     "django.contrib.admin",
     "django.contrib.auth",

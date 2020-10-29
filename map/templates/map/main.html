@@ -27,7 +27,7 @@
         "<p>{{ post.dropoff_time_2 }}</p>" +
         "<p>{{ post.dropoff_time_3 }}</p>" +
         "</div></div>"+
-        "<a href='/' class='btn btn-dark btn-wide' type='submit'>" +
+        "<a href='{% url 'reservation:reservation-request' post.id %}' class='btn btn-dark btn-wide' type='submit'>" +
         "Detail</button></a>"
   new mapboxgl.Marker({ "color": 'blue' })
     .setLngLat([{{ post.dropoff_location.longitude }},

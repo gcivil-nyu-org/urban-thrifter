@@ -1,0 +1,40 @@
+{% extends 'donation/base.html' %}
+{% block content %}
+{% include "donation/reservation_status_nav.html" %}
+<article class="media content-section">
+    <img class='rounded-circle article-img' src='{{ object.image.url }}'>
+    <!--  p>{{ object.image.url }}</p-->
+    <div class="media-body">
+        <div class="article-metadata">
+            <!--a class="mr-2" href="">Username</a-->
+            <h2 class="article-title">{{ object.title }}</h2>
+            <small class="text-muted">{{ object.date_created | date:'F d, Y'}}</small>
+            <!-- https://docs.djangoproject.com/en/2.0/ref/templates/builtins/#date -->
+            {% if object.author == user %}
+            <div>
+                <a class='btn btn-secondary btn-sm mt-1 mb-1' href=''>Update</a>
+                <a class='btn btn-danger btn-sm mt-1 mb-1' href=''>Delete</a>
+            </div>
+            {% endif %}
+        </div>
+        <p>Quantity: </p>
+        <p class="article-content graybox">{{ object.quantity }}</p>
+        <p>Status: </p>
+        <p class="article-content graybox">{{ object.status }}</p>
+        <p>Category: </p>
+        <p class="article-content graybox">{{ object.resource_category }}</p>
+        <p>Location: </p>
+        <p class="article-content graybox">{{ object.dropoff_location.place }}</p>
+        <p>Description: </p>
+        <p class="article-content graybox">{{ object.description }}</p>
+        <form>
+            <p class="article-content">Drop-off Time: </p>
+            <button class='btn btn-outline-secondary btn-wide'>{{ object.dropoff_time_1 }}</button>
+            <button class='btn btn-outline-secondary btn-wide'>{{ object.dropoff_time_2 }}</button>
+            <button class='btn btn-outline-secondary btn-wide'>{{ object.dropoff_time_3 }}</button>
+            <p><button class="mt-3 btn btn-dark btn-wide">Reserve</button></p>
+        </form>
+    </div>
+    
+</article>
+{% endblock content %}
