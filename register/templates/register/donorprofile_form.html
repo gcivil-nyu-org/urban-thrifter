@@ -26,6 +26,17 @@
       {{ form |crispy }}
     </fieldset>
     <div class='form-group'>
+      <!-- https://stackoverflow.com/questions/5629805/disabling-enter-key-for-form -->
+      <script type="text/javascript">
+        window.addEventListener('keydown', function(e) {
+          if (e.keyIdentifier == 'U+000A' || e.keyIdentifier == 'Enter' || e.keyCode == 13) {
+            if (e.target.nodeName == 'INPUT' && e.target.type == 'text') {
+              e.preventDefault();
+              return false;
+            }
+          }
+        }, true);
+      </script>
       <button class='btn btn-dark btn-wide' type='submit'>
         Save
       </button>
