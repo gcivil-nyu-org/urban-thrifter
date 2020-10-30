@@ -15,23 +15,14 @@
     font-weight: italic;
     src: url(d-din/D-DIN-Italic.otf) format("opentype");
 }*/
+
 body {
   background: #fafafa;
   color: #333333;
   margin-top: 5rem;
 }
 
-body,
-div,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-a,
-li {
+body, div, h1, h2, h3, h4, h5, h6, p, a, li {
   /*font-family: Palatino,Palatino Linotype,Palatino LT STD,Book Antiqua,Georgia,serif; */
   /*font-family: 'EB Garamond', serif;*/
   font-family: DINFont, serif;
@@ -72,13 +63,17 @@ li {
   max-width: 100px;
 }
 
-.marker {
+.shelter-marker {
   background-image: url('./mapicons/shelter.png');
   background-size: cover;
   width: 20px;
   height: 20px;
   border-radius: 50%;
   cursor: pointer;
+}
+
+.hide {
+  display: none;
 }
 
 h1, h2, h3, h4, h5, h6, .article-title {
@@ -92,9 +87,9 @@ p, a, li, input, label, textarea {
 /********** Common Element *************/
 
 .btn:focus {
-    box-shadow: none !important;
-    -webkit-box-shadow: none !important;
-    outline: none;
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+  outline: none;
 }
 
 .btn-wide {
@@ -108,7 +103,7 @@ p, a, li, input, label, textarea {
 }
 
 .gray-bg {
-    background: #f9f9f9;
+  background: #f9f9f9;
 }
 
 .btn-dark:hover {
@@ -296,6 +291,7 @@ a.article-title:hover {
 }
 
 /* filtering for main map */
+
 .filter-group {
   font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
   font-weight: 600;
@@ -335,8 +331,7 @@ a.article-title:hover {
   text-transform: capitalize;
 }
 
-.filter-group input[type='checkbox']+label:hover,
-.filter-group input[type='checkbox']:checked+label {
+.filter-group input[type='checkbox']+label:hover, .filter-group input[type='checkbox']:checked+label {
   background-color: #4ea0da;
 }
 
