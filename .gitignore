@@ -144,3 +144,4 @@ cython_debug/
 # Database
 *.sqlite3
 staticfiles/*
+*/migrations/*.py

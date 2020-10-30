@@ -14,23 +14,28 @@ def shelter_json_geojson(json_obj):
             if new_address[-1] == ";" or new_address[-2:] == ".,":
                 data["address"] = new_address[:-1]
                 break
-        comments = 'N/A'
-        if 'comments' in data:
-            comments = data['comments']
+        comments = "N/A"
+        if "comments" in data:
+            comments = data["comments"]
         locations = []
-        locations.append((float(data['longitude']), float(data['latitude'])))
-        geojson_obj.append(geojson.Feature(
-            geometry=geojson.Point(locations),
-            properties={
-                'center_name': data['center_name'],
-                'borough': data['borough'],
-                'address': data['address'],
-                'postcode': data['postcode'],
-                'comments': comments
-            }))
+        locations.append((float(data["longitude"]), float(data["latitude"])))
+        geojson_obj.append(
+            geojson.Feature(
+                geometry=geojson.Point(locations),
+                properties={
+                    "center_name": data["center_name"],
+                    "borough": data["borough"],
+                    "address": data["address"],
+                    "postcode": data["postcode"],
+                    "comments": comments,
+                },
+            )
+        )
     return geojson_obj
 
+
 # Create your views here.
+
 
 def main_map(request):
 
