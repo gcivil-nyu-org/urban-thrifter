@@ -3,7 +3,8 @@
 
 {% if user.is_authenticated and user.helpseekerprofile %}
 <!-- Toggle Button -->
-<p><button onclick="shelterFilter()" class="btn btn-wide btn-dark">Shelter</button></p>
+<p><button onclick="resourceFilter('shelter')" class="btn btn-wide btn-dark">Shelter</button></p>
+<p><button onclick="resourceFilter('wifi')" class="btn btn-wide btn-dark">Internet</button></p>
 
 <!-- Load Map -->
 <section role="main">
@@ -53,7 +54,6 @@
 <script>
   var el = document.createElement('div');
   el.className = 'shelter-marker';
-
   //make a marker for each feature and add to the map
   new mapboxgl.Marker(el)
     .setLngLat({{ center.geometry.coordinates.0 }})
@@ -74,31 +74,34 @@
 </script>
 {% endfor %}
 
-// {% for center in internet_centers %}
+{% for center in internet_centers %}
 <script>
-//   new mapboxgl.Marker({ "color": "#7DCEA0" })
-//     .setLngLat([{{ center.longitude }}, {{ center.latitude }}])
-//     .setPopup(new mapboxgl.Popup({ offset: 50 })
-//       .setHTML(
-//         "<div class='container'>" +
-//         "<h5 class='mb-3'><b>{{center.name}}</b></h5>" +
-//         "<div class='row'>" +
-//         "<div class='col'>" +
-//         "<p>Provider: <b>{{center.provider}}</b></p>" +
-//         "<p>Location: <b>{{center.location}}</b></p>" +
-//         "</div><div class='col'>" +
-//         "<p>Borough: <b>{{center.boroname}}</b></p>" +
-//         "<p>Type: <b>{{center.type}}</b></p>" +
-//         "<p>Remarks: <b>{{center.remarks}}</b></p>" +
-//         "</div></div></div>"
-//       ))
-//     .addTo(map)
+  var wifiEl = document.createElement('div');
+  wifiEl.className = 'wifi-marker';
+  //"color": "#7DCEA0"
+  new mapboxgl.Marker(wifiEl)
+    .setLngLat([{{ center.longitude }}, {{ center.latitude }}])
+    .setPopup(new mapboxgl.Popup({ offset: 50 })
+      .setHTML(
+        "<div class='container'>" +
+        "<h5 class='mb-3'><b>{{center.name}}</b></h5>" +
+        "<div class='row'>" +
+        "<div class='col'>" +
+        "<p>Provider: <b>{{center.provider}}</b></p>" +
+        "<p>Location: <b>{{center.location}}</b></p>" +
+        "</div><div class='col'>" +
+        "<p>Borough: <b>{{center.boroname}}</b></p>" +
+        "<p>Type: <b>{{center.type}}</b></p>" +
+        "<p>Remarks: <b>{{center.remarks}}</b></p>" +
+        "</div></div></div>"
+      ))
+    .addTo(map)
 </script>
-<!-- {% endfor %} -->
+{% endfor %}
 <script>
-  function shelterFilter() {
-    console.log("clicked");
-    var shelters = document.getElementsByClassName("shelter-marker");
+  function resourceFilter(recourceCategory) {
+    var filterClass = recourceCategory + "-marker"
+    var shelters = document.getElementsByClassName(filterClass);
     // console.log(x);
     for (i = 0; i < shelters.length; i++) {
       if (shelters[i].classList.contains("hide")) {

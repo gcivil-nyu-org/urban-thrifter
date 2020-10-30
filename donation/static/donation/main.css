@@ -3,6 +3,14 @@
   src: url(d-din/D-DIN.otf) format("opentype");
 }
 
+.icon::before {
+  display: inline-block;
+  font-style: normal;
+  font-variant: normal;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+}
+
 /*
 @font-face {
     font-family: DINFont;
@@ -64,14 +72,22 @@ body, div, h1, h2, h3, h4, h5, h6, p, a, li {
 }
 
 .shelter-marker {
-  background-image: url('./mapicons/shelter.png');
+  background-image: url('./mapicons/bed.svg');
   background-size: cover;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
+  /* font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  content: "\f236"; */
+  width: 30px;
+  height: 30px;
   cursor: pointer;
 }
-
+.wifi-marker {
+  background-image: url('./mapicons/wifi.svg');
+  background-size: cover;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
 .hide {
   display: none;
 }
