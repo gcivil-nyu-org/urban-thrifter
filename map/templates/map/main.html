@@ -1,7 +1,9 @@
 {% extends 'donation/navfull.html' %}
 {% block content %}
 {% if user.is_authenticated and user.helpseekerprofile %}
-<!-- shelter data-->
+<!-- Toggle Button -->
+<button class="btn btn-wide btn-dark">Shelter</button>
+<!-- Load Map -->
 <div id='map'></div>
 <nav id="filter-group" class="filter-group"></nav>
 <script>
@@ -38,52 +40,56 @@
 </script>
 {% endfor %}
 
-
-{% for center in drop_in_centers %}
+<!-- shelter data-->
+{% for center in shelter_geojson %}
 <script>
-  new mapboxgl.Marker({ "color": "#EB984E" })
-    .setLngLat([{{ center.longitude }}, {{ center.latitude }}])
+  var el = document.createElement('div');
+  el.className = 'marker';
+  el.classList.add("shelter-marker");
+
+  //make a marker for each feature and add to the map
+  new mapboxgl.Marker(el)
+    .setLngLat({{ center.geometry.coordinates.0 }})
     .setPopup(new mapboxgl.Popup({ offset: 50 })
       .setHTML(
-        "<div class='container'>"+
-        "<h5 class='mb-3'><b>{{center.center_name}}</b></h5>" +
+        "<div class='container'>" +
+        "<h5 class='mb-3'><b>{{center.properties.center_name}}</b></h5>" +
         "<div class='row'>" +
         "<div class='col'>" +
-        "<p>Address: <b>{{center.address}}</b></p>" +
-        "<p>Borough: <b>{{center.borough}}</b></p>" +
+        "<p>Address: <b>{{center.properties.address}}</b></p>" +
+        "<p>Borough: <b>{{center.properties.borough}}</b></p>" +
         "</div><div class='col'>" +
-        "<p>Zip: <b>{{center.postcode}}</b></p>" +
-        "<p>Hours: <b>{{center.comments}}</b></p>" +
+        "<p>Zip: <b>{{center.properties.postcode}}</b></p>" +
+        "<p>Hours: <b>{{center.properties.comments}}</b></p>" +
         "</div></div></div>"
       ))
-    .addTo(map)
+    .addTo(map);
 </script>
 {% endfor %}
 
-{% for center in internet_centers %}
+// {% for center in internet_centers %}
 <script>
-  new mapboxgl.Marker({ "color": "#7DCEA0" })
-    .setLngLat([{{ center.longitude }}, {{ center.latitude }}])
-    .setPopup(new mapboxgl.Popup({ offset: 50 })
-      .setHTML(
-        "<div class='container'>"+
-        "<h5 class='mb-3'><b>{{center.name}}</b></h5>" +
-        "<div class='row'>" +
-        "<div class='col'>" +
-        "<p>Provider: <b>{{center.provider}}</b></p>" +
-        "<p>Location: <b>{{center.location}}</b></p>" +
-        "</div><div class='col'>" +
-        "<p>Borough: <b>{{center.boroname}}</b></p>" +
-        "<p>Type: <b>{{center.type}}</b></p>" +
-        "<p>Remarks: <b>{{center.remarks}}</b></p>"+
-        "</div></div></div>"
-      ))
-    .addTo(map)
+//   new mapboxgl.Marker({ "color": "#7DCEA0" })
+//     .setLngLat([{{ center.longitude }}, {{ center.latitude }}])
+//     .setPopup(new mapboxgl.Popup({ offset: 50 })
+//       .setHTML(
+//         "<div class='container'>" +
+//         "<h5 class='mb-3'><b>{{center.name}}</b></h5>" +
+//         "<div class='row'>" +
+//         "<div class='col'>" +
+//         "<p>Provider: <b>{{center.provider}}</b></p>" +
+//         "<p>Location: <b>{{center.location}}</b></p>" +
+//         "</div><div class='col'>" +
+//         "<p>Borough: <b>{{center.boroname}}</b></p>" +
+//         "<p>Type: <b>{{center.type}}</b></p>" +
+//         "<p>Remarks: <b>{{center.remarks}}</b></p>" +
+//         "</div></div></div>"
+//       ))
+//     .addTo(map)
 </script>
-{% endfor %}
+<!-- {% endfor %} -->
 {% elif user.donorprofile %}
-<html>
-
+<!-- <html>
 <head>
   <script type="text/javascript">
     function Redirect() {

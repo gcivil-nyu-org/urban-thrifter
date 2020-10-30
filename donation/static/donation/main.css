@@ -72,6 +72,15 @@ li {
   max-width: 100px;
 }
 
+.marker {
+  background-image: url('./mapicons/shelter.png');
+  background-size: cover;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
 h1, h2, h3, h4, h5, h6, .article-title {
   color: #333;
 }
