@@ -13,8 +13,8 @@ class ReservationPost(models.Model):
     # donor_id = models.ForeignKey(User, on_delete=models.CASCADE)
     # helpseeker_id = models.ForeignKey(User, on_delete=models.CASCADE)
     
-    # TODO: generate order ID token as primary key?
-    # TODO: return order ID in __str__
+    # TODO: generate reservation ID token as primary key?
+    # TODO: return reservation ID in __str__
     # def __str__(self):
         # return self.title
 
