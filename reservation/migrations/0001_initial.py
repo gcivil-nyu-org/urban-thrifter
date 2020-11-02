@@ -9,15 +9,29 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='ReservationPost',
+            name="ReservationPost",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('dropoff_time_request', models.DateTimeField(default=datetime.datetime(2020, 10, 29, 3, 36, 56, 40342, tzinfo=utc))),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "dropoff_time_request",
+                    models.DateTimeField(
+                        default=datetime.datetime(
+                            2020, 10, 29, 3, 36, 56, 40342, tzinfo=utc
+                        )
+                    ),
+                ),
             ],
         ),
     ]

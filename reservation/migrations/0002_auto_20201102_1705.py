@@ -7,13 +7,13 @@ import django.utils.timezone
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('reservation', '0001_initial'),
+        ("reservation", "0001_initial"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='reservationpost',
-            name='dropoff_time_request',
+            model_name="reservationpost",
+            name="dropoff_time_request",
             field=models.DateTimeField(default=django.utils.timezone.now),
         ),
     ]
