@@ -124,6 +124,31 @@
 </script>
 {% endfor %}
 
+{% for center in after_school_prgms %}
+<script>
+  //var parkEl = document.createElement('div');
+  //parkEl.className = 'park-marker';
+  //"color": "#7DCEA0"
+  new mapboxgl.Marker({ "color": 'orange' })
+    .setLngLat([{{ center.location_1.longitude }}, {{ center.location_1.latitude }}])
+    .setPopup(new mapboxgl.Popup({ offset: 50 })
+      .setHTML(
+        "<div class='container'>" +
+        "<h5 class='mb-3'><b>{{center.name}}</b></h5>" +
+        "<div class='row'>" +
+        "<div class='col'>" +
+        "<p>Provider: <b>{{center.provider}}</b></p>" +
+        "<p>Location: <b>{{center.location}}</b></p>" +
+        "</div><div class='col'>" +
+        "<p>Borough: <b>{{center.boroname}}</b></p>" +
+        "<p>Type: <b>{{center.type}}</b></p>" +
+        "<p>Remarks: <b>{{center.remarks}}</b></p>" +
+        "</div></div></div>"
+      ))
+    .addTo(map)
+</script>
+{% endfor %}
+
 <script>
   function resourceFilter(recourceCategory) {
     var filterClass = recourceCategory + "-marker"
