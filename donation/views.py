@@ -63,8 +63,6 @@ class PostCreateView(LoginRequiredMixin, CreateView):
         "resource_category",
     ]
 
-    template_name = "reservation_status_nav.html"
-
     def get_form(self):
         form = super().get_form()
         form.fields["dropoff_time_1"].widget = DateTimePickerInput()
