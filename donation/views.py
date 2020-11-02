@@ -69,9 +69,9 @@ class PostCreateView(LoginRequiredMixin, CreateView):
         return form
 
     # Overwrite form valid method
-    # def form_valid(self, form):
-    #    form.instance.author = self.request.user
-    #    return super().form_valid(form)
+    def form_valid(self, form):
+       form.instance.donor = self.request.user
+       return super().form_valid(form)
 
 
 # Donation Detail View
