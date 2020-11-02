@@ -22,7 +22,7 @@ def home(request):
 
     # context is the argument pass into the html
 
-    return render(request, "donation/donation_all.html", context)
+    return render(request, "donation/reservation_status_nav.html", context)
 
 
 def reservation(request):
