@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+
 # from django.contrib.auth.models import User
 # from donation.models import ResourcePost
 # from places.fields import PlacesField
