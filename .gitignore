@@ -142,5 +142,4 @@ cython_debug/
 *.ini
 
 # Database
-*.sqlite3
 staticfiles/*
