@@ -53,3 +53,7 @@ class DonorProfile(models.Model):
 
     def get_absolute_url(self):
         return reverse("register:donor-profile", kwargs={"username": self.user})
+    
+    def __str__(self):
+        return "%s" % (self.user)
+
