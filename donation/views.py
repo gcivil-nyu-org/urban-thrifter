@@ -26,7 +26,7 @@ def home(request):
 
 
 def reservation(request):
-    return render(request, "donation/reservation.html")
+    return render(request, "donation/reservation_status_nav.html")
 
 
 # All Donations View
