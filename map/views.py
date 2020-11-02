@@ -64,6 +64,18 @@ def main_map(request):
     internet_center_URL = "https://data.cityofnewyork.us/resource/yjub-udmw.json"
     internet_center_r = requests.get(url=internet_center_URL)
     internet_centers = internet_center_r.json()
+    
+
+    # Toilets in Public Parks API GET
+    computer_centers_URL = "https://data.cityofnewyork.us/resource/cuzb-dmcd.json"
+    computer_centers_r = requests.get(url=computer_centers_URL)
+    computer_centers = computer_centers_r.json()
+
+    # Toilets in Public Parks API GET
+    after_school_prgms_URL = "https://data.cityofnewyork.us/resource/cuzb-dmcd.json"
+    after_school_prgms_r = requests.get(url=after_school_prgms_URL)
+    after_school_prgms = after_school_prgms_r.json()
+
     return render(
         request,
         "map/main.html",
@@ -72,6 +84,8 @@ def main_map(request):
             "drop_in_centers": drop_in_centers,
             "post_context": post_context["resource_posts"],
             "internet_centers": internet_centers,
+            "computer_centers": computer_centers,
+            "after_school_prgms":after_school_prgms,
             "shelter_geojson": shelter_geojson,
         },
     )
