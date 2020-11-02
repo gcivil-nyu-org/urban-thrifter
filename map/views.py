@@ -5,6 +5,7 @@ from django.apps import apps
 
 # Create your views here.
 
+
 def main_map(request):
 
     mapbox_access_token = "pk." + os.environ.get("MAPBOX_KEY")

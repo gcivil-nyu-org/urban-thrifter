@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from donation.models import ResourcePost
 from .models import ReservationPost
 from django.views.generic import ListView, DetailView
@@ -30,6 +29,7 @@ class PostDetailView(DetailView):
     # Basic detail view
     model = ResourcePost
     template_name = "reservation/reservation_request.html"
+
 
 class ReservationDetailView(DetailView):
     model = ReservationPost
