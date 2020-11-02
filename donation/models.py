@@ -7,6 +7,7 @@ from PIL import Image
 
 # from django.contrib.auth.models import User
 from places.fields import PlacesField
+from django.contrib.auth.models import User
 
 
 # Create your models here.
@@ -64,6 +65,7 @@ class ResourcePost(models.Model):
     dropoff_time_2 = models.DateTimeField(blank=True, null=True)
     dropoff_time_3 = models.DateTimeField(blank=True, null=True)
     date_created = models.DateTimeField(default=timezone.now)
+    donor = models.ForeignKey(User, on_delete=models.CASCADE)
 
     # donor_id = models.ForeignKey(User, on_delete=models.CASCADE)
     # 1:n relationship
