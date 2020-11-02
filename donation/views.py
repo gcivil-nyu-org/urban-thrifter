@@ -3,6 +3,8 @@ from django.views.generic import ListView, CreateView, DetailView
 from .models import ResourcePost
 from bootstrap_datepicker_plus import DateTimePickerInput
 from django.contrib.auth.mixins import LoginRequiredMixin
+from register.models import DonorProfile
+from django.contrib.auth.models import User
 
 # , UserPassesTestMixin
 
