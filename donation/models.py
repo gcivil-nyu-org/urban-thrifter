@@ -1,5 +1,7 @@
 from django.db import models
 from django.utils import timezone
+from register.models import DonorProfile
+from django.contrib.auth.models import User
 
 # Import reverse
 from django.urls import reverse
@@ -64,9 +66,8 @@ class ResourcePost(models.Model):
     dropoff_time_2 = models.DateTimeField(blank=True, null=True)
     dropoff_time_3 = models.DateTimeField(blank=True, null=True)
     date_created = models.DateTimeField(default=timezone.now)
-
-    # donor_id = models.ForeignKey(User, on_delete=models.CASCADE)
-    # 1:n relationship
+    donor_profile = models.ForeignKey(DonorProfile, on_delete=models.CASCADE)     # 1:n relationship (for one donor, many post)
+    # donor_profile = models.ForeignKey(User, on_delete=models.CASCADE)
 
     dropoff_location = PlacesField(blank=True, null=True)
     resource_category = models.CharField(
