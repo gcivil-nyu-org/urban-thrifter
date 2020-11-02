@@ -19,7 +19,6 @@ def home(request):
     print(request)
     user = request.user
     context = {"posts": ResourcePost.objects.filter(donor=user)}
-    
 
     # context is the argument pass into the html
 
@@ -61,9 +60,9 @@ class PostCreateView(LoginRequiredMixin, CreateView):
         "dropoff_time_2",
         "dropoff_time_3",
         "dropoff_location",
-        "resource_category"
+        "resource_category",
     ]
-    
+
     def get_form(self):
         form = super().get_form()
         form.fields["dropoff_time_1"].widget = DateTimePickerInput()
@@ -73,9 +72,8 @@ class PostCreateView(LoginRequiredMixin, CreateView):
 
     # Overwrite form valid method
     def form_valid(self, form):
-       form.instance.donor = self.request.user
-       return super().form_valid(form)
-
+        form.instance.donor = self.request.user
+        return super().form_valid(form)
 
 
 # Donation Detail View
