@@ -53,8 +53,3 @@ class PostDetailView(DetailView):
     # Basic detail view
     model = ResourcePost
     template_name = "reservation/reservation_request.html"
-
-
-class ReservationDetailView(DetailView):
-    model = ReservationPost
-    template_name = "reservation/reservation_detail.html"
