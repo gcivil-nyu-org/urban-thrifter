@@ -86,7 +86,6 @@ def main_map(request):
             "internet_centers": internet_centers,
             "computer_centers": computer_centers,
             "after_school_prgms":after_school_prgms,
-            "public_toilets":public_toilets,
             "shelter_geojson": shelter_geojson,
         },
     )
