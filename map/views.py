@@ -76,6 +76,11 @@ def main_map(request):
     after_school_prgms_r = requests.get(url=after_school_prgms_URL)
     after_school_prgms = after_school_prgms_r.json()
 
+    # Toilets in after school programmes API GET
+    public_toilets_URL = "https://data.cityofnewyork.us/resource/hjae-yuav.json"
+    public_toilets_r = requests.get(url=public_toilets_URL)
+    public_toilets = public_toilets_r.json()
+
     return render(
         request,
         "map/main.html",
@@ -86,6 +91,7 @@ def main_map(request):
             "internet_centers": internet_centers,
             "computer_centers": computer_centers,
             "after_school_prgms":after_school_prgms,
+            "public_toilets":public_toilets,
             "shelter_geojson": shelter_geojson,
         },
     )

@@ -6,6 +6,10 @@
 <p><button onclick="resourceFilter('shelter')" class="btn btn-wide btn-dark">Shelter</button></p>
 <p><button onclick="resourceFilter('wifi')" class="btn btn-wide btn-dark">Internet</button></p>
 
+<!--Geocoding-->
+<script src="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js"></script>
+<link href="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css" rel="stylesheet" />
+
 <!-- Load Map -->
 <section role="main">
   <div class="row">
@@ -148,6 +152,53 @@
     .addTo(map)
 </script>
 {% endfor %}
+
+<script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.min.js"></script>
+<link
+rel="stylesheet"
+href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.css"
+type="text/css"
+/>
+<!-- Promise polyfill script required to use Mapbox GL Geocoder in IE 11 -->
+<script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>
+<div id="map"></div>
+
+
+
+<script>
+
+  var mapboxClient = mapboxSdk({ accessToken: mapboxgl.accessToken });
+      mapboxClient.geocoding
+      .forwardGeocode({
+        query: 'Glenwood Road, East 100 & East 101 streets, Brooklyn,New York, United States',
+        autocomplete: false,
+        limit: 1
+      })
+      .send()
+      .then(function (response) {
+if (
+response &&
+response.body &&
+response.body.features &&
+response.body.features.length
+) {
+  var feature = response.body.features[0]; 
+    new mapboxgl.Marker({ "color": 'yellow' })
+    .setLngLat(feature.center)
+    .setPopup(new mapboxgl.Popup({ offset: 50 })
+    .setHTML(
+        "<div class='container'>" +
+        "<h5 class='mb-3'><b>{{center1.name}}</b></h5>" +
+        "<div class='row'>" +
+        "<div class='col'>" +
+        "</div></div></div>"
+      ))
+    .addTo(map);
+    
+    });
+</script>
+
 
 <script>
   function resourceFilter(recourceCategory) {
