@@ -50,3 +50,10 @@ class ComplaintModelTests(TestCase):
             image=None,
         )
         self.assertFalse(form.save())
+
+    def test_complaint_contains_without_subject_message_data(self):
+        form = Complaint(
+            uploaded_at=timezone.now(),
+            image=None,
+        )
+        self.assertFalse(form.save())
