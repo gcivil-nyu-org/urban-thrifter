@@ -8,15 +8,19 @@ import datetime
 # Create your views here.
 def reservation_function(request, id):
     if request.method == "POST":
-       selected_time = request.POST.get("dropoff_time")
+       selected_timeslot = request.POST.get("dropoff_time")
        resource_post = ResourcePost.objects.get(id=id)
+       if selected_timeslot == '1':
+            selected_time = resource_post.dropoff_time_1
+       elif selected_timeslot == '2':
+            selected_time = resource_post.dropoff_time_2
+       elif selected_timeslot == '3':
+            selected_time = resource_post.dropoff_time_3
        donor_id = User.objects.get(id=resource_post.donor_id)
        helpseeker_id = request.user
        reservation = ReservationPost(dropoff_time_request=selected_time, post=resource_post, donor=donor_id, helpseeker=helpseeker_id)
        reservation.save()
     return redirect("reservation-home")
-# All Resource View
-
 
 # Reservation List View
 class PostListView(ListView):
