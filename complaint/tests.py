@@ -28,3 +28,7 @@ class ComplaintModelTests(TestCase):
 
         response = self.client.get(reverse("issue-complaint"))
         self.assertEqual(response.status_code, 200)
+
+    def test_complaint_contains_no_data(self):
+        form = Complaint()
+        self.assertFalse(form.save())
