@@ -32,3 +32,12 @@ class ComplaintModelTests(TestCase):
     def test_complaint_contains_no_data(self):
         form = Complaint()
         self.assertFalse(form.save())
+
+    def test_complaint_contains_wrong_message_data(self):
+        form =Complaint(
+            subject="hi all,",
+            message="",
+            uploaded_at=timezone.now(),
+            image=None,
+        )
+        self.assertFalse(form.save())
