@@ -164,42 +164,6 @@ type="text/css"
 <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>
 <div id="map"></div>
 
-
-
-<script>
-
-  var mapboxClient = mapboxSdk({ accessToken: mapboxgl.accessToken });
-      mapboxClient.geocoding
-      .forwardGeocode({
-        query: 'Glenwood Road, East 100 & East 101 streets, Brooklyn,New York, United States',
-        autocomplete: false,
-        limit: 1
-      })
-      .send()
-      .then(function (response) {
-if (
-response &&
-response.body &&
-response.body.features &&
-response.body.features.length
-) {
-  var feature = response.body.features[0]; 
-    new mapboxgl.Marker({ "color": 'yellow' })
-    .setLngLat(feature.center)
-    .setPopup(new mapboxgl.Popup({ offset: 50 })
-    .setHTML(
-        "<div class='container'>" +
-        "<h5 class='mb-3'><b>{{center1.name}}</b></h5>" +
-        "<div class='row'>" +
-        "<div class='col'>" +
-        "</div></div></div>"
-      ))
-    .addTo(map);
-    
-    });
-</script>
-
-
 <script>
   function resourceFilter(recourceCategory) {
     var filterClass = recourceCategory + "-marker"
