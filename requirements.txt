@@ -29,3 +29,4 @@ black==20.8b1
 flake8==3.8.4
 coverage==5.3
 coveralls==2.1.2
+geojson
