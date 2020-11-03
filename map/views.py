@@ -66,7 +66,7 @@ def main_map(request):
     internet_centers = internet_center_r.json()
     
 
-    # Toilets in Public Parks API GET
+    # Toilets in Computer centers API GET
     computer_centers_URL = "https://data.cityofnewyork.us/resource/cuzb-dmcd.json"
     computer_centers_r = requests.get(url=computer_centers_URL)
     computer_centers = computer_centers_r.json()
