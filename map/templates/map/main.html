@@ -82,7 +82,6 @@
 <script>
   var wifiEl = document.createElement('div');
   wifiEl.className = 'wifi-marker';
-  //"color": "#7DCEA0"
   new mapboxgl.Marker(wifiEl)
     .setLngLat([{{ center.longitude }}, {{ center.latitude }}])
     .setPopup(new mapboxgl.Popup({ offset: 50 })
@@ -105,9 +104,6 @@
 
 {% for center in computer_centers %}
 <script>
-  //var parkEl = document.createElement('div');
-  //parkEl.className = 'park-marker';
-  //"color": "#7DCEA0"
   new mapboxgl.Marker({ "color": 'red' })
     .setLngLat([{{ center.lon }}, {{ center.lat }}])
     .setPopup(new mapboxgl.Popup({ offset: 50 })
@@ -130,9 +126,6 @@
 
 {% for center in after_school_prgms %}
 <script>
-  //var parkEl = document.createElement('div');
-  //parkEl.className = 'park-marker';
-  //"color": "#7DCEA0"
   new mapboxgl.Marker({ "color": 'orange' })
     .setLngLat([{{ center.location_1.longitude }}, {{ center.location_1.latitude }}])
     .setPopup(new mapboxgl.Popup({ offset: 50 })
