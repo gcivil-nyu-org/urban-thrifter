@@ -63,8 +63,7 @@ def main_map(request):
     # Internet spots API GET
     internet_center_URL = "https://data.cityofnewyork.us/resource/yjub-udmw.json"
     internet_center_r = requests.get(url=internet_center_URL)
-    internet_centers = internet_center_r.json()
-    
+    internet_centers = internet_center_r.json() 
 
     # Toilets in Computer centers API GET
     computer_centers_URL = "https://data.cityofnewyork.us/resource/cuzb-dmcd.json"
