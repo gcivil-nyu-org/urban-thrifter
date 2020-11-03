@@ -20,6 +20,8 @@ def reservation_function(request, id):
        helpseeker_id = request.user
        reservation = ReservationPost(dropoff_time_request=selected_time, post=resource_post, donor=donor_id, helpseeker=helpseeker_id)
        reservation.save()
+       resource_post.status = "PENDING"
+       resource_post.save()
     return redirect("reservation-home")
 
 # Reservation List View
