@@ -97,7 +97,7 @@
   var reeducationEl = document.createElement('div');
   reeducationEl.className = 'reeducation-marker';
   new mapboxgl.Marker(reeducationEl)
-    .setLngLat([{{ center.location_1.longitude }}, {{ center.location_1.latitude }}])
+    .setLngLat([String({{ center.location_1.longitude }}), String({{ center.location_1.latitude }})])
     .setPopup(new mapboxgl.Popup({ offset: 50 })
       .setHTML(
         "<div class='container'>" +
