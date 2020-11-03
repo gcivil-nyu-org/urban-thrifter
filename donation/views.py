@@ -16,8 +16,6 @@ def homepage(request):
 
 
 def home(request):
-    print(request)
-    user = request.user
     context = {"posts": ResourcePost.objects.filter(donor=user)}
 
     # context is the argument pass into the html
@@ -26,7 +24,7 @@ def home(request):
 
 
 def reservation(request):
-    return render(request, "donation/reservation_status_nav.html")
+    return render(request, "donation/reservation.html")
 
 
 # All Donations View
