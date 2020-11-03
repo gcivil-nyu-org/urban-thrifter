@@ -179,5 +179,7 @@ AUTHENTICATION_BACKENDS = [
     "django.contrib.auth.backends.ModelBackend",
 ]
 
+USE_L10N = False
+DATETIME_FORMAT = 'Y-m-d H:i:sO'
 
 django_heroku.settings(locals(), test_runner=False)

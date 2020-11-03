@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import PostListView, PostDetailView, ReservationDetailView
+from .views import PostListView, PostDetailView, ReservationDetailView, reservation_function
 
 urlpatterns = [
     path("", PostListView.as_view(), name="reservation-home"),
@@ -10,4 +10,5 @@ urlpatterns = [
         ReservationDetailView.as_view(),
         name="reservation-detail",
     ),
+    path("function/<int:id>", reservation_function, name="reservation-function")
 ]

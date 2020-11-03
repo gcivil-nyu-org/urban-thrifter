@@ -27,12 +27,16 @@
         <p class="article-content graybox">{{ object.dropoff_location.place }}</p>
         <p>Description: </p>
         <p class="article-content graybox">{{ object.description }}</p>
-        <form>
+        <form method="POST" action="{% url 'reservation:reservation-function' id=object.id %}">
+			{% csrf_token %}
             <p class="article-content">Drop-off Time: </p>
-            <button class='btn btn-outline-secondary btn-wide'>{{ object.dropoff_time_1 }}</button>
-            <button class='btn btn-outline-secondary btn-wide'>{{ object.dropoff_time_2 }}</button>
-            <button class='btn btn-outline-secondary btn-wide'>{{ object.dropoff_time_3 }}</button>
-            <p><button class="mt-3 btn btn-dark btn-wide">Reserve</button></p>
+			<input type="radio" id="dropoff_time_1" name="dropoff_time" value={{ object.dropoff_time_1 }}>
+			<label for="dropoff_time_1">{{ object.dropoff_time_1|date:'m-d-Y h:i a' }}</label><br>
+            <input type="radio" id="dropoff_time_2" name="dropoff_time" value={{ object.dropoff_time_2 }}>
+			<label for="dropoff_time_2">{{ object.dropoff_time_2|date:'m-d-Y h:i a' }}</label><br>
+            <input type="radio" id="dropoff_time_3" name="dropoff_time" value={{ object.dropoff_time_3 }}>
+			<label for="dropoff_time_3">{{ object.dropoff_time_3|date:'m-d-Y h:i a' }}</label><br>
+            <p><button class="mt-3 btn btn-dark btn-wide" type="submit">Reserve</button></p>
         </form>
     </div>
     
