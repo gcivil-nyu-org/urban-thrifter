@@ -63,7 +63,7 @@ def main_map(request):
     # Internet spots API GET
     internet_center_URL = "https://data.cityofnewyork.us/resource/yjub-udmw.json"
     internet_center_r = requests.get(url=internet_center_URL)
-    internet_centers = internet_center_r.json() 
+    internet_centers = internet_center_r.json()
 
     # Toilets in Computer centers API GET
     computer_centers_URL = "https://data.cityofnewyork.us/resource/cuzb-dmcd.json"
@@ -84,7 +84,7 @@ def main_map(request):
             "post_context": post_context["resource_posts"],
             "internet_centers": internet_centers,
             "computer_centers": computer_centers,
-            "after_school_prgms":after_school_prgms,
+            "after_school_prgms": after_school_prgms,
             "shelter_geojson": shelter_geojson,
         },
     )
