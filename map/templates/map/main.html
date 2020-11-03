@@ -2,13 +2,30 @@
 {% block content %}
 
 {% if user.is_authenticated and user.helpseekerprofile %}
-<!-- Toggle Button -->
-<p><button onclick="resourceFilter('shelter')" class="btn btn-wide btn-dark">Shelter</button></p>
-<p><button onclick="resourceFilter('wifi')" class="btn btn-wide btn-dark">Internet</button></p>
 
 <!-- Load Map -->
 <section role="main">
   <div class="row">
+    <ul class='map-filter'>
+      <li><button class="feature-icon food-icon" onclick="resourceFilter('food')">Food</br><i
+            class="fas fa-apple-alt"></i></button></li>
+      <li><button class="feature-icon shelter-icon" onclick="resourceFilter('shelter')">Shelter</br><i
+            class="fas fa-house-user"></i></button></li>
+      <li><button class="feature-icon ppe-icon" onclick="resourceFilter('ppe')">PPE</br><i
+            class="fas fa-head-side-mask"></i></button></li>
+      <li><button class="feature-icon restroom-icon" onclick="resourceFilter('restroom')">Restroom</br><i
+            class="fas fa-restroom"></i></button></li>
+      <li><button class="feature-icon electronics-icon" onclick="resourceFilter('electronics')">Electronics</br><i
+            class="fas fa-mobile-alt"></i></button></li>
+      <li><button class="feature-icon wifi-icon" onclick="resourceFilter('wifi')">Internet</br><i
+            class="fas fa-wifi"></i></button></li>
+      <li><button class="feature-icon cloth-icon" onclick="resourceFilter('clothes')">Clothes</br><i
+            class="fas fa-tshirt"></i></button></li>
+      <li><button class="feature-icon reeducation-icon" onclick="resourceFilter('reeducation')">Programs</br><i
+            class="fas fa-book-open"></i></button></li>
+      <li><button class="feature-icon others-icon" onclick="resourceFilter('others')">Others</br><i
+            class="fas fa-question"></i></button></li>
+    </ul>
     <div id='map'></div>
   </div>
 </section>
@@ -25,26 +42,76 @@
   })
 </script>
 
-{% for post in post_context %}
+{% for center in internet_centers %}
 <script>
-  personal_donation_html = "<div class='container donation-popup'>" +
-    "<h5 class='mb-3'><b>{{ post.title }}</b> * {{ post.quantity }}</h5>" +
-    "<div class='row'>" +
-    "<div class='col'>" +
-    "<p>{{ post.description }}</p>" +
-    "<p><img src='{{ post.image.url }}' /></p>" +
-    "</div><div class='col'>" +
-    "<p>{{ post.dropoff_time_1 }}</p>" +
-    "<p>{{ post.dropoff_time_2 }}</p>" +
-    "<p>{{ post.dropoff_time_3 }}</p>" +
-    "</div></div>" +
-    "<a href='/' class='btn btn-dark btn-wide' type='submit'>" +
-    "Detail</button></a>"
-  new mapboxgl.Marker({ "color": 'blue' })
-    .setLngLat([{{ post.dropoff_location.longitude }},
-    {{ post.dropoff_location.latitude }}])
-    .setPopup(new mapboxgl.Popup({ offset: 25 })
-      .setHTML(personal_donation_html))
+  var wifiEl = document.createElement('div');
+  wifiEl.className = 'wifi-marker';
+  new mapboxgl.Marker(wifiEl)
+    .setLngLat([{{ center.longitude }}, {{ center.latitude }}])
+    .setPopup(new mapboxgl.Popup({ offset: 50 })
+      .setHTML(
+        "<div class='container'>" +
+        "<h5 class='mb-3'><b>{{center.name}}</b></h5>" +
+        "<div class='row'>" +
+        "<div class='col'>" +
+        "<p>Provider: <b>{{center.provider}}</b></p>" +
+        "<p>Location: <b>{{center.location}}</b></p>" +
+        "</div><div class='col'>" +
+        "<p>Borough: <b>{{center.boroname}}</b></p>" +
+        "<p>Type: <b>{{center.type}}</b></p>" +
+        "<p>Remarks: <b>{{center.remarks}}</b></p>" +
+        "</div></div></div>"
+      ))
+    .addTo(map)
+</script>
+{% endfor %}
+
+<!-- computer center / electronics data-->
+{% for center in computer_centers %}
+<script>
+  var electronicEl = document.createElement('div');
+  electronicEl.className = 'electronics-marker';
+  new mapboxgl.Marker(electronicEl)
+    .setLngLat([{{ center.lon }}, {{ center.lat }}])
+    .setPopup(new mapboxgl.Popup({ offset: 50 })
+      .setHTML(
+        "<div class='container'>" +
+        "<h5 class='mb-3'><b>{{center.oversight_agency}}</b></h5>" +
+        "<div class='row'>" +
+        "<div class='col'>" +
+        "<p>Operator: <b>{{center.operator_name}}</b></p>" +
+        "<p>Location: <b>{{center.location_name}}</b></p>" +
+        "</div><div class='col'>" +
+        "<p>Wifi availability: <b>{{center.wi_fi_available}}</b></p>" +
+        "<p>Wheel chair access: <b>{{center.wheelchair_accessible}}</b></p>" +
+        "<p>Access requirements: <b>{{center.access_requirements}}</b></p>" +
+        "</div></div></div>"
+      ))
+    .addTo(map)
+</script>
+{% endfor %}
+
+<!-- reeducation data-->
+{% for center in after_school_prgms %}
+<script>
+  var reeducationEl = document.createElement('div');
+  reeducationEl.className = 'reeducation-marker';
+  new mapboxgl.Marker(reeducationEl)
+    .setLngLat([{{ center.location_1.longitude }}, {{ center.location_1.latitude }}])
+    .setPopup(new mapboxgl.Popup({ offset: 50 })
+      .setHTML(
+        "<div class='container'>" +
+        "<h5 class='mb-3'><b>{{center.program}}</b></h5>" +
+        "<div class='row'>" +
+        "<div class='col'>" +
+        "<p>Agency: <b>{{center.agency}}</b></p>" +
+        "<p>Borough: <b>{{center.borough_community}}</b></p>" +
+        "</div><div class='col'>" +
+        "<p>Program type: <b>{{center.program_type}}</b></p>" +
+        "<p>Contact: <b>{{center.contact_number}}</b></p>" +
+        "<p>Site name: <b>{{center.site_name}}</b></p>" +
+        "</div></div></div>"
+      ))
     .addTo(map)
 </script>
 {% endfor %}
@@ -74,70 +141,53 @@
 </script>
 {% endfor %}
 
-{% for center in internet_centers %}
+<!-- personal donation data-->
+{% for post in post_context %}
 <script>
-  var wifiEl = document.createElement('div');
-  wifiEl.className = 'wifi-marker';
-  new mapboxgl.Marker(wifiEl)
-    .setLngLat([{{ center.longitude }}, {{ center.latitude }}])
-    .setPopup(new mapboxgl.Popup({ offset: 50 })
-      .setHTML(
-        "<div class='container'>" +
-        "<h5 class='mb-3'><b>{{center.name}}</b></h5>" +
-        "<div class='row'>" +
-        "<div class='col'>" +
-        "<p>Provider: <b>{{center.provider}}</b></p>" +
-        "<p>Location: <b>{{center.location}}</b></p>" +
-        "</div><div class='col'>" +
-        "<p>Borough: <b>{{center.boroname}}</b></p>" +
-        "<p>Type: <b>{{center.type}}</b></p>" +
-        "<p>Remarks: <b>{{center.remarks}}</b></p>" +
-        "</div></div></div>"
-      ))
-    .addTo(map)
+  // console.log({{post.resource_category}})
+  var personalEl = document.createElement('div');
+  personal_donation_html = "<div class='container donation-popup'>" +
+    "<h5 class='mb-3'><b>{{ post.title }}</b> * {{ post.quantity }}</h5>" +
+    "<div class='row'>" +
+    "<div class='col'>" +
+    "<p>{{ post.description }}</p>" +
+    "<p><img src='{{ post.image.url }}' /></p>" +
+    "</div><div class='col'>" +
+    "<p>{{ post.dropoff_time_1 }}</p>" +
+    "<p>{{ post.dropoff_time_2 }}</p>" +
+    "<p>{{ post.dropoff_time_3 }}</p>" +
+    "</div></div>" +
+    "<a href='/' class='btn btn-dark btn-wide' type='submit'>" +
+    "Detail</button></a>"
 </script>
-{% endfor %}
 
-{% for center in computer_centers %}
+{% if post.resource_category == "FOOD" %}
 <script>
-  new mapboxgl.Marker({ "color": 'red' })
-    .setLngLat([{{ center.lon }}, {{ center.lat }}])
-    .setPopup(new mapboxgl.Popup({ offset: 50 })
-      .setHTML(
-        "<div class='container'>" +
-        "<h5 class='mb-3'><b>{{center.oversight_agency}}</b></h5>" +
-        "<div class='row'>" +
-        "<div class='col'>" +
-        "<p>Operator: <b>{{center.operator_name}}</b></p>" +
-        "<p>Location: <b>{{center.location_name}}</b></p>" +
-        "</div><div class='col'>" +
-        "<p>Wifi availability: <b>{{center.wi_fi_available}}</b></p>" +
-        "<p>Wheel chair access: <b>{{center.wheelchair_accessible}}</b></p>" +
-        "<p>Access requirements: <b>{{center.access_requirements}}</b></p>" +
-        "</div></div></div>"
-      ))
-    .addTo(map)
+  personalEl.className = 'food-marker';
 </script>
-{% endfor %}
-
-{% for center in after_school_prgms %}
+{% elif post.resource_category == "MDCL" %}
 <script>
-  new mapboxgl.Marker({ "color": 'orange' })
-    .setLngLat([{{ center.location_1.longitude }}, {{ center.location_1.latitude }}])
-    .setPopup(new mapboxgl.Popup({ offset: 50 })
-      .setHTML(
-        "<div class='container'>" +
-        "<h5 class='mb-3'><b>{{center.program}}</b></h5>" +
-        "<div class='row'>" +
-        "<div class='col'>" +
-        "<p>Agency: <b>{{center.agency}}</b></p>" +
-        "<p>Borough: <b>{{center.borough_community}}</b></p>" +
-        "</div><div class='col'>" +
-        "<p>Program type: <b>{{center.program_type}}</b></p>" +
-        "<p>Contact: <b>{{center.contact_number}}</b></p>" +
-        "<p>Site name: <b>{{center.site_name}}</b></p>" +
-        "</div></div></div>"
-      ))
+  personalEl.className = 'ppe-marker';
+</script>
+{% elif post.resource_category == "CLTH" %}
+<script>
+  personalEl.className = 'clothes-marker';
+</script>
+{% elif post.resource_category == "ELEC" %}
+<script>
+  personalEl.className = 'electronics-marker';
+</script>
+{% elif post.resource_category == "OTHR" %}
+<script>
+  personalEl.className = 'others-marker';
+</script>
+{% endif %}
+<script>
+  new mapboxgl.Marker(personalEl)
+    .setLngLat([{{ post.dropoff_location.longitude }},
+    {{ post.dropoff_location.latitude }}])
+    .setPopup(new mapboxgl.Popup({ offset: 25 })
+      .setHTML(personal_donation_html))
     .addTo(map)
 </script>
 {% endfor %}

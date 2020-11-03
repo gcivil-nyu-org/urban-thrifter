@@ -58,8 +58,151 @@ body, div, h1, h2, h3, h4, h5, h6, p, a, li {
   outline: 0;
 }
 
+.map-filter {
+  z-index: 1000;
+  padding-bottom: 10px;
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.map-filter li {
+  flex-grow: 1;
+  width: 100px;
+  margin: 0 5px;
+}
+
+.map-filter i {
+  font-size: 25px;
+  padding-top: 5px;
+}
+
+.map-filter li button {
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  border-top: 0;
+  background-color: #fff;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+/* .map-filter li:first-child button {
+  border-bottom-left-radius: 5px;
+}
+
+.map-filter li:last-child button {
+  border-bottom-right-radius: 5px ;
+} */
+
+.map-filter li .food-icon {
+  color: #C66257;
+  border: 2px solid #C66257;
+  border-top: none;
+}
+
+.map-filter li .shelter-icon {
+  color: #D6A77E;
+  border: 2px solid #D6A77E;
+  border-top: none;
+}
+
+.map-filter li .ppe-icon {
+  color: #6DB1C7;
+  border: 2px solid #6DB1C7;
+  border-top: none;
+}
+
+.map-filter li .electronics-icon {
+  color: #484848;
+  border: 2px solid #484848;
+  border-top: none;
+}
+
+.map-filter li .cloth-icon {
+  color: #E0C35C;
+  border: 2px solid #E0C35C;
+  border-top: none;
+}
+
+.map-filter li .restroom-icon {
+  color: #155889;
+  border: 2px solid #155889;
+  border-top: none;
+}
+
+.map-filter li .wifi-icon {
+  color: #72B163;
+  border: 2px solid #72B163;
+  border-top: none;
+}
+
+.map-filter li .reeducation-icon {
+  color: #8DA0D0;
+  border: 2px solid #8DA0D0;
+  border-top: none;
+}
+
+.map-filter li .others-icon {
+  color: #B65C87;
+  border: 2px solid #B65C87;
+  border-top: none;
+}
+
+.map-filter li .feature-icon {
+  -moz-transition: all .8s ease;
+  -webkit-transition: all .8s ease;
+  transition: all .8s ease;
+}
+
+.map-filter li:hover .food-icon {
+  background: #C66257;
+  color: white;
+}
+
+.map-filter li:hover .shelter-icon {
+  background: #D6A77E;
+  color: white;
+}
+
+.map-filter li:hover .ppe-icon {
+  background: #6DB1C7;
+  color: white;
+}
+
+.map-filter li:hover .electronics-icon {
+  background: #484848;
+  color: white;
+}
+
+.map-filter li:hover .cloth-icon {
+  background: #E0C35C;
+  color: white;
+}
+
+.map-filter li:hover .restroom-icon {
+  background: #155889;
+  color: white;
+}
+
+.map-filter li:hover .wifi-icon {
+  background: #72B163;
+  color: white;
+}
+
+.map-filter li:hover .reeducation-icon {
+  background: #8DA0D0;
+  color: white;
+}
+
+.map-filter li:hover .others-icon {
+  background: #B65C87;
+  color: white;
+}
+
 .mapboxgl-popup {
   min-width: 500px;
+  color: white;
 }
 
 .mapboxgl-popup-close-button {
@@ -71,23 +214,78 @@ body, div, h1, h2, h3, h4, h5, h6, p, a, li {
   max-width: 100px;
 }
 
-.shelter-marker {
-  background-image: url('./mapicons/bed.svg');
+.food-marker {
+  background-image: url('./mapicons/food.svg');
   background-size: cover;
-  /* font-family: "Font Awesome 5 Free";
-  font-weight: 900;
-  content: "\f236"; */
-  width: 30px;
+  width: 20px;
   height: 30px;
   cursor: pointer;
 }
+
+.shelter-marker {
+  background-image: url('./mapicons/shelter.svg');
+  background-size: cover;
+  width: 25px;
+  height: 30px;
+  cursor: pointer;
+}
+
+.ppe-marker {
+  background-image: url('./mapicons/ppe.svg');
+  background-size: cover;
+  width: 20px;
+  height: 30px;
+  cursor: pointer;
+}
+
+.reeducation-marker {
+  background-image: url('./mapicons/reeducation.svg');
+  background-size: cover;
+  width: 25px;
+  height: 30px;
+  cursor: pointer;
+}
+
+.restroom-marker {
+  background-image: url('./mapicons/restroom.svg');
+  background-size: cover;
+  width: 25px;
+  height: 30px;
+  cursor: pointer;
+}
+
+.electronics-marker {
+  background-image: url('./mapicons/electronics.svg');
+  background-size: cover;
+  width: 18px;
+  height: 36px;
+  cursor: pointer;
+}
+
 .wifi-marker {
   background-image: url('./mapicons/wifi.svg');
   background-size: cover;
-  width: 30px;
+  width: 25px;
   height: 30px;
   cursor: pointer;
 }
+
+.clothes-marker {
+  background-image: url('./mapicons/cloth.svg');
+  background-size: cover;
+  width: 25px;
+  height: 30px;
+  cursor: pointer;
+}
+
+.others-marker {
+  background-image: url('./mapicons/others.svg');
+  background-size: cover;
+  width: 20px;
+  height: 30px;
+  cursor: pointer;
+}
+
 .hide {
   display: none;
 }
