@@ -113,15 +113,15 @@
     .setPopup(new mapboxgl.Popup({ offset: 50 })
       .setHTML(
         "<div class='container'>" +
-        "<h5 class='mb-3'><b>{{center.name}}</b></h5>" +
+        "<h5 class='mb-3'><b>{{center.oversight_agency}}</b></h5>" +
         "<div class='row'>" +
         "<div class='col'>" +
-        "<p>Provider: <b>{{center.provider}}</b></p>" +
-        "<p>Location: <b>{{center.location}}</b></p>" +
+        "<p>Operator: <b>{{center.operator_name}}</b></p>" +
+        "<p>Location: <b>{{center.location_name}}</b></p>" +
         "</div><div class='col'>" +
-        "<p>Borough: <b>{{center.boroname}}</b></p>" +
-        "<p>Type: <b>{{center.type}}</b></p>" +
-        "<p>Remarks: <b>{{center.remarks}}</b></p>" +
+        "<p>Wifi availability: <b>{{center.wi_fi_available}}</b></p>" +
+        "<p>Wheel chair access: <b>{{center.wheelchair_accessible}}</b></p>" +
+        "<p>Access requirements: <b>{{center.access_requirements}}</b></p>" +
         "</div></div></div>"
       ))
     .addTo(map)
@@ -138,15 +138,15 @@
     .setPopup(new mapboxgl.Popup({ offset: 50 })
       .setHTML(
         "<div class='container'>" +
-        "<h5 class='mb-3'><b>{{center.name}}</b></h5>" +
+        "<h5 class='mb-3'><b>{{center.program}}</b></h5>" +
         "<div class='row'>" +
         "<div class='col'>" +
-        "<p>Provider: <b>{{center.provider}}</b></p>" +
-        "<p>Location: <b>{{center.location}}</b></p>" +
+        "<p>Agency: <b>{{center.agency}}</b></p>" +
+        "<p>Borough: <b>{{center.borough_community}}</b></p>" +
         "</div><div class='col'>" +
-        "<p>Borough: <b>{{center.boroname}}</b></p>" +
-        "<p>Type: <b>{{center.type}}</b></p>" +
-        "<p>Remarks: <b>{{center.remarks}}</b></p>" +
+        "<p>Program type: <b>{{center.program_type}}</b></p>" +
+        "<p>Contact: <b>{{center.contact_number}}</b></p>" +
+        "<p>Site name: <b>{{center.site_name}}</b></p>" +
         "</div></div></div>"
       ))
     .addTo(map)
