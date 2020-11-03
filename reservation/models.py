@@ -3,6 +3,7 @@ from django.utils import timezone
 
 from django.contrib.auth.models import User
 from donation.models import ResourcePost
+
 # from places.fields import PlacesField
 from django.urls import reverse
 
@@ -12,8 +13,10 @@ class ReservationPost(models.Model):
 
     dropoff_time_request = models.DateTimeField(default=timezone.now)
     post = models.ForeignKey(ResourcePost, on_delete=models.CASCADE)
-    donor = models.ForeignKey(User, on_delete=models.CASCADE, related_name='donor_id')
-    helpseeker = models.ForeignKey(User, on_delete=models.CASCADE, related_name='helpseeker_id')
+    donor = models.ForeignKey(User, on_delete=models.CASCADE, related_name="donor_id")
+    helpseeker = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="helpseeker_id"
+    )
 
     # TODO: generate reservation ID token as primary key?
     # TODO: return reservation ID in __str__
