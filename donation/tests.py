@@ -109,7 +109,7 @@ class ResourcePostCreateViewTests(TestCase):
             status="AVAILABLE",
         )
         create_resource_post.save()
-        url = reverse("donation-detail", args=(create_resource_post.pk,))
+        url = reverse("donation:donation-detail", args=(create_resource_post.pk,))
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
 
@@ -119,7 +119,7 @@ class ResourcePostListViewTests(TestCase):
         """
         If no post exist, an appropriate message is displayed.
         """
-        response = self.client.get(reverse("donation-all"))
+        response = self.client.get(reverse("donation:donation-all"))
         self.assertEqual(response.status_code, 200)
 
     # def test_donation_home(self):
@@ -131,18 +131,11 @@ class ResourcePostListViewTests(TestCase):
 
 
 class HomepageViewTests(TestCase):
-    def test_reservation(self):
-        """
-        If no post exist, an appropriate message is displayed.
-        """
-        response = self.client.get(reverse("home"))
-        self.assertEqual(response.status_code, 200)
-
     def test_homepage(self):
         """
         If no post exist, an appropriate message is displayed.
         """
-        response = self.client.get(reverse("reservation"))
+        response = self.client.get(reverse("home"))
         self.assertEqual(response.status_code, 200)
 
 
@@ -165,6 +158,6 @@ class ResourcePostDetailViewTests(TestCase):
             status="AVAILABLE",
         )
         create_resource_post.save()
-        url = reverse("donation-detail", args=(create_resource_post.pk,))
+        url = reverse("donation:donation-detail", args=(create_resource_post.pk,))
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)

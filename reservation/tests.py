@@ -73,5 +73,5 @@ class ReservationPostListViewTests(TestCase):
         """
         If no post exist, an appropriate message is displayed.
         """
-        response = self.client.get(reverse("reservation-home"))
+        response = self.client.get(reverse("reservation:reservation-home"))
         self.assertEqual(response.status_code, 200)
