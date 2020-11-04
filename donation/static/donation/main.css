@@ -189,15 +189,21 @@ select option:hover, select option:focus, select option:active {
 .button-nav {
   padding-bottom: 10px;
   display: flex;
+  justify-content: space-around;
+  flex-flow: row wrap;
 }
 
-.button-nav .btn {
+.button-nav .nav-item {
   flex-grow: 1;
   margin-right: 3px;
 }
 
-.button-nav .btn:last-child {
+.button-nav .nav-item:last-child {
   margin-right: 0;
+}
+
+.button-nav .nav-item a {
+  width: 100%;
 }
 
 .content-section {
