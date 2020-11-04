@@ -14,7 +14,7 @@
                             aria-selected="true">Reserved</a>
                     </li>
                     <li class="nav-item">
-                        <a class="btn align-middle btn-outline-dark" href='{% url "donation-new" %}'>New</a>
+                        <a class="btn align-middle btn-outline-dark" href='{% url "donation:donation-new" %}'>New</a>
                         <!-- <a class="btn align-middle btn-outline-dark" id="pills-new-tab" data-toggle="pill"
                             href="#pills-new" role="tab" aria-controls="pills-new" aria-selected="true">New</a> -->
                     </li>
@@ -51,7 +51,7 @@
                     <div class="row text-center">
                         <div class="col">
                             <p>Title</p>
-                            <p><a href="{% url 'donation-detail' post.id %}">{{ post.title }}</a></p>
+                            <p><a href="{% url 'donation:donation-detail' post.id %}">{{ post.title }}</a></p>
                         </div>
                         <div class="col">
                             <p>Quantity</p>

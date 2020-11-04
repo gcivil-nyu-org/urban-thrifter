@@ -87,7 +87,7 @@ class ResourcePost(models.Model):
     # let the view redirect for us
     def get_absolute_url(self):
         # return the path of the specific post
-        return reverse("donation-detail", kwargs={"pk": self.pk})
+        return reverse("donation:donation-detail", kwargs={"pk": self.pk})
 
     def check_quantity(self):
         if type(self.quantity) != int:
