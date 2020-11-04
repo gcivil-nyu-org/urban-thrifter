@@ -15,6 +15,8 @@ from django.test import override_settings
 #     image = Image.new("RGB", size, color)
 #     image.save(temp_file, "jpeg")
 #     return temp_file
+
+
 def createdonor():
     donor = User(
         username="donor_unit_test",
@@ -27,6 +29,7 @@ def createdonor():
     #                           complaint_count=0,
     #                           donation_count=0)
     return donor
+
 
 class ResourcePostCreateViewTests(TestCase):
     def test_quantity_non_numeric_input(self):
