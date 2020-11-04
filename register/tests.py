@@ -3,6 +3,38 @@ from .models import HelpseekerProfile, DonorProfile
 from .forms import HelpseekerForm, DonorForm
 from django.contrib.auth.models import User
 from django.urls import reverse
+from django.utils.http import urlsafe_base64_encode
+from django.contrib.auth.tokens import PasswordResetTokenGenerator
+from django.utils.encoding import force_bytes
+
+
+class EmailTests(TestCase):
+    def test_email_sent(self):
+        holder = self.client.get(reverse("register:email-sent"))
+        self.assertEqual(holder.status_code, 200)
+        self.assertContains(holder, "Confirmation email has been sent!")
+
+    def test_change_password(self):
+        user = User.objects.create(
+            username="test",
+            email="ponathanjun@gmail.com",
+            password="peaches12",
+        )
+        holder = self.client.post(
+            "/register/activate/"
+            + urlsafe_base64_encode(force_bytes(user.pk))
+            + "/"
+            + PasswordResetTokenGenerator().make_token(user),
+            {"password1": "peaches14", "password2": "peaches14"},
+        )
+        self.assertEqual(holder.status_code, 200)
+
+
+class RegisterPageViewTests(TestCase):
+    def test_register_redirect(self):
+        holder = self.client.get(reverse("register:register"))
+        self.assertEqual(holder.status_code, 200)
+        self.assertContains(holder, "Are you a _______?")
 
 
 class HelpseekerRegistrationTests(TestCase):
@@ -311,6 +343,7 @@ class HelpseekerViewTests(TestCase):
             },
         )
         self.assertEqual(holder.status_code, 200)
+        self.assertContains(holder, "Help Seeker Registration")
 
     def test_bad_email_post_request(self):
         holder = self.client.post(
@@ -325,6 +358,7 @@ class HelpseekerViewTests(TestCase):
             },
         )
         self.assertEqual(holder.status_code, 200)
+        self.assertContains(holder, "Help Seeker Registration")
 
     def test_bad_password_post_request(self):
         holder = self.client.post(
@@ -339,20 +373,12 @@ class HelpseekerViewTests(TestCase):
             },
         )
         self.assertEqual(holder.status_code, 200)
+        self.assertContains(holder, "Help Seeker Registration")
 
-    def test_mismatch_password_post_request(self):
-        holder = self.client.post(
-            reverse("register:helpseeker-register"),
-            data={
-                "username": "Jonathan",
-                "email": "ponathanjun@gmail.com",
-                "password1": "peaches12",
-                "password2": "peaches13",
-                "borough": "MAN",
-                "resource": ["FOOD", "MDCL"],
-            },
-        )
+    def test_helpseeker_register_get(self):
+        holder = self.client.get(reverse("register:helpseeker-register"))
         self.assertEqual(holder.status_code, 200)
+        self.assertContains(holder, "Help Seeker Registration")
 
 
 class DonorRegistrationTests(TestCase):
@@ -536,3 +562,75 @@ class DonorProfileTests(TestCase):
         user = User.objects.filter(id="1").first()
         profile = DonorProfile(user=user)
         self.assertTrue(profile.complaint_count == 0)
+
+
+class DonorViewTests(TestCase):
+    def test_successful_post_request(self):
+        holder = self.client.post(
+            reverse("register:donor-register"),
+            data={
+                "username": "Jonathan",
+                "email": "ponathanjun@gmail.com",
+                "password1": "peaches12",
+                "password2": "peaches12",
+            },
+        )
+        self.assertEqual(holder.status_code, 302)
+        self.assertEqual(holder["Location"], "/register/email-sent")
+
+    def test_bad_username_post_request(self):
+        holder = self.client.post(
+            reverse("register:donor-register"),
+            data={
+                "username": "jon",
+                "email": "ponathanjun@gmail.com",
+                "password1": "peaches12",
+                "password2": "peaches12",
+            },
+        )
+        self.assertEqual(holder.status_code, 200)
+        self.assertContains(holder, "Donor Registration")
+
+    def test_bad_email_post_request(self):
+        holder = self.client.post(
+            reverse("register:donor-register"),
+            data={
+                "username": "Jonathan",
+                "email": "ponathanjun",
+                "password1": "peaches12",
+                "password2": "peaches12",
+            },
+        )
+        self.assertEqual(holder.status_code, 200)
+        self.assertContains(holder, "Donor Registration")
+
+    def test_bad_password_post_request(self):
+        holder = self.client.post(
+            reverse("register:donor-register"),
+            data={
+                "username": "Jonathan",
+                "email": "ponathanjun@gmail.com",
+                "password1": "dog",
+                "password2": "dog",
+            },
+        )
+        self.assertEqual(holder.status_code, 200)
+        self.assertContains(holder, "Donor Registration")
+
+    def test_mismatch_password_post_request(self):
+        holder = self.client.post(
+            reverse("register:donor-register"),
+            data={
+                "username": "Jonathan",
+                "email": "ponathanjun@gmail.com",
+                "password1": "peaches12",
+                "password2": "peaches13",
+            },
+        )
+        self.assertEqual(holder.status_code, 200)
+        self.assertContains(holder, "Donor Registration")
+
+    def test_helpseeker_register_get(self):
+        holder = self.client.get(reverse("register:donor-register"))
+        self.assertEqual(holder.status_code, 200)
+        self.assertContains(holder, "Donor Registration")
