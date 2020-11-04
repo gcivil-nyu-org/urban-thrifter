@@ -7,6 +7,7 @@ from PIL import Image
 
 # from django.contrib.auth.models import User
 from places.fields import PlacesField
+from django.contrib.auth.models import User
 
 
 # Create your models here.
@@ -51,8 +52,9 @@ RESROUCE_CATEGORY_CHOICES = (
 )
 STATUS_CHOICES = (
     ("AVAILABLE", "Available"),
+    ("RESERVED", "Reserved"),
     ("PENDING", "Pending"),
-    ("NOTAVAILABLE", "Not Available"),
+    ("CLOSED", "Closed"),
 )
 
 
@@ -64,10 +66,7 @@ class ResourcePost(models.Model):
     dropoff_time_2 = models.DateTimeField(blank=True, null=True)
     dropoff_time_3 = models.DateTimeField(blank=True, null=True)
     date_created = models.DateTimeField(default=timezone.now)
-
-    # donor_id = models.ForeignKey(User, on_delete=models.CASCADE)
-    # 1:n relationship
-
+    donor = models.ForeignKey(User, on_delete=models.CASCADE)
     dropoff_location = PlacesField(blank=True, null=True)
     resource_category = models.CharField(
         max_length=100, choices=RESROUCE_CATEGORY_CHOICES
@@ -88,7 +87,7 @@ class ResourcePost(models.Model):
     # let the view redirect for us
     def get_absolute_url(self):
         # return the path of the specific post
-        return reverse("donation-detail", kwargs={"pk": self.pk})
+        return reverse("donation:donation-detail", kwargs={"pk": self.pk})
 
     def check_quantity(self):
         if type(self.quantity) != int:
@@ -98,8 +97,10 @@ class ResourcePost(models.Model):
         else:
             return True
 
-    def save(self):
-        super().save()
+    def save(self, *args, **kwargs):
+        if not self.dropoff_location:
+            self.dropoff_location = self.donor.donorprofile.dropoff_location
+        super().save(*args, **kwargs)
 
         path = self.image.path
         img = Image.open(path)

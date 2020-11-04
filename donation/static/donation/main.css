@@ -3,6 +3,14 @@
   src: url(d-din/D-DIN.otf) format("opentype");
 }
 
+.icon::before {
+  display: inline-block;
+  font-style: normal;
+  font-variant: normal;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+}
+
 /*
 @font-face {
     font-family: DINFont;
@@ -15,23 +23,14 @@
     font-weight: italic;
     src: url(d-din/D-DIN-Italic.otf) format("opentype");
 }*/
+
 body {
   background: #fafafa;
   color: #333333;
   margin-top: 5rem;
 }
 
-body,
-div,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-a,
-li {
+body, div, h1, h2, h3, h4, h5, h6, p, a, li {
   /*font-family: Palatino,Palatino Linotype,Palatino LT STD,Book Antiqua,Georgia,serif; */
   /*font-family: 'EB Garamond', serif;*/
   font-family: DINFont, serif;
@@ -59,8 +58,154 @@ li {
   outline: 0;
 }
 
+.map-filter {
+  z-index: 1000;
+  padding-bottom: 10px;
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 15px;
+}
+
+.map-filter li {
+  flex-grow: 1;
+  width: 100px;
+  margin: 0 5px;
+}
+
+.map-filter i {
+  font-size: 25px;
+  padding-top: 5px;
+}
+
+.map-filter li button {
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.map-filter li:hover button {
+  background-color: #fff;
+}
+
+.map-filter li .food-icon {
+  background: #C66257;
+  color: white;
+  border: 1px solid #C66257;
+}
+
+.map-filter li .shelter-icon {
+  background: #D6A77E;
+  color: white;
+  border: 1px solid #D6A77E;
+}
+
+.map-filter li .ppe-icon {
+  background: #6DB1C7;
+  color: white;
+  border: 1px solid #6DB1C7;
+}
+
+.map-filter li .electronics-icon {
+  background: #484848;
+  color: white;
+  border: 1px solid #484848;
+}
+
+.map-filter li .cloth-icon {
+  background: #E0C35C;
+  color: white;
+  border: 1px solid #E0C35C;
+}
+
+.map-filter li .restroom-icon {
+  background: #155889;
+  color: white;
+  border: 1px solid #155889;
+}
+
+.map-filter li .wifi-icon {
+  background: #72B163;
+  color: white;
+  border: 1px solid #72B163;
+}
+
+.map-filter li .reeducation-icon {
+  background: #8DA0D0;
+  color: white;
+  border: 1px solid #8DA0D0;
+}
+
+.map-filter li .others-icon {
+  background: #B65C87;
+  color: white;
+  border: 1px solid #B65C87;
+}
+
+.map-filter li:hover .food-icon,
+.map-filter .food-icon.inactive {
+  color: #C66257;
+  background-color: #fff;
+}
+
+.map-filter li:hover .shelter-icon,
+.map-filter .shelter-icon.inactive {
+  color: #D6A77E;
+  background-color: #fff;
+}
+
+.map-filter li:hover .ppe-icon,
+.map-filter .ppe-icon.inactive {
+  color: #6DB1C7;
+  background-color: #fff;
+}
+
+.map-filter li:hover .electronics-icon,
+.map-filter .electronics-icon.inactive {
+  color: #484848;
+  background-color: #fff;
+}
+
+.map-filter li:hover .cloth-icon,
+.map-filter .cloth-icon.inactive {
+  color: #E0C35C;
+  background-color: #fff;
+}
+
+.map-filter li:hover .restroom-icon,
+.map-filter .restroom-icon.inactive {
+  color: #155889;
+  background-color: #fff;
+}
+
+.map-filter li:hover .wifi-icon,
+.map-filter .wifi-icon.inactive {
+  color: #72B163;
+  background-color: #fff;
+}
+
+.map-filter li:hover .reeducation-icon,
+.map-filter .reeducation-icon.inactive {
+  color: #8DA0D0;
+  background-color: #fff;
+}
+
+.map-filter li:hover .others-icon,
+.map-filter .others-icon.inactive {
+  color: #B65C87;
+  background-color: #fff;
+}
+
+.map-filter li .feature-icon {
+  -moz-transition: all .8s ease;
+  -webkit-transition: all .8s ease;
+  transition: all .8s ease;
+}
+
 .mapboxgl-popup {
   min-width: 500px;
+  color: white;
 }
 
 .mapboxgl-popup-close-button {
@@ -70,6 +215,82 @@ li {
 
 .donation-popup img {
   max-width: 100px;
+}
+
+.food-marker {
+  background-image: url('./mapicons/food.svg');
+  background-size: cover;
+  width: 20px;
+  height: 30px;
+  cursor: pointer;
+}
+
+.shelter-marker {
+  background-image: url('./mapicons/shelter.svg');
+  background-size: cover;
+  width: 25px;
+  height: 30px;
+  cursor: pointer;
+}
+
+.ppe-marker {
+  background-image: url('./mapicons/ppe.svg');
+  background-size: cover;
+  width: 20px;
+  height: 30px;
+  cursor: pointer;
+}
+
+.reeducation-marker {
+  background-image: url('./mapicons/reeducation.svg');
+  background-size: cover;
+  width: 25px;
+  height: 30px;
+  cursor: pointer;
+}
+
+.restroom-marker {
+  background-image: url('./mapicons/restroom.svg');
+  background-size: cover;
+  width: 25px;
+  height: 30px;
+  cursor: pointer;
+}
+
+.electronics-marker {
+  background-image: url('./mapicons/electronics.svg');
+  background-size: cover;
+  width: 18px;
+  height: 36px;
+  cursor: pointer;
+}
+
+.wifi-marker {
+  background-image: url('./mapicons/wifi.svg');
+  background-size: cover;
+  width: 25px;
+  height: 30px;
+  cursor: pointer;
+}
+
+.clothes-marker {
+  background-image: url('./mapicons/cloth.svg');
+  background-size: cover;
+  width: 25px;
+  height: 30px;
+  cursor: pointer;
+}
+
+.others-marker {
+  background-image: url('./mapicons/others.svg');
+  background-size: cover;
+  width: 20px;
+  height: 30px;
+  cursor: pointer;
+}
+
+.hide {
+  display: none;
 }
 
 h1, h2, h3, h4, h5, h6, .article-title {
@@ -83,9 +304,9 @@ p, a, li, input, label, textarea {
 /********** Common Element *************/
 
 .btn:focus {
-    box-shadow: none !important;
-    -webkit-box-shadow: none !important;
-    outline: none;
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+  outline: none;
 }
 
 .btn-wide {
@@ -99,12 +320,20 @@ p, a, li, input, label, textarea {
 }
 
 .gray-bg {
-    background: #f9f9f9;
+  background: #f9f9f9;
 }
 
 .btn-dark:hover {
   background-color: #fff !important;
   color: #333 !important;
+}
+
+.btn a:hover, .btn a:link {
+  text-decoration: none;
+}
+
+.btn-warning a {
+  color: #fff;
 }
 
 ul {
@@ -189,15 +418,21 @@ select option:hover, select option:focus, select option:active {
 .button-nav {
   padding-bottom: 10px;
   display: flex;
+  justify-content: space-around;
+  flex-flow: row wrap;
 }
 
-.button-nav .btn {
+.button-nav .nav-item {
   flex-grow: 1;
   margin-right: 3px;
 }
 
-.button-nav .btn:last-child {
+.button-nav .nav-item:last-child {
   margin-right: 0;
+}
+
+.button-nav .nav-item a {
+  width: 100%;
 }
 
 .content-section {
@@ -287,6 +522,7 @@ a.article-title:hover {
 }
 
 /* filtering for main map */
+
 .filter-group {
   font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
   font-weight: 600;
@@ -326,8 +562,7 @@ a.article-title:hover {
   text-transform: capitalize;
 }
 
-.filter-group input[type='checkbox']+label:hover,
-.filter-group input[type='checkbox']:checked+label {
+.filter-group input[type='checkbox']+label:hover, .filter-group input[type='checkbox']:checked+label {
   background-color: #4ea0da;
 }
 

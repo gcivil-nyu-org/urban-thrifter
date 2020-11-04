@@ -1,8 +1,8 @@
-{% extends 'donation/base.html' %} 
-{% load crispy_forms_tags %} 
+{% extends 'donation/reservation_status_nav.html' %}
+{% load crispy_forms_tags %}
 
 {% block content %}
-{% include "donation/reservation_status_nav.html" %}
+
 <div class='content-section'>
     <!-- Need to add CSRF token, a hidden tag for security required by django -->
     {{ form.media }}
@@ -12,6 +12,7 @@
             <legend class='mb-4 font-weight-bold'>Donation Details</legend>
             <!-- Crispy filter to style the form -->
             {{ form|crispy }}
+            <p>The dropoff location will be {{user.donorprofile.dropoff_location.place}} if you do not specify a location here.</p>
         </fieldset>
         <div class='form-group'>
             <button class='btn btn-dark btn-wide' type='submit'>

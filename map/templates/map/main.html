@@ -1,9 +1,36 @@
 {% extends 'donation/navfull.html' %}
 {% block content %}
+
 {% if user.is_authenticated and user.helpseekerprofile %}
-<!-- shelter data-->
-<div id='map'></div>
-<nav id="filter-group" class="filter-group"></nav>
+
+<!-- Load Map -->
+<section role="main">
+  <div class="row">
+    <ul class='map-filter'>
+      <li><button class="feature-icon food-icon" onclick="resourceFilter('food', this)">Food</br><i
+            class="fas fa-apple-alt"></i></button></li>
+      <li><button class="feature-icon shelter-icon" onclick="resourceFilter('shelter', this)">Shelter</br><i
+            class="fas fa-house-user"></i></button></li>
+      <li><button class="feature-icon ppe-icon" onclick="resourceFilter('ppe', this)">PPE</br><i
+            class="fas fa-head-side-mask"></i></button></li>
+      <li><button class="feature-icon restroom-icon" onclick="resourceFilter('restroom', this)">Restroom</br><i
+            class="fas fa-restroom"></i></button></li>
+      <li><button class="feature-icon electronics-icon" onclick="resourceFilter('electronics', this)">Electronics</br><i
+            class="fas fa-mobile-alt"></i></button></li>
+      <li><button class="feature-icon wifi-icon" onclick="resourceFilter('wifi', this)">Internet</br><i
+            class="fas fa-wifi"></i></button></li>
+      <li><button class="feature-icon cloth-icon" onclick="resourceFilter('clothes', this)">Clothes</br><i
+            class="fas fa-tshirt"></i></button></li>
+      <li><button class="feature-icon reeducation-icon" onclick="resourceFilter('reeducation', this)">Programs</br><i
+            class="fas fa-book-open"></i></button></li>
+      <li><button class="feature-icon others-icon" onclick="resourceFilter('others', this)">Others</br><i
+            class="fas fa-question"></i></button></li>
+    </ul>
+    <div id='map'></div>
+  </div>
+</section>
+<div class="clearfix"></div>
+
 <script>
   mapboxgl.accessToken = '{{ mapbox_access_token }}'
   var map = new mapboxgl.Map({
@@ -14,59 +41,41 @@
   })
 </script>
 
-{% for post in post_context %}
+<!-- computer center / electronics data-->
+{% for center in computer_centers %}
 <script>
-  personal_donation_html = "<div class='container donation-popup'>"+
-        "<h5 class='mb-3'><b>{{ post.title }}</b> * {{ post.quantity }}</h5>" +
-        "<div class='row'>" +
-        "<div class='col'>" +
-        "<p>{{ post.description }}</p>" +
-        "<p><img src='{{ post.image.url }}' /></p>" +
-        "</div><div class='col'>" +
-        "<p>{{ post.dropoff_time_1 }}</p>" +
-        "<p>{{ post.dropoff_time_2 }}</p>" +
-        "<p>{{ post.dropoff_time_3 }}</p>" +
-        "</div></div>"+
-        "<a href='/' class='btn btn-dark btn-wide' type='submit'>" +
-        "Detail</button></a>"
-  new mapboxgl.Marker({ "color": 'blue' })
-    .setLngLat([{{ post.dropoff_location.longitude }},
-    {{ post.dropoff_location.latitude }}])
-    .setPopup(new mapboxgl.Popup({ offset: 25 })
-      .setHTML(personal_donation_html))
-    .addTo(map)
-</script>
-{% endfor %}
-
-
-{% for center in drop_in_centers %}
-<script>
-  new mapboxgl.Marker({ "color": "#EB984E" })
-    .setLngLat([{{ center.longitude }}, {{ center.latitude }}])
+  var electronicEl = document.createElement('div');
+  electronicEl.className = 'electronics-marker';
+  new mapboxgl.Marker(electronicEl)
+    .setLngLat([{{ center.lon }}, {{ center.lat }}])
     .setPopup(new mapboxgl.Popup({ offset: 50 })
       .setHTML(
-        "<div class='container'>"+
-        "<h5 class='mb-3'><b>{{center.center_name}}</b></h5>" +
+        "<div class='container'>" +
+        "<h5 class='mb-3'><b>{{center.oversight_agency}}</b></h5>" +
         "<div class='row'>" +
         "<div class='col'>" +
-        "<p>Address: <b>{{center.address}}</b></p>" +
-        "<p>Borough: <b>{{center.borough}}</b></p>" +
+        "<p>Operator: <b>{{center.operator_name}}</b></p>" +
+        "<p>Location: <b>{{center.location_name}}</b></p>" +
         "</div><div class='col'>" +
-        "<p>Zip: <b>{{center.postcode}}</b></p>" +
-        "<p>Hours: <b>{{center.comments}}</b></p>" +
+        "<p>Wifi availability: <b>{{center.wi_fi_available}}</b></p>" +
+        "<p>Wheel chair access: <b>{{center.wheelchair_accessible}}</b></p>" +
+        "<p>Access requirements: <b>{{center.access_requirements}}</b></p>" +
         "</div></div></div>"
       ))
     .addTo(map)
 </script>
 {% endfor %}
 
+<!-- wifi data-->
 {% for center in internet_centers %}
 <script>
-  new mapboxgl.Marker({ "color": "#7DCEA0" })
+  var wifiEl = document.createElement('div');
+  wifiEl.className = 'wifi-marker';
+  new mapboxgl.Marker(wifiEl)
     .setLngLat([{{ center.longitude }}, {{ center.latitude }}])
     .setPopup(new mapboxgl.Popup({ offset: 50 })
       .setHTML(
-        "<div class='container'>"+
+        "<div class='container'>" +
         "<h5 class='mb-3'><b>{{center.name}}</b></h5>" +
         "<div class='row'>" +
         "<div class='col'>" +
@@ -75,15 +84,139 @@
         "</div><div class='col'>" +
         "<p>Borough: <b>{{center.boroname}}</b></p>" +
         "<p>Type: <b>{{center.type}}</b></p>" +
-        "<p>Remarks: <b>{{center.remarks}}</b></p>"+
+        "<p>Remarks: <b>{{center.remarks}}</b></p>" +
         "</div></div></div>"
       ))
     .addTo(map)
 </script>
 {% endfor %}
-{% elif user.donorprofile %}
-<html>
 
+<!-- reeducation data-->
+{% for center in after_school_prgms %}
+<script>
+  var reeducationEl = document.createElement('div');
+  reeducationEl.className = 'reeducation-marker';
+  new mapboxgl.Marker(reeducationEl)
+    .setLngLat([String({{ center.location_1.longitude }}), String({{ center.location_1.latitude }})])
+    .setPopup(new mapboxgl.Popup({ offset: 50 })
+      .setHTML(
+        "<div class='container'>" +
+        "<h5 class='mb-3'><b>{{center.program}}</b></h5>" +
+        "<div class='row'>" +
+        "<div class='col'>" +
+        "<p>Agency: <b>{{center.agency}}</b></p>" +
+        "<p>Borough: <b>{{center.borough_community}}</b></p>" +
+        "</div><div class='col'>" +
+        "<p>Program type: <b>{{center.program_type}}</b></p>" +
+        "<p>Contact: <b>{{center.contact_number}}</b></p>" +
+        "<p>Site name: <b>{{center.site_name}}</b></p>" +
+        "</div></div></div>"
+      ))
+    .addTo(map)
+</script>
+{% endfor %}
+
+<!-- shelter data-->
+{% for center in shelter_geojson %}
+<script>
+  var el = document.createElement('div');
+  el.className = 'shelter-marker';
+  //make a marker for each feature and add to the map
+  new mapboxgl.Marker(el)
+    .setLngLat({{ center.geometry.coordinates.0 }})
+    .setPopup(new mapboxgl.Popup({ offset: 50 })
+      .setHTML(
+        "<div class='container'>" +
+        "<h5 class='mb-3'><b>{{center.properties.center_name}}</b></h5>" +
+        "<div class='row'>" +
+        "<div class='col'>" +
+        "<p>Address: <b>{{center.properties.address}}</b></p>" +
+        "<p>Borough: <b>{{center.properties.borough}}</b></p>" +
+        "</div><div class='col'>" +
+        "<p>Zip: <b>{{center.properties.postcode}}</b></p>" +
+        "<p>Hours: <b>{{center.properties.comments}}</b></p>" +
+        "</div></div></div>"
+      ))
+    .addTo(map);
+</script>
+{% endfor %}
+
+<!-- personal donation data-->
+{% for post in post_context %}
+{% if post.status == "AVAILABLE" or post.status == "Available" %}
+<script>
+  // console.log({{post.resource_category}})
+  var personalEl = document.createElement('div');
+  personal_donation_html = "<div class='container donation-popup'>" +
+    "<h5 class='mb-3'><b>{{ post.title }}</b> * {{ post.quantity }}</h5>" +
+    "<div class='row'>" +
+    "<div class='col'>" +
+    "<p>{{ post.description }}</p>" +
+    "<p><img src='{{ post.image.url }}' /></p>" +
+    "</div><div class='col'>" +
+    "<p>{{ post.dropoff_time_1 }}</p>" +
+    "<p>{{ post.dropoff_time_2 }}</p>" +
+    "<p>{{ post.dropoff_time_3 }}</p>" +
+    "</div></div>" +
+    "<a href='{% url 'reservation:reservation-request' post.id %}' class='btn btn-dark btn-wide' type='submit'>" +
+    "Detail</button></a>"
+</script>
+
+{% if post.resource_category == "FOOD" %}
+<script>
+  personalEl.className = 'food-marker';
+</script>
+{% elif post.resource_category == "MDCL" %}
+<script>
+  personalEl.className = 'ppe-marker';
+</script>
+{% elif post.resource_category == "CLTH" %}
+<script>
+  personalEl.className = 'clothes-marker';
+</script>
+{% elif post.resource_category == "ELEC" %}
+<script>
+  personalEl.className = 'electronics-marker';
+</script>
+{% elif post.resource_category == "OTHR" %}
+<script>
+  personalEl.className = 'others-marker';
+</script>
+{% endif %}
+<script>
+  new mapboxgl.Marker(personalEl)
+    .setLngLat([{{ post.dropoff_location.longitude }},
+    {{ post.dropoff_location.latitude }}])
+    .setPopup(new mapboxgl.Popup({ offset: 25 })
+      .setHTML(personal_donation_html))
+    .addTo(map)
+</script>
+{% endif %}
+{% endfor %}
+
+<script>
+  function resourceFilter(recourceCategory, elem) {
+    if (elem.classList.contains('inactive')){
+      elem.classList.remove('inactive');
+    } else {
+      elem.classList.add('inactive');
+    }
+
+    var filterClass = recourceCategory + "-marker"
+    var shelters = document.getElementsByClassName(filterClass);
+    // console.log(x);
+    for (i = 0; i < shelters.length; i++) {
+      if (shelters[i].classList.contains("hide")) {
+        shelters[i].classList.remove("hide");
+      } else {
+        shelters[i].classList.add("hide");
+      }
+    }
+  }
+</script>
+{% elif user.donorprofile %}
+
+<!-- <html>
 <head>
   <script type="text/javascript">
     function Redirect() {
@@ -96,6 +229,6 @@
 <body>
 </body>
 
-</html>
+</html> -->
 {% endif %}
 {% endblock content %}

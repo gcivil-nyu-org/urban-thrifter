@@ -16,15 +16,12 @@ def homepage(request):
 
 
 def home(request):
-    context = {"posts": ResourcePost.objects.all()}
+    user = request.user
+    context = {"posts": ResourcePost.objects.filter(donor=user)}
 
     # context is the argument pass into the html
 
-    return render(request, "donation/donation_all.html", context)
-
-
-def reservation(request):
-    return render(request, "donation/reservation.html")
+    return render(request, "donation/reservation_status_nav.html", context)
 
 
 # All Donations View
@@ -33,7 +30,7 @@ class PostListView(ListView):
     model = ResourcePost
     # Assign tempalte otherwise it would look for post_list.html
     # as default template
-    template_name = "donation/donation_all.html"
+    template_name = "donation/reservation_status_nav.html"
 
     # Set context_attribute to post object
     context_object_name = "posts"
@@ -57,8 +54,8 @@ class PostCreateView(LoginRequiredMixin, CreateView):
         "dropoff_time_1",
         "dropoff_time_2",
         "dropoff_time_3",
-        "dropoff_location",
         "resource_category",
+        "dropoff_location",
     ]
 
     def get_form(self):
@@ -69,9 +66,9 @@ class PostCreateView(LoginRequiredMixin, CreateView):
         return form
 
     # Overwrite form valid method
-    # def form_valid(self, form):
-    #    form.instance.author = self.request.user
-    #    return super().form_valid(form)
+    def form_valid(self, form):
+        form.instance.donor = self.request.user
+        return super().form_valid(form)
 
 
 # Donation Detail View

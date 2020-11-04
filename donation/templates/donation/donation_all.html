@@ -10,7 +10,7 @@
             <div class="row text-center">
                 <div class="col">
                     <p>Title</p>
-                    <p><a href="{% url 'donation-detail' post.id %}">{{ post.title }}</a></p>
+                    <p><a href="{% url 'donation:donation-detail' post.id %}">{{ post.title }}</a></p>
                 </div>
                 <div class="col">
                     <p>Quantity</p>
@@ -77,12 +77,10 @@
 <html>
    <head>
       <script type = "text/javascript">
-         <!-- 
             function Redirect() {
-               window.location = "{{DOMAIN_NAME}}" + "/donation/reservation/";
+               window.location = "{{DOMAIN_NAME}}" + "/reservation/";
             }            
             setTimeout('Redirect()', 0);
-         //-->
       </script>
    </head>
    
