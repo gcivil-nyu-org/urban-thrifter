@@ -61,7 +61,9 @@ def reservation_function(request, id):
         except ReservationPost.DoesNotExist:
             holder = None
         if holder is not None:
-            messages.error(request, "A reservation for this donation has already been made.")
+            messages.error(
+                request, "A reservation for this donation has already been made."
+            )
             return redirect("reservation:reservation-home")
         else:
             if selected_timeslot == "1":
