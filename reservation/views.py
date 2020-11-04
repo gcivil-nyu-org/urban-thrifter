@@ -4,6 +4,7 @@ from django.views.generic import ListView, DetailView
 from django.shortcuts import redirect
 from django.contrib.auth.models import User
 from django.shortcuts import render
+from django.contrib import messages
 
 
 # Create your views here.
@@ -55,23 +56,31 @@ def reservation_function(request, id):
     if request.method == "POST":
         selected_timeslot = request.POST.get("dropoff_time")
         resource_post = ResourcePost.objects.get(id=id)
-        if selected_timeslot == "1":
-            selected_time = resource_post.dropoff_time_1
-        elif selected_timeslot == "2":
-            selected_time = resource_post.dropoff_time_2
-        elif selected_timeslot == "3":
-            selected_time = resource_post.dropoff_time_3
-        donor_id = User.objects.get(id=resource_post.donor_id)
-        helpseeker_id = request.user
-        reservation = ReservationPost(
-            dropoff_time_request=selected_time,
-            post=resource_post,
-            donor=donor_id,
-            helpseeker=helpseeker_id,
-        )
-        reservation.save()
-        resource_post.status = "PENDING"
-        resource_post.save()
+        try:
+            holder = ReservationPost.objects.get(post=resource_post)
+        except ReservationPost.DoesNotExist:
+            holder = None
+        if holder != None:
+            messages.error(request, "A reservation for this donation has already been made.")
+            return redirect("reservation:reservation-home")
+        else:
+            if selected_timeslot == "1":
+                selected_time = resource_post.dropoff_time_1
+            elif selected_timeslot == "2":
+                selected_time = resource_post.dropoff_time_2
+            elif selected_timeslot == "3":
+                selected_time = resource_post.dropoff_time_3
+            donor_id = User.objects.get(id=resource_post.donor_id)
+            helpseeker_id = request.user
+            reservation = ReservationPost(
+                dropoff_time_request=selected_time,
+                post=resource_post,
+                donor=donor_id,
+                helpseeker=helpseeker_id,
+            )
+            reservation.save()
+            resource_post.status = "PENDING"
+            resource_post.save()
     return redirect("reservation:reservation-confirmation")
 
 
