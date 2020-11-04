@@ -96,7 +96,7 @@ class ResourcePostCreateViewTests(TestCase):
             image=image,
             status="AVAILABLE",
         )
-        create_resource_post.save(*args, **kwargs)
+        create_resource_post.save()
         url = reverse("donation-detail", args=(create_resource_post.pk,))
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
@@ -152,7 +152,7 @@ class ResourcePostDetailViewTests(TestCase):
             resource_category="FOOD",
             status="AVAILABLE",
         )
-        create_resource_post.save(*args, **kwargs)
+        create_resource_post.save()
         url = reverse("donation-detail", args=(create_resource_post.pk,))
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)

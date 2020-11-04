@@ -97,10 +97,10 @@ class ResourcePost(models.Model):
         else:
             return True
 
-    def save(self, *args, **kwargs):
+    def save(self):
         if not self.dropoff_location:
             self.dropoff_location = self.donor.donorprofile.dropoff_location
-        super().save(*args, **kwargs)
+        super().save()
 
         path = self.image.path
         img = Image.open(path)
