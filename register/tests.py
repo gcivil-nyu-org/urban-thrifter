@@ -1,8 +1,11 @@
-from django.test import TestCase
+from django.test import TestCase, Client
 from .models import HelpseekerProfile, DonorProfile
 from .forms import HelpseekerForm, DonorForm
 from django.contrib.auth.models import User
 from django.urls import reverse
+from django.utils.http import urlsafe_base64_encode
+from django.contrib.auth.tokens import PasswordResetTokenGenerator
+from django.utils.encoding import force_bytes
 
 class EmailTests(TestCase):
     def test_email_sent(self):
@@ -10,6 +13,21 @@ class EmailTests(TestCase):
             reverse("register:email-sent"))
         self.assertEqual(holder.status_code, 200)
         self.assertContains(holder, "Confirmation email has been sent!")
+
+    def test_change_password(self):
+        user = User.objects.create(
+            username="test",
+            email="ponathanjun@gmail.com",
+            password="peaches12",
+        )
+        holder = self.client.post(
+            "/register/activate/"
+            + urlsafe_base64_encode(force_bytes(user.pk))
+            + "/"
+            + PasswordResetTokenGenerator().make_token(user),
+            {"password1": "peaches14", "password2": "peaches14"},
+        )
+        self.assertEqual(holder.status_code, 200)
         
 class RegisterPageViewTests(TestCase):
     def test_register_redirect(self):
@@ -356,11 +374,13 @@ class HelpseekerViewTests(TestCase):
         self.assertEqual(holder.status_code, 200)
         self.assertContains(holder, "Help Seeker Registration")
 
-    def helpseeker_register_get(self):
+    def test_helpseeker_register_get(self):
         holder = self.client.get(
             reverse("register:helpseeker-register"))
         self.assertEqual(holder.status_code, 200)
         self.assertContains(holder, "Help Seeker Registration")
+
+    
 
 
 class DonorRegistrationTests(TestCase):
