@@ -6,6 +6,7 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 import tempfile
 from django.test import override_settings
 
+
 # from PIL import Image
 # Create your tests here.
 
@@ -17,15 +18,17 @@ from django.test import override_settings
 #     return temp_file
 
 
+class donorP:
+    dropoff_location = "Metrotech"
+
+
 def createdonor():
     donor = User(
         username="donor_unit_test",
         password="Unittestpassword123!",
         is_active=True,
         email="unittest@unittest.com",
-        donorprofile = {
-            dropoff_location = "Metrotech"
-        }
+        donorprofile=donorP(),
     )
     donor.save()
     # donor_prof = DonorProfile(user=donor,
