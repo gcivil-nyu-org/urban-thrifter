@@ -60,7 +60,7 @@ def reservation_function(request, id):
             holder = ReservationPost.objects.get(post=resource_post)
         except ReservationPost.DoesNotExist:
             holder = None
-        if holder != None:
+        if holder is not None:
             messages.error(request, "A reservation for this donation has already been made.")
             return redirect("reservation:reservation-home")
         else:
@@ -91,6 +91,7 @@ class PostDetailView(DetailView):
     # Basic detail view
     model = ResourcePost
     template_name = "reservation/reservation_request.html"
+
 
 class ReservationDetailView(DetailView):
     # Basic detail view
