@@ -18,13 +18,12 @@ def homepage(request):
 
 
 def home(request):
-    print(request)
     user = request.user
     context = {"posts": ResourcePost.objects.filter(donor=user)}
 
     # context is the argument pass into the html
 
-    return render(request, "donation/donation_all.html", context)
+    return render(request, "donation/reservation_status_nav.html", context)
 
 
 def reservation(request):
@@ -37,7 +36,7 @@ class PostListView(ListView):
     model = ResourcePost
     # Assign tempalte otherwise it would look for post_list.html
     # as default template
-    template_name = "donation/donation_all.html"
+    template_name = "donation/reservation_status_nav.html"
 
     # Set context_attribute to post object
     context_object_name = "posts"

@@ -1,9 +1,8 @@
-<!-- This is where new donations are made -->
-{% extends 'donation/base.html' %} 
+{% extends 'donation/reservation_status_nav.html' %}
 {% load crispy_forms_tags %} 
 
 {% block content %}
-{% include "donation/reservation_status_nav.html" %}
+
 <div class='content-section'>
     <!-- Need to add CSRF token, a hidden tag for security required by django -->
     {{ form.media }}
