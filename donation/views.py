@@ -59,8 +59,8 @@ class PostCreateView(LoginRequiredMixin, CreateView):
         "dropoff_time_1",
         "dropoff_time_2",
         "dropoff_time_3",
-        "dropoff_location",
         "resource_category",
+        "dropoff_location",
     ]
 
     def get_form(self):
