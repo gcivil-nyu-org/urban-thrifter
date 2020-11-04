@@ -66,9 +66,11 @@ class ResourcePost(models.Model):
     dropoff_time_2 = models.DateTimeField(blank=True, null=True)
     dropoff_time_3 = models.DateTimeField(blank=True, null=True)
     date_created = models.DateTimeField(default=timezone.now)
-    donor = models.ForeignKey(User, on_delete=models.CASCADE, default=None)     # 1:n relationship (for one donor, many post)
+    donor = models.ForeignKey(
+        User, on_delete=models.CASCADE, default=None
+    )  # 1:n relationship (for one donor, many post)
     dropoff_location = PlacesField(blank=True, null=True)
-       
+
     resource_category = models.CharField(
         max_length=100, choices=RESROUCE_CATEGORY_CHOICES
     )
@@ -113,4 +115,3 @@ class ResourcePost(models.Model):
             img = img.crop_to_aspect(300, 300)
             img.thumbnail(output_size)
             img.save(path)
-    
