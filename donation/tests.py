@@ -1,10 +1,12 @@
 from django.test import TestCase
 from django.urls import reverse
 from .models import ResourcePost, User
+from register.models import DonorProfile
 from django.utils import timezone
 from django.core.files.uploadedfile import SimpleUploadedFile
 import tempfile
 from django.test import override_settings
+
 
 # from PIL import Image
 # Create your tests here.
@@ -18,16 +20,26 @@ from django.test import override_settings
 
 
 def createdonor():
-    donor = User(
+    subuser = User(
         username="donor_unit_test",
         password="Unittestpassword123!",
         is_active=True,
         email="unittest@unittest.com",
     )
+    donor = User(
+        username="donor_unit_test",
+        password="Unittestpassword123!",
+        is_active=True,
+        email="unittest@unittest.com",
+        donorprofile=DonorProfile(
+            user=subuser,
+            complaint_count=0,
+            donation_count=0,
+            dropoff_location="MetroTech Center, Brooklyn New York USA, \
+                40.6930882, -73.9853095",
+        ),
+    )
     donor.save()
-    # donor_prof = DonorProfile(user=donor,
-    #                           complaint_count=0,
-    #                           donation_count=0)
     return donor
 
 
