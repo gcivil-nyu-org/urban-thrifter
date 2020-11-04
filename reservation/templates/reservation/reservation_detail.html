@@ -1,0 +1,23 @@
+{% extends 'donation/base.html' %}
+{% block content %}
+{% include "reservation/reservation_status_nav.html" %}
+<h4 class="mt-3 mb-3">Donation from {{object.donor}}:</h4>
+<article class="media content-section">
+    <img class='rounded-circle article-img' src='{{ object.post.image.url }}'>
+    <!--  p>{{ object.image.url }}</p-->
+    <div class="media-body">
+        <div class="article-metadata">
+            <!--a class="mr-2" href="">Username</a-->
+            <h2 class="article-title">{{ object.post.title }}</h2>
+            <!-- https://docs.djangoproject.com/en/2.0/ref/templates/builtins/#date -->
+        </div>
+        <p class="article-content">Quantity: {{ object.post.quantity }}</p>
+        <p class="article-content">Status: {{ object.post.status }}</p>
+        <p class="article-content">Category: {{ object.post.resource_category }}</p>
+        <p class="article-content">Location: {{ object.post.dropoff_location.place }}</p>
+        <p class="article-content">Drop-off Time: </p>
+        <p class='article-content'>{{ object.dropoff_time_request }}</p>
+        <p class="article-content">Description: {{ object.post.description }}</p>
+    </div>
+</article>
+{% endblock content %}

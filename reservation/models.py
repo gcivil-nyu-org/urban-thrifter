@@ -27,4 +27,4 @@ class ReservationPost(models.Model):
     # let the view redirect for us
     def get_absolute_url(self):
         # return the path of the specific post
-        return reverse("reservation-detail")
+        return reverse("reservation-detail", kwargs={"pk": self.pk})
