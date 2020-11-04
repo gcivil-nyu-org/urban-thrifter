@@ -82,104 +82,124 @@ body, div, h1, h2, h3, h4, h5, h6, p, a, li {
   width: 100%;
   height: 100%;
   padding: 10px;
-  background-color: #fff;
   border-radius: 5px;
 }
 
+.map-filter li:hover button {
+  background-color: #fff;
+}
+
 .map-filter li .food-icon {
-  color: #C66257;
+  background: #C66257;
+  color: white;
   border: 1px solid #C66257;
 }
 
 .map-filter li .shelter-icon {
-  color: #D6A77E;
+  background: #D6A77E;
+  color: white;
   border: 1px solid #D6A77E;
 }
 
 .map-filter li .ppe-icon {
-  color: #6DB1C7;
+  background: #6DB1C7;
+  color: white;
   border: 1px solid #6DB1C7;
 }
 
 .map-filter li .electronics-icon {
-  color: #484848;
+  background: #484848;
+  color: white;
   border: 1px solid #484848;
 }
 
 .map-filter li .cloth-icon {
-  color: #E0C35C;
+  background: #E0C35C;
+  color: white;
   border: 1px solid #E0C35C;
 }
 
 .map-filter li .restroom-icon {
-  color: #155889;
+  background: #155889;
+  color: white;
   border: 1px solid #155889;
 }
 
 .map-filter li .wifi-icon {
-  color: #72B163;
+  background: #72B163;
+  color: white;
   border: 1px solid #72B163;
 }
 
 .map-filter li .reeducation-icon {
-  color: #8DA0D0;
+  background: #8DA0D0;
+  color: white;
   border: 1px solid #8DA0D0;
 }
 
 .map-filter li .others-icon {
-  color: #B65C87;
+  background: #B65C87;
+  color: white;
   border: 1px solid #B65C87;
+}
+
+.map-filter li:hover .food-icon,
+.map-filter .food-icon.inactive {
+  color: #C66257;
+  background-color: #fff;
+}
+
+.map-filter li:hover .shelter-icon,
+.map-filter .shelter-icon.inactive {
+  color: #D6A77E;
+  background-color: #fff;
+}
+
+.map-filter li:hover .ppe-icon,
+.map-filter .ppe-icon.inactive {
+  color: #6DB1C7;
+  background-color: #fff;
+}
+
+.map-filter li:hover .electronics-icon,
+.map-filter .electronics-icon.inactive {
+  color: #484848;
+  background-color: #fff;
+}
+
+.map-filter li:hover .cloth-icon,
+.map-filter .cloth-icon.inactive {
+  color: #E0C35C;
+  background-color: #fff;
+}
+
+.map-filter li:hover .restroom-icon,
+.map-filter .restroom-icon.inactive {
+  color: #155889;
+}
+
+.map-filter li:hover .wifi-icon,
+.map-filter .wifi-icon.inactive {
+  color: #72B163;
+  background-color: #fff;
+}
+
+.map-filter li:hover .reeducation-icon,
+.map-filter .reeducation-icon.inactive {
+  color: #8DA0D0;
+  background-color: #fff;
+}
+
+.map-filter li:hover .others-icon,
+.map-filter .others-icon.inactive {
+  color: #B65C87;
+  background-color: #fff;
 }
 
 .map-filter li .feature-icon {
   -moz-transition: all .8s ease;
   -webkit-transition: all .8s ease;
   transition: all .8s ease;
-}
-
-.map-filter li:hover .food-icon {
-  background: #C66257;
-  color: white;
-}
-
-.map-filter li:hover .shelter-icon {
-  background: #D6A77E;
-  color: white;
-}
-
-.map-filter li:hover .ppe-icon {
-  background: #6DB1C7;
-  color: white;
-}
-
-.map-filter li:hover .electronics-icon {
-  background: #484848;
-  color: white;
-}
-
-.map-filter li:hover .cloth-icon {
-  background: #E0C35C;
-  color: white;
-}
-
-.map-filter li:hover .restroom-icon {
-  background: #155889;
-  color: white;
-}
-
-.map-filter li:hover .wifi-icon {
-  background: #72B163;
-  color: white;
-}
-
-.map-filter li:hover .reeducation-icon {
-  background: #8DA0D0;
-  color: white;
-}
-
-.map-filter li:hover .others-icon {
-  background: #B65C87;
-  color: white;
 }
 
 .mapboxgl-popup {

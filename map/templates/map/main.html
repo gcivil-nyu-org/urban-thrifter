@@ -7,23 +7,23 @@
 <section role="main">
   <div class="row">
     <ul class='map-filter'>
-      <li><button class="feature-icon food-icon" onclick="resourceFilter('food')">Food</br><i
+      <li><button class="feature-icon food-icon" onclick="resourceFilter('food', this)">Food</br><i
             class="fas fa-apple-alt"></i></button></li>
-      <li><button class="feature-icon shelter-icon" onclick="resourceFilter('shelter')">Shelter</br><i
+      <li><button class="feature-icon shelter-icon" onclick="resourceFilter('shelter', this)">Shelter</br><i
             class="fas fa-house-user"></i></button></li>
-      <li><button class="feature-icon ppe-icon" onclick="resourceFilter('ppe')">PPE</br><i
+      <li><button class="feature-icon ppe-icon" onclick="resourceFilter('ppe', this)">PPE</br><i
             class="fas fa-head-side-mask"></i></button></li>
-      <li><button class="feature-icon restroom-icon" onclick="resourceFilter('restroom')">Restroom</br><i
+      <li><button class="feature-icon restroom-icon" onclick="resourceFilter('restroom', this)">Restroom</br><i
             class="fas fa-restroom"></i></button></li>
-      <li><button class="feature-icon electronics-icon" onclick="resourceFilter('electronics')">Electronics</br><i
+      <li><button class="feature-icon electronics-icon" onclick="resourceFilter('electronics', this)">Electronics</br><i
             class="fas fa-mobile-alt"></i></button></li>
-      <li><button class="feature-icon wifi-icon" onclick="resourceFilter('wifi')">Internet</br><i
+      <li><button class="feature-icon wifi-icon" onclick="resourceFilter('wifi', this)">Internet</br><i
             class="fas fa-wifi"></i></button></li>
-      <li><button class="feature-icon cloth-icon" onclick="resourceFilter('clothes')">Clothes</br><i
+      <li><button class="feature-icon cloth-icon" onclick="resourceFilter('clothes', this)">Clothes</br><i
             class="fas fa-tshirt"></i></button></li>
-      <li><button class="feature-icon reeducation-icon" onclick="resourceFilter('reeducation')">Programs</br><i
+      <li><button class="feature-icon reeducation-icon" onclick="resourceFilter('reeducation', this)">Programs</br><i
             class="fas fa-book-open"></i></button></li>
-      <li><button class="feature-icon others-icon" onclick="resourceFilter('others')">Others</br><i
+      <li><button class="feature-icon others-icon" onclick="resourceFilter('others', this)">Others</br><i
             class="fas fa-question"></i></button></li>
     </ul>
     <div id='map'></div>
@@ -41,30 +41,6 @@
     zoom: 9.5
   })
 </script>
-
-{% for center in internet_centers %}
-<script>
-  var wifiEl = document.createElement('div');
-  wifiEl.className = 'wifi-marker';
-  new mapboxgl.Marker(wifiEl)
-    .setLngLat([{{ center.longitude }}, {{ center.latitude }}])
-    .setPopup(new mapboxgl.Popup({ offset: 50 })
-      .setHTML(
-        "<div class='container'>" +
-        "<h5 class='mb-3'><b>{{center.name}}</b></h5>" +
-        "<div class='row'>" +
-        "<div class='col'>" +
-        "<p>Provider: <b>{{center.provider}}</b></p>" +
-        "<p>Location: <b>{{center.location}}</b></p>" +
-        "</div><div class='col'>" +
-        "<p>Borough: <b>{{center.boroname}}</b></p>" +
-        "<p>Type: <b>{{center.type}}</b></p>" +
-        "<p>Remarks: <b>{{center.remarks}}</b></p>" +
-        "</div></div></div>"
-      ))
-    .addTo(map)
-</script>
-{% endfor %}
 
 <!-- computer center / electronics data-->
 {% for center in computer_centers %}
@@ -85,6 +61,31 @@
         "<p>Wifi availability: <b>{{center.wi_fi_available}}</b></p>" +
         "<p>Wheel chair access: <b>{{center.wheelchair_accessible}}</b></p>" +
         "<p>Access requirements: <b>{{center.access_requirements}}</b></p>" +
+        "</div></div></div>"
+      ))
+    .addTo(map)
+</script>
+{% endfor %}
+
+<!-- wifi data-->
+{% for center in internet_centers %}
+<script>
+  var wifiEl = document.createElement('div');
+  wifiEl.className = 'wifi-marker';
+  new mapboxgl.Marker(wifiEl)
+    .setLngLat([{{ center.longitude }}, {{ center.latitude }}])
+    .setPopup(new mapboxgl.Popup({ offset: 50 })
+      .setHTML(
+        "<div class='container'>" +
+        "<h5 class='mb-3'><b>{{center.name}}</b></h5>" +
+        "<div class='row'>" +
+        "<div class='col'>" +
+        "<p>Provider: <b>{{center.provider}}</b></p>" +
+        "<p>Location: <b>{{center.location}}</b></p>" +
+        "</div><div class='col'>" +
+        "<p>Borough: <b>{{center.boroname}}</b></p>" +
+        "<p>Type: <b>{{center.type}}</b></p>" +
+        "<p>Remarks: <b>{{center.remarks}}</b></p>" +
         "</div></div></div>"
       ))
     .addTo(map)
@@ -143,6 +144,7 @@
 
 <!-- personal donation data-->
 {% for post in post_context %}
+{% if post.status == "AVAILABLE" %}
 <script>
   // console.log({{post.resource_category}})
   var personalEl = document.createElement('div');
@@ -190,10 +192,17 @@
       .setHTML(personal_donation_html))
     .addTo(map)
 </script>
+{% endif %}
 {% endfor %}
 
 <script>
-  function resourceFilter(recourceCategory) {
+  function resourceFilter(recourceCategory, elem) {
+    if (elem.classList.contains('inactive')){
+      elem.classList.remove('inactive');
+    } else {
+      elem.classList.add('inactive');
+    }
+
     var filterClass = recourceCategory + "-marker"
     var shelters = document.getElementsByClassName(filterClass);
     // console.log(x);
