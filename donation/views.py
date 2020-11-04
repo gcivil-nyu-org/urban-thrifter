@@ -18,7 +18,9 @@ def homepage(request):
 
 
 def home(request):
-    context = {"posts": ResourcePost.objects.all()}
+    print(request)
+    user = request.user
+    context = {"posts": ResourcePost.objects.filter(donor=user)}
 
     # context is the argument pass into the html
 

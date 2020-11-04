@@ -9,6 +9,7 @@ from PIL import Image
 
 # from django.contrib.auth.models import User
 from places.fields import PlacesField
+from django.contrib.auth.models import User
 
 
 # Create your models here.
@@ -69,6 +70,7 @@ class ResourcePost(models.Model):
     donor = models.ForeignKey(
         User, on_delete=models.CASCADE, default=None
     )  # 1:n relationship (for one donor, many post)
+
     dropoff_location = PlacesField(blank=True, null=True)
 
     resource_category = models.CharField(

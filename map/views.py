@@ -2,22 +2,55 @@ import os
 import requests
 from django.shortcuts import render
 from django.apps import apps
+import geojson
+
+
+def shelter_json_geojson(json_obj):
+    geojson_obj = []
+    for data in json_obj:
+        new_address = ""
+        for part in data["address"].split():
+            new_address = new_address + " " + part
+            if new_address[-1] == ";" or new_address[-2:] == ".,":
+                data["address"] = new_address[:-1]
+                break
+        comments = "N/A"
+        if "comments" in data:
+            comments = data["comments"]
+        locations = []
+        locations.append((float(data["longitude"]), float(data["latitude"])))
+        geojson_obj.append(
+            geojson.Feature(
+                geometry=geojson.Point(locations),
+                properties={
+                    "center_name": data["center_name"],
+                    "borough": data["borough"],
+                    "address": data["address"],
+                    "postcode": data["postcode"],
+                    "comments": comments,
+                },
+            )
+        )
+    return geojson_obj
+
 
 # Create your views here.
 
 
 def main_map(request):
+
+    mapbox_access_token = "pk." + os.environ.get("MAPBOX_KEY")
+
     resource_post_model = apps.get_model(
         "donation", "ResourcePost"
     )  # getting model from donation app
     post_context = {"resource_posts": resource_post_model.objects.all()}
 
-    mapbox_access_token = "pk." + os.environ.get("MAPBOX_KEY")
-
     # Drop-in Center API GET
     drop_in_center_URL = "https://data.cityofnewyork.us/resource/bmxf-3rd4.json"
     drop_in_center_r = requests.get(url=drop_in_center_URL)
     drop_in_centers = drop_in_center_r.json()
+    shelter_geojson = shelter_json_geojson(drop_in_centers)
 
     for center in drop_in_centers:
         new_address = ""
@@ -32,35 +65,15 @@ def main_map(request):
     internet_center_r = requests.get(url=internet_center_URL)
     internet_centers = internet_center_r.json()
 
-    # [{"objectid":"10362",
-    # "borough":"3",
-    # "type":"Limited Free",
-    # "provider":"ALTICEUSA",
-    # "name":"Linden Park",
-    # "location":"IN PARK PLAYGROUND AREA",
-    # "latitude":"40.65838500000",
-    # "longitude":"-73.88758299940",
-    # "x":"1015440.52783000000",
-    # "y":"179163.81002900000",
-    # "location_t":"Outdoor",
-    # "remarks":"3 free 10 min sessions",
-    # "city":"Brooklyn",
-    # "ssid":"GuestWiFi",
-    # "activated":"9999-09-09T00:00:00.000",
-    # "borocode":"3",
-    # "boroname":"Brooklyn",
-    # "ntacode":"BK82",
-    # "ntaname":"East New York",
-    # "coundist":"42.00000000000",
-    # "zip":"11207",
-    # "borocd":"305.00000000000",
-    # "ct2010":"1104.00000000000",
-    # "bctcb2010":"1104.00000000000",
-    # "bin":"0E-11",
-    # "bbl":"3043490001.00000000000",
-    # "doitt_id":"217",
-    # "location_lat_long":{"latitude":"40.658385","longitude":"-73.8875829994"},
-    # ":@computed_region_efsh_h5xi":"17214",":@computed_region_f5dn_yrer":"45",":@computed_region_yeji_bk3q":"2",":@computed_region_92fq_4b7q":"25",":@computed_region_sbqj_enih":"47"}]
+    # Toilets in Computer centers API GET
+    computer_centers_URL = "https://data.cityofnewyork.us/resource/cuzb-dmcd.json"
+    computer_centers_r = requests.get(url=computer_centers_URL)
+    computer_centers = computer_centers_r.json()
+
+    # Toilets in after school programmes API GET
+    after_school_prgms_URL = "https://data.cityofnewyork.us/resource/ujsc-un6m.json"
+    after_school_prgms_r = requests.get(url=after_school_prgms_URL)
+    after_school_prgms = after_school_prgms_r.json()
 
     return render(
         request,
@@ -70,5 +83,8 @@ def main_map(request):
             "drop_in_centers": drop_in_centers,
             "post_context": post_context["resource_posts"],
             "internet_centers": internet_centers,
+            "computer_centers": computer_centers,
+            "after_school_prgms": after_school_prgms,
+            "shelter_geojson": shelter_geojson,
         },
     )
