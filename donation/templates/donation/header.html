@@ -20,12 +20,12 @@
           {% if user.donorprofile %}
           <a class="nav-item nav-link" href="{% url 'register:donor-profile' user.username %}"><i
               class="fas fa-user-circle"></i></a>
-          <a class="nav-item nav-link" href="{% url 'donation-home' %}"><i class="fas fa-box-open"></i></a>
+          <a class="nav-item nav-link" href="{% url 'donation:donation-home' %}"><i class="fas fa-box-open"></i></a>
           {% elif user.helpseekerprofile %}
           <a class="nav-item nav-link" href="{% url 'register:helpseeker-profile' %}"><i
               class="fas fa-user-circle"></i></a>
           <a class="nav-item nav-link" href="{% url 'main-map' %}"><i class="fas fa-map-marker-alt"></i></a>
-          <a class="nav-item nav-link" href="{% url 'reservation' %}"><i class="fas fa-box-open"></i></a>
+          <a class="nav-item nav-link" href="{% url 'reservation:reservation-home' %}"><i class="fas fa-box-open"></i></a>
           {% else %}
           <a class="nav-item nav-link" href="/admin"><i class="fas fa-user-circle"></i></a>
           {% endif %}

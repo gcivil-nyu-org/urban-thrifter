@@ -327,6 +327,14 @@ p, a, li, input, label, textarea {
   color: #333 !important;
 }
 
+.btn a:hover, .btn a:link {
+  text-decoration: none;
+}
+
+.btn-warning a {
+  color: #fff;
+}
+
 ul {
   margin: 0;
 }
