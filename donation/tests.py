@@ -1,6 +1,7 @@
 from django.test import TestCase
 from django.urls import reverse
-from .models import ResourcePost, User, DonorProfile
+from .models import ResourcePost, User
+from register.models import DonorProfile
 from django.utils import timezone
 from django.core.files.uploadedfile import SimpleUploadedFile
 import tempfile
