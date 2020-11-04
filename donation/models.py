@@ -52,8 +52,9 @@ RESROUCE_CATEGORY_CHOICES = (
 )
 STATUS_CHOICES = (
     ("AVAILABLE", "Available"),
+    ("RESERVED", "Reserved"),
     ("PENDING", "Pending"),
-    ("NOTAVAILABLE", "Not Available"),
+    ("CLOSED", "Closed"),
 )
 
 

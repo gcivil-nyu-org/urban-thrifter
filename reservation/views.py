@@ -3,9 +3,54 @@ from .models import ReservationPost
 from django.views.generic import ListView, DetailView
 from django.shortcuts import redirect
 from django.contrib.auth.models import User
+from django.shortcuts import render
 
 
 # Create your views here.
+def home(request):
+    return render(request, "reservation/reservation_home.html")
+
+
+class PostListView(ListView):
+    # Basic list view
+    model = ResourcePost
+    # Assign tempalte otherwise it would look for post_list.html
+    # as default template
+    template_name = "reservation/reservation_home.html"
+
+    # Set context_attribute to post object
+    context_object_name = "posts"
+
+    # Add ordering attribute to put most recent post to top
+    ordering = ["-date_created"]
+
+    # filters = {'status':'AVAILABLE'}
+
+    # Add pagination
+    paginate_by = 5
+
+
+class ReservationPostListView(ListView):
+    # Basic list view
+    model = ReservationPost
+    # Assign tempalte otherwise it would look for post_list.html
+    # as default template
+    template_name = "reservation/reservation_list.html"
+
+    # Set context_attribute to post object
+    context_object_name = "posts"
+
+    # Add ordering attribute to put most recent post to top
+    ordering = ["-date_created"]
+
+    # Add pagination
+    paginate_by = 5
+
+
+def confirmation(request):
+    return render(request, "reservation/reservation_confirmation.html")
+
+
 def reservation_function(request, id):
     if request.method == "POST":
         selected_timeslot = request.POST.get("dropoff_time")
@@ -27,28 +72,12 @@ def reservation_function(request, id):
         reservation.save()
         resource_post.status = "PENDING"
         resource_post.save()
-    return redirect("reservation-home")
-
-
-# Reservation List View
-class PostListView(ListView):
-    # Basic list view
-    model = ResourcePost
-    # Assign tempalte otherwise it would look for post_list.html
-    # as default template
-    template_name = "reservation/listing_all.html"
-
-    # Set context_attribute to post object
-    context_object_name = "posts"
-
-    # Add ordering attribute to put most recent post to top
-    ordering = ["-date_created"]
-
-    # Add pagination
-    paginate_by = 5
+    return redirect("reservation:reservation-confirmation")
 
 
 # Reservation Detail View
+
+
 class PostDetailView(DetailView):
     # Basic detail view
     model = ResourcePost

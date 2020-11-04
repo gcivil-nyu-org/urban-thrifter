@@ -15,23 +15,14 @@
     font-weight: italic;
     src: url(d-din/D-DIN-Italic.otf) format("opentype");
 }*/
+
 body {
   background: #fafafa;
   color: #333333;
   margin-top: 5rem;
 }
 
-body,
-div,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-a,
-li {
+body, div, h1, h2, h3, h4, h5, h6, p, a, li {
   /*font-family: Palatino,Palatino Linotype,Palatino LT STD,Book Antiqua,Georgia,serif; */
   /*font-family: 'EB Garamond', serif;*/
   font-family: DINFont, serif;
@@ -83,9 +74,9 @@ p, a, li, input, label, textarea {
 /********** Common Element *************/
 
 .btn:focus {
-    box-shadow: none !important;
-    -webkit-box-shadow: none !important;
-    outline: none;
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+  outline: none;
 }
 
 .btn-wide {
@@ -99,7 +90,7 @@ p, a, li, input, label, textarea {
 }
 
 .gray-bg {
-    background: #f9f9f9;
+  background: #f9f9f9;
 }
 
 .btn-dark:hover {
@@ -189,15 +180,21 @@ select option:hover, select option:focus, select option:active {
 .button-nav {
   padding-bottom: 10px;
   display: flex;
+  justify-content: space-around;
+  flex-flow: row wrap;
 }
 
-.button-nav .btn {
+.button-nav .nav-item {
   flex-grow: 1;
   margin-right: 3px;
 }
 
-.button-nav .btn:last-child {
+.button-nav .nav-item:last-child {
   margin-right: 0;
+}
+
+.button-nav .nav-item a {
+  width: 100%;
 }
 
 .content-section {
@@ -287,6 +284,7 @@ a.article-title:hover {
 }
 
 /* filtering for main map */
+
 .filter-group {
   font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
   font-weight: 600;
@@ -326,8 +324,7 @@ a.article-title:hover {
   text-transform: capitalize;
 }
 
-.filter-group input[type='checkbox']+label:hover,
-.filter-group input[type='checkbox']:checked+label {
+.filter-group input[type='checkbox']+label:hover, .filter-group input[type='checkbox']:checked+label {
   background-color: #4ea0da;
 }
 
