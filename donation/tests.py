@@ -23,6 +23,9 @@ def createdonor():
         password="Unittestpassword123!",
         is_active=True,
         email="unittest@unittest.com",
+        donorprofile = {
+            dropoff_location = "Metrotech"
+        }
     )
     donor.save()
     # donor_prof = DonorProfile(user=donor,
