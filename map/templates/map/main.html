@@ -143,7 +143,7 @@
 
 <!-- personal donation data-->
 {% for post in post_context %}
-{% if post.status == "AVAILABLE" %}
+{% if post.status == "AVAILABLE" or post.status == "Available" %}
 <script>
   // console.log({{post.resource_category}})
   var personalEl = document.createElement('div');
