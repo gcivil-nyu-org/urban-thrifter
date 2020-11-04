@@ -30,7 +30,6 @@
   </div>
 </section>
 <div class="clearfix"></div>
-<nav id="filter-group" class="filter-group"></nav>
 
 <script>
   mapboxgl.accessToken = '{{ mapbox_access_token }}'
@@ -159,7 +158,7 @@
     "<p>{{ post.dropoff_time_2 }}</p>" +
     "<p>{{ post.dropoff_time_3 }}</p>" +
     "</div></div>" +
-    "<a href='/' class='btn btn-dark btn-wide' type='submit'>" +
+    "<a href='{% url 'reservation:reservation-request' post.id %}' class='btn btn-dark btn-wide' type='submit'>" +
     "Detail</button></a>"
 </script>
 
@@ -230,6 +229,6 @@
 <body>
 </body>
 
-</html>
+</html> -->
 {% endif %}
 {% endblock content %}

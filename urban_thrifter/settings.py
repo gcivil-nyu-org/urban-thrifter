@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     "places",
     # Default apps
     "map.apps.MapConfig",
+    "reservation.apps.ReservationConfig",
     "register.apps.RegisterConfig",
     "django.contrib.admin",
     "django.contrib.auth",
@@ -177,6 +178,5 @@ AUTHENTICATION_BACKENDS = [
     # Django ModelBackend is the default authentication backend.
     "django.contrib.auth.backends.ModelBackend",
 ]
-
 
 django_heroku.settings(locals(), test_runner=False)

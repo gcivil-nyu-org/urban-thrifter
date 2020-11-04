@@ -176,6 +176,7 @@ body, div, h1, h2, h3, h4, h5, h6, p, a, li {
 .map-filter li:hover .restroom-icon,
 .map-filter .restroom-icon.inactive {
   color: #155889;
+  background-color: #fff;
 }
 
 .map-filter li:hover .wifi-icon,
@@ -325,6 +326,14 @@ p, a, li, input, label, textarea {
 .btn-dark:hover {
   background-color: #fff !important;
   color: #333 !important;
+}
+
+.btn a:hover, .btn a:link {
+  text-decoration: none;
+}
+
+.btn-warning a {
+  color: #fff;
 }
 
 ul {

@@ -22,12 +22,16 @@ from donation import views as donation_view
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
-    path("donation/", include("donation.urls")),
+    path("donation/", include(("donation.urls", "donation"), namespace="donation")),
+    path(
+        "reservation/",
+        include(("reservation.urls", "reservation"), namespace="reservation"),
+    ),
     path("admin/", admin.site.urls),
     path("map/", include("map.urls")),
     path("", donation_view.homepage, name="home"),
     path("issue-complaint/", views.issue_complaint, name="issue-complaint"),
-    path("register/", include("register.urls")),
+    path("register/", include(("register.urls", "register"), namespace="register")),
     path(
         "login/",
         auth_views.LoginView.as_view(template_name="register/login.html"),

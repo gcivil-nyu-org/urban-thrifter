@@ -41,12 +41,13 @@ def main_map(request):
 
     mapbox_access_token = "pk." + os.environ.get("MAPBOX_KEY")
 
+    # All Personal Donations
     resource_post_model = apps.get_model(
         "donation", "ResourcePost"
     )  # getting model from donation app
     post_context = {"resource_posts": resource_post_model.objects.all()}
 
-    # Drop-in Center API GET
+    # Shelter API GET
     drop_in_center_URL = "https://data.cityofnewyork.us/resource/bmxf-3rd4.json"
     drop_in_center_r = requests.get(url=drop_in_center_URL)
     drop_in_centers = drop_in_center_r.json()
