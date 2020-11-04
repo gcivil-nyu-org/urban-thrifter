@@ -64,6 +64,7 @@ body, div, h1, h2, h3, h4, h5, h6, p, a, li {
   display: flex;
   margin-left: auto;
   margin-right: auto;
+  margin-top: 15px;
 }
 
 .map-filter li {
@@ -81,72 +82,53 @@ body, div, h1, h2, h3, h4, h5, h6, p, a, li {
   width: 100%;
   height: 100%;
   padding: 10px;
-  border-top: 0;
   background-color: #fff;
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
+  border-radius: 5px;
 }
-
-/* .map-filter li:first-child button {
-  border-bottom-left-radius: 5px;
-}
-
-.map-filter li:last-child button {
-  border-bottom-right-radius: 5px ;
-} */
 
 .map-filter li .food-icon {
   color: #C66257;
-  border: 2px solid #C66257;
-  border-top: none;
+  border: 1px solid #C66257;
 }
 
 .map-filter li .shelter-icon {
   color: #D6A77E;
-  border: 2px solid #D6A77E;
-  border-top: none;
+  border: 1px solid #D6A77E;
 }
 
 .map-filter li .ppe-icon {
   color: #6DB1C7;
-  border: 2px solid #6DB1C7;
-  border-top: none;
+  border: 1px solid #6DB1C7;
 }
 
 .map-filter li .electronics-icon {
   color: #484848;
-  border: 2px solid #484848;
-  border-top: none;
+  border: 1px solid #484848;
 }
 
 .map-filter li .cloth-icon {
   color: #E0C35C;
-  border: 2px solid #E0C35C;
-  border-top: none;
+  border: 1px solid #E0C35C;
 }
 
 .map-filter li .restroom-icon {
   color: #155889;
-  border: 2px solid #155889;
-  border-top: none;
+  border: 1px solid #155889;
 }
 
 .map-filter li .wifi-icon {
   color: #72B163;
-  border: 2px solid #72B163;
-  border-top: none;
+  border: 1px solid #72B163;
 }
 
 .map-filter li .reeducation-icon {
   color: #8DA0D0;
-  border: 2px solid #8DA0D0;
-  border-top: none;
+  border: 1px solid #8DA0D0;
 }
 
 .map-filter li .others-icon {
   color: #B65C87;
-  border: 2px solid #B65C87;
-  border-top: none;
+  border: 1px solid #B65C87;
 }
 
 .map-filter li .feature-icon {
