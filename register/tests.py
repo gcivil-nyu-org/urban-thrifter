@@ -4,6 +4,19 @@ from .forms import HelpseekerForm, DonorForm
 from django.contrib.auth.models import User
 from django.urls import reverse
 
+class EmailTests(TestCase):
+    def test_email_sent(self):
+        holder = self.client.get(
+            reverse("register:email-sent"))
+        self.assertEqual(holder.status_code, 200)
+        self.assertContains(holder, "Confirmation email has been sent!")
+        
+class RegisterPageViewTests(TestCase):
+    def test_register_redirect(self):
+        holder = self.client.get(
+            reverse("register:register"))
+        self.assertEqual(holder.status_code, 200)
+        self.assertContains(holder, "Are you a _______?")
 
 class HelpseekerRegistrationTests(TestCase):
     def test_username_label(self):
@@ -44,7 +57,7 @@ class HelpseekerRegistrationTests(TestCase):
             }
         )
         self.assertTrue(form.is_valid())
-
+ 
     def test_form_username_wrong(self):
         form = HelpseekerForm(
             data={
@@ -311,6 +324,7 @@ class HelpseekerViewTests(TestCase):
             },
         )
         self.assertEqual(holder.status_code, 200)
+        self.assertContains(holder, "Help Seeker Registration")
 
     def test_bad_email_post_request(self):
         holder = self.client.post(
@@ -325,6 +339,7 @@ class HelpseekerViewTests(TestCase):
             },
         )
         self.assertEqual(holder.status_code, 200)
+        self.assertContains(holder, "Help Seeker Registration")
 
     def test_bad_password_post_request(self):
         holder = self.client.post(
@@ -339,20 +354,13 @@ class HelpseekerViewTests(TestCase):
             },
         )
         self.assertEqual(holder.status_code, 200)
+        self.assertContains(holder, "Help Seeker Registration")
 
-    def test_mismatch_password_post_request(self):
-        holder = self.client.post(
-            reverse("register:helpseeker-register"),
-            data={
-                "username": "Jonathan",
-                "email": "ponathanjun@gmail.com",
-                "password1": "peaches12",
-                "password2": "peaches13",
-                "borough": "MAN",
-                "resource": ["FOOD", "MDCL"],
-            },
-        )
+    def helpseeker_register_get(self):
+        holder = self.client.get(
+            reverse("register:helpseeker-register"))
         self.assertEqual(holder.status_code, 200)
+        self.assertContains(holder, "Help Seeker Registration")
 
 
 class DonorRegistrationTests(TestCase):
@@ -562,6 +570,7 @@ class DonorViewTests(TestCase):
             },
         )
         self.assertEqual(holder.status_code, 200)
+        self.assertContains(holder, "Donor Registration")
 
     def test_bad_email_post_request(self):
         holder = self.client.post(
@@ -574,6 +583,7 @@ class DonorViewTests(TestCase):
             },
         )
         self.assertEqual(holder.status_code, 200)
+        self.assertContains(holder, "Donor Registration")
 
     def test_bad_password_post_request(self):
         holder = self.client.post(
@@ -586,6 +596,7 @@ class DonorViewTests(TestCase):
             },
         )
         self.assertEqual(holder.status_code, 200)
+        self.assertContains(holder, "Donor Registration")
 
     def test_mismatch_password_post_request(self):
         holder = self.client.post(
@@ -598,3 +609,4 @@ class DonorViewTests(TestCase):
             },
         )
         self.assertEqual(holder.status_code, 200)
+        self.assertContains(holder, "Donor Registration")
