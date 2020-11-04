@@ -29,6 +29,7 @@ class EmailTests(TestCase):
         )
         self.assertEqual(holder.status_code, 200)
         
+        
 class RegisterPageViewTests(TestCase):
     def test_register_redirect(self):
         holder = self.client.get(
@@ -379,9 +380,7 @@ class HelpseekerViewTests(TestCase):
             reverse("register:helpseeker-register"))
         self.assertEqual(holder.status_code, 200)
         self.assertContains(holder, "Help Seeker Registration")
-
-    
-
+        
 
 class DonorRegistrationTests(TestCase):
     def test_username_label(self):
@@ -630,3 +629,10 @@ class DonorViewTests(TestCase):
         )
         self.assertEqual(holder.status_code, 200)
         self.assertContains(holder, "Donor Registration")
+
+    def test_helpseeker_register_get(self):
+        holder = self.client.get(
+            reverse("register:donor-register"))
+        self.assertEqual(holder.status_code, 200)
+        self.assertContains(holder, "Donor Registration")
+        
