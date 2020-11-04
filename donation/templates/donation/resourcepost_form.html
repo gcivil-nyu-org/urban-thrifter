@@ -13,7 +13,7 @@
             <legend class='mb-4 font-weight-bold'>Donation Details</legend>
             <!-- Crispy filter to style the form -->
             {{ form|crispy }}
-            <p>The dropoff location will be {{user.donorprofile.dropoff_location}} if you do not specify a location here.</p>
+            <p>The dropoff location will be {{user.donorprofile.dropoff_location.place}} if you do not specify a location here.</p>
         </fieldset>
         <div class='form-group'>
             <button class='btn btn-dark btn-wide' type='submit'>
