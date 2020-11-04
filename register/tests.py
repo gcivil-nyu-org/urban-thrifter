@@ -1,4 +1,4 @@
-from django.test import TestCase, Client
+from django.test import TestCase
 from .models import HelpseekerProfile, DonorProfile
 from .forms import HelpseekerForm, DonorForm
 from django.contrib.auth.models import User
@@ -7,10 +7,10 @@ from django.utils.http import urlsafe_base64_encode
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.utils.encoding import force_bytes
 
+
 class EmailTests(TestCase):
     def test_email_sent(self):
-        holder = self.client.get(
-            reverse("register:email-sent"))
+        holder = self.client.get(reverse("register:email-sent"))
         self.assertEqual(holder.status_code, 200)
         self.assertContains(holder, "Confirmation email has been sent!")
 
@@ -28,14 +28,14 @@ class EmailTests(TestCase):
             {"password1": "peaches14", "password2": "peaches14"},
         )
         self.assertEqual(holder.status_code, 200)
-        
-        
+
+
 class RegisterPageViewTests(TestCase):
     def test_register_redirect(self):
-        holder = self.client.get(
-            reverse("register:register"))
+        holder = self.client.get(reverse("register:register"))
         self.assertEqual(holder.status_code, 200)
         self.assertContains(holder, "Are you a _______?")
+
 
 class HelpseekerRegistrationTests(TestCase):
     def test_username_label(self):
@@ -76,7 +76,7 @@ class HelpseekerRegistrationTests(TestCase):
             }
         )
         self.assertTrue(form.is_valid())
- 
+
     def test_form_username_wrong(self):
         form = HelpseekerForm(
             data={
@@ -376,11 +376,10 @@ class HelpseekerViewTests(TestCase):
         self.assertContains(holder, "Help Seeker Registration")
 
     def test_helpseeker_register_get(self):
-        holder = self.client.get(
-            reverse("register:helpseeker-register"))
+        holder = self.client.get(reverse("register:helpseeker-register"))
         self.assertEqual(holder.status_code, 200)
         self.assertContains(holder, "Help Seeker Registration")
-        
+
 
 class DonorRegistrationTests(TestCase):
     def test_username_label(self):
@@ -564,6 +563,7 @@ class DonorProfileTests(TestCase):
         profile = DonorProfile(user=user)
         self.assertTrue(profile.complaint_count == 0)
 
+
 class DonorViewTests(TestCase):
     def test_successful_post_request(self):
         holder = self.client.post(
@@ -631,8 +631,6 @@ class DonorViewTests(TestCase):
         self.assertContains(holder, "Donor Registration")
 
     def test_helpseeker_register_get(self):
-        holder = self.client.get(
-            reverse("register:donor-register"))
+        holder = self.client.get(reverse("register:donor-register"))
         self.assertEqual(holder.status_code, 200)
         self.assertContains(holder, "Donor Registration")
-        
