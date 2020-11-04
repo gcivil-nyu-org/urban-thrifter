@@ -1,6 +1,5 @@
 from django.db import models
 from django.utils import timezone
-from register.models import DonorProfile
 from django.contrib.auth.models import User
 
 # Import reverse
@@ -9,7 +8,6 @@ from PIL import Image
 
 # from django.contrib.auth.models import User
 from places.fields import PlacesField
-from django.contrib.auth.models import User
 
 
 # Create your models here.
