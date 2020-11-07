@@ -13,7 +13,7 @@
             <!-- Crispy filter to style the form -->
             {{ form|crispy }}
             {% if not user.donorprofile.dropoff_location %}
-            <p>Need to specify a dropoff location</p>
+            <p>Need to specify a dropoff location.</p>
             {% else %}
             <p>The dropoff location will be {{user.donorprofile.dropoff_location.place}} if you do not specify a location here.</p>
             {% endif %}
