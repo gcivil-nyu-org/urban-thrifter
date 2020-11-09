@@ -41,6 +41,7 @@
     <div class="tab-pane fade show active" id="pills-reserve" role="tabpanel" aria-labelledby="pills-reserved-tab">
         {% if user.is_authenticated and user.donorprofile %}
         {% for post in posts %}
+        {% if post.status == "RESERVED" %}
         <article class="card donation-card mb-2">
             <!-- <img class='rounded-circle article-img' src='{{ post.author.profile.image.url }}' > -->
             <div class="card-header">
@@ -91,6 +92,7 @@
                 </div>
             </div>
         </article>
+        {% endif %}
         {% endfor %}
         <!-- Add Pagination Logic -->
         {% if is_paginated %}
