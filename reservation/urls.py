@@ -5,6 +5,7 @@ from .views import (
     PostDetailView,
     ReservationDetailView,
     reservation_function,
+    ShowNotifications,
 )
 
 urlpatterns = [
@@ -14,4 +15,5 @@ urlpatterns = [
     path("post/<int:pk>", PostDetailView.as_view(), name="reservation-request"),
     path("detail/<int:pk>", ReservationDetailView.as_view(), name="reservation-detail"),
     path("function/<int:id>", reservation_function, name="reservation-function"),
+    path("notification/", ShowNotifications, name="reservation-notification"),
 ]

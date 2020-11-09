@@ -1,0 +1,54 @@
+
+
+{% extends 'donation/base.html' %}
+{% block content %}
+{% if user.is_authenticated and user.donorprofile %}
+{% for notification in notifications %}
+
+<article class="card donation-card mb-2">
+    <!-- <img class='rounded-circle article-img' src='{{ post.author.profile.image.url }}' > -->
+    <div class="card-header">
+        <div class='container'>
+            <div class="row text-center">
+                <div class="col">
+                    <p>Title</p>
+                    <p>{{ notification.post.post.title}}</p>
+                </div>
+                <div class="col">
+                    <p>Helpseeker</p>
+                    <p>{{ notification.sender }}</p>
+                </div>
+                <div class="col">
+                    <p>Status</p>
+                    {% if notification.notificationstatus == 3 %}
+                    <p>PENDING</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-body ">
+        <div class='container'>
+            <div class="row">
+                <div class="col-2">
+                    <p class="article-img img-circle"><img class="img-thumbnail" src='{{notification.post.post.image.url}}'></i></p>
+                </div>
+                <div class="col-5">
+                    <p>Dropoff Request Time: </p>
+                    <ul class="pl-3">
+                        <li>{{ notification.post.dropoff_time_request}}</li>
+                    </ul>
+                </div>
+                <div class="col-5">
+                    <button class='btn btn-outline-dark btn-wide mb-1 float-right'>Confirm</button>
+                    <button class='btn btn-danger btn-wide float-right'>Deny</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</article>
+
+{% endfor %}
+{% endif %}
+{% endblock %}

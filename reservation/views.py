@@ -1,10 +1,14 @@
 from donation.models import ResourcePost
-from .models import ReservationPost
+from .models import ReservationPost, Notification
 from django.views.generic import ListView, DetailView
 from django.shortcuts import redirect
 from django.contrib.auth.models import User
 from django.shortcuts import render
 from django.contrib import messages
+from django.template import loader
+from django.http import HttpResponse
+
+# from donor_notifications.models import Notification
 
 
 # Create your views here.
@@ -80,9 +84,18 @@ def reservation_function(request, id):
                 donor=donor_id,
                 helpseeker=helpseeker_id,
             )
+        try:
             reservation.save()
             resource_post.status = "PENDING"
             resource_post.save()
+        except Exception:
+            resource_post.status = "AVAILABLE"
+            resource_post.save()
+            reservation.delete()
+            messages.error(
+                request, "Your reservation was unsuccessful. Please try again!"
+            )
+            return redirect("reservation:reservation-home")
     return redirect("reservation:reservation-confirmation")
 
 
@@ -99,3 +112,16 @@ class ReservationDetailView(DetailView):
     # Basic detail view
     model = ReservationPost
     template_name = "reservation/reservation_detail.html"
+
+
+def ShowNotifications(request):
+    print(request.user.id)
+    receiver = request.user
+    notifications = Notification.objects.filter(receiver=receiver).order_by("-date")
+    template = loader.get_template("donation/notifications.html")
+
+    context = {
+        "notifications": notifications,
+    }
+
+    return HttpResponse(template.render(context, request))
