@@ -1,7 +1,7 @@
 from django.urls import path
 from . import views
 from .views import PostCreateView, PostListView, PostDetailView
-from reservation.views import ShowNotifications
+from reservation.views import ShowNotifications,confirmNotification
 
 urlpatterns = [
     path("", views.home, name="donation-home"),
@@ -9,4 +9,5 @@ urlpatterns = [
     path("new/", PostCreateView.as_view(), name="donation-new"),
     path("post/<int:pk>", PostDetailView.as_view(), name="donation-detail"),
     path("messages/", ShowNotifications, name="donation-messages"),
+    path("messages/notification/<int:id>", confirmNotification, name="confirm-notification"),
 ]
