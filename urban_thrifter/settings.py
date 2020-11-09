@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     "map.apps.MapConfig",
     "reservation.apps.ReservationConfig",
     "register.apps.RegisterConfig",
+    "storages",
     # Default apps
     "django.contrib.admin",
     "django.contrib.auth",
@@ -179,5 +180,14 @@ AUTHENTICATION_BACKENDS = [
     # Django ModelBackend is the default authentication backend.
     "django.contrib.auth.backends.ModelBackend",
 ]
+
+AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID")
+AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY")
+AWS_STORAGE_BUCKET_NAME = os.environ.get("AWS_STORAGE_BUCKET_NAME")
+
+AWS_S3_FILE_OVERWRITE = False #keep all file names distinct
+AWS_DEFAULT_ACL = None
+
+# DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 django_heroku.settings(locals(), test_runner=False)
