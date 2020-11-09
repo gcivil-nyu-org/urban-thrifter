@@ -9,5 +9,4 @@ urlpatterns = [
     path("new/", PostCreateView.as_view(), name="donation-new"),
     path("post/<int:pk>", PostDetailView.as_view(), name="donation-detail"),
     path("messages/", ShowNotifications, name="donation-messages"),
-    path("messages/notification/<int:id>", confirmNotification, name="confirm-notification"),
 ]
