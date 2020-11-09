@@ -15,11 +15,6 @@ def homepage(request):
     # Redirect to login page
     return render(request, "donation/homepage.html")
 
-
-class MessageView(TemplateView):
-    template_name = "donation/notifications.html"
-
-
 def home(request):
     user = request.user
     context = {"posts": ResourcePost.objects.filter(donor=user)}
