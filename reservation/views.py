@@ -64,6 +64,7 @@ def confirmNotification(request, id):
         elif 'deny' in request.POST:
         # do unsubscribe
             notification.notificationstatus=2
+    notification.save()
     return render(request,"donation/notifications_confirm.html")
 
 def reservation_function(request, id):
