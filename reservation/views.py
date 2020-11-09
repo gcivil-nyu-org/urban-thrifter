@@ -58,6 +58,12 @@ def confirmation(request):
 def confirmNotification(request, id):
     if request.method == 'POST':
         notification = Notification.objects.get(id=id)
+        if 'accept' in request.POST:
+        # do subscribe
+            notification.notificationstatus="ACCEPT"
+        elif 'deny' in request.POST:
+        # do unsubscribe
+            notification.notificationstatus="REJECT"
     return render(request,"donation/notifications_confirm.html")
 
 def reservation_function(request, id):
