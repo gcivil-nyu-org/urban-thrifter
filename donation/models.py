@@ -98,17 +98,17 @@ class ResourcePost(models.Model):
         else:
             return True
 
-    def save(self, *args, **kwargs):
-        if not self.dropoff_location:
-            self.dropoff_location = self.donor.donorprofile.dropoff_location
-        super().save(*args, **kwargs)
+    # def save(self, *args, **kwargs):
+    #     if not self.dropoff_location:
+    #         self.dropoff_location = self.donor.donorprofile.dropoff_location
+    #     super().save(*args, **kwargs)
 
-        path = self.image.path
-        img = Image.open(path)
+    #     path = self.image.path
+    #     img = Image.open(path)
 
-        # 2. resize the image to 300,300 if larger
-        if img.height > 300 or img.width > 300:
-            output_size = (300, 300)
-            img = img.crop_to_aspect(300, 300)
-            img.thumbnail(output_size)
-            img.save(path)
+    #     # 2. resize the image to 300,300 if larger
+    #     if img.height > 300 or img.width > 300:
+    #         output_size = (300, 300)
+    #         img = img.crop_to_aspect(300, 300)
+    #         img.thumbnail(output_size)
+    #         img.save(path)
