@@ -36,6 +36,11 @@
 						<li class="nav-item">
 							<a class="nav-link page-scroll" href="#contact">Contact</a>
 						</li>
+						{% if user.is_authenticated %}
+						<li class="nav-item">
+							<a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
+						</li>
+						{% endif %}
 					</ul>
 				</div>
 			</div>
@@ -47,9 +52,19 @@
 						<h2 class="head-title">Urban Thrifter</h2>
 						<p>Connect the resource to the people in need.</p>
 						<div class="header-button">
+							{% if user.is_authenticated %}
+							{% if user.donorprofile %}
+							<a href="{% url 'donation:donation-home' %}" rel="nofollow" class="btn btn-dark btn-wide">Start your donation!</a>
+							{% elif user.helpseekerprofile %}
+							<a href="{% url 'main-map' %}" rel="nofollow" class="btn btn-dark btn-wide">Checkout what we have!</a>
+							{% else %}
+							<a href="/admin" rel="nofollow" class="btn btn-dark btn-wide">Go to admin</a>
+							{% endif %}
+							{% else %}
 							<a href="{% url 'register:register' %}" rel="nofollow" class="btn btn-dark btn-wide">Join
 								Us</a>
 							<a href="{% url 'login' %}" rel="nofollow" class="btn btn-dark btn-wide">Login</a>
+							{% endif %}
 						</div>
 					</div>
 				</div>
