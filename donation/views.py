@@ -3,6 +3,7 @@ from django.views.generic import ListView, CreateView, DetailView
 from .models import ResourcePost
 from bootstrap_datepicker_plus import DateTimePickerInput
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import TemplateView
 
 # , UserPassesTestMixin
 
@@ -14,6 +15,8 @@ def homepage(request):
     # Redirect to login page
     return render(request, "donation/homepage.html")
 
+class MessageView(TemplateView):
+    template_name = "donation/notifications.html"
 
 def home(request):
     user = request.user
