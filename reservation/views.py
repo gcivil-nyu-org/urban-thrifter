@@ -56,6 +56,8 @@ def confirmation(request):
     return render(request, "reservation/reservation_confirmation.html")
 
 def confirmNotification(request):
+    if request.method == 'POST':
+        notification = Notification.objects.get(id=id)
     return render(request,"donation/notifications_confirm.html")
 
 def reservation_function(request, id):
