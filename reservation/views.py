@@ -60,10 +60,10 @@ def confirmNotification(request, id):
         notification = Notification.objects.get(id=id)
         if 'accept' in request.POST:
         # do subscribe
-            notification.notificationstatus="ACCEPT"
+            notification.notificationstatus=1
         elif 'deny' in request.POST:
         # do unsubscribe
-            notification.notificationstatus="REJECT"
+            notification.notificationstatus=2
     return render(request,"donation/notifications_confirm.html")
 
 def reservation_function(request, id):
