@@ -3,6 +3,7 @@ from django.views.generic import ListView, CreateView, DetailView
 from .models import ResourcePost
 from bootstrap_datepicker_plus import DateTimePickerInput
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import JsonResponse
 
 # , UserPassesTestMixin
 
@@ -75,3 +76,7 @@ class PostCreateView(LoginRequiredMixin, CreateView):
 class PostDetailView(DetailView):
     # Basic detail view
     model = ResourcePost
+
+def getResourcePost(request):
+    queryset = ResourcePost.objects.all()
+    return JsonResponse({"resource_posts":list(queryset.values())})
