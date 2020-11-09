@@ -36,7 +36,7 @@
                 $.ajax({
                     type: 'GET',
                     url: "{% url 'getResourcePosts' %}",
-                    success: fucntion(response) {
+                    success: function(response) {
                       console.log(response)
                     },
                     error: function(response) {
