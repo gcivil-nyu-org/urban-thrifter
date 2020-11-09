@@ -32,6 +32,7 @@ urlpatterns = [
     path("", donation_view.homepage, name="home"),
     path("issue-complaint/", views.issue_complaint, name="issue-complaint"),
     path("register/", include(("register.urls", "register"), namespace="register")),
+    # path("notification/", include("donor_notifications.urls")),
     path(
         "login/",
         auth_views.LoginView.as_view(template_name="register/login.html"),
