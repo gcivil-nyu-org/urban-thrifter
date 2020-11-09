@@ -47,10 +47,13 @@ INSTALLED_APPS = [
     "bootstrap4",
     "bootstrap_datepicker_plus",
     "places",
-    # Default apps
+    "complaint",
+    "widget_tweaks",
+    "axes",
     "map.apps.MapConfig",
     "reservation.apps.ReservationConfig",
     "register.apps.RegisterConfig",
+    # Default apps
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -58,9 +61,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.sites",
-    "complaint",
-    "widget_tweaks",
-    "axes",
+
 ]
 SITE_ID = 1
 
