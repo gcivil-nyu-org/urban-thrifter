@@ -40,7 +40,7 @@
                     </ul>
                 </div>
                 <div class="col-5">
-                    <form method="POST" action="{% url 'reservation:confirm-notification' %}"></form>
+                    <form method="POST" action="{% url 'reservation:confirm-notification' notification.id %}"></form>
                     <p class="article-content">Status: </p>
                         <p><button name="accept" class="mt-3 btn btn-dark btn-wide" type="submit">Accept</button></p>
                         <p><button name="deny" class="mt-3 btn btn-dark btn-wide" type="submit">Deny</button></p>
