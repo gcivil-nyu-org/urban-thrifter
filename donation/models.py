@@ -9,6 +9,7 @@ from PIL import Image
 from places.fields import PlacesField
 from django.contrib.auth.models import User
 
+
 # Create your models here.
 class _Image(Image.Image):
     def crop_to_aspect(self, aspect, divisor=1, alignx=0.5, aligny=0.5):

@@ -7,7 +7,8 @@ from donation.models import ResourcePost
 # from places.fields import PlacesField
 from django.urls import reverse
 from django.db.models.signals import post_save
-from django.dispatch import receiver
+
+
 # Create your models here.
 class ReservationPost(models.Model):
 
@@ -23,13 +24,15 @@ class ReservationPost(models.Model):
     # def __str__(self):
     # return self.title
 
-
     def give_notifications(sender, instance, *args, **kwargs):
         reservationpost = instance
         reservepost = reservationpost.post
         helpseker = reservationpost.helpseeker
-        notify = Notification(post=reservationpost, sender=helpseker, receiver=reservepost.donor)
+        notify = Notification(
+            post=reservationpost, sender=helpseker, receiver=reservepost.donor
+        )
         notify.save()
+
     # Reverse would return the full url as a string and
     # let the view redirect for us
 
@@ -38,15 +41,27 @@ class ReservationPost(models.Model):
         return reverse("reservation-detail", kwargs={"pk": self.pk})
 
 
-
 class Notification(models.Model):
-    NOTIFICATION_STATUS = ((1, 'ACCEPT'), (2, 'REJECT'), (3, 'PENDING'))
+    NOTIFICATION_STATUS = ((1, "ACCEPT"), (2, "REJECT"), (3, "PENDING"))
 
-    post = models.ForeignKey(ReservationPost, on_delete=models.CASCADE, related_name='noti_post', blank=True, null=True)
-    sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name='noti_from_user')
-    receiver = models.ForeignKey(User, on_delete=models.CASCADE, related_name='noti_to_user')
-    notificationstatus = models.IntegerField(choices=NOTIFICATION_STATUS, default=NOTIFICATION_STATUS[2][0])
+    post = models.ForeignKey(
+        ReservationPost,
+        on_delete=models.CASCADE,
+        related_name="noti_post",
+        blank=True,
+        null=True,
+    )
+    sender = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="noti_from_user"
+    )
+    receiver = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="noti_to_user"
+    )
+    notificationstatus = models.IntegerField(
+        choices=NOTIFICATION_STATUS, default=NOTIFICATION_STATUS[2][0]
+    )
     date = models.DateTimeField(auto_now_add=True)
     is_seen = models.BooleanField(default=False)
+
 
 post_save.connect(ReservationPost.give_notifications, sender=ReservationPost)

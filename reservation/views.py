@@ -5,10 +5,9 @@ from django.shortcuts import redirect
 from django.contrib.auth.models import User
 from django.shortcuts import render
 from django.contrib import messages
-from django.db.models.signals import post_save
-from django.dispatch import receiver
 from django.template import loader
 from django.http import HttpResponse
+
 # from donor_notifications.models import Notification
 
 
@@ -89,7 +88,7 @@ def reservation_function(request, id):
             reservation.save()
             resource_post.status = "PENDING"
             resource_post.save()
-        except:
+        except Exception:
             resource_post.status = "AVAILABLE"
             resource_post.save()
             reservation.delete()
@@ -98,9 +97,6 @@ def reservation_function(request, id):
             )
             return redirect("reservation:reservation-home")
     return redirect("reservation:reservation-confirmation")
-
-
-
 
 
 # Reservation Detail View
@@ -121,11 +117,11 @@ class ReservationDetailView(DetailView):
 def ShowNotifications(request):
     print(request.user.id)
     receiver = request.user
-    notifications = Notification.objects.filter(receiver=receiver).order_by('-date')
-    template = loader.get_template('donation/notifications.html')
+    notifications = Notification.objects.filter(receiver=receiver).order_by("-date")
+    template = loader.get_template("donation/notifications.html")
 
     context = {
-        'notifications': notifications,
+        "notifications": notifications,
     }
 
     return HttpResponse(template.render(context, request))
