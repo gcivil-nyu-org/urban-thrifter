@@ -53,7 +53,7 @@
     {% endfor %}
 </div>
 
-<div class="tab-pane fade show active" id="pills-pending" role="tabpanel" aria-labelledby="pills-pending-tab">
+<div class="tab-pane fade" id="pills-pending" role="tabpanel" aria-labelledby="pills-pending-tab">
     {% for post in posts %}
     {% if post.status == "PENDING" %}
     <article class="card donation-card mb-2">

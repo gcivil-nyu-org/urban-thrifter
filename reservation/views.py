@@ -29,6 +29,8 @@ class PostListView(ListView):
 
     # Add pagination
     paginate_by = 5
+    
+    
 
 
 class ReservationPostListView(ListView):
