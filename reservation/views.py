@@ -58,6 +58,7 @@ def confirmation(request):
 def confirmNotification(request, id):
     if request.method == 'POST':
         notification = Notification.objects.get(id=id)
+        resource_post = ResourcePost.objects.get(id=notification.post.post)
         if 'accept' in request.POST:
         # do subscribe
             notification.notificationstatus=1
