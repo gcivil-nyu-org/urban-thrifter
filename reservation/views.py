@@ -55,8 +55,8 @@ class ReservationPostListView(ListView):
 def confirmation(request):
     return render(request, "reservation/reservation_confirmation.html")
 
-
-
+def confirmNotification(request):
+    return render(request,"donation/notifications_confirm.html")
 
 def reservation_function(request, id):
     if request.method == "POST":
