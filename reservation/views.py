@@ -56,6 +56,8 @@ def confirmation(request):
     return render(request, "reservation/reservation_confirmation.html")
 
 
+
+
 def reservation_function(request, id):
     if request.method == "POST":
         selected_timeslot = request.POST.get("dropoff_time")
@@ -125,3 +127,4 @@ def ShowNotifications(request):
     }
 
     return HttpResponse(template.render(context, request))
+
