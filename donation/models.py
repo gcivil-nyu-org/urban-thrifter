@@ -91,14 +91,6 @@ class ResourcePost(models.Model):
         # return the path of the specific post
         return reverse("donation:donation-detail", kwargs={"pk": self.pk})
 
-    # def check_quantity(self):
-    #     if type(self.quantity) != int:
-    #         return False
-    #     elif self.quantity <= 0:
-    #         return False
-    #     else:
-    #         return True
-
     # def save(self, *args, **kwargs):
     #     if not self.dropoff_location:
     #         self.dropoff_location = self.donor.donorprofile.dropoff_location
