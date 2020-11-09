@@ -68,6 +68,7 @@ def confirmNotification(request, id):
             notification.notificationstatus=2
             resource_post.status = "AVAILABLE"
     notification.save()
+    resource_post.save()
     return render(request,"donation/notifications_confirm.html")
 
 def reservation_function(request, id):
