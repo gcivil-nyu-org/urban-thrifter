@@ -8,7 +8,9 @@ from PIL import Image
 # from django.contrib.auth.models import User
 from places.fields import PlacesField
 from django.contrib.auth.models import User
-
+# from reservation.models import ReservationPost
+# from django.db.models.signals import post_save
+# from django.dispatch import receiver
 
 # Create your models here.
 class _Image(Image.Image):
@@ -111,3 +113,9 @@ class ResourcePost(models.Model):
             img = img.crop_to_aspect(300, 300)
             img.thumbnail(output_size)
             img.save(path)
+
+# @receiver(post_save, sender=ReservationPost)
+# def give_notifications(sender, instance, created, **kwargs):
+#     if created:
+#         pending_posts = ReservationPost.objects.filter(donor=instance)
+#         print(pending_posts)
