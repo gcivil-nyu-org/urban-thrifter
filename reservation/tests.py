@@ -93,7 +93,6 @@ class NotificationTests(TestCase):
             post=reservation,
             sender=helpseeker,
             receiver=donor,
-            notificationstatus=1,
             date=timezone.now(),
         )
         self.assertEqual(notification.is_seen, False)
