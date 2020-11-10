@@ -64,7 +64,10 @@ def confirmNotification(request, id):
         if "accept" in request.POST:
             # do subscribe
             notification.notificationstatus = 1
+            notification.is_seen = True
             resource_post.status = "RESERVED"
+            resource_post.save()
+            notification.save()
             return render(request, "donation/notifications_confirm.html")
         elif "deny" in request.POST:
             # do unsubscribe
