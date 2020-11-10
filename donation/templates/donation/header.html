@@ -21,11 +21,12 @@
           <a class="nav-item nav-link" href="{% url 'register:donor-profile' user.username %}"><i
               class="fas fa-user-circle"></i></a>
           <a class="nav-item nav-link" href="{% url 'donation:donation-home' %}"><i class="fas fa-box-open"></i></a>
-            {% if Notification.get_unseen_messages_status %}
-                <a class="nav-item nav-link" href="{% url 'donation:donation-messages' %}"><i class="fas fa-envelope-open-text"></i></a> 
-            {% else %}          
-                <a class="nav-item nav-link" href="{% url 'donation:donation-messages' %}"><i class="fas fa-envelope"></i></a>
-            {% endif %}
+            {% for notification in notifications %}
+              {% if notification.is_seen == False %}
+                <a class="nav-item nav-link" href="{% url 'donation:donation-messages' %}"><i class="fas fa-envelope-open-text"></i></a>          
+                <a class="nav-item nav-link hidden" href="{% url 'donation:donation-messages' %}"><i class="fas fa-envelope"></i></a>
+              {% endif %}
+            {% endfor %}
           {% elif user.helpseekerprofile %}
           <a class="nav-item nav-link" href="{% url 'register:helpseeker-profile' %}"><i
               class="fas fa-user-circle"></i></a>
