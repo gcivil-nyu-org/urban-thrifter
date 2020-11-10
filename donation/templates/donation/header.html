@@ -16,6 +16,7 @@
         <div class="navbar-nav">
           <!-- Add conditional statement to present different tab dependiing on the login status -->
           {% if user.is_authenticated %}
+          <a id="display" class="nav-item nav-link" href="#"></a>
           <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
           {% if user.donorprofile %}
           <a class="nav-item nav-link" href="{% url 'register:donor-profile' user.username %}"><i
@@ -34,7 +35,7 @@
           <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
           <a class="nav-item nav-link" href="{% url 'register:register' %}">Register</a>
           {% endif %}
-          <p id="display"></p>
+
         </div>
       </div>
     </div>

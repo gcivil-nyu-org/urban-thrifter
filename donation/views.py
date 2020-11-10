@@ -90,9 +90,4 @@ def getResourcePost(request):
         passingList.append(notiPost)
     context = {'resource_posts': passingList}
 
-    # id
-    # title
-    # description
-    # new/not
-
     return JsonResponse(context)
