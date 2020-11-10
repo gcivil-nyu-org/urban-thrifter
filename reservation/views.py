@@ -67,6 +67,7 @@ def confirmNotification(request, id):
         # do unsubscribe
             notification.notificationstatus=2
             resource_post.status = "AVAILABLE"
+    notification.is_seen=True
     resource_post.save()
     notification.save()
     return render(request,"donation/notifications_confirm.html")
