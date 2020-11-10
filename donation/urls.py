@@ -1,7 +1,7 @@
 from django.urls import path
 from . import views
 from .views import PostCreateView, PostListView, PostDetailView
-from reservation.views import ShowNotifications, confirmNotification
+from reservation.views import ShowNotifications
 
 urlpatterns = [
     path("", views.home, name="donation-home"),
