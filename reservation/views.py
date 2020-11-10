@@ -69,17 +69,15 @@ def confirm_notification(request, id):
             notification.is_seen = True
             notification.notificationstatus = 1
             resource_post.status = "RESERVED"
-            notification.save()
             resource_post.save()
+            notification.save()
             return render(request, "donation/notifications_confirm.html")
         elif "deny" in request.POST:
             # do unsubscribe
-            notification.notificationstatus = 2
             resource_post.status = "AVAILABLE"
             resource_post.save()
             reserve_post.delete()
-            notification.is_seen = True
-            notification.save()
+            notification.delete()
             return redirect("donation:donation-home")
 
 
