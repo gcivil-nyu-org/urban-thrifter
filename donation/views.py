@@ -42,8 +42,8 @@ class PostListView(ListView):
     paginate_by = 5
 
     def get_queryset(self):
-        user = get_object_or_404(User, username=self.kwargs.get('username'))
-        return ResourcePost.objects.filter(author=user).order_by('-date_created')
+        user = get_object_or_404(User, username=self.kwargs.get("username"))
+        return ResourcePost.objects.filter(author=user).order_by("-date_created")
 
 
 # Post Donation View

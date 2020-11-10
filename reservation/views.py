@@ -5,6 +5,7 @@ from django.shortcuts import redirect
 from django.contrib.auth.models import User
 from django.shortcuts import render
 from django.contrib import messages
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 # Create your views here.
@@ -12,25 +13,19 @@ def home(request):
     return render(request, "reservation/reservation_home.html")
 
 
-class PostListView(ListView):
-    # Basic list view
-    model = ResourcePost
-    # Assign tempalte otherwise it would look for post_list.html
-    # as default template
-    template_name = "reservation/reservation_home.html"
+def PostListView(request):
+    post_list = ResourcePost.objects.all().order_by("-date_created")
+    page = request.GET.get("page", 1)
 
-    # Set context_attribute to post object
-    context_object_name = "posts"
+    paginator = Paginator(post_list, 5)
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        posts = paginator.page(1)
+    except EmptyPage:
+        posts = paginator.page(paginator.num_pages)
 
-    # Add ordering attribute to put most recent post to top
-    ordering = ["-date_created"]
-
-    # filters = {'status':'AVAILABLE'}
-
-    # Add pagination
-    paginate_by = 5
-    
-    
+    return render(request, "reservation/reservation_home.html", {"posts": posts})
 
 
 class ReservationPostListView(ListView):
