@@ -91,10 +91,10 @@ class ResourcePost(models.Model):
         # return the path of the specific post
         return reverse("donation:donation-detail", kwargs={"pk": self.pk})
 
-    # def save(self, *args, **kwargs):
-    #     if not self.dropoff_location:
-    #         self.dropoff_location = self.donor.donorprofile.dropoff_location
-    #     super().save(*args, **kwargs)
+    def save(self, *args, **kwargs):
+        if not self.dropoff_location:
+            self.dropoff_location = self.donor.donorprofile.dropoff_location
+        super().save(*args, **kwargs)
 
     #     path = self.image.path
     #     img = Image.open(path)
