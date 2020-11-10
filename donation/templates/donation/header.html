@@ -16,6 +16,7 @@
         <div class="navbar-nav">
           <!-- Add conditional statement to present different tab dependiing on the login status -->
           {% if user.is_authenticated %}
+          <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
           <a id="display" class="nav-item nav-link" href="#"></a>
           <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
           {% if user.donorprofile %}
@@ -41,3 +42,25 @@
     </div>
   </nav>
 </header>
+
+<script>
+    $(document).ready(function(){
+        setInterval(() => {
+            $.ajax({
+                type: 'GET',
+                url: "{% url 'donation:getResourcePosts' %}",
+                success: function(response) {
+                  $("#display").empty()
+                  let postCounter = 0
+                  for (i = 0; i < response.resource_posts.length; i++) {
+                    postCounter += 1
+                  }
+                  $("#display").append(postCounter)
+                },
+                error: function(response) {
+                    alert("No DATA FOUND")
+                }
+            })
+        }, 5000)
+    })
+</script>
