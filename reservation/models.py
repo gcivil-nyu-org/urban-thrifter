@@ -63,5 +63,12 @@ class Notification(models.Model):
     date = models.DateTimeField(auto_now_add=True)
     is_seen = models.BooleanField(default=False)
 
+    """def get_unseen_messages_status(self):
+        notifications = Notification.objects.all()
+        for notification in notifications:
+            if notification.is_seen==False:
+                return True
+        return False"""
+
 
 post_save.connect(ReservationPost.give_notifications, sender=ReservationPost)

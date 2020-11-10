@@ -56,6 +56,24 @@ def confirmation(request):
     return render(request, "reservation/reservation_confirmation.html")
 
 
+def confirmNotification(request, id):
+    if request.method == "POST":
+        notification = Notification.objects.get(id=id)
+        resource_post = ResourcePost.objects.get(id=notification.post.post.id)
+        if "accept" in request.POST:
+            # do subscribe
+            notification.notificationstatus = 1
+            resource_post.status = "RESERVED"
+        elif "deny" in request.POST:
+            # do unsubscribe
+            notification.notificationstatus = 2
+            resource_post.status = "AVAILABLE"
+    notification.is_seen = True
+    resource_post.save()
+    notification.save()
+    return render(request, "donation/notifications_confirm.html")
+
+
 def reservation_function(request, id):
     if request.method == "POST":
         selected_timeslot = request.POST.get("dropoff_time")

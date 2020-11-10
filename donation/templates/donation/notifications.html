@@ -48,8 +48,18 @@
                     </ul>
                 </div>
                 <div class="col-5">
-                    <button class='btn btn-outline-dark btn-wide mb-1 float-right'>Confirm</button>
-                    <button class='btn btn-danger btn-wide float-right'>Deny</button>
+                    <form method="POST" action="{% url 'reservation:confirm-notification' notification.id %}">
+                        {% csrf_token %}
+                        <p class="article-content">Status: </p>
+                        {% if notification.notificationstatus == 3 %}
+                        <p><button name="accept" class="mt-3 btn btn-dark btn-wide" type="submit">Accept</button></p>
+                        <p><button name="deny" class="mt-3 btn btn-dark btn-wide" type="submit">Deny</button></p>
+                        {% elif notification.notificationstatus == 1 %}
+                        <p>Accepted</p>
+                        {% else %}
+                        <p>Denied</p>
+                        {% endif %}
+                    </form>
                 </div>
             </div>
         </div>
