@@ -7,8 +7,11 @@ from django.shortcuts import render
 from django.contrib import messages
 from django.template import loader
 from django.http import HttpResponse
+from django.views import View
+from django.utils.decorators import method_decorator
 
 # from donor_notifications.models import Notification
+from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
@@ -56,15 +59,18 @@ def confirmation(request):
     return render(request, "reservation/reservation_confirmation.html")
 
 
-def confirmNotification(request, id):
+def confirm_notification(request, id):
     if request.method == "POST":
         notification = Notification.objects.get(id=id)
         resource_post = ResourcePost.objects.get(id=notification.post.post.id)
         reserve_post = ReservationPost.objects.get(id=notification.post.id)
         if "accept" in request.POST:
             # do subscribe
+            notification.is_seen = True
             notification.notificationstatus = 1
             resource_post.status = "RESERVED"
+            notification.save()
+            resource_post.save()
             return render(request, "donation/notifications_confirm.html")
         elif "deny" in request.POST:
             # do unsubscribe
@@ -73,7 +79,7 @@ def confirmNotification(request, id):
             resource_post.save()
             reserve_post.delete()
             notification.is_seen = True
-            notification.delete()
+            notification.save()
             return redirect("donation:donation-home")
 
 
@@ -120,9 +126,6 @@ def reservation_function(request, id):
     return redirect("reservation:reservation-confirmation")
 
 
-# Reservation Detail View
-
-
 class PostDetailView(DetailView):
     # Basic detail view
     model = ResourcePost
@@ -135,8 +138,8 @@ class ReservationDetailView(DetailView):
     template_name = "reservation/reservation_detail.html"
 
 
-def ShowNotifications(request):
-    print(request.user.id)
+def show_notifications(request):
+    # print(request.user.id)
     receiver = request.user
     notifications = Notification.objects.filter(receiver=receiver).order_by("-date")
     template = loader.get_template("donation/notifications.html")
@@ -146,3 +149,13 @@ def ShowNotifications(request):
     }
 
     return HttpResponse(template.render(context, request))
+
+
+@method_decorator(login_required, name="dispatch")
+class NotificationCheck(View):
+    def get(self, request):
+        # print("Notification Count: ", Notification.objects.filter
+        # (is_seen=False, receiver=request.user).count())
+        return HttpResponse(
+            Notification.objects.filter(is_seen=False, receiver=request.user).count()
+        )

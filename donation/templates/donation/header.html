@@ -16,20 +16,19 @@
         <div class="navbar-nav">
           <!-- Add conditional statement to present different tab dependiing on the login status -->
           {% if user.is_authenticated %}
-          <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
+          <a class="nav-item nav-link" href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i></a>
           {% if user.donorprofile %}
           <a class="nav-item nav-link" href="{% url 'register:donor-profile' user.username %}"><i
               class="fas fa-user-circle"></i></a>
           <a class="nav-item nav-link" href="{% url 'donation:donation-home' %}"><i class="fas fa-box-open"></i></a>
-
-          <a id = "opened" class="nav-item nav-link " href="{% url 'donation:donation-messages' %}"><i class="fas fa-envelope-open-text"></i></a> 
-          <a id = "opened" class="nav-item nav-link " href="{% url 'donation:donation-messages' %}"><i class="fas fa-envelope"></i></a>
-        
+          <a id="donor-notification" class="nav-item nav-link" href="{% url 'donation:donation-messages' %}"><i
+              class="fas fa-envelope"></i></a>
           {% elif user.helpseekerprofile %}
           <a class="nav-item nav-link" href="{% url 'register:helpseeker-profile' %}"><i
               class="fas fa-user-circle"></i></a>
           <a class="nav-item nav-link" href="{% url 'main-map' %}"><i class="fas fa-map-marker-alt"></i></a>
-          <a class="nav-item nav-link" href="{% url 'reservation:reservation-home' %}"><i class="fas fa-box-open"></i></a>
+          <a class="nav-item nav-link" href="{% url 'reservation:reservation-home' %}"><i
+              class="fas fa-box-open"></i></a>
           {% else %}
           <a class="nav-item nav-link" href="/admin"><i class="fas fa-user-circle"></i></a>
           {% endif %}
@@ -43,15 +42,3 @@
     </div>
   </nav>
 </header>
-
-{% for notification in notifications %}
-    {% if notification.is_seen == false %}
-<script>
-      console.log('{{ notification.is_seen }}');
-      if ($('#opened').classList.containClass('invisible') == true) {
-        $('#opened').classList.removeClass('invisible');}
-      if ($('#closed').classList.containClass('invisible') == false) {
-        $('#closed').classList.addClass('invisible');}
-</script>
-    {% endif %}
-{% endfor %}
