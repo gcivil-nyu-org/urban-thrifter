@@ -50,12 +50,13 @@
                 type: 'GET',
                 url: "{% url 'donation:getResourcePosts' %}",
                 success: function(response) {
-                  $("#display").empty()
-                  let postCounter = 0
-                  for (i = 0; i < response.resource_posts.length; i++) {
-                    postCounter += 1
-                  }
-                  $("#display").append(postCounter)
+                  console.log(response.resource_posts)
+                  // $("#display").empty()
+                  // let postCounter = 0
+                  // for (i = 0; i < response.resource_posts.length; i++) {
+                  //   postCounter += 1
+                  // }
+                  // $("#display").append(postCounter)
                 },
                 error: function(response) {
                     alert("No DATA FOUND")
