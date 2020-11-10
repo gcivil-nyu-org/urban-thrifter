@@ -3,6 +3,7 @@ from django.test import TestCase
 from .models import ReservationPost
 from donation.models import ResourcePost
 from register.models import DonorProfile, HelpseekerProfile
+from reservation.models import Notification
 from django.contrib.auth.models import User
 from django.urls import reverse
 from django.utils import timezone
@@ -75,3 +76,41 @@ class ReservationPostListViewTests(TestCase):
         """
         response = self.client.get(reverse("reservation:reservation-home"))
         self.assertEqual(response.status_code, 200)
+
+
+class NotificationTests(TestCase):
+    def test_notification_model_isseen(self):
+        donor = createdonor()
+        helpseeker = creathelpseeker()
+        donation_post = createdonation(donor)
+        reservation = ReservationPost(
+            dropoff_time_request=1,
+            post=donation_post,
+            donor=donor,
+            helpseeker=helpseeker,
+        )
+        notification = Notification(
+            post=reservation,
+            sender=helpseeker,
+            receiver=donor,
+            date=timezone.now(),
+        )
+        self.assertEqual(notification.is_seen, False)
+
+    def test_notification_model_status(self):
+        donor = createdonor()
+        helpseeker = creathelpseeker()
+        donation_post = createdonation(donor)
+        reservation = ReservationPost(
+            dropoff_time_request=1,
+            post=donation_post,
+            donor=donor,
+            helpseeker=helpseeker,
+        )
+        notification = Notification(
+            post=reservation,
+            sender=helpseeker,
+            receiver=donor,
+            date=timezone.now(),
+        )
+        self.assertEqual(notification.notificationstatus, 3)
