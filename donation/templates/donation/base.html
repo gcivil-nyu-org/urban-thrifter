@@ -1,4 +1,4 @@
-<!-- Template Inheritance -->
+Template Inheritance
 {% load static %}
 <!DOCTYPE html>
 <html lang="en", dir="ltr">
@@ -35,7 +35,7 @@
             setInterval(() => {
                 $.ajax({
                     type: 'GET',
-                    url: "{% url 'getResourcePosts' %}",
+                    url: "{% url 'donation:getResourcePosts' %}",
                     success: function(response) {
                       console.log(response)
                     },

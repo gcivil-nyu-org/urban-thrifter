@@ -1,23 +1,15 @@
-{% extends 'donation/base.html' %}
-{% load crispy_forms_tags %}
-
-{% block content %}
-{% include "donation/reservation_status_nav.html" %}
-<div class='content-section'>
-    <!-- Need to add CSRF token, a hidden tag for security required by django -->
-    {{ form.media }}
-    <form method='POST' enctype='multipart/form-data'>
-        {% csrf_token %}
-        <fieldset class='form-group'>
-            <legend class='mb-4 font-weight-bold'>Donation Details</legend>
-            <!-- Crispy filter to style the form -->
-            {{ form|crispy }}
-        </fieldset>
-        <div class='form-group'>
-            <button class='btn btn-dark btn-wide' type='submit'>
-                Save
-            </button>
-        </div>
-    </form>
-</div>
-{% endblock content %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    {%if not queryset%}
+    <p>empty</p>
+    {% endif %}
+    {% for post in posts %}
+    <p>{{post.title}}</p>
+    {% endfor %}
+  </body>
+</html>

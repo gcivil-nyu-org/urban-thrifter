@@ -78,5 +78,21 @@ class PostDetailView(DetailView):
     model = ResourcePost
 
 def getResourcePost(request):
-    queryset = ResourcePost.objects.all()
-    return JsonResponse({"resource_posts":list(queryset.values())})
+    # context = {"posts": list(ResourcePost.objects.all().values())}
+    posts = ResourcePost.objects.all()
+    passingList = []
+    for post in posts:
+        notiPost = {
+            'id': post.id,
+            'title': post.title,
+            'description': post.description
+        }
+        passingList.append(notiPost)
+    context = {'resource_posts': passingList}
+
+    # id
+    # title
+    # description
+    # new/not
+
+    return JsonResponse(context)
