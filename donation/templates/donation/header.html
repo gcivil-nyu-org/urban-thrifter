@@ -22,8 +22,7 @@
               class="fas fa-user-circle"></i></a>
           <a class="nav-item nav-link" href="{% url 'donation:donation-home' %}"><i class="fas fa-box-open"></i></a>
 
-          <a id = "opened" class="nav-item nav-link invisible" href="{% url 'donation:donation-messages' %}"><i class="fas fa-envelope-open-text"></i></a>         
-          <a id = "closed" class="nav-item nav-link" href="{% url 'donation:donation-messages' %}"><i class="fas fa-envelope"></i></a>
+          <a id = "opened" class="nav-item nav-link " href="{% url 'donation:donation-messages' %}"><i class="fas fa-envelope-open-text"></i></a>         
         
           {% elif user.helpseekerprofile %}
           <a class="nav-item nav-link" href="{% url 'register:helpseeker-profile' %}"><i
