@@ -10,39 +10,6 @@ from PIL import Image
 from places.fields import PlacesField
 from django.contrib.auth.models import User
 
-
-# Create your models here.
-# class _Image(Image.Image):
-#     def crop_to_aspect(self, aspect, divisor=1, alignx=0.5, aligny=0.5):
-#         """Crops an image to a given aspect ratio.
-#         Args:
-#             aspect (float): The desired aspect ratio.
-#             divisor (float): Optional divisor. Allows passing in (w, h) pair as
-#                             the first two arguments.
-#             alignx (float): Horizontal crop align from 0 (left) to 1 (right)
-#             aligny (float): Vertical crop align from 0 (left) to 1 (right)
-#         Returns:
-#             Image: The cropped Image object.
-#         """
-#         if self.width / self.height > aspect / divisor:
-#             newwidth = int(self.height * (aspect / divisor))
-#             newheight = self.height
-#         else:
-#             newwidth = self.width
-#             newheight = int(self.width / (aspect / divisor))
-#         img = self.crop(
-#             (
-#                 alignx * (self.width - newwidth),
-#                 aligny * (self.height - newheight),
-#                 alignx * (self.width - newwidth) + newwidth,
-#                 aligny * (self.height - newheight) + newheight,
-#             )
-#         )
-#         return img
-
-
-# Image.Image.crop_to_aspect = _Image.crop_to_aspect
-
 # User Models save database specifically for USERS
 RESROUCE_CATEGORY_CHOICES = (
     ("FOOD", "Food"),
@@ -95,13 +62,3 @@ class ResourcePost(models.Model):
         if not self.dropoff_location:
             self.dropoff_location = self.donor.donorprofile.dropoff_location
         super().save(*args, **kwargs)
-
-    #     path = self.image.path
-    #     img = Image.open(path)
-
-    #     # 2. resize the image to 300,300 if larger
-    #     if img.height > 300 or img.width > 300:
-    #         output_size = (300, 300)
-    #         img = img.crop_to_aspect(300, 300)
-    #         img.thumbnail(output_size)
-    #         img.save(path)
