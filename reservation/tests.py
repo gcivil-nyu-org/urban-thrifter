@@ -96,3 +96,21 @@ class NotificationTests(TestCase):
             date=timezone.now(),
         )
         self.assertEqual(notification.is_seen, False)
+
+    def test_notification_model_status(self):
+        donor = createdonor()
+        helpseeker = creathelpseeker()
+        donation_post = createdonation(donor)
+        reservation = ReservationPost(
+            dropoff_time_request=1,
+            post=donation_post,
+            donor=donor,
+            helpseeker=helpseeker,
+        )
+        notification = Notification(
+            post=reservation,
+            sender=helpseeker,
+            receiver=donor,
+            date=timezone.now(),
+        )
+        self.assertEqual(notification.notificationstatus, 3)
