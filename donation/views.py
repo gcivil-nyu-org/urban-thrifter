@@ -3,6 +3,7 @@ from django.views.generic import ListView, CreateView, DetailView
 from .models import ResourcePost
 from bootstrap_datepicker_plus import DateTimePickerInput
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib import messages
 
 # , UserPassesTestMixin
 
@@ -68,6 +69,12 @@ class PostCreateView(LoginRequiredMixin, CreateView):
     # Overwrite form valid method
     def form_valid(self, form):
         form.instance.donor = self.request.user
+        if (
+            not form.cleaned_data["dropoff_location"]
+            and not form.instance.donor.donorprofile.dropoff_location
+        ):
+            messages.error(self.request, "Please input your dropoff location.")
+            return super().form_invalid(form)
         return super().form_valid(form)
 
 
