@@ -8,28 +8,35 @@
 {% if post.resource_category == user.helpseekerprofile.rc_1 or post.resource_category == user.helpseekerprofile.rc_2 or post.resource_category == user.helpseekerprofile.rc_3 %}
 <article class="card donation-card mb-2">
     <!-- <img class='rounded-circle article-img' src='{{ post.author.profile.image.url }}' > -->
-    <a class="card-header" href="{% url 'main-map' %}">
+    <div class="card-header">
         <div class='container'>
-            <div class="row text-center">
+            <div class="row pt-2 pb-2 pl-4">
+                <p><i class="far fa-star"></i> New watchlist item in {{ post.resource_category }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class='container'>
+            <div class="row">
                 <div class="col">
-                    <p>From</p>
-                    <p>{{ post.donor.username }}</p>
+                    <b>Item</b>
+                    <p><a href="{% url 'donation:donation-detail' post.id %}">{{ post.title }}</a></p>
                 </div>
                 <div class="col">
-                    <p>Title</p>
-                    <p>{{ post.title }}</p>
+                    <b>Status</b>
+                    <p>{{ post.status }}</p>
                 </div>
                 <div class="col">
-                    <p>Subject</p>
-                    <p>{{ post.description }}</p>
+                    <b>Location</b>
+                    <p>{{ post.dropoff_location.place }}</p>
                 </div>
                 <div class="col">
-                    <p>Time</p>
-                    <p>{{ post.date_created }}</p>
+                    <b>Map</b>
+                    <p><a href="{% url 'main-map' %}"><i class="fas fa-map-marked-alt"></i></a></p>
                 </div>
             </div>
         </div>
-    </a>
+    </div>
 
 </article>
 {% endif %}
