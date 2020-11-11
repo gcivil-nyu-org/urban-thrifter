@@ -143,56 +143,47 @@ body, div, h1, h2, h3, h4, h5, h6, p, a, li {
   border: 1px solid #B65C87;
 }
 
-.map-filter li:hover .food-icon,
-.map-filter .food-icon.inactive {
+.map-filter li:hover .food-icon, .map-filter .food-icon.inactive {
   color: #C66257;
   background-color: #fff;
 }
 
-.map-filter li:hover .shelter-icon,
-.map-filter .shelter-icon.inactive {
+.map-filter li:hover .shelter-icon, .map-filter .shelter-icon.inactive {
   color: #D6A77E;
   background-color: #fff;
 }
 
-.map-filter li:hover .ppe-icon,
-.map-filter .ppe-icon.inactive {
+.map-filter li:hover .ppe-icon, .map-filter .ppe-icon.inactive {
   color: #6DB1C7;
   background-color: #fff;
 }
 
-.map-filter li:hover .electronics-icon,
-.map-filter .electronics-icon.inactive {
+.map-filter li:hover .electronics-icon, .map-filter .electronics-icon.inactive {
   color: #484848;
   background-color: #fff;
 }
 
-.map-filter li:hover .cloth-icon,
-.map-filter .cloth-icon.inactive {
+.map-filter li:hover .cloth-icon, .map-filter .cloth-icon.inactive {
   color: #E0C35C;
   background-color: #fff;
 }
 
-.map-filter li:hover .restroom-icon,
-.map-filter .restroom-icon.inactive {
+.map-filter li:hover .restroom-icon, .map-filter .restroom-icon.inactive {
   color: #155889;
   background-color: #fff;
 }
 
-.map-filter li:hover .wifi-icon,
-.map-filter .wifi-icon.inactive {
+.map-filter li:hover .wifi-icon, .map-filter .wifi-icon.inactive {
   color: #72B163;
   background-color: #fff;
 }
 
-.map-filter li:hover .reeducation-icon,
-.map-filter .reeducation-icon.inactive {
+.map-filter li:hover .reeducation-icon, .map-filter .reeducation-icon.inactive {
   color: #8DA0D0;
   background-color: #fff;
 }
 
-.map-filter li:hover .others-icon,
-.map-filter .others-icon.inactive {
+.map-filter li:hover .others-icon, .map-filter .others-icon.inactive {
   color: #B65C87;
   background-color: #fff;
 }
@@ -413,6 +404,18 @@ select option:hover, select option:focus, select option:active {
 .side-bar a:hover:after, .side-bar a:active:after {
   opacity: 1;
   right: 10px;
+}
+
+.message-number {
+  height: 20px;
+  width: 20px;
+  background-color: #C03F3F;
+  border-radius: 50%;
+  text-align: center;
+  margin-left: 5px;
+  display: inline-block;
+  color: #fff;
+  font-size: 14px;
 }
 
 .button-nav {
