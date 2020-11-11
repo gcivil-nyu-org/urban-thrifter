@@ -95,7 +95,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "urban_thrifter.wsgi.application"
-# ASGI_APPLICATION = "urban_thrifter.asgi.application"
 
 
 # Database
