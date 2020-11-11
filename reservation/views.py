@@ -19,14 +19,14 @@ def PostListView(request):
     # Getting posts based on filters or getting all posts
     url_parameter = request.GET.get("q")
     if url_parameter:
-        post_list = ResourcePost.objects.filter(title__icontains=url_parameter).order_by(
-            "-date_created"
-        )
+        post_list = ResourcePost.objects.filter(
+            title__icontains=url_parameter
+        ).order_by("-date_created")
     else:
         post_list = ResourcePost.objects.all().order_by("-date_created")
-    
-    # Paginator 
-    page = request.GET.get('page', 1)
+
+    # Paginator
+    page = request.GET.get("page", 1)
     paginator = Paginator(post_list, 5)
     try:
         posts = paginator.page(page)
@@ -34,7 +34,7 @@ def PostListView(request):
         posts = paginator.page(1)
     except EmptyPage:
         posts = paginator.page(paginator.num_pages)
-    
+
     # Ajax code
     if request.is_ajax():
         html = render_to_string(
