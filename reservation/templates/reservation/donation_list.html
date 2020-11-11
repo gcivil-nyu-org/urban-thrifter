@@ -6,7 +6,7 @@
 {% endif %}
 <div id="replaceable-content">
 	{% for post in posts %}
-	{% if post.status == "AVAILABLE" %}
+	{% if post.status == "Available" or post.status == "AVAILABLE"%}
 	<article class="card donation-card mb-2">
 		<!-- <img class='rounded-circle article-img' src='{{ post.author.profile.image.url }}' > -->
 		<div class="card-header">
