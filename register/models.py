@@ -9,7 +9,7 @@ class HelpseekerProfile(models.Model):
         ("MAN", "Manhattan"),
         ("BRK", "Brooklyn"),
         ("QUN", "Queens"),
-        ("BRX", "The Bronx"),
+        ("BRX", "Bronx"),
         ("STN", "Staten Island"),
     ]
     RESOURCE_CATEGORY_CHOICES = [
