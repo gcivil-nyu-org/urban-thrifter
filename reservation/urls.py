@@ -8,8 +8,9 @@ from .views import (
 )
 
 urlpatterns = [
-    path("", PostListView.as_view(), name="reservation-home"),
     path("confirmed/", views.confirmation, name="reservation-confirmation"),
+    path("", views.PostListView, name="reservation-home"),
+    # path("new/", PostCreateView.as_view(), name="reservation-new"),
     path("post/<int:pk>", PostDetailView.as_view(), name="reservation-request"),
     path("detail/<int:pk>", ReservationDetailView.as_view(), name="reservation-detail"),
     path("function/<int:id>", views.reservation_function, name="reservation-function"),

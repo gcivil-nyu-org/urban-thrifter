@@ -5,6 +5,9 @@ from django.shortcuts import redirect
 from django.contrib.auth.models import User
 from django.shortcuts import render
 from django.contrib import messages
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.http import JsonResponse
+from django.template.loader import render_to_string
 from django.template import loader
 from django.http import HttpResponse
 from django.views import View
@@ -19,23 +22,37 @@ def home(request):
     return render(request, "reservation/reservation_home.html")
 
 
-class PostListView(ListView):
-    # Basic list view
-    model = ResourcePost
-    # Assign tempalte otherwise it would look for post_list.html
-    # as default template
-    template_name = "reservation/reservation_home.html"
+def PostListView(request):
+    # Getting posts based on filters or getting all posts
+    url_parameter = request.GET.get("q")
+    if url_parameter:
+        post_list = ResourcePost.objects.filter(
+            title__icontains=url_parameter
+        ).order_by("-date_created")
+    else:
+        post_list = ResourcePost.objects.all().order_by("-date_created")
 
-    # Set context_attribute to post object
-    context_object_name = "posts"
+    # Paginator
+    page = request.GET.get("page", 1)
+    paginator = Paginator(post_list, 5)
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        posts = paginator.page(1)
+    except EmptyPage:
+        posts = paginator.page(paginator.num_pages)
 
-    # Add ordering attribute to put most recent post to top
-    ordering = ["-date_created"]
+    # Ajax code
+    if request.is_ajax():
+        html = render_to_string(
+            template_name="reservation/donation_list.html", context={"posts": posts}
+        )
+        data_dict = {"html_from_view": html}
+        return JsonResponse(data=data_dict, safe=False)
 
-    # filters = {'status':'AVAILABLE'}
-
-    # Add pagination
-    paginate_by = 5
+    return render(
+        request, "reservation/reservation_home.html", {"posts": posts, "first": "True"}
+    )
 
 
 class ReservationPostListView(ListView):

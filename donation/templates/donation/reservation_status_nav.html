@@ -1,5 +1,4 @@
 {% extends 'donation/base.html' %}
-
 {% block content %}
 {% if user.is_authenticated and user.donorprofile %}
 <div>
@@ -10,8 +9,6 @@
         </li>
         <li class="nav-item">
             <a class="btn align-middle btn-outline-dark" href='{% url "donation:donation-new" %}'>New</a>
-            <!-- <a class="btn align-middle btn-outline-dark" id="pills-new-tab" data-toggle="pill"
-                            href="#pills-new" role="tab" aria-controls="pills-new" aria-selected="true">New</a> -->
         </li>
         <li class="nav-item">
             <a class="btn align-middle btn-outline-dark" id="pills-available-tab" data-toggle="pill"
@@ -23,7 +20,6 @@
         </li>
     </ul>
 </div>
-
 <div class="tab-content" id="pills-tabContent">
     <div class="tab-pane fade show active" id="pills-reserve" role="tabpanel" aria-labelledby="pills-reserved-tab">
         {% if user.is_authenticated and user.donorprofile %}
@@ -85,7 +81,6 @@
         <a class='btn btn-outline-info mb-4' href='?page=1'>First</a>
         <a class='btn btn-outline-info mb-4' href='{{ page_obj.previous_page_number }}'> Prev </a>
         {% endif %}
-
         {% for page_num in page_obj.paginator.page_range %}
         {% if page_obj.number == page_num%}
         <a class='btn btn-info mb-4' href='?page={{ page_num }}'>{{ page_num }}</a>
@@ -93,19 +88,15 @@
         <a class='btn btn-outline-info mb-4' href='?page={{ page_num }}'>{{ page_num }}</a>
         {% endif %}
         {% endfor %}
-
         {% if page_obj.has_next %}
         <a class='btn btn-outline-info mb-4' href='?page={{ page_obj.next_page_number }}'> Next </a>
         <a class='btn btn-outline-info mb-4' href='?page={{ page_obj.paginator.num_pages }}'>End</a>
         {% endif %}
         {% endif %}
-
         {% elif user.helpseekerprofile %}
         <html>
-
         <head>
             <script type="text/javascript">
-
                 function Redirect() {
                     window.location = "{{DOMAIN_NAME}}" + "/donation/reservation/";
                 }
@@ -113,14 +104,11 @@
                  //-->
             </script>
         </head>
-
         <body>
         </body>
-
         </html>
         {% endif %}
     </div>
-
     <div class="tab-pane fade" id="pills-available" role="tabpanel" aria-labelledby="pills-available-tab">
         {% if user.is_authenticated and user.donorprofile %}
         {% for post in posts %}
@@ -181,7 +169,6 @@
         <a class='btn btn-outline-info mb-4' href='?page=1'>First</a>
         <a class='btn btn-outline-info mb-4' href='{{ page_obj.previous_page_number }}'> Prev </a>
         {% endif %}
-
         {% for page_num in page_obj.paginator.page_range %}
         {% if page_obj.number == page_num%}
         <a class='btn btn-info mb-4' href='?page={{ page_num }}'>{{ page_num }}</a>
@@ -189,19 +176,15 @@
         <a class='btn btn-outline-info mb-4' href='?page={{ page_num }}'>{{ page_num }}</a>
         {% endif %}
         {% endfor %}
-
         {% if page_obj.has_next %}
         <a class='btn btn-outline-info mb-4' href='?page={{ page_obj.next_page_number }}'> Next </a>
         <a class='btn btn-outline-info mb-4' href='?page={{ page_obj.paginator.num_pages }}'>End</a>
         {% endif %}
         {% endif %}
-
         {% elif user.helpseekerprofile %}
         <html>
-
         <head>
             <script type="text/javascript">
-
                 function Redirect() {
                     window.location = "{{DOMAIN_NAME}}" + "/donation/reservation/";
                 }
@@ -209,15 +192,11 @@
                  //-->
             </script>
         </head>
-
         <body>
         </body>
-
         </html>
         {% endif %}
     </div>
-
-
     <div class="tab-pane fade" id="pills-new" role="tabpanel" aria-labelledby="pills-new-tab">
         {% load crispy_forms_tags %}
         <div class='content-section'>
@@ -238,17 +217,11 @@
             </form>
         </div>
     </div>
-
     <div class="tab-pane fade" id="pills-closed" role="tabpanel" aria-labelledby="pills-closed-tab">
     </div>
 </div>
-
 {% elif user.is_authenticated and user.helpseekerprofile %}
 <a class="btn align-middle btn-outline-dark" type="button" href='{% url "reservation" %}'>Pending</a>
 <a class="btn align-middle btn-outline-dark" type="button" href='{% url "reservation" %}'>Closed</a>
-
-
-
 {% endif %}
-
 {% endblock content %}
