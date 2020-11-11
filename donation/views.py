@@ -102,7 +102,7 @@ class MessageListView(ListView):
     template_name = "donation/messages_home.html"
 
     # Set context_attribute to post object
-    context_object_name = "posts"
+    context_object_name = "resource_posts"
 
     # Add ordering attribute to put most recent post to top
     ordering = ["-date_created"]
