@@ -34,7 +34,6 @@ class ResourcePost(models.Model):
     dropoff_time_3 = models.DateTimeField(blank=True, null=True)
     date_created = models.DateTimeField(default=timezone.now)
     donor = models.ForeignKey(User, on_delete=models.CASCADE)
-    print(donor)
     dropoff_location = PlacesField()
     resource_category = models.CharField(
         max_length=100, choices=RESROUCE_CATEGORY_CHOICES
