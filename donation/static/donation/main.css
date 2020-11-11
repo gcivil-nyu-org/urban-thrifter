@@ -406,7 +406,7 @@ select option:hover, select option:focus, select option:active {
   right: 10px;
 }
 
-.message-number{
+.message-number {
   height: 20px;
   width: 20px;
   background-color: #C03F3F;
@@ -414,7 +414,7 @@ select option:hover, select option:focus, select option:active {
   text-align: center;
   margin-left: 5px;
   display: inline-block;
-  color:#fff;
+  color: #fff;
   font-size: 14px;
 }
 
@@ -523,6 +523,10 @@ a.article-title:hover {
   margin: 0;
   padding: 0;
 }
+
+/* .donation-card a {
+  color: #A0D3D6;
+} */
 
 /* filtering for main map */
 
