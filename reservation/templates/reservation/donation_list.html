@@ -1,9 +1,11 @@
 <div class="tab-pane fade show active" id="pills-available" role="tabpanel" aria-labelledby="pills-available-tab">
 	{% if first %}
-	<form class="form-inline">
-			<i id="search-icon" class="fas fa-search" aria-hidden="true"></i>
-			<input id="user-input" class="form-control form-control-sm ml-3 w-75" type="text" placeholder="Search" aria-label="Search">
-	</form>
+	<div class="mb-2">
+		<form class="form-group">
+			<input id="user-input" class="form-control form-control" type="text" placeholder="&#xF002; Search"
+				style="font-family:DINFont, FontAwesome; font-size: 16px;" aria-label="Search">
+		</form>
+	</div>
 	{% endif %}
 	<div id="replaceable-content">
 		{% for post in posts %}
@@ -49,7 +51,8 @@
 							<p>{{ post.dropoff_location.place}}</p>
 						</div>
 						<div class="col-5">
-							<button class='btn btn-outline-dark btn-wide mb-1 float-right'><a href="{% url 'reservation:reservation-request' post.id %}">Reserve</a></button>
+							<button class='btn btn-outline-dark btn-wide mb-1 float-right'><a
+									href="{% url 'reservation:reservation-request' post.id %}">Reserve</a></button>
 						</div>
 					</div>
 				</div>

@@ -498,6 +498,7 @@ a.article-title:hover {
 
 .form-group input:focus {
   outline: none;
+  box-shadow: none;
 }
 
 .form-group input[name='image'] {
