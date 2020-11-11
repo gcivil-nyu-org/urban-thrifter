@@ -3,6 +3,7 @@ from django.views.generic import ListView, CreateView, DetailView
 from .models import ResourcePost, User
 from bootstrap_datepicker_plus import DateTimePickerInput
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import JsonResponse
 from django.contrib import messages
 
 # , UserPassesTestMixin
@@ -86,3 +87,45 @@ class PostCreateView(LoginRequiredMixin, CreateView):
 class PostDetailView(DetailView):
     # Basic detail view
     model = ResourcePost
+
+
+def getResourcePost(request):
+    curr_user_rc_1 = request.user.helpseekerprofile.rc_1
+    curr_user_rc_2 = request.user.helpseekerprofile.rc_2
+    curr_user_rc_3 = request.user.helpseekerprofile.rc_3
+
+    posts = ResourcePost.objects.all()
+    passingList = []
+    for post in posts:
+        if (
+            post.resource_category == curr_user_rc_1
+            or post.resource_category == curr_user_rc_2
+            or post.resource_category == curr_user_rc_3
+        ):
+            # sending id, title, description, because mabye we can use it to make a message popup
+            notiPost = {
+                "id": post.id,
+                "title": post.title,
+                "description": post.description,
+            }
+            passingList.append(notiPost)
+    context = {"resource_posts": passingList}
+
+    return JsonResponse(context)
+
+
+class MessageListView(ListView):
+    # Basic list view
+    model = ResourcePost
+    # Assign tempalte otherwise it would look for post_list.html
+    # as default template
+    template_name = "donation/messages_home.html"
+
+    # Set context_attribute to post object
+    context_object_name = "resource_posts"
+
+    # Add ordering attribute to put most recent post to top
+    ordering = ["-date_created"]
+
+    # Add pagination
+    paginate_by = 20
