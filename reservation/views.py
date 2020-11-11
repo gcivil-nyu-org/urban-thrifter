@@ -22,7 +22,7 @@ def home(request):
     return render(request, "reservation/reservation_home.html")
 
 
-def PostListView(request):
+def donation_post_list(request):
     # Getting posts based on filters or getting all posts
     url_parameter = request.GET.get("q")
     if url_parameter:
