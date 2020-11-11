@@ -22,7 +22,7 @@
               class="fas fa-user-circle"></i></a>
           <a class="nav-item nav-link" href="{% url 'donation:donation-home' %}"><i class="fas fa-box-open"></i></a>
           {% elif user.helpseekerprofile %}
-          <a id="display" class="nav-item nav-link" href="#"><i class="fas fa-bell"></i></a>
+          <a id="display" class="nav-item nav-link" href="/messages"><i class="fas fa-bell"></i></a>
           <a class="nav-item nav-link" href="{% url 'register:helpseeker-profile' %}"><i
               class="fas fa-user-circle"></i></a>
           <a class="nav-item nav-link" href="{% url 'main-map' %}"><i class="fas fa-map-marker-alt"></i></a>
