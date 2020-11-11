@@ -1,5 +1,5 @@
 from donation.models import ResourcePost
-from .models import ReservationPost
+from .models import ReservationPost, Notification
 from django.views.generic import ListView, DetailView
 from django.shortcuts import redirect
 from django.contrib.auth.models import User
@@ -8,6 +8,13 @@ from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import JsonResponse
 from django.template.loader import render_to_string
+from django.template import loader
+from django.http import HttpResponse
+from django.views import View
+from django.utils.decorators import method_decorator
+
+# from donor_notifications.models import Notification
+from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
@@ -69,6 +76,29 @@ def confirmation(request):
     return render(request, "reservation/reservation_confirmation.html")
 
 
+def confirm_notification(request, id):
+    if request.method == "POST":
+        notification = Notification.objects.get(id=id)
+        resource_post = ResourcePost.objects.get(id=notification.post.post.id)
+        reserve_post = ReservationPost.objects.get(id=notification.post.id)
+        if "accept" in request.POST:
+            # do subscribe
+            notification.is_seen = True
+            notification.notificationstatus = 1
+            notification.is_seen = True
+            resource_post.status = "RESERVED"
+            resource_post.save()
+            notification.save()
+            return render(request, "donation/notifications_confirm.html")
+        elif "deny" in request.POST:
+            # do unsubscribe
+            resource_post.status = "AVAILABLE"
+            resource_post.save()
+            reserve_post.delete()
+            notification.delete()
+            return redirect("donation:donation-home")
+
+
 def reservation_function(request, id):
     if request.method == "POST":
         selected_timeslot = request.POST.get("dropoff_time")
@@ -97,13 +127,19 @@ def reservation_function(request, id):
                 donor=donor_id,
                 helpseeker=helpseeker_id,
             )
+        try:
             reservation.save()
             resource_post.status = "PENDING"
             resource_post.save()
+        except Exception:
+            resource_post.status = "AVAILABLE"
+            resource_post.save()
+            reservation.delete()
+            messages.error(
+                request, "Your reservation was unsuccessful. Please try again!"
+            )
+            return redirect("reservation:reservation-home")
     return redirect("reservation:reservation-confirmation")
-
-
-# Reservation Detail View
 
 
 class PostDetailView(DetailView):
@@ -116,3 +152,26 @@ class ReservationDetailView(DetailView):
     # Basic detail view
     model = ReservationPost
     template_name = "reservation/reservation_detail.html"
+
+
+def show_notifications(request):
+    # print(request.user.id)
+    receiver = request.user
+    notifications = Notification.objects.filter(receiver=receiver).order_by("-date")
+    template = loader.get_template("donation/notifications.html")
+
+    context = {
+        "notifications": notifications,
+    }
+
+    return HttpResponse(template.render(context, request))
+
+
+@method_decorator(login_required, name="dispatch")
+class NotificationCheck(View):
+    def get(self, request):
+        # print("Notification Count: ", Notification.objects.filter
+        # (is_seen=False, receiver=request.user).count())
+        return HttpResponse(
+            Notification.objects.filter(is_seen=False, receiver=request.user).count()
+        )
