@@ -7,6 +7,7 @@ from django.shortcuts import render
 from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import JsonResponse
+from django.template.loader import render_to_string
 
 
 # Create your views here.
@@ -18,20 +19,33 @@ def PostListView(request):
     # Getting posts based on filters or getting all posts
     url_parameter = request.GET.get("q")
     if url_parameter:
-        posts = ResourcePost.objects.filter(title__icontains=url_parameter).order_by("-date_created")
+        post_list = ResourcePost.objects.filter(title__icontains=url_parameter).order_by(
+            "-date_created"
+        )
     else:
-        posts = ResourcePost.objects.all().order_by("-date_created")
-        
+        post_list = ResourcePost.objects.all().order_by("-date_created")
+    
+    # Paginator 
+    page = request.GET.get('page', 1)
+    paginator = Paginator(post_list, 5)
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        posts = paginator.page(1)
+    except EmptyPage:
+        posts = paginator.page(paginator.num_pages)
+    
     # Ajax code
     if request.is_ajax():
         html = render_to_string(
-            template_name="reservation/reservation_list.html", 
-            context={"posts": posts}
+            template_name="reservation/donation_list.html", context={"posts": posts}
         )
         data_dict = {"html_from_view": html}
         return JsonResponse(data=data_dict, safe=False)
-        
-    return render(request, "reservation/reservation_home.html", {"posts": posts})
+
+    return render(
+        request, "reservation/reservation_home.html", {"posts": posts, "first": "True"}
+    )
 
 
 class ReservationPostListView(ListView):

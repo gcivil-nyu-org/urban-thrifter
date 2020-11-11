@@ -1,4 +1,5 @@
 {% extends 'donation/base.html' %}
+{% load static %}
 {% block content %}
 {% include "reservation/reservation_status_nav.html" %}
 {% if user.is_authenticated and user.helpseekerprofile %}
@@ -9,17 +10,12 @@
     </div>
     {% endfor %}
 {% endif %}
-<form class="form-inline">
-		<i id="search-icon" class="fas fa-search" aria-hidden="true"></i>
-		<input id="user-input" class="form-control form-control-sm ml-3 w-75" type="text" placeholder="Search" aria-label="Search">
-</form>
-<div id="replaceable-content">
 	<div class="tab-content" id="pills-tabContent">
-		<div class="tab-pane fade show active" id="pills-available" role="tabpanel" aria-labelledby="pills-available-tab">
+		<div class="tab-pane fade show active" id="pills-available" role="tabpanel" aria-labelledby="pills-available-tab">	
 			{% include "reservation/donation_list.html" %}
 		</div>
 		{% include "reservation/reservation_list.html" %}
 	</div>
-</div> 
 {% endif %}
+<script type="text/javascript" src="{% static 'javascript/search.js' %}"></script> 
 {% endblock content %}

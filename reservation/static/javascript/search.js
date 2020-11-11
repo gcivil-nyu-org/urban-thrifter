@@ -9,11 +9,13 @@ let ajax_call = function (endpoint, request_parameters) {
     $.getJSON(endpoint, request_parameters)
         .done(response => {
             // fade out the resourceposts_div, then:
-            resourceposts_div.fadeTo('slow', 0).promise().then(() => {
+            resourceposts.fadeTo('slow', 0).promise().then(() => {
                 // replace the HTML contents
                 resourceposts_div.html(response['html_from_view'])
                 // fade-in the div with new contents
                 resourceposts_div.fadeTo('slow', 1)
+                // stop animating search icon
+                /*search_icon.removeClass('blink') */
             })
         })
 }
@@ -24,6 +26,9 @@ user_input.on('keyup', function () {
     const request_parameters = {
         q: $(this).val() // value of user_input: the HTML element with ID user-input
     }
+
+    // start animating the search icon with the CSS class
+    /*search_icon.addClass('blink')*/
 
     // if scheduled_function is NOT false, cancel the execution of the function
     if (scheduled_function) {
