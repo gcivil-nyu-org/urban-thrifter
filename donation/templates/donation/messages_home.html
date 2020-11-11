@@ -9,7 +9,7 @@
         {% for post in resource_posts %}
         <article class="card donation-card mb-2">
             <!-- <img class='rounded-circle article-img' src='{{ post.author.profile.image.url }}' > -->
-            <div class="card-header">
+            <a class="card-header" href="{% url 'main-map' %}">
                 <div class='container'>
                     <div class="row text-center">
                         <div class="col">
@@ -30,7 +30,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </a>
             
         </article>
         {% endfor %}
