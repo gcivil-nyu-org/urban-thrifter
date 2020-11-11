@@ -42,6 +42,7 @@
   </nav>
 </header>
 
+{% if user.helpseekerprofile %}
 <script>
     $(document).ready(function(){
         setInterval(() => {
@@ -63,3 +64,4 @@
         }, 1000)
     })
 </script>
+{% endif %}
