@@ -281,7 +281,7 @@ body, div, h1, h2, h3, h4, h5, h6, p, a, li {
 }
 
 .hide {
-  display: none;
+  display: none !important;
 }
 
 h1, h2, h3, h4, h5, h6, .article-title {

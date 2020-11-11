@@ -1,0 +1,53 @@
+{% extends 'donation/base.html' %}
+{% block content %}
+{% if user.is_authenticated and user.donorprofile %}
+{% for notification in notifications %}
+
+<article class="card donation-card mb-2">
+    <!-- <img class='rounded-circle article-img' src='{{ post.author.profile.image.url }}' > -->
+    <div class="card-header">
+        <div class='container'>
+            <div class="row">
+                <div class="col pl-4 pb-2 pt-2">
+                    <p><i class="fas fa-box-open"></i> <b>{{ notification.sender }}</b> just requested your
+                        <b>{{ notification.post.post.title}}</b> * {{ notification.post.post.quantity}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-body ">
+        <div class='container'>
+            <div class="row">
+                <div class="col-2">
+                    <p class="article-img img-circle"><img class="img-thumbnail"
+                            src='{{notification.post.post.image.url}}'></i></p>
+                </div>
+                <div class="col-5">
+                    <b>Dropoff Request Time: </b>
+                    <p>{{ notification.post.dropoff_time_request}}</p>
+                    <b>Dropoff Location:</b>
+                    <p>{{ notification.post.post.dropoff_location.place}}</p>
+                </div>
+                <div class="col-5">
+                    <form method="POST" action="{% url 'reservation:confirm-notification' notification.id %}">
+                        {% csrf_token %}
+                        <b class="article-content">Status: </b>
+                        {% if notification.notificationstatus == 3 %}
+                        <p><button name="accept" class="mt-3 btn btn-dark btn-wide" type="submit">Accept</button></p>
+                        <p><button name="deny" class="mt-3 btn btn-dark btn-wide" type="submit">Decline</button></p>
+                        {% elif notification.notificationstatus == 1 %}
+                        <p>Accepted</p>
+                        {% else %}
+                        <p>Denied</p>
+                        {% endif %}
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</article>
+
+{% endfor %}
+{% endif %}
+{% endblock %}
