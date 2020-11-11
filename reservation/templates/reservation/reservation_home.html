@@ -9,12 +9,17 @@
     </div>
     {% endfor %}
 {% endif %}
-<div class="tab-content" id="pills-tabContent">
-    <div class="tab-pane fade show active" id="pills-available" role="tabpanel" aria-labelledby="pills-available-tab">
-        {% include "reservation/donation_list.html" %}
-    </div>
-    {% include "reservation/reservation_list.html" %}
-</div>
-
+<form class="form-inline">
+		<i id="search-icon" class="fas fa-search" aria-hidden="true"></i>
+		<input id="user-input" class="form-control form-control-sm ml-3 w-75" type="text" placeholder="Search" aria-label="Search">
+</form>
+<div id="replaceable-content">
+	<div class="tab-content" id="pills-tabContent">
+		<div class="tab-pane fade show active" id="pills-available" role="tabpanel" aria-labelledby="pills-available-tab">
+			{% include "reservation/donation_list.html" %}
+		</div>
+		{% include "reservation/reservation_list.html" %}
+	</div>
+</div> 
 {% endif %}
 {% endblock content %}
