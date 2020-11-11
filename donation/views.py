@@ -77,21 +77,17 @@ class PostDetailView(DetailView):
     # Basic detail view
     model = ResourcePost
 
+
 def getResourcePost(request):
     # context = {"posts": list(ResourcePost.objects.all().values())}
     posts = ResourcePost.objects.all()
     passingList = []
     for post in posts:
-        notiPost = {
-            'id': post.id,
-            'title': post.title,
-            'description': post.description
-        }
+        notiPost = {"id": post.id, "title": post.title, "description": post.description}
         passingList.append(notiPost)
-    context = {'resource_posts': passingList}
+    context = {"resource_posts": passingList}
 
     return JsonResponse(context)
-
 
 
 class MessageListView(ListView):

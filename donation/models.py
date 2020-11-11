@@ -4,7 +4,6 @@ from django.core.validators import MinValueValidator
 
 # Import reverse
 from django.urls import reverse
-from PIL import Image
 
 # from django.contrib.auth.models import User
 from places.fields import PlacesField
