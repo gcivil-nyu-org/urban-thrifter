@@ -98,7 +98,7 @@ class ResourcePost(models.Model):
             return True
 
     def save(self, *args, **kwargs):
-        if not self.dropoff_location:
+        if not self.dropoff_location and self.donor.donorprofile.dropoff_location:
             self.dropoff_location = self.donor.donorprofile.dropoff_location
         super().save(*args, **kwargs)
 
