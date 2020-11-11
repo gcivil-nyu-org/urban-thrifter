@@ -323,7 +323,15 @@ p, a, li, input, label, textarea {
   text-decoration: none;
 }
 
-.btn-warning a {
+.btn-outline-dark a {
+  color: #333;
+}
+
+.btn-outline-dark:hover a {
+  color: #fff;
+}
+
+.btn-dark a, .btn-warning a {
   color: #fff;
 }
 
