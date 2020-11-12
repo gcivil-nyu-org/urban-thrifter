@@ -701,35 +701,35 @@ button:focus {
   transition: all .8s ease;
 }
 #resource .feature-item:hover .food-icon {
-  background: #EC7063;
+  background: #C66257;
 }
 
 #resource .feature-item:hover .shelter-icon {
-  background: #EB984E;
+  background: #D6A77E;
 }
 
 #resource .feature-item:hover .ppe-icon {
-  background: #A0D3D6;
+  background: #6DB1C7;
 }
 
 #resource .feature-item:hover .electronics-icon {
-  background: #8E9AD7;
+  background: #484848;
 }
 
 #resource .feature-item:hover .cloth-icon {
-  background: #F1C40F  ;
+  background: #E0C35C;
 }
 
 #resource .feature-item:hover .restroom-icon {
-  background: #5499C7;
+  background: #155889;
 }
 
 #resource .feature-item:hover .wifi-icon {
-  background: #7DCEA0;
+  background: #72B163;
 }
 
 #resource .feature-item:hover .reeducation-icon {
-  background: #57788A;
+  background: #8DA0D0;
 }
 
 #resource .feature-item:hover .feature-icon i {
