@@ -8,9 +8,9 @@
       {% csrf_token %}
       <fieldset class="form-group">
         {{form.as_p}}
-        <small class="text-muted">
+        <p class="text-muted">
           Forget Password?<a class="ml-2" href="{% url 'password-reset' %}">Reset Password</a>
-        </small>
+        </p>
       </fieldset>
 
       <button class="btn btn-dark btn-wide mb-3" type="submit">Login</button>
