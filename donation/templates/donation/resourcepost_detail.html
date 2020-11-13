@@ -1,15 +1,15 @@
 {% extends 'donation/base.html' %}
+{% load static %}
 {% block content %}
 
-<article class="media content-section">
-    <img class='rounded-circle article-img' src='{{ object.image.url }}'>
+<article class="media content-section container animated fadeInUp">
+    <img class='rounded-circle article-img' src='{% static "donation/asset/user.svg" %}'>
     <!--  p>{{ object.image.url }}</p-->
     <div class="media-body">
         <div class="article-metadata">
             <!--a class="mr-2" href="">Username</a-->
-            <h2 class="article-title">{{ object.title }}</h2>
-            <small class="text-muted">{{ object.date_created | date:'F d, Y'}}</small>
-            <!-- https://docs.djangoproject.com/en/2.0/ref/templates/builtins/#date -->
+            <h2 class="article-title">{{ object.title }} * {{ object.quantity }}</h2>
+            <p class="text-muted"><i class="far fa-clock pr-2"></i>{{ object.date_created | date:'F d, Y'}}</p>
             {% if object.author == user %}
             <div>
                 <a class='btn btn-secondary btn-sm mt-1 mb-1' href=''>Update</a>
@@ -17,15 +17,29 @@
             </div>
             {% endif %}
         </div>
-        <p class="article-content">Quantity: {{ object.quantity }}</p>
-        <p class="article-content">Status: {{ object.status }}</p>
-        <p class="article-content">Category: {{ object.resource_category }}</p>
-        <p class="article-content">Location: {{ object.dropoff_location.place }}</p>
-        <p class="article-content">Drop-off Time: </p>
-        <button class='btn btn-outline-secondary'>{{ object.dropoff_time_1 }}</button>
-        <button class='btn btn-outline-secondary'>{{ object.dropoff_time_2 }}</button>
-        <button class='btn btn-outline-secondary'>{{ object.dropoff_time_3 }}</button>
-        <p class="article-content">{{ object.description }}</p>
+
+        <div class="row">
+            <div class="col col-lg-2">
+            <img class='rounded-circle article-img' src="{{ object.image.url }}" max-width="30%"></div>
+            <div class="col">
+                <p>Status:</p>
+                <p class="graybox">{{ object.status }}</p>
+                <p>Category:</p>
+                <p class="graybox">{{ object.resource_category }}</p>
+                <p>Location:</p>
+                <p class="graybox">{{ object.dropoff_location.place }}</p>
+                <p>Drop-off Time: </p>
+                <p class="graybox">{{ object.dropoff_time_1 }}</p>
+                {% if object.dropoff_time_2 %}
+                <p class="graybox">{{ object.dropoff_time_2 }}</p>
+                {% endif %}
+                {% if object.dropoff_time_3 %}
+                <p class="graybox">{{ object.dropoff_time_3 }}</p>
+                {% endif %}
+                <p>Description: </p>
+                <div class="graybox">{{ object.description }}</div>
+            </div>
+        </div>
     </div>
 </article>
 {% endblock content %}

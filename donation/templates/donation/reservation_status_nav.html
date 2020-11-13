@@ -1,49 +1,30 @@
 {% extends 'donation/base.html' %}
-
 {% block content %}
 {% if user.is_authenticated and user.donorprofile %}
-<div class="card-body">
-    <div class="container ">
-        <div class="row">
-            <div class="col-lg-12">
-                <ul class="nav nav-pills button-nav" id="pills-tab" role="tablist">
-
-                    <li class="nav-item">
-                        <a class="btn align-middle btn-outline-dark" id="pills-reserved-tab" data-toggle="pill"
-                            href="#pills-reserve" role="tab" aria-controls="pills-reserve"
-                            aria-selected="true">Reserved</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="btn align-middle btn-outline-dark" href='{% url "donation:donation-new" %}'>New</a>
-                        <!-- <a class="btn align-middle btn-outline-dark" id="pills-new-tab" data-toggle="pill"
-                            href="#pills-new" role="tab" aria-controls="pills-new" aria-selected="true">New</a> -->
-                    </li>
-                    <li class="nav-item">
-                        <a class="btn align-middle btn-outline-dark" id="pills-available-tab" data-toggle="pill"
-                            href="#pills-available" role="tab" aria-controls="pills-available"
-                            aria-selected="false">Available</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="btn align-middle btn-outline-dark" id="pills-closed-tab" data-toggle="pill"
-                            href="#pills-closed" role="tab" aria-controls="pills-closed"
-                            aria-selected="false">Closed</a>
-                    </li>
-                </ul>
-
-            </div>
-        </div>
-    </div>
+<div>
+    <ul class="nav nav-pills button-nav animated fadeInDown" id="pills-tab" role="tablist">
+        <li class="nav-item">
+            <a class="btn align-middle btn-outline-dark active" id="pills-reserved-tab" data-toggle="pill"
+                href="#pills-reserve" role="tab" aria-controls="pills-reserve" aria-selected="true">Reserved</a>
+        </li>
+        <li class="nav-item">
+            <a class="btn align-middle btn-outline-dark" href='{% url "donation:donation-new" %}'>New</a>
+        </li>
+        <li class="nav-item">
+            <a class="btn align-middle btn-outline-dark" id="pills-available-tab" data-toggle="pill"
+                href="#pills-available" role="tab" aria-controls="pills-available" aria-selected="false">Available</a>
+        </li>
+        <li class="nav-item">
+            <a class="btn align-middle btn-outline-dark" id="pills-closed-tab" data-toggle="pill" href="#pills-closed"
+                role="tab" aria-controls="pills-closed" aria-selected="false">Closed</a>
+        </li>
+    </ul>
 </div>
-
-
-
-<div class="tab-content pt-2 pl-1" id="pills-tabContent">
+<div class="tab-content animated fadeIn" id="pills-tabContent">
     <div class="tab-pane fade show active" id="pills-reserve" role="tabpanel" aria-labelledby="pills-reserved-tab">
-    </div>
-
-    <div class="tab-pane fade" id="pills-available" role="tabpanel" aria-labelledby="pills-available-tab">
         {% if user.is_authenticated and user.donorprofile %}
         {% for post in posts %}
+        {% if post.status == "RESERVED" or post.status == "Reserved" %}
         <article class="card donation-card mb-2">
             <!-- <img class='rounded-circle article-img' src='{{ post.author.profile.image.url }}' > -->
             <div class="card-header">
@@ -86,14 +67,13 @@
                         </div>
                         <div class="col-5">
                             <button class='btn btn-outline-dark btn-wide mb-1 float-right'>Edit</button>
-                            <button class='btn btn-outline-warning mb-1 btn-wide float-right'><a
-                                    href="{% url 'issue-complaint' %}">Complaint</a></button>
                             <button class='btn btn-danger btn-wide float-right'>Cancel</button>
                         </div>
                     </div>
                 </div>
             </div>
         </article>
+        {% endif %}
         {% endfor %}
         <!-- Add Pagination Logic -->
         {% if is_paginated %}
@@ -101,7 +81,6 @@
         <a class='btn btn-outline-info mb-4' href='?page=1'>First</a>
         <a class='btn btn-outline-info mb-4' href='{{ page_obj.previous_page_number }}'> Prev </a>
         {% endif %}
-
         {% for page_num in page_obj.paginator.page_range %}
         {% if page_obj.number == page_num%}
         <a class='btn btn-info mb-4' href='?page={{ page_num }}'>{{ page_num }}</a>
@@ -109,35 +88,85 @@
         <a class='btn btn-outline-info mb-4' href='?page={{ page_num }}'>{{ page_num }}</a>
         {% endif %}
         {% endfor %}
-
         {% if page_obj.has_next %}
         <a class='btn btn-outline-info mb-4' href='?page={{ page_obj.next_page_number }}'> Next </a>
         <a class='btn btn-outline-info mb-4' href='?page={{ page_obj.paginator.num_pages }}'>End</a>
         {% endif %}
         {% endif %}
-
-        {% elif user.helpseekerprofile %}
-        <html>
-
-        <head>
-            <script type="text/javascript">
-
-                function Redirect() {
-                    window.location = "{{DOMAIN_NAME}}" + "/donation/reservation/";
-                }
-                setTimeout('Redirect()', 0);
-                 //-->
-            </script>
-        </head>
-
-        <body>
-        </body>
-
-        </html>
         {% endif %}
     </div>
-
-
+    <div class="tab-pane fade" id="pills-available" role="tabpanel" aria-labelledby="pills-available-tab">
+        {% for post in posts %}
+        {% if post.status == "AVAILABLE" or post.status == "Available" %}
+        <article class="card donation-card mb-2">
+            <!-- <img class='rounded-circle article-img' src='{{ post.author.profile.image.url }}' > -->
+            <div class="card-header">
+                <div class='container'>
+                    <div class="row text-center">
+                        <div class="col">
+                            <p>Title</p>
+                            <p><a href="{% url 'donation:donation-detail' post.id %}">{{ post.title }}</a></p>
+                        </div>
+                        <div class="col">
+                            <p>Quantity</p>
+                            <p>{{ post.quantity }}</p>
+                        </div>
+                        <div class="col">
+                            <p>Category</p>
+                            <p>{{ post.resource_category }}</p>
+                        </div>
+                        <div class="col">
+                            <p>Status</p>
+                            <p>{{ post.status }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body ">
+                <div class='container'>
+                    <div class="row">
+                        <div class="col-2">
+                            <p class="article-img img-circle"><img class="img-thumbnail" src='{{post.image.url}}'></i>
+                            </p>
+                        </div>
+                        <div class="col-5">
+                            <p>Available Dropoff Time: </p>
+                            <ul class="pl-3">
+                                <li>{{ post.dropoff_time_1 | date:'F d, Y H:m'}}</li>
+                                <li>{{ post.dropoff_time_2 | date:'F d, Y H:m'}}</li>
+                                <li>{{ post.dropoff_time_3 | date:'F d, Y H:m'}}</li>
+                            </ul>
+                            <p>{{ post.dropoff_location.place}}</p>
+                        </div>
+                        <div class="col-5">
+                            <button class='btn btn-outline-dark btn-wide mb-1 float-right'>Edit</button>
+                            <button class='btn btn-danger btn-wide float-right'>Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </article>
+        {% endif %}
+        {% endfor %}
+        <!-- Add Pagination Logic -->
+        {% if is_paginated %}
+        {% if page_obj.has_previous %}
+        <a class='btn btn-outline-info mb-4' href='?page=1'>First</a>
+        <a class='btn btn-outline-info mb-4' href='{{ page_obj.previous_page_number }}'> Prev </a>
+        {% endif %}
+        {% for page_num in page_obj.paginator.page_range %}
+        {% if page_obj.number == page_num%}
+        <a class='btn btn-info mb-4' href='?page={{ page_num }}'>{{ page_num }}</a>
+        {% elif page_num > page_obj.number|add:'-3' and page_num < page_obj.number|add:'3' %}
+        <a class='btn btn-outline-info mb-4' href='?page={{ page_num }}'>{{ page_num }}</a>
+        {% endif %}
+        {% endfor %}
+        {% if page_obj.has_next %}
+        <a class='btn btn-outline-info mb-4' href='?page={{ page_obj.next_page_number }}'> Next </a>
+        <a class='btn btn-outline-info mb-4' href='?page={{ page_obj.paginator.num_pages }}'>End</a>
+        {% endif %}
+        {% endif %}
+    </div>
     <div class="tab-pane fade" id="pills-new" role="tabpanel" aria-labelledby="pills-new-tab">
         {% load crispy_forms_tags %}
         <div class='content-section'>
@@ -158,17 +187,11 @@
             </form>
         </div>
     </div>
-
     <div class="tab-pane fade" id="pills-closed" role="tabpanel" aria-labelledby="pills-closed-tab">
     </div>
 </div>
-
 {% elif user.is_authenticated and user.helpseekerprofile %}
 <a class="btn align-middle btn-outline-dark" type="button" href='{% url "reservation" %}'>Pending</a>
 <a class="btn align-middle btn-outline-dark" type="button" href='{% url "reservation" %}'>Closed</a>
-
-
-
-    {% endif %}
-
-    {% endblock content %}
+{% endif %}
+{% endblock content %}

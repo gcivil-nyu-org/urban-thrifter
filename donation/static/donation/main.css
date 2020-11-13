@@ -46,6 +46,317 @@ body, div, h1, h2, h3, h4, h5, h6, p, a, li {
   clear: both;
 }
 
+.hide {
+  display: none !important;
+}
+
+h1, h2, h3, h4, h5, h6, .article-title {
+  color: #333;
+}
+
+p, a, li, input, label, textarea {
+  font-size: 16px;
+}
+
+/********** Common Element *************/
+
+.btn:focus {
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+  outline: none;
+}
+
+.btn-wide {
+  width: 200px;
+}
+
+.graybox {
+  background: #e6e6e6;
+  border-radius: 5px;
+  padding: .375rem .75rem;
+}
+
+.gray-bg {
+  background: #f9f9f9;
+}
+
+.btn-dark:hover {
+  background-color: #fff !important;
+  color: #333 !important;
+}
+
+.btn a:hover, .btn a:link {
+  text-decoration: none;
+}
+
+.btn-outline-dark a {
+  color: #333;
+}
+
+.btn-outline-dark:hover a {
+  color: #fff;
+}
+
+.btn-dark a, .btn-warning a {
+  color: #fff;
+}
+
+ul {
+  margin: 0;
+}
+
+li {
+  list-style: none;
+}
+
+.bg-white {
+  background-color: #fff;
+}
+
+select option {
+  background: #e6e6e6
+}
+
+select option:hover, select option:focus, select option:active {
+  background: #b3b3b3
+}
+
+.site-header {
+  height: 86px;
+}
+
+.site-header .navbar-brand, .site-header .navbar-nav .nav-link {
+  color: #333;
+}
+
+.site-header .navbar-brand {
+  font-size: 40px;
+}
+
+.site-header .navbar-nav {
+  font-size: 20px;
+}
+
+.site-header .navbar-nav i {
+  font-size: 23px;
+}
+
+.site-header .navbar-nav .nav-link:hover {
+  color: #b3b3b3 !important;
+}
+
+.site-header .navbar-nav .nav-link.active {
+  font-weight: 500;
+}
+
+.side-bar .list-group {
+  border-radius: 0;
+}
+
+.side-bar .list-group-item {
+  border: none;
+  padding: 5px 0;
+  margin-top: 100px;
+  color: #333;
+  border-bottom: 1px solid #333;
+  font-weight: 900;
+}
+
+.side-bar a, .side-bar a:hover {
+  color: #333;
+  text-decoration: none;
+}
+
+.side-bar a:after {
+  content: '▶';
+  opacity: 0;
+  top: 14px;
+  transition: 0.5s;
+  padding-left: 16px;
+}
+
+.side-bar a:hover:after, .side-bar a:active:after {
+  opacity: 1;
+  right: 10px;
+}
+
+#display, #donor-notification {
+  position: relative;
+}
+
+#display i, #donor-notification i {
+  position: absolute;
+  left: -15px;
+}
+
+#display span, #donor-notification span {
+  position: absolute;
+  top: 0;
+  left: -8px;
+  z-index: 10;
+}
+
+.message-number {
+  height: 20px;
+  width: 20px;
+  background-color: #C03F3F;
+  border-radius: 50%;
+  text-align: center;
+  margin-left: 5px;
+  display: inline-block;
+  color: #fff;
+  font-size: 14px;
+}
+
+.message-map {
+  height: 300px;
+}
+
+.button-nav {
+  padding-bottom: 10px;
+  display: flex;
+  justify-content: space-around;
+  flex-flow: row wrap;
+}
+
+.button-nav .nav-item {
+  flex-grow: 1;
+  margin-right: 3px;
+}
+
+.button-nav .nav-item:last-child {
+  margin-right: 0;
+}
+
+.button-nav .nav-item a {
+  width: 100%;
+}
+
+.content-section {
+  background: #ffffff;
+  padding: 10px 20px;
+  border: 1px solid #dddddd;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+a.article-title:hover {
+  color: #428bca;
+  text-decoration: none;
+}
+
+.article-content {
+  white-space: pre-line;
+}
+
+.article-img {
+  height: 65px;
+  width: 65px;
+  margin-right: 16px;
+}
+
+.article-metadata {
+  padding-bottom: 1px;
+  margin-bottom: 4px;
+  border-bottom: 1px solid #e3e3e3
+}
+
+.article-metadata a:hover {
+  color: #333;
+  text-decoration: none;
+}
+
+.article-svg {
+  width: 25px;
+  height: 25px;
+  vertical-align: middle;
+}
+
+.account-img {
+  height: 125px;
+  width: 125px;
+  margin-right: 20px;
+  margin-bottom: 16px;
+}
+
+.account-heading {
+  font-size: 2.5rem;
+}
+
+.form-group input, .form-group textarea, .form-group select, .form-group select:focus {
+  background: #e6e6e6;
+  border: none;
+  border-radius: 5px;
+  padding: .375rem .75rem;
+}
+
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+  outline: none;
+  box-shadow: 0 0 0 1px #e6e6e6;
+}
+
+.form-group input[name='image'] {
+  background: #fff;
+}
+
+.anchor-title h3 {
+  font-weight: 900;
+  font-size: 45px;
+  padding: 25px 0;
+}
+
+/* Donation app style */
+
+.places-widget>div {
+  border: none !important;
+}
+
+.gm-err-container {
+  border-radius: 5px !important;
+}
+
+#map_location>div {
+  border-radius: 5px !important;
+}
+
+.places-widget>input:first-child {
+  width: 100% !important;
+}
+
+.places-widget>input:nth-child(2) {
+  display: none !important;
+}
+
+.places-widget>input:nth-child(3) {
+  display: none !important;
+}
+
+.donation-card .card-body img {
+  max-height: 100px;
+  max-width: 100px;
+}
+
+.donation-card .card-header {
+  padding: 3px 0;
+}
+
+.donation-card .card-header p {
+  margin: 0;
+  padding: 0;
+}
+
+.bootstrap-datetimepicker-widget {
+  color: #333 !important;
+}
+
+/* Donation app style end */
+
+/* Reservation app style */
+
+/* Reservation app style end */
+
+/* Map app style */
+
 #map {
   position: absolute;
   width: 100%;
@@ -143,56 +454,47 @@ body, div, h1, h2, h3, h4, h5, h6, p, a, li {
   border: 1px solid #B65C87;
 }
 
-.map-filter li:hover .food-icon,
-.map-filter .food-icon.inactive {
+.map-filter li:hover .food-icon, .map-filter .food-icon.inactive {
   color: #C66257;
   background-color: #fff;
 }
 
-.map-filter li:hover .shelter-icon,
-.map-filter .shelter-icon.inactive {
+.map-filter li:hover .shelter-icon, .map-filter .shelter-icon.inactive {
   color: #D6A77E;
   background-color: #fff;
 }
 
-.map-filter li:hover .ppe-icon,
-.map-filter .ppe-icon.inactive {
+.map-filter li:hover .ppe-icon, .map-filter .ppe-icon.inactive {
   color: #6DB1C7;
   background-color: #fff;
 }
 
-.map-filter li:hover .electronics-icon,
-.map-filter .electronics-icon.inactive {
+.map-filter li:hover .electronics-icon, .map-filter .electronics-icon.inactive {
   color: #484848;
   background-color: #fff;
 }
 
-.map-filter li:hover .cloth-icon,
-.map-filter .cloth-icon.inactive {
+.map-filter li:hover .cloth-icon, .map-filter .cloth-icon.inactive {
   color: #E0C35C;
   background-color: #fff;
 }
 
-.map-filter li:hover .restroom-icon,
-.map-filter .restroom-icon.inactive {
+.map-filter li:hover .restroom-icon, .map-filter .restroom-icon.inactive {
   color: #155889;
   background-color: #fff;
 }
 
-.map-filter li:hover .wifi-icon,
-.map-filter .wifi-icon.inactive {
+.map-filter li:hover .wifi-icon, .map-filter .wifi-icon.inactive {
   color: #72B163;
   background-color: #fff;
 }
 
-.map-filter li:hover .reeducation-icon,
-.map-filter .reeducation-icon.inactive {
+.map-filter li:hover .reeducation-icon, .map-filter .reeducation-icon.inactive {
   color: #8DA0D0;
   background-color: #fff;
 }
 
-.map-filter li:hover .others-icon,
-.map-filter .others-icon.inactive {
+.map-filter li:hover .others-icon, .map-filter .others-icon.inactive {
   color: #B65C87;
   background-color: #fff;
 }
@@ -289,240 +591,6 @@ body, div, h1, h2, h3, h4, h5, h6, p, a, li {
   cursor: pointer;
 }
 
-.hide {
-  display: none;
-}
-
-h1, h2, h3, h4, h5, h6, .article-title {
-  color: #333;
-}
-
-p, a, li, input, label, textarea {
-  font-size: 16px;
-}
-
-/********** Common Element *************/
-
-.btn:focus {
-  box-shadow: none !important;
-  -webkit-box-shadow: none !important;
-  outline: none;
-}
-
-.btn-wide {
-  width: 200px;
-}
-
-.graybox {
-  background: #e6e6e6;
-  border-radius: 5px;
-  padding: .375rem .75rem;
-}
-
-.gray-bg {
-  background: #f9f9f9;
-}
-
-.btn-dark:hover {
-  background-color: #fff !important;
-  color: #333 !important;
-}
-
-.btn a:hover, .btn a:link {
-  text-decoration: none;
-}
-
-.btn-warning a {
-  color: #fff;
-}
-
-ul {
-  margin: 0;
-}
-
-li {
-  list-style: none;
-}
-
-.bg-white {
-  background-color: #fff;
-}
-
-select option {
-  background: #e6e6e6
-}
-
-select option:hover, select option:focus, select option:active {
-  background: #b3b3b3
-}
-
-.site-header {
-  height: 86px;
-}
-
-.site-header .navbar-brand, .site-header .navbar-nav .nav-link {
-  color: #333;
-}
-
-.site-header .navbar-brand {
-  font-size: 40px;
-}
-
-.site-header .navbar-nav {
-  font-size: 20px;
-}
-
-.site-header .navbar-nav i {
-  font-size: 23px;
-}
-
-.site-header .navbar-nav .nav-link:hover {
-  color: #b3b3b3;
-}
-
-.site-header .navbar-nav .nav-link.active {
-  font-weight: 500;
-}
-
-.side-bar .list-group {
-  border-radius: 0;
-}
-
-.side-bar .list-group-item {
-  border: none;
-  padding: 5px 0;
-  margin-top: 100px;
-  color: #333;
-  border-bottom: 1px solid #333;
-  font-weight: 900;
-}
-
-.side-bar a, .side-bar a:hover {
-  color: #333;
-  text-decoration: none;
-}
-
-.side-bar a:after {
-  content: '▶';
-  opacity: 0;
-  top: 14px;
-  transition: 0.5s;
-  padding-left: 16px;
-}
-
-.side-bar a:hover:after, .side-bar a:active:after {
-  opacity: 1;
-  right: 10px;
-}
-
-.button-nav {
-  padding-bottom: 10px;
-  display: flex;
-  justify-content: space-around;
-  flex-flow: row wrap;
-}
-
-.button-nav .nav-item {
-  flex-grow: 1;
-  margin-right: 3px;
-}
-
-.button-nav .nav-item:last-child {
-  margin-right: 0;
-}
-
-.button-nav .nav-item a {
-  width: 100%;
-}
-
-.content-section {
-  background: #ffffff;
-  padding: 10px 20px;
-  border: 1px solid #dddddd;
-  border-radius: 5px;
-  margin-bottom: 20px;
-}
-
-a.article-title:hover {
-  color: #428bca;
-  text-decoration: none;
-}
-
-.article-content {
-  white-space: pre-line;
-}
-
-.article-img {
-  height: 65px;
-  width: 65px;
-  margin-right: 16px;
-}
-
-.article-metadata {
-  padding-bottom: 1px;
-  margin-bottom: 4px;
-  border-bottom: 1px solid #e3e3e3
-}
-
-.article-metadata a:hover {
-  color: #333;
-  text-decoration: none;
-}
-
-.article-svg {
-  width: 25px;
-  height: 25px;
-  vertical-align: middle;
-}
-
-.account-img {
-  height: 125px;
-  width: 125px;
-  margin-right: 20px;
-  margin-bottom: 16px;
-}
-
-.account-heading {
-  font-size: 2.5rem;
-}
-
-.form-group input, .form-group textarea, .form-group select, .form-group select:focus {
-  background: #e6e6e6;
-  border: none;
-  border-radius: 5px;
-  padding: .375rem .75rem;
-}
-
-.form-group input:focus {
-  outline: none;
-}
-
-.form-group input[name='image'] {
-  background: #fff;
-}
-
-.anchor-title h3 {
-  font-weight: 900;
-  font-size: 45px;
-  padding: 25px 0;
-}
-
-.donation-card .card-body img {
-  max-height: 100px;
-  max-width: 100px;
-}
-
-.donation-card .card-header {
-  padding: 3px 0;
-}
-
-.donation-card .card-header p {
-  margin: 0;
-  padding: 0;
-}
-
-/* filtering for main map */
-
 .filter-group {
   font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
   font-weight: 600;
@@ -571,4 +639,34 @@ a.article-title:hover {
   margin-right: 5px;
 }
 
-/* filtering for main map end */
+/* Map app style end */
+
+/* Register app style */
+
+#id_borough {
+  -moz-column-count: 2;
+  -moz-column-gap: 20px;
+  -webkit-column-count: 2;
+  -webkit-column-gap: 20px;
+  column-count: 2;
+  column-gap: 20px;
+}
+
+#div_id_resource label {
+  display: block;
+}
+
+#div_id_resource div>div {
+  width: 50%;
+  display: inline-block;
+}
+
+#div_id_resource div>div:nth-child(odd) {
+  float: right;
+}
+
+#div_id_resource div>div:nth-child(odd) {
+  float: left;
+}
+
+/* Register app style end */

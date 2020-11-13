@@ -16,26 +16,74 @@
         <div class="navbar-nav">
           <!-- Add conditional statement to present different tab dependiing on the login status -->
           {% if user.is_authenticated %}
-          <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
           {% if user.donorprofile %}
+          <a id="donor-notification" class="nav-item nav-link" href="{% url 'donation:donation-messages' %}"><i
+              class="fas fa-envelope"></i></a>
           <a class="nav-item nav-link" href="{% url 'register:donor-profile' user.username %}"><i
               class="fas fa-user-circle"></i></a>
           <a class="nav-item nav-link" href="{% url 'donation:donation-home' %}"><i class="fas fa-box-open"></i></a>
+          <a class="nav-item nav-link" href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i></a>
           {% elif user.helpseekerprofile %}
+          <a id="display" class="nav-item nav-link" href="/messages"><i class="fas fa-bell"></i></a>
           <a class="nav-item nav-link" href="{% url 'register:helpseeker-profile' %}"><i
               class="fas fa-user-circle"></i></a>
           <a class="nav-item nav-link" href="{% url 'main-map' %}"><i class="fas fa-map-marker-alt"></i></a>
-          <a class="nav-item nav-link" href="{% url 'reservation:reservation-home' %}"><i class="fas fa-box-open"></i></a>
+          <a class="nav-item nav-link" href="{% url 'reservation:reservation-home' %}"><i
+              class="fas fa-box-open"></i></a>
+          <a class="nav-item nav-link" href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i></a>
           {% else %}
           <a class="nav-item nav-link" href="/admin"><i class="fas fa-user-circle"></i></a>
+          <a class="nav-item nav-link" href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i></a>
+
           {% endif %}
 
           {% else %}
-          <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
-          <a class="nav-item nav-link" href="{% url 'register:register' %}">Register</a>
+          <a class="nav-item nav-link" href="{% url 'login' %}"><i class="fas fa-sign-in-alt"></i></a>
+          <a class="nav-item nav-link" href="{% url 'register:register' %}"><i class="fas fa-user-plus"></i></a>
           {% endif %}
+
         </div>
       </div>
     </div>
   </nav>
 </header>
+
+{% if user.helpseekerprofile %}
+<script>
+  $(document).ready(function () {
+    setInterval(() => {
+      $.ajax({
+        type: 'GET',
+        url: "{% url 'donation:getResourcePosts' %}",
+        success: function (response) {
+          $("#display").html('<i class="fas fa-bell"></i>')
+          let postCounter = 0
+          for (i = 0; i < response.resource_posts.length; i++) {
+            postCounter += 1
+          }
+          $("#display").append('<span class="message-number">' + postCounter + '</span>')
+        },
+        error: function (response) {
+          console.log("No DATA FOUND")
+        }
+      })
+    }, 2000)
+  })
+</script>
+{% endif %}
+{% if user.donorprofile %}
+<script type="text/javascript">
+    var ajaxLink = "{% url 'reservation:ajax-notification' %}";
+    setInterval(function () {
+        $.get(ajaxLink, function (data) {
+            if (data == 0) {
+                $("#donor-notification").html("<i class='fas fa-envelope'></i>");
+
+            } else {
+                $("#donor-notification").html("<i class='fas fa-envelope-open-text'></i><span class='message-number'>" + data +
+                    "</span>");
+            }
+        });
+    }, 1000 * 1); // check notification every 1 second
+</script>
+{% endif %}

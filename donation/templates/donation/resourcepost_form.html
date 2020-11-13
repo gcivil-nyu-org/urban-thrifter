@@ -2,17 +2,50 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-
-<div class='content-section'>
+{% if not user.donorprofile.dropoff_location.place %}
+<div class="container alert alert-info text-center">
+    <h4>No Default Address Given.</h4>
+    <h6>Please make sure you set a dropoff location when you make a listing.</h6>
+    <h6>Please go to your <a href="{% url 'register:donor-profile' user.username %}">Profile <i
+                class="fas fa-user-circle"></i></a> to set your default address.</h6>
+</div>
+{% endif %}
+{% if messages %}
+{% for message in messages %}
+<div class="container alert alert-danger text-center">
+    {{ message }}
+</div>
+{% endfor %}
+{% endif %}
+<div class='content-section animated fadeIn'>
     <!-- Need to add CSRF token, a hidden tag for security required by django -->
     {{ form.media }}
     <form method='POST' enctype='multipart/form-data'>
+        <legend class='mb-4 font-weight-bold'>Donation Details</legend>
         {% csrf_token %}
         <fieldset class='form-group'>
-            <legend class='mb-4 font-weight-bold'>Donation Details</legend>
             <!-- Crispy filter to style the form -->
-            {{ form|crispy }}
-            <p>The dropoff location will be {{user.donorprofile.dropoff_location.place}} if you do not specify a location here.</p>
+            <div class="row">
+                <div class="col">
+                    {{ form.title| as_crispy_field }}
+                    {{ form.resource_category| as_crispy_field }}
+                    {{ form.dropoff_time_1| as_crispy_field }}
+                    {{ form.dropoff_time_2| as_crispy_field }}
+                    {{ form.dropoff_time_3| as_crispy_field }}
+                </div>
+                <div class="col">
+                    {{ form.quantity| as_crispy_field }}
+                    {{ form.description| as_crispy_field }}
+                </div>
+            </div>
+            {{ form.image| as_crispy_field }}
+            {% if user.donorprofile.dropoff_location.place %}
+            <p>Your default dropoff location is: </p>
+            <p class="graybox">{{user.donorprofile.dropoff_location.place}}</p>
+            {% else %}
+            <p class="alert alert-danger text-center">Need to specify a dropoff location.</p>
+            {% endif %}
+            {{ form.dropoff_location| as_crispy_field }}
         </fieldset>
         <div class='form-group'>
             <button class='btn btn-dark btn-wide' type='submit'>

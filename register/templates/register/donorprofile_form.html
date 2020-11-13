@@ -3,7 +3,7 @@
 {% block content %}
 
 {% include "register/profile_nav.html" %}
-<div class="content-section">
+<div class="content-section animated fadeIn">
   <legend class="mb-3 font-weight-bold">Account Details</legend>
   <div class="media-body">
     {% if messages %}
@@ -13,10 +13,16 @@
     </div>
     {% endfor %}
     {% endif %}
-    <label>Username:</label>
-    <p class="graybox">{{ user.username }}</p>
-    <label>Email:</label>
-    <p class="graybox">{{ user.email }}</p>
+    <div class="row">
+      <div class="col">
+        <label>Username:</label>
+        <p class="graybox">{{ user.username }}</p>
+      </div>
+      <div class="col">
+        <label>Email:</label>
+        <p class="graybox">{{ user.email }}</p>
+      </div>
+    </div>
   </div>
   {{ form.media }}
   <form method='POST' enctype='multipart/form-data'>
@@ -28,7 +34,7 @@
     <div class='form-group'>
       <!-- https://stackoverflow.com/questions/5629805/disabling-enter-key-for-form -->
       <script type="text/javascript">
-        window.addEventListener('keydown', function(e) {
+        window.addEventListener('keydown', function (e) {
           if (e.keyIdentifier == 'U+000A' || e.keyIdentifier == 'Enter' || e.keyCode == 13) {
             if (e.target.nodeName == 'INPUT' && e.target.type == 'text') {
               e.preventDefault();
