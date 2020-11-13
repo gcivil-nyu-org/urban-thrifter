@@ -543,9 +543,11 @@ a.article-title:hover {
   padding: .375rem .75rem;
 }
 
-.form-group input:focus {
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
   outline: none;
-  box-shadow: 0 0 0 0.1rem #e6e6e6;
+  box-shadow: 0 0 0 1px #e6e6e6;
 }
 
 .form-group input[name='image'] {
