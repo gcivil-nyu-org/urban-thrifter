@@ -6,7 +6,7 @@
 <!-- for resource posts which are in the watchlist, show them here -->
 {% for post in resource_posts %}
 {% if post.resource_category == user.helpseekerprofile.rc_1 or post.resource_category == user.helpseekerprofile.rc_2 or post.resource_category == user.helpseekerprofile.rc_3 %}
-<article class="card donation-card mb-2">
+<article class="card donation-card mb-2 animated fadeIn">
     <!-- <img class='rounded-circle article-img' src='{{ post.author.profile.image.url }}' > -->
     <a class="card-header" href="{% url 'main-map' %}">
         <div class='container'>

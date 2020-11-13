@@ -1,22 +1,20 @@
 {% extends 'donation/nav.html' %}
 {% block content %}
-<h1>Donor Registration</h1>
-	<div class="content-section">
-		<form method="POST">
-			{% csrf_token %}
-			<fieldset class="form-group">
-				<legend class="border-bottom mb-4">Join Today</legend>
-				{{ form.as_p }}
-			</fieldset>
-			<div class="form-group">
-				<button class="btn btn-dark btn-wide" type="submit">Sign Up</button>
-			</div>
-		</form>
-		<div class="border-top pt-3">
-			<p class="text-muted">
-				Already Have An Account? <a class="ml-2" href="{% url 'login' %}">Sign In</a>
-			</p>
+<div class="content-section animated fadeIn">
+	<form method="POST">
+		{% csrf_token %}
+		<fieldset class="form-group">
+			<legend class="border-bottom mb-4">Join Today as a Donor</legend>
+			{{ form.as_p }}
+		</fieldset>
+		<div class="form-group">
+			<button class="btn btn-dark btn-wide" type="submit">Sign Up</button>
+		</div>
+	</form>
+	<div class="border-top pt-3">
+		<p class="text-muted">
+			Already Have An Account? <a class="ml-2" href="{% url 'login' %}">Sign In</a>
 		</p>
-	</div>	
-{% endblock content %}
-
+		</p>
+	</div>
+	{% endblock content %}

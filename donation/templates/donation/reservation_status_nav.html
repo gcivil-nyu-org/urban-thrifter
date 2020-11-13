@@ -2,7 +2,7 @@
 {% block content %}
 {% if user.is_authenticated and user.donorprofile %}
 <div>
-    <ul class="nav nav-pills button-nav" id="pills-tab" role="tablist">
+    <ul class="nav nav-pills button-nav animated fadeInDown" id="pills-tab" role="tablist">
         <li class="nav-item">
             <a class="btn align-middle btn-outline-dark active" id="pills-reserved-tab" data-toggle="pill"
                 href="#pills-reserve" role="tab" aria-controls="pills-reserve" aria-selected="true">Reserved</a>
@@ -20,7 +20,7 @@
         </li>
     </ul>
 </div>
-<div class="tab-content" id="pills-tabContent">
+<div class="tab-content animated fadeIn" id="pills-tabContent">
     <div class="tab-pane fade show active" id="pills-reserve" role="tabpanel" aria-labelledby="pills-reserved-tab">
         {% if user.is_authenticated and user.donorprofile %}
         {% for post in posts %}

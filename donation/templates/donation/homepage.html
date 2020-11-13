@@ -49,27 +49,33 @@
 			<div class="row space-100">
 				<div class="col-lg-6 col-md-12 col-xs-12">
 					<div class="contents">
-						<h2 class="head-title">Urban Thrifter</h2>
-						<p>Connect the resource to the people in need.</p>
+						<h2 class="head-title animated fadeInDown">Urban Thrifter</h2>
+						<p class="animated fadeInDown">Connect the resource to the people in need.</p>
 						<div class="header-button">
 							{% if user.is_authenticated %}
 							{% if user.donorprofile %}
-							<a href="{% url 'donation:donation-home' %}" rel="nofollow" class="btn btn-dark btn-wide">Start your donation!</a>
+							<a href="{% url 'donation:donation-home' %}" rel="nofollow"
+								class="btn btn-dark btn-wide animated fadeInUp">Start your donation!</a>
 							{% elif user.helpseekerprofile %}
-							<a href="{% url 'main-map' %}" rel="nofollow" class="btn btn-dark btn-wide">Checkout what we have!</a>
+							<a href="{% url 'main-map' %}" rel="nofollow"
+								class="btn btn-dark btn-wide animated fadeInUp">Checkout what we
+								have!</a>
 							{% else %}
-							<a href="/admin" rel="nofollow" class="btn btn-dark btn-wide">Go to admin</a>
+							<a href="/admin" rel="nofollow" class="btn btn-dark btn-wide animated fadeInUp">Go to
+								admin</a>
 							{% endif %}
 							{% else %}
-							<a href="{% url 'register:register' %}" rel="nofollow" class="btn btn-dark btn-wide">Join
+							<a href="{% url 'register:register' %}" rel="nofollow"
+								class="btn btn-dark btn-wide animated fadeInUp">Join
 								Us</a>
-							<a href="{% url 'login' %}" rel="nofollow" class="btn btn-dark btn-wide">Login</a>
+							<a href="{% url 'login' %}" rel="nofollow"
+								class="btn btn-dark btn-wide animated fadeInUp">Sign In</a>
 							{% endif %}
 						</div>
 					</div>
 				</div>
 				<div class="col-lg-6 col-md-12 col-xs-12 p-0">
-					<div class="intro-img">
+					<div class="intro-img animated fadeInRight">
 						<img src="{% static 'homepage/img/intro.png' %}" alt="">
 					</div>
 				</div>
@@ -728,4 +734,5 @@
 	<script type="text/javascript" src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
 </body>
 <script type="text/javascript" src="{% static 'js/main.js' %}"></script>
+
 </html>
