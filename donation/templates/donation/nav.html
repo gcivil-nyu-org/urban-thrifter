@@ -26,21 +26,6 @@
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
     <script src="{% static 'main.js' %}"></script>
-
-    <script type="text/javascript">
-        var ajaxLink = "{% url 'reservation:ajax-notification' %}";
-        setInterval(function () {
-            $.get(ajaxLink, function (data) {
-                if (data == 0) {
-                    $("#donor-notification").html("<i class='fas fa-envelope'></i>");
-
-                } else {
-                    $("#donor-notification").html("<i class='fas fa-envelope-open-text'></i><span class='message-number'>" + data +
-                        "</span>");
-                }
-            });
-        }, 1000 * 1); // check notification every 10 seconds 
-    </script>
 </body>
 
 </html>

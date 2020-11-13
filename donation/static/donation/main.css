@@ -46,6 +46,29 @@ body, div, h1, h2, h3, h4, h5, h6, p, a, li {
   clear: both;
 }
 
+.places-widget>div {
+  border: none !important;
+}
+
+.gm-err-container {
+  border-radius: 5px !important;
+}
+
+#map_location>div {
+  border-radius: 5px !important;
+}
+
+.places-widget>input:first-child {
+  width: 100% !important;
+}
+.places-widget>input:nth-child(2) {
+  display: none !important;
+}
+
+.places-widget>input:nth-child(3) {
+  display: none !important;
+}
+
 #map {
   position: absolute;
   width: 100%;
@@ -522,7 +545,7 @@ a.article-title:hover {
 
 .form-group input:focus {
   outline: none;
-  box-shadow: none;
+  box-shadow: 0 0 0 0.1rem #e6e6e6;
 }
 
 .form-group input[name='image'] {
@@ -604,3 +627,31 @@ a.article-title:hover {
 }
 
 /* filtering for main map end */
+
+/* register app style */
+
+#id_borough {
+  -moz-column-count: 2;
+  -moz-column-gap: 20px;
+  -webkit-column-count: 2;
+  -webkit-column-gap: 20px;
+  column-count: 2;
+  column-gap: 20px;
+}
+
+#div_id_resource label {
+  display: block;
+}
+
+#div_id_resource div>div {
+  width: 50%;
+  display: inline-block;
+}
+
+#div_id_resource div>div:nth-child(odd) {
+  float: right;
+}
+
+#div_id_resource div>div:nth-child(odd) {
+  float: left;
+}

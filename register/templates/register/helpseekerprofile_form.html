@@ -13,23 +13,45 @@
     </div>
     {% endfor %}
     {% endif %}
-    <label>Username:</label>
-    <p class="graybox">{{ user.username }}</p>
-    <label>Email:</label>
-    <p class="graybox">{{ user.email }}</p>
+    <div class="row">
+      <div class="col">
+        <label>Username:</label>
+        <p class="graybox">{{ user.username }}</p>
+      </div>
+      <div class="col">
+        <label>Email:</label>
+        <p class="graybox">{{ user.email }}</p>
+      </div>
+    </div>
   </div>
   <form method='POST' enctype='multipart/form-data'>
     {% csrf_token %}
     <fieldset class='form-group'>
       <!-- Crispy filter to style the form -->
-      {{ hs_form |crispy }}
+      <div class="row">
+        <div class="col">
+          <label>Borough*:</label>
+          {{ hs_form.borough | as_crispy_field }}
+        </div>
+        <div class="col">
+          <label>Resource Category 1:</label>
+          {{ hs_form.rc_1 | as_crispy_field }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <label>Resource Category 2:</label>
+          {{ hs_form.rc_2 | as_crispy_field }}
+        </div>
+        <div class="col">
+          <label>Resource Category 3:</label>
+          {{ hs_form.rc_3 | as_crispy_field }}
+        </div>
+      </div>
     </fieldset>
-    <div class='form-group'>
-      <button class='btn btn-dark btn-wide' type='submit'>
-        Save
-      </button>
-    </div>
+    <button class='btn btn-dark btn-wide' type='submit'>
+      Save
+    </button>
   </form>
 </div>
-
 {% endblock content %}
