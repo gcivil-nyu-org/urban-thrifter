@@ -83,3 +83,15 @@ urlpatterns = [
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+handler400 = 'register.views.bad_request'
+handler401 = 'register.views.error'
+handler403 = 'register.views.permission_denied'
+handler404 = 'register.views.page_not_found'
+handler408 = 'register.views.error'
+handler500 = 'register.views.server_error'
+handler501 = 'register.views.error'
+handler502 = 'register.views.error'
+handler503 = 'register.views.error'
+handler504 = 'register.views.error'
+handler505 = 'register.views.error'

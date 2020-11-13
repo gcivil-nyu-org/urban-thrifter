@@ -156,3 +156,25 @@ class DonorUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
         if username is None:
             raise Http404
         return get_object_or_404(DonorProfile, user__username__iexact=username)
+
+
+def bad_request(request, exception):
+    response = render(request, 'register/error.html')
+    response.status_code = 400
+    return response
+
+
+def permission_denied(request, exception):
+    return render(request, "register/error.html")
+
+
+def page_not_found(request, exception):
+    return render(request, "register/error.html")
+
+
+def server_error(request):
+    return render(request, "register/error.html")
+
+
+def error(request, exception):
+    return render(request, "register/error.html")
