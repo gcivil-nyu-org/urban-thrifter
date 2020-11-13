@@ -621,8 +621,9 @@ button:focus {
 }
 
 #how-to-share .business-item-info ol {
-  padding-inline-start:15px;
+  padding-inline-start: 15px;
 }
+
 #how-to-share .business-item-info ol li {
   font-size: 18px;
   padding-left: 5px;
@@ -644,13 +645,14 @@ button:focus {
 #resource .feature-item {
   padding: 30px;
   overflow: hidden;
+  min-height: 250px;
   -moz-transition: all .8s ease;
   -webkit-transition: all .8s ease;
   transition: all .8s ease;
 }
 
 #resource .feature-item .feature-icon {
-  background: #d6d6d6;
+  background: #f9f9f9;
   width: 100px;
   height: 100px;
   margin: 0px auto;
@@ -700,39 +702,118 @@ button:focus {
   -webkit-transition: all .8s ease;
   transition: all .8s ease;
 }
+
+#resource .feature-item:hover .food-icon i {
+  color: #C66257;
+}
+
 #resource .feature-item:hover .food-icon {
-  background: #C66257;
+  background: #fff;
+  border: 1px solid #C66257;
+}
+
+#resource .feature-item:hover .shelter-icon i {
+  color: #D6A77E;
 }
 
 #resource .feature-item:hover .shelter-icon {
-  background: #D6A77E;
+  background: #fff;
+  border: 1px solid #D6A77E;
+}
+
+#resource .feature-item:hover .ppe-icon i {
+  color: #6DB1C7;
 }
 
 #resource .feature-item:hover .ppe-icon {
-  background: #6DB1C7;
+  background: #fff;
+  border: 1px solid #6DB1C7;
+}
+
+#resource .feature-item:hover .electronics-icon i {
+  color: #484848;
 }
 
 #resource .feature-item:hover .electronics-icon {
-  background: #484848;
+  background: #fff;
+  border: 1px solid #484848;
+}
+
+#resource .feature-item:hover .cloth-icon i {
+  color: #E0C35C;
 }
 
 #resource .feature-item:hover .cloth-icon {
-  background: #E0C35C;
+  background: #fff;
+  border: 1px solid #E0C35C;
+}
+
+#resource .feature-item:hover .restroom-icon i {
+  color: #155889;
 }
 
 #resource .feature-item:hover .restroom-icon {
-  background: #155889;
+  background: #fff;
+  border: 1px solid #155889;
+}
+
+#resource .feature-item:hover .wifi-icon i {
+  color: #72B163;
 }
 
 #resource .feature-item:hover .wifi-icon {
-  background: #72B163;
+  background: #fff;
+  border: 1px solid #72B163;
+}
+
+#resource .feature-item:hover .reeducation-icon i {
+  color: #8DA0D0;
 }
 
 #resource .feature-item:hover .reeducation-icon {
+  background: #fff;
+  border: 1px solid #8DA0D0;
+}
+
+#resource .feature-item:hover .feature-icon {
+  -moz-transition: all .8s ease;
+  -webkit-transition: all .8s ease;
+  transition: all .8s ease;
+}
+
+#resource .feature-item .food-icon {
+  background: #C66257;
+}
+
+#resource .feature-item .shelter-icon {
+  background: #D6A77E;
+}
+
+#resource .feature-item .ppe-icon {
+  background: #6DB1C7;
+}
+
+#resource .feature-item .electronics-icon {
+  background: #484848;
+}
+
+#resource .feature-item .cloth-icon {
+  background: #E0C35C;
+}
+
+#resource .feature-item .restroom-icon {
+  background: #155889;
+}
+
+#resource .feature-item .wifi-icon {
+  background: #72B163;
+}
+
+#resource .feature-item .reeducation-icon {
   background: #8DA0D0;
 }
 
-#resource .feature-item:hover .feature-icon i {
+#resource .feature-item .feature-icon i {
   color: #fff;
   -moz-transition: all .8s ease;
   -webkit-transition: all .8s ease;
