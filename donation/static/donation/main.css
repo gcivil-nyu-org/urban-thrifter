@@ -61,6 +61,7 @@ body, div, h1, h2, h3, h4, h5, h6, p, a, li {
 .places-widget>input:first-child {
   width: 100% !important;
 }
+
 .places-widget>input:nth-child(2) {
   display: none !important;
 }
@@ -465,6 +466,10 @@ select option:hover, select option:focus, select option:active {
   font-size: 14px;
 }
 
+.message-map {
+  height: 300px;
+}
+
 .button-nav {
   padding-bottom: 10px;
   display: flex;
@@ -543,9 +548,7 @@ a.article-title:hover {
   padding: .375rem .75rem;
 }
 
-.form-group input:focus,
-.form-group select:focus,
-.form-group textarea:focus {
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus {
   outline: none;
   box-shadow: 0 0 0 1px #e6e6e6;
 }
