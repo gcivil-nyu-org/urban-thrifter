@@ -414,6 +414,22 @@ select option:hover, select option:focus, select option:active {
   right: 10px;
 }
 
+#display, #donor-notification {
+  position: relative;
+}
+
+#display i, #donor-notification i {
+  position: absolute;
+  left: -15px;
+}
+
+#display span, #donor-notification span {
+  position: absolute;
+  top: 0;
+  left: -8px;
+  z-index: 10;
+}
+
 .message-number {
   height: 20px;
   width: 20px;
