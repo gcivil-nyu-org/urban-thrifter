@@ -5,6 +5,7 @@ from bootstrap_datepicker_plus import DateTimePickerInput
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse
 from django.contrib import messages
+import os
 
 # , UserPassesTestMixin
 
@@ -129,3 +130,8 @@ class MessageListView(ListView):
 
     # Add pagination
     paginate_by = 20
+
+    def get_context_data(self, **kwargs):
+        context = super(MessageListView, self).get_context_data(**kwargs)
+        context['mapbox_access_token'] = "pk." + os.environ.get("MAPBOX_KEY")
+        return context

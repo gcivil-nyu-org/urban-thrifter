@@ -33,7 +33,7 @@
                 <div class="col">
                     <b>Location</b>
                     <p class="message-map-{{post.id}}" style="cursor:pointer;color:#007bff;"
-                        onclick="toggleMap('{{post.dropoff_location.latitude}}','{{post.dropoff_location.longitude}}', '{{post.id}}')">
+                        onclick="toggleMap('{{post.dropoff_location.latitude}}','{{post.dropoff_location.longitude}}', '{{post.id}}', '{{mapbox_access_token}}')">
                         <i class="fas fa-map-marked-alt"></i></p>
                 </div>
             </div>
@@ -44,9 +44,9 @@
 </article>
 
 <script>
-    function toggleMap(lat, long, postId) {
+    function toggleMap(lat, long, postId, mapbox_key) {
         $("#message-location-" + postId).toggle();
-        mapboxgl.accessToken = '{{ mapbox_access_token }}'
+        mapboxgl.accessToken = mapbox_key
         var map = new mapboxgl.Map({
             container: 'message-location-' + postId,
             style: 'mapbox://styles/jginmb7/ckgg1lsi02e2m1ao7bk8ov89z',
