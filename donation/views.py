@@ -133,5 +133,5 @@ class MessageListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(MessageListView, self).get_context_data(**kwargs)
-        context['mapbox_access_token'] = "pk." + os.environ.get("MAPBOX_KEY")
+        context["mapbox_access_token"] = "pk." + os.environ.get("MAPBOX_KEY")
         return context
