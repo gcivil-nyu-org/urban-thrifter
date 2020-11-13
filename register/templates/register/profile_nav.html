@@ -1,8 +1,8 @@
 <div class="form-inline button-nav animated fadeInDown">
     {% if user.donorprofile %}
-    <a class="btn align-middle btn-outline-dark nav-item" type="button" href="{% url 'register:donor-profile' user.username %}">Info</a>
+    <a class="btn align-middle btn-outline-dark nav-item active" type="button" href="{% url 'register:donor-profile' user.username %}">Info</a>
     {% elif user.helpseekerprofile %}
-    <a class="btn align-middle btn-outline-dark nav-item" type="button" href='{% url "register:helpseeker-profile" %}'>Info</a>
+    <a class="btn align-middle btn-outline-dark nav-item active" type="button" href='{% url "register:helpseeker-profile" %}'>Info</a>
     {% endif %}
     <a class="btn align-middle btn-outline-dark nav-item" type="button" href=''>Delete</a>
 </div>

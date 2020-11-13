@@ -32,11 +32,10 @@
                     <form method="POST" action="{% url 'reservation:confirm-notification' notification.id %}">
                         {% csrf_token %}
                         {% if notification.notificationstatus == 3 %}
-                        <p><button name="accept" class="btn btn-outline-dark btn-wide" type="submit">Accept</button></p>
-                        <p><button name="deny" class="btn btn-outline-danger btn-wide" type="submit">Decline</button></p>
+                        <button name="accept" class="btn btn-outline-success btn-wide mb-1 float-right" type="submit">Accept</button>
+                        <button name="deny" class="btn btn-outline-danger btn-wide float-right" type="submit">Decline</button>
                         {% elif notification.notificationstatus == 1 %}
-                        <b class="article-content">Status: </b>
-                        <p>Accepted</p>
+                        <p class="btn btn-wide btn-success float-right">Accepted</p>
                         {% else %}
                         <b class="article-content">Status: </b>
                         <p>Denied</p>
