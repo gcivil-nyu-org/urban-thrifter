@@ -32,13 +32,32 @@
                 </div>
                 <div class="col">
                     <b>Map</b>
-                    <p><a href="{% url 'main-map' %}"><i class="fas fa-map-marked-alt"></i></a></p>
+                    <button class="message-map-{{post.id}}"
+                        onclick="toggleMap('{{post.dropoff_location}}', '{{post.id}}')"><i
+                            class="fas fa-map-marked-alt"></i></button>
                 </div>
             </div>
+            <div id="message-location-{{post.id}}" style="display: none;"></div>
         </div>
     </div>
 
 </article>
+
+<script>
+    function toggleMap(address, postId) {
+        $("#message-location-"+postId).toggle();
+        // mapboxgl.accessToken = '{{ mapbox_access_token }}'
+        mapboxgl.accessToken = 'eyJ1Ijoiamdpbm1iNyIsImEiOiJja2cybXpuNzAwMXFzMnFqdDFzbXBmNGszIn0.6UJeoJW2FwSS9LAOZN_QBw'
+        var map = new mapboxgl.Map({
+            container: 'message-location-'+postId,
+            style: 'mapbox://styles/jginmb7/ckgg1lsi02e2m1ao7bk8ov89z',
+            // center: [address.latitude, address.longitude],
+            center: [-73.8648, 40.8448],
+            zoom: 12.5
+        });
+    }
+
+</script>
 {% endif %}
 {% endfor %}
 
