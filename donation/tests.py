@@ -113,7 +113,7 @@ class HomepageViewTests(TestCase):
 class ResourcePostDetailViewTests(TestCase):
     def test_regular_post(self):
         """
-        The detail view of a question with a pub_date in the future
+        The detail view of a resource post by donor
         returns a 404 not found.
         """
         create_resource_post = ResourcePost(
