@@ -19,6 +19,7 @@ def homepage(request):
     # Redirect to login page
     return render(request, "donation/homepage.html")
 
+
 def home(request):
     user = request.user
     post_list = ResourcePost.objects.filter(donor=user)
@@ -32,7 +33,6 @@ def home(request):
         posts = paginator.page(1)
     except EmptyPage:
         posts = paginator.page(paginator.num_pages)
-
 
     user = request.user
     context = {"posts": posts}
@@ -128,6 +128,40 @@ def getResourcePost(request):
     return JsonResponse(context)
 
 
+
+
+# funciton based view version of messagelistview
+def message_list_view(request):
+    user = request.user
+
+    def filter_watchlist(post):
+        filtered = ResourcePost.objects.all().filter(resource_category=user.helpseekerprofile.rc_1)\
+             + ResourcePost.objects.all().filter(resource_category=user.helpseekerprofile.rc_2)\
+                  + ResourcePost.objects.all().filter(resource_category=user.helpseekerprofile.rc_3)
+        if post in filtered:
+            return True
+        else:
+            return False
+
+    post_list = ResourcePost.objects.all().filter(filter_watchlist).order_by("-date_created")
+
+    page = request.GET.get("page", 1)
+    paginator = Paginator(post_list, 20)
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        posts = paginator.page(1)
+    except EmptyPage:
+        posts = paginator.page(paginator.num_pages)
+
+    timestamp_now = datetime.datetime.now()
+    context = {
+        "mapbox_access_token": "pk." + os.environ.get("MAPBOX_KEY"),
+        "timestamp": timestamp_now,
+        "posts": posts,
+    }
+    return render(request, "donation/messages_home.html", context)
+
 # # class based view version of messagelistview
 # class MessageListView(ListView):
 #     # Basic list view
@@ -151,24 +185,3 @@ def getResourcePost(request):
 #         context["timestamp_now"] = datetime.datetime.now()
 #         return context
 
-# funciton based view version of messagelistview
-def message_list_view(request):
-    post_list = ResourcePost.objects.all().order_by("-date_created")
-
-    page = request.GET.get("page", 1)
-    paginator = Paginator(post_list, 3)
-    try:
-        posts = paginator.page(page)
-    except PageNotAnInteger:
-        posts = paginator.page(1)
-    except EmptyPage:
-        posts = paginator.page(paginator.num_pages)
-
-    # if request.method == 'GET':
-    timestamp_now = datetime.datetime.now()
-    context = {
-        "mapbox_access_token": "pk." + os.environ.get("MAPBOX_KEY"),
-        "timestamp": timestamp_now,
-        "posts": posts,
-    }
-    return render(request, "donation/messages_home.html", context)
