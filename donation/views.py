@@ -19,12 +19,23 @@ def homepage(request):
     # Redirect to login page
     return render(request, "donation/homepage.html")
 
-
 def home(request):
     user = request.user
-    context = {"posts": ResourcePost.objects.filter(donor=user)}
+    post_list = ResourcePost.objects.filter(donor=user)
+    # .order_by("-date_created")
 
-    # context is the argument pass into the html
+    page = request.GET.get("page", 1)
+    paginator = Paginator(post_list, 3)
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        posts = paginator.page(1)
+    except EmptyPage:
+        posts = paginator.page(paginator.num_pages)
+
+
+    user = request.user
+    context = {"posts": posts}
 
     return render(request, "donation/reservation_status_nav.html", context)
 
