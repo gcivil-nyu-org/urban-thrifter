@@ -24,6 +24,11 @@
     src: url(d-din/D-DIN-Italic.otf) format("opentype");
 }*/
 
+html {
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
 body {
   background: #fafafa;
   color: #333333;
