@@ -117,46 +117,47 @@ def getResourcePost(request):
     return JsonResponse(context)
 
 
-def message_list_view(request):
-    post_list = ResourcePost.objects.all().order_by("-date_created")
+# class based view version of messagelistview
+class MessageListView(ListView):
+    # Basic list view
+    model = ResourcePost
+    # Assign tempalte otherwise it would look for post_list.html
+    # as default template
+    template_name = "donation/messages_home.html"
 
-    page = request.GET.get("page", 1)
-    paginator = Paginator(post_list, 5)
-    try:
-        posts = paginator.page(page)
-    except PageNotAnInteger:
-        posts = paginator.page(1)
-    except EmptyPage:
-        posts = paginator.page(paginator.num_pages)
+    # Set context_attribute to post object
+    context_object_name = "resource_posts"
 
-    # if request.method == 'GET':
-    timestamp_now = datetime.datetime.now()
-    context = {
-        "mapbox_access_token": "pk." + os.environ.get("MAPBOX_KEY"),
-        "timestamp": timestamp_now,
-        "resource_posts": posts,
-    }
-    return render(request, "donation/messages_home.html", context)
+    # Add ordering attribute to put most recent post to top
+    ordering = ["-date_created"]
 
+    # Add pagination
+    paginate_by = 3
 
-# class based view version
-# class MessageListView(ListView):
-#     # Basic list view
-#     model = ResourcePost
-#     # Assign tempalte otherwise it would look for post_list.html
-#     # as default template
-#     template_name = "donation/messages_home.html"
+    def get_context_data(self, **kwargs):
+        context = super(MessageListView, self).get_context_data(**kwargs)
+        context["mapbox_access_token"] = "pk." + os.environ.get("MAPBOX_KEY")
+        context["timestamp_now"] = datetime.datetime.now()
+        return context
 
-#     # Set context_attribute to post object
-#     context_object_name = "resource_posts"
+# # funciton based view version of messagelistview
+# def message_list_view(request):
+#     post_list = ResourcePost.objects.all().order_by("-date_created")
 
-#     # Add ordering attribute to put most recent post to top
-#     ordering = ["-date_created"]
+#     page = request.GET.get("page", 1)
+#     paginator = Paginator(post_list, 5)
+#     try:
+#         posts = paginator.page(page)
+#     except PageNotAnInteger:
+#         posts = paginator.page(1)
+#     except EmptyPage:
+#         posts = paginator.page(paginator.num_pages)
 
-#     # Add pagination
-#     paginate_by = 3
-
-#     def get_context_data(self, **kwargs):
-#         context = super(MessageListView, self).get_context_data(**kwargs)
-#         context["mapbox_access_token"] = "pk." + os.environ.get("MAPBOX_KEY")
-#         return context
+#     # if request.method == 'GET':
+#     timestamp_now = datetime.datetime.now()
+#     context = {
+#         "mapbox_access_token": "pk." + os.environ.get("MAPBOX_KEY"),
+#         "timestamp": timestamp_now,
+#         "resource_posts": posts,
+#     }
+#     return render(request, "donation/messages_home.html", context)
