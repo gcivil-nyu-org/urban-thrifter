@@ -7,7 +7,7 @@ from django.http import JsonResponse
 from django.contrib import messages
 import os
 import datetime
-from django.core.paginator import Paginator
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 # , UserPassesTestMixin
 
@@ -118,25 +118,28 @@ def getResourcePost(request):
 
 
 def message_list_view(request):
-    posts = ResourcePost.objects.all().order_by("-date_created")
+    post_list = ResourcePost.objects.all().order_by("-date_created")
 
-    # paginator = Paginator(posts, 3)
-
-    # page = request.GET.get('page')
-    # # ?page = 2
-    # posts = paginator
+    page = request.GET.get("page", 1)
+    paginator = Paginator(post_list, 5)
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        posts = paginator.page(1)
+    except EmptyPage:
+        posts = paginator.page(paginator.num_pages)
 
     # if request.method == 'GET':
     timestamp_now = datetime.datetime.now()
-    resource_posts = {
-        'timestamp': timestamp_now,
-        'posts': posts
+    context = {
+        "mapbox_access_token": "pk." + os.environ.get("MAPBOX_KEY"),
+        "timestamp": timestamp_now,
+        "resource_posts": posts,
     }
-    return render(request, "donation/messages_home.html", resource_posts)
+    return render(request, "donation/messages_home.html", context)
 
 
-
-
+# class based view version
 # class MessageListView(ListView):
 #     # Basic list view
 #     model = ResourcePost
@@ -151,7 +154,7 @@ def message_list_view(request):
 #     ordering = ["-date_created"]
 
 #     # Add pagination
-#     paginate_by = 20
+#     paginate_by = 3
 
 #     def get_context_data(self, **kwargs):
 #         context = super(MessageListView, self).get_context_data(**kwargs)
