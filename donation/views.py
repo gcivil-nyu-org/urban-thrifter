@@ -132,7 +132,6 @@ def message_list_view(request):
         'timestamp': timestamp_now,
         'posts': posts
     }
-    print(resource_posts[posts])
     return render(request, "donation/messages_home.html", resource_posts)
 
 
