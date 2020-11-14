@@ -19,8 +19,9 @@
         </div>
 
         <div class="row">
-            <div class="col col-lg-2">
-            <img class='rounded-circle article-img' src="{{ object.image.url }}" max-width="30%"></div>
+            <div class="col col-lg-4">
+                <img width="100%" src="{{ object.image.url }}" />
+            </div>
             <div class="col">
                 <p>Status:</p>
                 <p class="graybox">{{ object.status }}</p>
@@ -37,7 +38,7 @@
                 <p class="graybox">{{ object.dropoff_time_3 }}</p>
                 {% endif %}
                 <p>Description: </p>
-                <div class="graybox">{{ object.description }}</div>
+                <p class="graybox-textarea">{{ object.description }}</p>
             </div>
         </div>
     </div>

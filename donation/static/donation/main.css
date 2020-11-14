@@ -63,7 +63,22 @@ p, a, li, input, label, textarea {
   font-size: 16px;
 }
 
+.form-control {
+  height: 32px !important;
+}
+
+textarea.form-control {
+  height: auto !important;
+  min-height: 100px !important;
+}
+
 /********** Common Element *************/
+
+.btn {
+  height: 32px !important;
+  padding: .25rem .75rem !important;
+  font-size: 16px !important;
+}
 
 .btn:focus {
   box-shadow: none !important;
@@ -78,7 +93,17 @@ p, a, li, input, label, textarea {
 .graybox {
   background: #e6e6e6;
   border-radius: 5px;
-  padding: .375rem .75rem;
+  padding: .25rem .75rem;
+  border: none;
+  height: 32px;
+  vertical-align: center;
+}
+
+.graybox-textarea {
+  background: #e6e6e6;
+  border-radius: 5px;
+  padding: .25rem .75rem;
+  border: none;
 }
 
 .gray-bg {
@@ -292,7 +317,12 @@ a.article-title:hover {
   background: #e6e6e6;
   border: none;
   border-radius: 5px;
-  padding: .375rem .75rem;
+  padding: .25rem .75rem;
+  height: 32px;
+}
+
+.form-group textarea {
+  height: auto;
 }
 
 .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
@@ -326,6 +356,7 @@ a.article-title:hover {
 
 .places-widget>input:first-child {
   width: 100% !important;
+  height: 32px !important;
 }
 
 .places-widget>input:nth-child(2) {
@@ -649,11 +680,11 @@ a.article-title:hover {
 /* Register app style */
 
 #id_borough {
-  -moz-column-count: 2;
+  -moz-column-count: 3;
   -moz-column-gap: 20px;
-  -webkit-column-count: 2;
+  -webkit-column-count: 3;
   -webkit-column-gap: 20px;
-  column-count: 2;
+  column-count: 3;
   column-gap: 20px;
 }
 
@@ -662,16 +693,16 @@ a.article-title:hover {
 }
 
 #div_id_resource div>div {
-  width: 50%;
+  width: 33%;
   display: inline-block;
 }
 
-#div_id_resource div>div:nth-child(odd) {
-  float: right;
+#div_id_resource div>div:nth-child(1), #div_id_resource div>div:nth-child(4) {
+  float: left;
 }
 
-#div_id_resource div>div:nth-child(odd) {
-  float: left;
+#div_id_resource div>div:nth-child(3) {
+  float: right;
 }
 
 /* Register app style end */
