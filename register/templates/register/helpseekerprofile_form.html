@@ -4,7 +4,11 @@
 
 {% include "register/profile_nav.html" %}
 <div class="content-section animated fadeIn">
-  <legend class="mb-3 font-weight-bold">Account Details</legend>
+  <div class="row justify-content-around">
+    <div class="col-10">
+      <legend class="mb-3 font-weight-bold">Account Details</legend>
+    </div>
+  </div>
   <div class="media-body">
     {% if messages %}
     {% for message in messages %}
@@ -13,12 +17,12 @@
     </div>
     {% endfor %}
     {% endif %}
-    <div class="row">
-      <div class="col">
+    <div class="row justify-content-around">
+      <div class="col-4">
         <label>Username:</label>
         <p class="graybox">{{ user.username }}</p>
       </div>
-      <div class="col">
+      <div class="col-4">
         <label>Email:</label>
         <p class="graybox">{{ user.email }}</p>
       </div>
@@ -28,30 +32,27 @@
     {% csrf_token %}
     <fieldset class='form-group'>
       <!-- Crispy filter to style the form -->
-      <div class="row">
-        <div class="col">
+      <div class="row justify-content-around">
+        <div class="col-4">
           <label>Borough*:</label>
           {{ hs_form.borough | as_crispy_field }}
-        </div>
-        <div class="col">
-          <label>Resource Category 1:</label>
-          {{ hs_form.rc_1 | as_crispy_field }}
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
           <label>Resource Category 2:</label>
           {{ hs_form.rc_2 | as_crispy_field }}
         </div>
-        <div class="col">
+        <div class="col-4">
+          <label>Resource Category 1:</label>
+          {{ hs_form.rc_1 | as_crispy_field }}
           <label>Resource Category 3:</label>
           {{ hs_form.rc_3 | as_crispy_field }}
         </div>
       </div>
     </fieldset>
-    <button class='btn btn-dark btn-wide' type='submit'>
-      Save
-    </button>
+    <div class="row justify-content-around pb-3">
+      <div class="col-10">
+        <button class='btn btn-dark btn-wide' type='submit'>
+          Save
+        </button></div>
+  </form>
   </form>
 </div>
 {% endblock content %}

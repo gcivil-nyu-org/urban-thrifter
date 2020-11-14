@@ -10,7 +10,7 @@
 		{% csrf_token %}
 		<fieldset class="form-group">
 			<div class="row justify-content-around">
-				<div class="col-4 mr-5">
+				<div class="col">
 					{{ form.username|as_crispy_field }}
 					<br />
 					{{ form.email|as_crispy_field }}
@@ -19,7 +19,7 @@
 					<br />
 					{{ form.password2|as_crispy_field }}
 				</div>
-				<div class="col-4">
+				<div class="col">
 					<span class="graybox mb-2">Borough*</span>
 					{{ form.borough }}
 					<span class="graybox mb-2">Resources (Optional, select up to 3)</span>
