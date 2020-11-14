@@ -145,7 +145,7 @@ def message_list_view(request):
     post_list = ResourcePost.objects.all().order_by("-date_created")
 
     page = request.GET.get("page", 1)
-    paginator = Paginator(post_list, 1)
+    paginator = Paginator(post_list, 3)
     try:
         posts = paginator.page(page)
     except PageNotAnInteger:
@@ -158,6 +158,6 @@ def message_list_view(request):
     context = {
         "mapbox_access_token": "pk." + os.environ.get("MAPBOX_KEY"),
         "timestamp": timestamp_now,
-        "resource_posts": posts,
+        "posts": posts,
     }
     return render(request, "donation/messages_home.html", context)
