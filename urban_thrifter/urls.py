@@ -73,11 +73,16 @@ urlpatterns = [
     ),
     path(
         "messages/",
-        donation_view.MessageListView.as_view(
-            template_name="donation/messages_home.html"
-        ),
+        donation_view.message_list_view,
         name="messages-home",
     ),
+    # path(
+    #     "messages/",
+    #     donation_view.MessageListView.as_view(
+    #         template_name="donation/messages_home.html"
+    #     ),
+    #     name="messages-home",
+    # ),
 ]
 
 

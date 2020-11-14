@@ -6,6 +6,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse
 from django.contrib import messages
 import os
+import datetime
+from django.core.paginator import Paginator
 
 # , UserPassesTestMixin
 
@@ -115,23 +117,44 @@ def getResourcePost(request):
     return JsonResponse(context)
 
 
-class MessageListView(ListView):
-    # Basic list view
-    model = ResourcePost
-    # Assign tempalte otherwise it would look for post_list.html
-    # as default template
-    template_name = "donation/messages_home.html"
+def message_list_view(request):
+    posts = ResourcePost.objects.all().order_by("-date_created")
 
-    # Set context_attribute to post object
-    context_object_name = "resource_posts"
+    # paginator = Paginator(posts, 3)
 
-    # Add ordering attribute to put most recent post to top
-    ordering = ["-date_created"]
+    # page = request.GET.get('page')
+    # # ?page = 2
+    # posts = paginator
 
-    # Add pagination
-    paginate_by = 20
+    # if request.method == 'GET':
+    timestamp_now = datetime.datetime.now()
+    resource_posts = {
+        'timestamp': timestamp_now,
+        'posts': posts
+    }
+    print(resource_posts[posts])
+    return render(request, "donation/messages_home.html", resource_posts)
 
-    def get_context_data(self, **kwargs):
-        context = super(MessageListView, self).get_context_data(**kwargs)
-        context["mapbox_access_token"] = "pk." + os.environ.get("MAPBOX_KEY")
-        return context
+
+
+
+# class MessageListView(ListView):
+#     # Basic list view
+#     model = ResourcePost
+#     # Assign tempalte otherwise it would look for post_list.html
+#     # as default template
+#     template_name = "donation/messages_home.html"
+
+#     # Set context_attribute to post object
+#     context_object_name = "resource_posts"
+
+#     # Add ordering attribute to put most recent post to top
+#     ordering = ["-date_created"]
+
+#     # Add pagination
+#     paginate_by = 20
+
+#     def get_context_data(self, **kwargs):
+#         context = super(MessageListView, self).get_context_data(**kwargs)
+#         context["mapbox_access_token"] = "pk." + os.environ.get("MAPBOX_KEY")
+#         return context
