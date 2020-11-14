@@ -62,27 +62,28 @@
 </script>
 {% endif %}
 {% endfor %}
-  <!-- pagination -->
-  {% if is_paginated %}
-    {% if page_obj.has_previous %} <!--page_obj: page object that our view passed into the template --> <!--has_previous: has previous page -->
-      <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
-      <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.previous_page_number }}">Previous</a>
-    {% endif %}
 
-    {% for num in page_obj.paginator.page_range %} <!--page_obj.paginator: gets the paginotor object of current page--> <!--page_range: loops over all the pages-->
-      {% if page_obj.number == num %} <!-- if the current page number is the same as num of the loop -->
-        <a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>
-      {% elif num < page_obj.number|add:'3' and num > page_obj.number|add:'-3' %} <!-- y|add:'x' is an operation of adding x to y-->
-        <a class="btn btn-outline-info mb-4" href="?page={{ num }}">{{ num }}</a>
-      {% endif %}
-    {% endfor %}
+<!-- pagination -->
+{% if resource_posts.paginator.num_pages > 1 %}
+{% if resource_posts.has_previous %}
+<a class="btn btn-outline-info mb-4" href="?page=1">First</a>
+<a class="btn btn-outline-info mb-4" href="?page={{ resource_posts.previous_page_number }}">Previous</a>
+{% endif %}
 
-    {% if page_obj.has_next %}
-      <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.next_page_number }}">Next</a>
-      <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
-    {% endif %}
-  {% endif %}
-  <!-- pagination -->
+{% for num in resource_posts.paginator.page_range %}
+{% if resource_posts.number == num %}
+<a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>
+{% elif num < resource_posts.number|add:'3' and num > resource_posts.number|add:'-3' %}
+<a class="btn btn-outline-info mb-4" href="?page={{ num }}">{{ num }}</a>
+{% endif %}
+{% endfor %
+
+{% if resource_posts.has_next %}
+<a class="btn btn-outline-info mb-4" href="?page={{ resource_posts.next_page_number }}">Next</a>
+<a class="btn btn-outline-info mb-4" href="?page={{ resource_posts.paginator.num_pages }}">Last</a>
+{% endif %}
+{% endif %}
+<!-- pagination -->
 
 {% endif %}
 {% endblock content %}
