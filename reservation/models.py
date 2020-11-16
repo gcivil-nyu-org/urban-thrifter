@@ -81,6 +81,7 @@ class Notification(models.Model):
                 self.msg="Reservation pending"
             Notification.helpseeker_noti_objects.append(self)
             print("hello")
+            print(Notification.helpseeker_noti_objects)
 
         super(Notification, self).save(force_insert, force_update, *args, **kwargs)
         self.__original_notificationstatus = self.notificationstatus
