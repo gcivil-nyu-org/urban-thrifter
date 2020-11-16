@@ -635,6 +635,7 @@ class DonorViewTests(TestCase):
         self.assertEqual(holder.status_code, 200)
         # self.assertContains(holder, "Donor Registration")
 
+
 class UserDeleteTests(TestCase):
     def test_delete_user(self):
         user = User.objects.create(
@@ -645,6 +646,5 @@ class UserDeleteTests(TestCase):
         uname = user.username
         user.delete()
         length = len(User.objects.filter(username=uname))
-        
+
         self.assertEqual(length, 0)
-        
