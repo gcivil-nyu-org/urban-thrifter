@@ -132,6 +132,9 @@ def getResourcePost(request):
 def message_list_view(request):
     user = request.user
 
+    timestamp_interval = [user.helpseekerprofile.message_timer_before, timezone.now]
+    user.helpseekerprofile.message_timer_before = timezone.now
+    
     # https://stackoverflow.com/questions/64838254/making-multiple-filters-in-function-filter-django
     post_list = ResourcePost.objects.filter(
         resource_category__in = [
@@ -152,7 +155,7 @@ def message_list_view(request):
 
     context = {
         "mapbox_access_token": "pk." + os.environ.get("MAPBOX_KEY"),
-        "timestamp": timezone.now,
+        "timestamp_interval": timestamp_interval,
         "posts": posts,
     }
     return render(request, "donation/messages_home.html", context)
