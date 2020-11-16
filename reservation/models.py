@@ -7,7 +7,7 @@ from donation.models import ResourcePost
 # from places.fields import PlacesField
 from django.urls import reverse
 from django.db.models.signals import post_save
-
+from django.utils import FieldTracker
 
 # Create your models here.
 class ReservationPost(models.Model):
@@ -62,6 +62,8 @@ class Notification(models.Model):
     )
     date = models.DateTimeField(auto_now_add=True)
     is_seen = models.BooleanField(default=False)
+
+    tracker = FieldTracker()
 
 
 post_save.connect(ReservationPost.give_notifications, sender=ReservationPost)
