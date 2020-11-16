@@ -115,18 +115,18 @@ class NotificationTests(TestCase):
         )
         self.assertEqual(notification.notificationstatus, 3)
 
+
 class ReservationPostListDeleteTests(TestCase):
     def test_delete_reservation_with_delete_helpseeker(self):
         donor = createdonor()
         helpseeker = creathelpseeker()
         donation_post = createdonation(donor)
-        reservation = ReservationPost(
+        ReservationPost(
             dropoff_time_request=1,
             post=donation_post,
             donor=donor,
             helpseeker=helpseeker,
         )
-        hs = reservation.helpseeker
         user = User.objects.get(username=helpseeker.username)
         user.delete()
         rp = ReservationPost.objects.filter(helpseeker=user)
@@ -136,13 +136,12 @@ class ReservationPostListDeleteTests(TestCase):
         donor = createdonor()
         helpseeker = creathelpseeker()
         donation_post = createdonation(donor)
-        reservation = ReservationPost(
+        ReservationPost(
             dropoff_time_request=1,
             post=donation_post,
             donor=donor,
             helpseeker=helpseeker,
         )
-        hs = reservation.helpseeker
         user = User.objects.get(username=helpseeker.username)
         user.delete()
         noti = Notification.objects.filter(sender=helpseeker)
