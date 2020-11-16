@@ -64,6 +64,4 @@ class Notification(models.Model):
     is_seen = models.BooleanField(default=False)
 
     tracker = FieldTracker()
-
-
 post_save.connect(ReservationPost.give_notifications, sender=ReservationPost)
