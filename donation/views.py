@@ -128,25 +128,21 @@ def getResourcePost(request):
     return JsonResponse(context)
 
 
-
-
 # funciton based view version of messagelistview
 def message_list_view(request):
     user = request.user
 
-    def filter_watchlist(post):
-        filtered = ResourcePost.objects.all().filter(resource_category=user.helpseekerprofile.rc_1)\
-             + ResourcePost.objects.all().filter(resource_category=user.helpseekerprofile.rc_2)\
-                  + ResourcePost.objects.all().filter(resource_category=user.helpseekerprofile.rc_3)
-        if post in filtered:
-            return True
-        else:
-            return False
-
-    post_list = ResourcePost.objects.all().filter(filter_watchlist).order_by("-date_created")
+    # https://stackoverflow.com/questions/64838254/making-multiple-filters-in-function-filter-django
+    post_list = ResourcePost.objects.filter(
+        resource_category__in=[
+            user.helpseekerprofile.rc_1,
+            user.helpseekerprofile.rc_2,
+            user.helpseekerprofile.rc_3,
+        ]
+    ).order_by("-date_created")
 
     page = request.GET.get("page", 1)
-    paginator = Paginator(post_list, 20)
+    paginator = Paginator(post_list, 5)
     try:
         posts = paginator.page(page)
     except PageNotAnInteger:
@@ -161,6 +157,7 @@ def message_list_view(request):
         "posts": posts,
     }
     return render(request, "donation/messages_home.html", context)
+
 
 # # class based view version of messagelistview
 # class MessageListView(ListView):
@@ -184,4 +181,3 @@ def message_list_view(request):
 #         context["mapbox_access_token"] = "pk." + os.environ.get("MAPBOX_KEY")
 #         context["timestamp_now"] = datetime.datetime.now()
 #         return context
-
