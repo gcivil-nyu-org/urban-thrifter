@@ -7,7 +7,8 @@ from donation.models import ResourcePost
 # from places.fields import PlacesField
 from django.urls import reverse
 from django.db.models.signals import post_save
-from model_utils import FieldTracker
+from django.http import HttpResponse
+from django.template import loader
 
 # Create your models here.
 class ReservationPost(models.Model):
@@ -63,5 +64,25 @@ class Notification(models.Model):
     date = models.DateTimeField(auto_now_add=True)
     is_seen = models.BooleanField(default=False)
 
-    tracker = FieldTracker()
+    __original_notificationstatus = None
+
+    def __init__(self, *args, **kwargs):
+        super(Notification, self).__init__(*args, **kwargs)
+        self.__original_notificationstatus = self.notificationstatus
+
+    def save(self, force_insert=False, force_update=False, *args, **kwargs):
+        if self.notificationstatus != self.__original_notificationstatus:
+            # name changed - do something here
+            print("hello")
+            template = loader.get_template("reservation/messages.html")
+
+            context = {
+                    "notification": self,
+                }
+
+            return HttpResponse(template.render(context))
+
+        super(Notification, self).save(force_insert, force_update, *args, **kwargs)
+        self.__original_notificationstatus = self.notificationstatus
+
 post_save.connect(ReservationPost.give_notifications, sender=ReservationPost)
