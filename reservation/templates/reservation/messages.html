@@ -1,6 +1,6 @@
 {% extends 'donation/base.html' %}
 {% block content %}
-{% if user.is_authenticated and user.donorprofile %}
+{% if user.is_authenticated and user.helpseekerprofile %}
 {% for notification in notifications %}
 
 <article class="card donation-card mb-2 animated fadeIn">
