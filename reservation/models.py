@@ -72,7 +72,13 @@ class Notification(models.Model):
 
     def save(self, force_insert=False, force_update=False, *args, **kwargs):
         if self.notificationstatus != self.__original_notificationstatus:
-            # name changed - do something here
+            # status changed 
+            if self.notificationstatus ==1:
+                self.msg="Reservation status changed to Accepted"
+            elif self.notificationstatus==2:
+                self.msg=="Reservation status changed to Denied"
+            else:
+                self.msg="Reservation pending"
             Notification.helpseeker_noti_objects.append(self)
             print("hello")
 
