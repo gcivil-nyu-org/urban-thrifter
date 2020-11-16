@@ -84,21 +84,4 @@ class Notification(models.Model):
         super(Notification, self).save(force_insert, force_update, *args, **kwargs)
         self.__original_notificationstatus = self.notificationstatus
 
-'''class NotificationHelpseeker(models.Model):
-    NOTIFICATION_STATUS = ((1, "ACCEPTED"), (2, "REJECTED"), (3, "CANCELLED"))
-
-    post = models.ForeignKey(
-        ReservationPost,
-        on_delete=models.CASCADE,
-        related_name="noti_post",
-        blank=True,
-        null=True,
-    )
-    notificationstatus = models.IntegerField(
-        choices=NOTIFICATION_STATUS, default=NOTIFICATION_STATUS[2][0]
-    )
-    date = models.DateTimeField(auto_now_add=True)
-    is_seen = models.BooleanField(default=False)
-'''
-
 post_save.connect(ReservationPost.give_notifications, sender=ReservationPost)
