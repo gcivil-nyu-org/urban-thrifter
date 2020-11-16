@@ -166,6 +166,18 @@ def show_notifications(request):
 
     return HttpResponse(template.render(context, request))
 
+def helpseeker_notifications(request):
+    # print(request.user.id)
+    sender = request.user
+    notifications = Notification.objects.filter(sender=sender).order_by("-date")
+    template = loader.get_template("reservation/messages.html")
+
+    context = {
+        "notifications": notifications,
+    }
+
+    return HttpResponse(template.render(context, request))
+
 
 @method_decorator(login_required, name="dispatch")
 class NotificationCheck(View):
