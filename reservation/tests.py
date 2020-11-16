@@ -114,3 +114,36 @@ class NotificationTests(TestCase):
             date=timezone.now(),
         )
         self.assertEqual(notification.notificationstatus, 3)
+
+class ReservationPostListDeleteTests(TestCase):
+    def test_delete_reservation_with_delete_helpseeker(self):
+        donor = createdonor()
+        helpseeker = creathelpseeker()
+        donation_post = createdonation(donor)
+        reservation = ReservationPost(
+            dropoff_time_request=1,
+            post=donation_post,
+            donor=donor,
+            helpseeker=helpseeker,
+        )
+        hs = reservation.helpseeker
+        user = User.objects.get(username=helpseeker.username)
+        user.delete()
+        rp = ReservationPost.objects.filter(helpseeker=user)
+        self.assertEqual(len(rp), 0)
+
+    def test_delete_notification_with_delete_helpseeker(self):
+        donor = createdonor()
+        helpseeker = creathelpseeker()
+        donation_post = createdonation(donor)
+        reservation = ReservationPost(
+            dropoff_time_request=1,
+            post=donation_post,
+            donor=donor,
+            helpseeker=helpseeker,
+        )
+        hs = reservation.helpseeker
+        user = User.objects.get(username=helpseeker.username)
+        user.delete()
+        noti = Notification.objects.filter(sender=helpseeker)
+        self.assertEqual(len(noti), 0)
