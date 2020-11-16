@@ -30,6 +30,14 @@
                     <p>{{ notification.post.dropoff_time_request }}</p>
                     <b>Dropoff Location:</b>
                     <p>{{ notification.post.post.dropoff_location.place }}</p>
+                    <b>Status:</b>
+                    {% if notification.notificationstatus == 1 %}
+                    <p>Accepted</p>
+                    {% elif notification.notificationstatus == 2 %}
+                    <p>Denied</p>
+                    {% else %}
+                    <p>Pending</p>
+                    {% endif %}
                 </div>
             </div>
         </div>
