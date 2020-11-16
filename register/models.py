@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 from places.fields import PlacesField
 from django.urls import reverse
+from django.utils import timezone
+
 
 
 class HelpseekerProfile(models.Model):
@@ -43,6 +45,7 @@ class HelpseekerProfile(models.Model):
         blank=True,
         null=True,
     )
+    message_timer_before = models.DateTimeField(default=timezone.now)
 
 
 class DonorProfile(models.Model):

@@ -6,7 +6,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse
 from django.contrib import messages
 import os
-import datetime
+from django.utils import timezone
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 # , UserPassesTestMixin
@@ -134,7 +134,7 @@ def message_list_view(request):
 
     # https://stackoverflow.com/questions/64838254/making-multiple-filters-in-function-filter-django
     post_list = ResourcePost.objects.filter(
-        resource_category__in=[
+        resource_category__in = [
             user.helpseekerprofile.rc_1,
             user.helpseekerprofile.rc_2,
             user.helpseekerprofile.rc_3,
@@ -150,10 +150,9 @@ def message_list_view(request):
     except EmptyPage:
         posts = paginator.page(paginator.num_pages)
 
-    timestamp_now = datetime.datetime.now()
     context = {
         "mapbox_access_token": "pk." + os.environ.get("MAPBOX_KEY"),
-        "timestamp": timestamp_now,
+        "timestamp": timezone.now,
         "posts": posts,
     }
     return render(request, "donation/messages_home.html", context)
