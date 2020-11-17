@@ -17,7 +17,7 @@
 					<div class="row text-center">
 						<div class="col">
 							<p>Title</p>
-							<p><a href="{% url 'donation:donation-detail' post.id %}">{{ post.title }}</a></p>
+							<p><a href="{% url 'reservation:reservation-request' post.id %}">{{ post.title }}</a></p>
 						</div>
 						<div class="col">
 							<p>Quantity</p>
@@ -43,11 +43,15 @@
 						</div>
 						<div class="col-5">
 							<p>Available Dropoff Time: </p>
-							<ul class="pl-3">
-								<li>{{ post.dropoff_time_1 | date:'F d, Y H:m'}}</li>
-								<li>{{ post.dropoff_time_2 | date:'F d, Y H:m'}}</li>
-								<li>{{ post.dropoff_time_3 | date:'F d, Y H:m'}}</li>
-							</ul>
+							<ul>
+                                <li>{{ post.dropoff_time_1 | date:'F d, Y H:m'}}</li>
+                                {% if post.dropoff_time_2 != None %}
+                                <li>{{ post.dropoff_time_2 | date:'F d, Y H:m'}}</li>
+                                {% endif %}
+                                {% if post.dropoff_time_3 != None %}
+                                <li>{{ post.dropoff_time_3 | date:'F d, Y H:m'}}</li>
+                                {% endif %}
+                            </ul>
 							<p>{{ post.dropoff_location.place}}</p>
 						</div>
 						<div class="col-5">

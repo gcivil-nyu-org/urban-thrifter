@@ -65,6 +65,7 @@ p, a, li, input, label, textarea {
 
 .form-control {
   height: 32px !important;
+  padding:.25rem .75rem;
 }
 
 textarea.form-control {
@@ -75,7 +76,6 @@ textarea.form-control {
 /********** Common Element *************/
 
 .btn {
-  height: 32px !important;
   padding: .25rem .75rem !important;
   font-size: 16px !important;
 }
@@ -95,7 +95,6 @@ textarea.form-control {
   border-radius: 5px;
   padding: .25rem .75rem;
   border: none;
-  height: 32px;
   vertical-align: center;
 }
 
@@ -205,7 +204,7 @@ select option:hover, select option:focus, select option:active {
   padding-left: 16px;
 }
 
-.side-bar a:hover:after, .side-bar a:active:after {
+.side-bar a:hover:after, .side-bar a.active:after {
   opacity: 1;
   right: 10px;
 }
@@ -318,7 +317,6 @@ a.article-title:hover {
   border: none;
   border-radius: 5px;
   padding: .25rem .75rem;
-  height: 32px;
 }
 
 .form-group textarea {
@@ -383,6 +381,10 @@ a.article-title:hover {
 
 .bootstrap-datetimepicker-widget {
   color: #333 !important;
+}
+
+#dropoff-location {
+  min-height: 450px;
 }
 
 /* Donation app style end */

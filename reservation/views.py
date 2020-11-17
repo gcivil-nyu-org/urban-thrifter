@@ -63,13 +63,19 @@ class ReservationPostListView(ListView):
     template_name = "reservation/reservation_list.html"
 
     # Set context_attribute to post object
-    context_object_name = "posts"
+    context_object_name = "reservation_posts"
 
     # Add ordering attribute to put most recent post to top
     ordering = ["-date_created"]
 
     # Add pagination
     paginate_by = 5
+
+    def get_context_data(self, **kwargs):
+        # user = self.request.user
+        context = super().get_context_data(**kwargs)
+        context["pending_posts"] = ReservationPost.objects.filter(helpseeker=user, status="Pending" or "PENDING")
+        return context
 
 
 def confirmation(request):

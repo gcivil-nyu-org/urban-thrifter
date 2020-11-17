@@ -58,10 +58,14 @@
                         </div>
                         <div class="col-5">
                             <p>Available Dropoff Time: </p>
-                            <ul class="pl-3">
+                            <ul>
                                 <li>{{ post.dropoff_time_1 | date:'F d, Y H:m'}}</li>
+                                {% if post.dropoff_time_2 != None %}
                                 <li>{{ post.dropoff_time_2 | date:'F d, Y H:m'}}</li>
+                                {% endif %}
+                                {% if post.dropoff_time_3 != None %}
                                 <li>{{ post.dropoff_time_3 | date:'F d, Y H:m'}}</li>
+                                {% endif %}
                             </ul>
                             <p>{{ post.dropoff_location.place}}</p>
                         </div>
@@ -131,10 +135,14 @@
                         </div>
                         <div class="col-5">
                             <p>Available Dropoff Time: </p>
-                            <ul class="pl-3">
+                            <ul>
                                 <li>{{ post.dropoff_time_1 | date:'F d, Y H:m'}}</li>
+                                {% if post.dropoff_time_2 != None %}
                                 <li>{{ post.dropoff_time_2 | date:'F d, Y H:m'}}</li>
+                                {% endif %}
+                                {% if post.dropoff_time_3 != None %}
                                 <li>{{ post.dropoff_time_3 | date:'F d, Y H:m'}}</li>
+                                {% endif %}
                             </ul>
                             <p>{{ post.dropoff_location.place}}</p>
                         </div>
