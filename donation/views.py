@@ -7,6 +7,7 @@ from django.http import JsonResponse
 from django.contrib import messages
 import os
 from django.utils import timezone
+from datetime import date, timedelta
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 # , UserPassesTestMixin
@@ -132,8 +133,11 @@ def getResourcePost(request):
 def message_list_view(request):
     user = request.user
 
-    timestamp_interval = [user.helpseekerprofile.message_timer_before, timezone.now]
-    user.helpseekerprofile.message_timer_before = timezone.now
+    time_now = timezone.now()
+    timestamp_interval = [user.helpseekerprofile.message_timer_before, time_now]
+    user.helpseekerprofile.message_timer_before = time_now
+    # https://stackoverflow.com/questions/53146840/change-model-field-value-after-button-click/53147979
+    user.helpseekerprofile.save(update_fields=["message_timer_before"])
     
     # https://stackoverflow.com/questions/64838254/making-multiple-filters-in-function-filter-django
     post_list = ResourcePost.objects.filter(
