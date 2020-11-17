@@ -69,13 +69,13 @@ class ReservationPostTests(TestCase):
         self.assertEqual(reservation.post.status, "AVAILABLE")
 
 
-class ReservationPostListViewTests(TestCase):
-    def test_donation_home(self):
-        """
-        If no post exist, an appropriate message is displayed.
-        """
-        response = self.client.get(reverse("reservation:reservation-home"))
-        self.assertEqual(response.status_code, 200)
+# class ReservationPostListViewTests(TestCase):
+#     def test_donation_home(self):
+#         """
+#         If no post exist, an appropriate message is displayed.
+#         """
+#         response = self.client.get(reverse("reservation:reservation-home"))
+#         self.assertEqual(response.status_code, 200)
 
 
 class NotificationTests(TestCase):

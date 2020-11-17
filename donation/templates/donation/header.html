@@ -34,14 +34,11 @@
           {% else %}
           <a class="nav-item nav-link" href="/admin"><i class="fas fa-user-circle"></i></a>
           <a class="nav-item nav-link" href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i></a>
-
           {% endif %}
-
           {% else %}
           <a class="nav-item nav-link" href="{% url 'login' %}"><i class="fas fa-sign-in-alt"></i></a>
           <a class="nav-item nav-link" href="{% url 'register:register' %}"><i class="fas fa-user-plus"></i></a>
           {% endif %}
-
         </div>
       </div>
     </div>
