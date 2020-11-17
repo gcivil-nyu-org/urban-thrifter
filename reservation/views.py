@@ -168,7 +168,7 @@ def show_notifications(request):
 
 def helpseeker_notifications(request):
     # print(request.user.id)
-    notifications = Notification.objects.filter(sender=request.user).order_by("-date")
+    notifications = Notification.objects.filter(receiver=request.user).order_by("-date")
     template = loader.get_template("reservation/messages.html")
 
     context = {
@@ -186,3 +186,4 @@ class NotificationCheck(View):
         return HttpResponse(
             Notification.objects.filter(is_seen=False, receiver=request.user).count()
         )
+        

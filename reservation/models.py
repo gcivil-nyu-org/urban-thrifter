@@ -62,7 +62,6 @@ class Notification(models.Model):
     )
     date = models.DateTimeField(auto_now_add=True)
     is_seen = models.BooleanField(default=False)
-    msg=models.CharField(blank=True, null=True, max_length=50)
     __original_notificationstatus = None
 
     def __init__(self, *args, **kwargs):
@@ -72,10 +71,17 @@ class Notification(models.Model):
     def save(self, force_insert=False, force_update=False, *args, **kwargs):
         if self.notificationstatus != self.__original_notificationstatus:
             # status changed 
-            if self.notificationstatus ==1:
-                self.msg="Reservation status changed to accepted."
-            elif self.notificationstatus==2:
-                self.msg=="Reservation status changed to denied."
+            reservation_post = self.post
+            helpseeker = self.sender
+            donor = self.receiver
+            notification_status = self.notificationstatus
+            notify = Notification(
+                post=reservation_post, 
+                sender=donor, 
+                receiver=helpseeker, 
+                notificationstatus=notification_status
+            )
+            notify.save()
 
         super(Notification, self).save(force_insert, force_update, *args, **kwargs)
         self.__original_notificationstatus = self.notificationstatus
