@@ -21,19 +21,19 @@
           <div class="row text-center">
             <div class="col">
               <p>Title</p>
-              <p><a href="{% url 'reservation:reservation-detail' post.id %}">{{ post.title }}</a></p>
+              <p><a href="{% url 'reservation:reservation-detail' post.id %}">{{ post.post.title }}</a></p>
             </div>
             <div class="col">
               <p>Quantity</p>
-              <p>{{ post.quantity }}</p>
+              <p>{{ post.post.quantity }}</p>
             </div>
             <div class="col">
               <p>Category</p>
-              <p>{{ post.resource_category }}</p>
+              <p>{{ post.post.resource_category }}</p>
             </div>
             <div class="col">
               <p>Status</p>
-              <p>{{ post.status }}</p>
+              <p>{{ post.post.status }}</p>
             </div>
           </div>
         </div>
@@ -42,13 +42,13 @@
         <div class='container'>
           <div class="row">
             <div class="col-2">
-              <p class="article-img img-circle"><img class="img-thumbnail" src='{{post.image.url}}'></i>
+              <p class="article-img img-circle"><img class="img-thumbnail" src='{{post.post.image.url}}'></i>
               </p>
             </div>
             <div class="col-5">
               <p>Request Pickup Time: </p>
               <p>{{ post.dropoff_time_request | date:'F d, Y H:m'}}</p>
-              <p>{{ post.dropoff_location.place}}</p>
+              <p>{{ post.post.dropoff_location.place}}</p>
             </div>
             <div class="col-5">
               <button class='btn btn-outline-dark btn-wide mb-1 float-right'>Edit</button>
@@ -123,19 +123,19 @@
           <div class="row text-center">
             <div class="col">
               <p>Title</p>
-              <p><a href="{% url 'reservation:reservation-detail' post.id %}">{{ post.title }}</a></p>
+              <p><a href="{% url 'reservation:reservation-detail' post.id %}">{{ post.post.title }}</a></p>
             </div>
             <div class="col">
               <p>Quantity</p>
-              <p>{{ post.quantity }}</p>
+              <p>{{ post.post.quantity }}</p>
             </div>
             <div class="col">
               <p>Category</p>
-              <p>{{ post.resource_category }}</p>
+              <p>{{ post.post.resource_category }}</p>
             </div>
             <div class="col">
               <p>Status</p>
-              <p>{{ post.status }}</p>
+              <p>{{ post.post.status }}</p>
             </div>
           </div>
         </div>
@@ -144,13 +144,13 @@
         <div class='container'>
           <div class="row">
             <div class="col-2">
-              <p class="article-img img-circle"><img class="img-thumbnail" src='{{post.image.url}}'></i>
+              <p class="article-img img-circle"><img class="img-thumbnail" src='{{post.post.image.url}}'></i>
               </p>
             </div>
             <div class="col-5">
               <p>Request Pickup Time: </p>
-              <p>{{ post.dropoff_time_request | date:'F d, Y H:m'}}</p>
-              <p>{{ post.dropoff_location.place}}</p>
+              <p>{{ post.post.dropoff_time_request | date:'F d, Y H:m'}}</p>
+              <p>{{ post.post.dropoff_location.place}}</p>
             </div>
             <div class="col-5">
               <button class='btn btn-warning mb-1 btn-wide float-right'><a

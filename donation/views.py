@@ -28,14 +28,14 @@ def home(request):
     reserved_donation_posts = post_list.filter(status__in=["Reserved", "RESERVED"])
     available_donation_posts = post_list.filter(status__in=["Available", "AVAILABLE"])
     closed_donation_posts = post_list.filter(status__in=["Closed", "CLOSED"])
-    page = request.GET.get("page", 1)
-    paginator = Paginator(post_list, 3)
-    try:
-        post_list = paginator.page(page)
-    except PageNotAnInteger:
-        post_list = paginator.page(1)
-    except EmptyPage:
-        post_list = paginator.page(paginator.num_pages)
+    # page = request.GET.get("page", 1)
+    # paginator = Paginator(post_list, 3)
+    # try:
+    #     post_list = paginator.page(page)
+    # except PageNotAnInteger:
+    #     post_list = paginator.page(1)
+    # except EmptyPage:
+    #     post_list = paginator.page(paginator.num_pages)
     user = request.user
     context = {
         "reserved_donation_posts": reserved_donation_posts,
