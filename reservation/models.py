@@ -63,7 +63,7 @@ class Notification(models.Model):
     )
     date = models.DateTimeField(auto_now_add=True)
     is_seen = models.BooleanField(default=False)
-    msg=models.CharField(default="Hi",blank=True, null=True, max_length=50)
+    msg=models.CharField(blank=True, null=True, max_length=50)
     __original_notificationstatus = None
 
     def __init__(self, *args, **kwargs):
@@ -74,9 +74,9 @@ class Notification(models.Model):
         if self.notificationstatus != self.__original_notificationstatus:
             # status changed 
             if self.notificationstatus ==1:
-                self.msg="Reservation status changed to Accepted"
+                self.msg="Reservation status changed to accepted"
             elif self.notificationstatus==2:
-                self.msg=="Reservation status changed to Denied"
+                self.msg=="Reservation status changed to denied"
             else:
                 self.msg="Reservation pending"
             Notification.helpseeker_noti_objects.append(self)
