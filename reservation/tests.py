@@ -5,7 +5,8 @@ from donation.models import ResourcePost
 from register.models import DonorProfile, HelpseekerProfile
 from reservation.models import Notification
 from django.contrib.auth.models import User
-from django.urls import reverse
+
+# from django.urls import reverse
 from django.utils import timezone
 
 

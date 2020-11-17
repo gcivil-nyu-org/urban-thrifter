@@ -411,6 +411,13 @@ a.article-title:hover {
   background-color: #bee5eb !important;
 }
 
+.read-button:hover .unread,
+.read-button .read {
+    display: none;
+}
+.read-button:hover .read {
+    display: inline;
+}
 /* Reservation app style end */
 
 /* Map app style */

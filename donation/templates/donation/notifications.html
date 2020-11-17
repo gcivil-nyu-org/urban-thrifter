@@ -13,6 +13,7 @@
                             <b>{{ notification.post.post.title}}</b>
                         </a>
                         * {{ notification.post.post.quantity}}</p>
+                    <!-- <span class="float-right"><i class="fas fa-check-circle" style="color:green"></i></span> -->
                 </div>
             </div>
         </div>
@@ -42,7 +43,7 @@
                         <p class="btn btn-wide btn-success float-right">Accepted</p>
                         {% else %}
                         <b class="article-content">Status: </b>
-                        <p>Denied</p>
+                        <p class="btn btn-wide btn-danger float-right">Denied</p>
                         {% endif %}
                     </form>
                 </div>

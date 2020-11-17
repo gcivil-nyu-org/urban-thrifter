@@ -25,29 +25,22 @@ def homepage(request):
 def home(request):
     user = request.user
     post_list = ResourcePost.objects.filter(donor=user).order_by("-date_created")
-    reserved_donation_posts = post_list.filter(
-        status__in=["Reserved", "RESERVED"]
-    )
-    available_donation_posts = post_list.filter(
-        status__in=["Available", "AVAILABLE"]
-    )
-    closed_donation_posts = post_list.filter(
-        status__in=["Closed", "CLOSED"]
-    )
+    reserved_donation_posts = post_list.filter(status__in=["Reserved", "RESERVED"])
+    available_donation_posts = post_list.filter(status__in=["Available", "AVAILABLE"])
+    closed_donation_posts = post_list.filter(status__in=["Closed", "CLOSED"])
     page = request.GET.get("page", 1)
     paginator = Paginator(post_list, 3)
     try:
-        posts = paginator.page(page)
+        post_list = paginator.page(page)
     except PageNotAnInteger:
-        posts = paginator.page(1)
+        post_list = paginator.page(1)
     except EmptyPage:
-        posts = paginator.page(paginator.num_pages)
-
+        post_list = paginator.page(paginator.num_pages)
     user = request.user
     context = {
         "reserved_donation_posts": reserved_donation_posts,
         "available_donation_posts": available_donation_posts,
-        "closed_donation_posts": closed_donation_posts
+        "closed_donation_posts": closed_donation_posts,
     }
 
     return render(request, "donation/reservation_status_nav.html", context)
