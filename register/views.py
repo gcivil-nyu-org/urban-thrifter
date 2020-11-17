@@ -158,6 +158,19 @@ class DonorUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
         return get_object_or_404(DonorProfile, user__username__iexact=username)
 
 
+def delete_profile(request):
+    user = request.user
+    try:
+        user.delete()
+        messages.success(request, "Account deleted successfully.")
+        return redirect("/")
+    except Exception:
+        messages.error(
+            request, "Your profile deletion was unsuccessful. Please try again!"
+        )
+        return HttpResponseRedirect(request.META.get("HTTP_REFERER"))
+
+
 def bad_request(request, exception):
     response = render(request, "register/errorpage/error.html")
     response.status_code = 400
