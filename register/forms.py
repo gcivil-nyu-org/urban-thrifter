@@ -3,8 +3,8 @@ from django.contrib.auth.models import User
 from .models import HelpseekerProfile
 from django.core.exceptions import ValidationError
 from django.contrib.auth.forms import UserCreationForm
-from crispy_forms.layout import Layout, Field
 
+# from crispy_forms.layout import Layout, Field
 # from django.contrib.auth.forms import AuthenticationForm
 from crispy_forms.helper import FormHelper
 
@@ -27,24 +27,28 @@ RESOURCE_CATEGORY_CHOICES = [
 class HelpseekerForm(UserCreationForm):
     username = forms.CharField(
         label="",
-        min_length=4, max_length=50, required=True,
-        widget=forms.TextInput(attrs={'placeholder': 'Username*'})
+        min_length=4,
+        max_length=50,
+        required=True,
+        widget=forms.TextInput(attrs={"placeholder": "Username*"}),
     )
     email = forms.EmailField(
-        label="", max_length=60, required=True,
-        widget=forms.TextInput(attrs={'placeholder': 'Email*'})
-
+        label="",
+        max_length=60,
+        required=True,
+        widget=forms.TextInput(attrs={"placeholder": "Email*"}),
     )
     password1 = forms.CharField(
         label="",
-        max_length=30, required=True,
-        widget=forms.PasswordInput(attrs={'placeholder': 'Password*'})
+        max_length=30,
+        required=True,
+        widget=forms.PasswordInput(attrs={"placeholder": "Password*"}),
     )
     password2 = forms.CharField(
         label="",
         max_length=30,
-        widget=forms.PasswordInput(attrs={'placeholder': 'Confirm Password*'}),
-        required=True
+        widget=forms.PasswordInput(attrs={"placeholder": "Confirm Password*"}),
+        required=True,
     )
     borough = forms.CharField(
         label="Borough",
@@ -81,22 +85,29 @@ class HelpseekerForm(UserCreationForm):
 
 class DonorForm(UserCreationForm):
     username = forms.CharField(
-        label="", min_length=4, max_length=50, required=True,
-        widget=forms.TextInput(attrs={'placeholder': 'Username*'})
+        label="",
+        min_length=4,
+        max_length=50,
+        required=True,
+        widget=forms.TextInput(attrs={"placeholder": "Username*"}),
     )
     email = forms.EmailField(
-        label="", max_length=60, required=True,
-        widget=forms.TextInput(attrs={'placeholder': 'Email*'})
+        label="",
+        max_length=60,
+        required=True,
+        widget=forms.TextInput(attrs={"placeholder": "Email*"}),
     )
     password1 = forms.CharField(
         label="",
-        max_length=30, required=True,
-        widget=forms.PasswordInput(attrs={'placeholder': 'Password*'})
+        max_length=30,
+        required=True,
+        widget=forms.PasswordInput(attrs={"placeholder": "Password*"}),
     )
     password2 = forms.CharField(
         label="",
-        max_length=30, required=True,
-        widget=forms.PasswordInput(attrs={'placeholder': 'Confirm Password*'})
+        max_length=30,
+        required=True,
+        widget=forms.PasswordInput(attrs={"placeholder": "Confirm Password*"}),
     )
 
     def clean_email(self):

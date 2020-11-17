@@ -104,6 +104,11 @@ class PostDetailView(DetailView):
     # Basic detail view
     model = ResourcePost
 
+    def get_context_data(self, **kwargs):
+        context = super(PostDetailView, self).get_context_data(**kwargs)
+        context["mapbox_access_token"] = "pk." + os.environ.get("MAPBOX_KEY")
+        return context
+
 
 @login_required
 def getResourcePost(request):
@@ -149,7 +154,8 @@ def watchlist_view(request):
             user.helpseekerprofile.rc_1,
             user.helpseekerprofile.rc_2,
             user.helpseekerprofile.rc_3,
-        ]
+        ],
+        status__in=["AVAILABLE", "Available"],
     ).order_by("-date_created")
 
     new_post_list = post_list.filter(

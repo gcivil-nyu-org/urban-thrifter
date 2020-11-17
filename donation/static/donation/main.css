@@ -408,7 +408,7 @@ a.article-title:hover {
 /* Reservation app style */
 
 .new-watchlist-post {
-  background-color: #bee5eb;
+  background-color: #bee5eb !important;
 }
 
 /* Reservation app style end */

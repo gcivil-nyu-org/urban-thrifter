@@ -74,7 +74,10 @@ class ReservationPostListView(ListView):
     def get_context_data(self, **kwargs):
         # user = self.request.user
         context = super().get_context_data(**kwargs)
-        context["pending_posts"] = ReservationPost.objects.filter(helpseeker=user, status="Pending" or "PENDING")
+        context["pending_posts"] = ReservationPost.objects.filter(
+            helpseeker=self.request.user,
+            status__in=["Pending", "PENDING"],
+        )
         return context
 
 
