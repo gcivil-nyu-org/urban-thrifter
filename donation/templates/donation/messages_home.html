@@ -4,8 +4,7 @@
 {% if user.is_authenticated and user.helpseekerprofile %}
 
 <!-- for resource posts which are in the watchlist, show them here -->
-{% for post in resource_posts %}
-{% if post.resource_category == user.helpseekerprofile.rc_1 or post.resource_category == user.helpseekerprofile.rc_2 or post.resource_category == user.helpseekerprofile.rc_3 %}
+{% for post in posts %}
 <article class="card donation-card mb-2 animated fadeIn">
     <!-- <img class='rounded-circle article-img' src='{{ post.author.profile.image.url }}' > -->
     <div class="card-header">
@@ -60,8 +59,13 @@
     }
 
 </script>
-{% endif %}
 {% endfor %}
+
+<!-- pagination -->
+{% if posts.paginator.num_pages > 1 %}
+{% include 'donation/_pagination.html' with posts=posts %}
+{% endif %}
+<!-- pagination -->
 
 
 {% endif %}

@@ -79,24 +79,13 @@
         </article>
         {% endif %}
         {% endfor %}
-        <!-- Add Pagination Logic -->
-        {% if is_paginated %}
-        {% if page_obj.has_previous %}
-        <a class='btn btn-outline-info mb-4' href='?page=1'>First</a>
-        <a class='btn btn-outline-info mb-4' href='{{ page_obj.previous_page_number }}'> Prev </a>
-        {% endif %}
-        {% for page_num in page_obj.paginator.page_range %}
-        {% if page_obj.number == page_num%}
-        <a class='btn btn-info mb-4' href='?page={{ page_num }}'>{{ page_num }}</a>
-        {% elif page_num > page_obj.number|add:'-3' and page_num < page_obj.number|add:'3' %}
-        <a class='btn btn-outline-info mb-4' href='?page={{ page_num }}'>{{ page_num }}</a>
-        {% endif %}
-        {% endfor %}
-        {% if page_obj.has_next %}
-        <a class='btn btn-outline-info mb-4' href='?page={{ page_obj.next_page_number }}'> Next </a>
-        <a class='btn btn-outline-info mb-4' href='?page={{ page_obj.paginator.num_pages }}'>End</a>
-        {% endif %}
-        {% endif %}
+        <!-- pagination -->
+        <!-- {% if posts.paginator.num_pages > 1 %}
+        {% include 'donation/_pagination.html' with posts=posts %}
+        {% endif %} -->
+        <!-- pagination -->
+
+
         {% endif %}
     </div>
     <div class="tab-pane fade" id="pills-available" role="tabpanel" aria-labelledby="pills-available-tab">
@@ -156,24 +145,13 @@
         </article>
         {% endif %}
         {% endfor %}
-        <!-- Add Pagination Logic -->
-        {% if is_paginated %}
-        {% if page_obj.has_previous %}
-        <a class='btn btn-outline-info mb-4' href='?page=1'>First</a>
-        <a class='btn btn-outline-info mb-4' href='{{ page_obj.previous_page_number }}'> Prev </a>
-        {% endif %}
-        {% for page_num in page_obj.paginator.page_range %}
-        {% if page_obj.number == page_num%}
-        <a class='btn btn-info mb-4' href='?page={{ page_num }}'>{{ page_num }}</a>
-        {% elif page_num > page_obj.number|add:'-3' and page_num < page_obj.number|add:'3' %}
-        <a class='btn btn-outline-info mb-4' href='?page={{ page_num }}'>{{ page_num }}</a>
-        {% endif %}
-        {% endfor %}
-        {% if page_obj.has_next %}
-        <a class='btn btn-outline-info mb-4' href='?page={{ page_obj.next_page_number }}'> Next </a>
-        <a class='btn btn-outline-info mb-4' href='?page={{ page_obj.paginator.num_pages }}'>End</a>
-        {% endif %}
-        {% endif %}
+        <!-- pagination -->
+        <!-- {% if posts.paginator.num_pages > 1 %}
+        {% include 'donation/_pagination.html' with posts=posts %}
+        {% endif %} -->
+        <!-- pagination -->
+
+
     </div>
     <div class="tab-pane fade" id="pills-new" role="tabpanel" aria-labelledby="pills-new-tab">
         {% load crispy_forms_tags %}
