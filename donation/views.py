@@ -105,14 +105,16 @@ class PostDetailView(DetailView):
 
 
 def getResourcePost(request):
-    curr_user_rc_1 = request.user.helpseekerprofile.rc_1
-    curr_user_rc_2 = request.user.helpseekerprofile.rc_2
-    curr_user_rc_3 = request.user.helpseekerprofile.rc_3
+    user = request.user
+
+    curr_user_rc_1 = user.helpseekerprofile.rc_1
+    curr_user_rc_2 = user.helpseekerprofile.rc_2
+    curr_user_rc_3 = user.helpseekerprofile.rc_3
 
     posts = ResourcePost.objects.all()
     passingList = []
     for post in posts:
-        if post.date_created >= request.user.helpseekerprofile.message_timer_before \
+        if post.date_created >= user.helpseekerprofile.message_timer_before \
         and (post.resource_category == curr_user_rc_1
              or post.resource_category == curr_user_rc_2
              or post.resource_category == curr_user_rc_3):
