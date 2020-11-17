@@ -15,7 +15,8 @@
             <div class='container'>
                 <div class="row pt-2 pb-2 pl-4">
                     {% if post in new_posts %}
-                    <p><i class="fas fa-star" style="color:#0c5460;"></i> New watchlist item in {{ post.resource_category }}</p>
+                    <p><i class="fas fa-star" style="color:#0c5460;"></i> New watchlist item in
+                        {{ post.resource_category }}</p>
                     {% else %}
                     <p><i class="far fa-star"></i> Watchlist item in {{ post.resource_category }}</p>
                     {% endif %}
@@ -67,6 +68,8 @@
     }
 
 </script>
+{% empty %}
+<div class="mt-3 alert alert-info text-center">There has not been any new donation listed in your watchlist categories yet.</div>
 {% endfor %}
 
 <!-- pagination -->
