@@ -6,6 +6,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse
 from django.contrib import messages
 import os
+from django.utils import timezone
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 # , UserPassesTestMixin
 
@@ -20,9 +22,20 @@ def homepage(request):
 
 def home(request):
     user = request.user
-    context = {"posts": ResourcePost.objects.filter(donor=user)}
+    post_list = ResourcePost.objects.filter(donor=user)
+    # .order_by("-date_created")
 
-    # context is the argument pass into the html
+    page = request.GET.get("page", 1)
+    paginator = Paginator(post_list, 3)
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        posts = paginator.page(1)
+    except EmptyPage:
+        posts = paginator.page(paginator.num_pages)
+
+    user = request.user
+    context = {"posts": posts}
 
     return render(request, "donation/reservation_status_nav.html", context)
 
@@ -91,14 +104,16 @@ class PostDetailView(DetailView):
 
 
 def getResourcePost(request):
-    curr_user_rc_1 = request.user.helpseekerprofile.rc_1
-    curr_user_rc_2 = request.user.helpseekerprofile.rc_2
-    curr_user_rc_3 = request.user.helpseekerprofile.rc_3
+    user = request.user
+
+    curr_user_rc_1 = user.helpseekerprofile.rc_1
+    curr_user_rc_2 = user.helpseekerprofile.rc_2
+    curr_user_rc_3 = user.helpseekerprofile.rc_3
 
     posts = ResourcePost.objects.all()
     passingList = []
     for post in posts:
-        if (
+        if post.date_created >= user.helpseekerprofile.message_timer_before and (
             post.resource_category == curr_user_rc_1
             or post.resource_category == curr_user_rc_2
             or post.resource_category == curr_user_rc_3
@@ -115,23 +130,65 @@ def getResourcePost(request):
     return JsonResponse(context)
 
 
-class MessageListView(ListView):
-    # Basic list view
-    model = ResourcePost
-    # Assign tempalte otherwise it would look for post_list.html
-    # as default template
-    template_name = "donation/messages_home.html"
+# funciton based view version of messagelistview
+def message_list_view(request):
+    user = request.user
 
-    # Set context_attribute to post object
-    context_object_name = "resource_posts"
+    time_now = timezone.now()
+    timestamp_interval = [user.helpseekerprofile.message_timer_before, time_now]
+    user.helpseekerprofile.message_timer_before = time_now
+    # https://stackoverflow.com/questions/53146840/change-model-field-value-after-button-click/53147979
+    user.helpseekerprofile.save(update_fields=["message_timer_before"])
 
-    # Add ordering attribute to put most recent post to top
-    ordering = ["-date_created"]
+    # https://stackoverflow.com/questions/64838254/making-multiple-filters-in-function-filter-django
+    post_list = ResourcePost.objects.filter(
+        resource_category__in=[
+            user.helpseekerprofile.rc_1,
+            user.helpseekerprofile.rc_2,
+            user.helpseekerprofile.rc_3,
+        ]
+    ).order_by("-date_created")
 
-    # Add pagination
-    paginate_by = 20
+    post_list = post_list.filter(
+        date_created__gte=timestamp_interval[0], date_created__lte=timestamp_interval[1]
+    )
 
-    def get_context_data(self, **kwargs):
-        context = super(MessageListView, self).get_context_data(**kwargs)
-        context["mapbox_access_token"] = "pk." + os.environ.get("MAPBOX_KEY")
-        return context
+    page = request.GET.get("page", 1)
+    paginator = Paginator(post_list, 5)
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        posts = paginator.page(1)
+    except EmptyPage:
+        posts = paginator.page(paginator.num_pages)
+
+    context = {
+        "mapbox_access_token": "pk." + os.environ.get("MAPBOX_KEY"),
+        "timestamp_interval": timestamp_interval,
+        "posts": posts,
+    }
+    return render(request, "donation/messages_home.html", context)
+
+
+# # class based view version of messagelistview
+# class MessageListView(ListView):
+#     # Basic list view
+#     model = ResourcePost
+#     # Assign tempalte otherwise it would look for post_list.html
+#     # as default template
+#     template_name = "donation/messages_home.html"
+
+#     # Set context_attribute to post object
+#     context_object_name = "resource_posts"
+
+#     # Add ordering attribute to put most recent post to top
+#     ordering = ["-date_created"]
+
+#     # Add pagination
+#     paginate_by = 3
+
+#     def get_context_data(self, **kwargs):
+#         context = super(MessageListView, self).get_context_data(**kwargs)
+#         context["mapbox_access_token"] = "pk." + os.environ.get("MAPBOX_KEY")
+#         context["timestamp_now"] = datetime.datetime.now()
+#         return context
