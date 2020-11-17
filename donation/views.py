@@ -7,7 +7,6 @@ from django.http import JsonResponse
 from django.contrib import messages
 import os
 from django.utils import timezone
-from datetime import date, timedelta
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 # , UserPassesTestMixin
@@ -114,10 +113,11 @@ def getResourcePost(request):
     posts = ResourcePost.objects.all()
     passingList = []
     for post in posts:
-        if post.date_created >= user.helpseekerprofile.message_timer_before \
-        and (post.resource_category == curr_user_rc_1
-             or post.resource_category == curr_user_rc_2
-             or post.resource_category == curr_user_rc_3):
+        if post.date_created >= user.helpseekerprofile.message_timer_before and (
+            post.resource_category == curr_user_rc_1
+            or post.resource_category == curr_user_rc_2
+            or post.resource_category == curr_user_rc_3
+        ):
             # sending id, title, description, because mabye we can use it to make a message popup
             notiPost = {
                 "id": post.id,

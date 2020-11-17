@@ -5,7 +5,6 @@ from django.urls import reverse
 from django.utils import timezone
 
 
-
 class HelpseekerProfile(models.Model):
     BOROUGH_CHOICES = [
         ("MAN", "Manhattan"),
