@@ -10,7 +10,10 @@
             <div class="row">
                 <div class="col pl-4 pb-2 pt-2">
                     <p><i class="fas fa-box-open"></i> <b>{{ notification.sender }}</b> just requested your
-                        <b>{{ notification.post.post.title}}</b> * {{ notification.post.post.quantity}}</p>
+                        <a href="{% url 'donation:donation-detail' notification.post.post.id %}">
+                            <b>{{ notification.post.post.title}}</b>
+                        </a>
+                        * {{ notification.post.post.quantity}}</p>
                 </div>
             </div>
         </div>

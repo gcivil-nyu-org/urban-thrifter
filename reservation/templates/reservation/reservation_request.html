@@ -39,13 +39,13 @@
                 <label class="graybox" for="dropoff_time_1">{{ object.dropoff_time_1 }}</label>
                 {% if object.dropoff_time_2 != None %}
                 <input type="radio" id="dropoff_time_2" name="dropoff_time" value=2>
-                <label for="dropoff_time_2">{{ object.dropoff_time_2 }}</label>
+                <label class="graybox" for="dropoff_time_2">{{ object.dropoff_time_2 }}</label>
                 {% endif %}
                 {% if object.dropoff_time_3 != None %}
                 <input type="radio" id="dropoff_time_3" name="dropoff_time" value=3>
-                <label for="dropoff_time_3">{{ object.dropoff_time_3 }}</label>
+                <label class="graybox" for="dropoff_time_3">{{ object.dropoff_time_3 }}</label>
                 {% endif %}
-                <p><button class="mt-3 btn btn-dark btn-wide" type="submit">Reserve</button></p>
+                <div class="text-center"><button class="mt-3 btn btn-dark btn-wide" type="submit">Reserve</button></div>
             </form>
         </div>
     </div>

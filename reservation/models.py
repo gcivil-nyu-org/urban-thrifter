@@ -21,8 +21,8 @@ class ReservationPost(models.Model):
 
     # TODO: generate reservation ID token as primary key?
     # TODO: return reservation ID in __str__
-    # def __str__(self):
-    # return self.title
+    def __str__(self):
+        return str(self.post.title)+" for " + str(self.helpseeker.username)
 
     def give_notifications(sender, instance, *args, **kwargs):
         reservationpost = instance
@@ -62,6 +62,11 @@ class Notification(models.Model):
     )
     date = models.DateTimeField(auto_now_add=True)
     is_seen = models.BooleanField(default=False)
+
+    def __str__(self):
+        return str(self.sender.username) + " to " + \
+            str(self.receiver.username) + " for " + \
+            str(self.post.post.title)
 
     """def get_unseen_messages_status(self):
         notifications = Notification.objects.all()

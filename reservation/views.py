@@ -32,6 +32,19 @@ def donation_post_list(request):
     else:
         post_list = ResourcePost.objects.all().order_by("-date_created")
 
+    reservation_list = ReservationPost.objects.filter(
+        helpseeker=request.user
+    )
+    reservation_reserved_list = reservation_list.filter(
+        post__status__in=["Reserved", "RESERVED"]
+    )
+    reservation_pending_list = reservation_list.filter(
+        post__status__in=["Pending", "PENDING"]
+    )
+    reservation_closed_list = reservation_list.filter(
+        post__status__in=["Closed", "CLOSED"]
+    )
+    # print(reservation_list.first().post.title)
     # Paginator
     page = request.GET.get("page", 1)
     paginator = Paginator(post_list, 5)
@@ -51,34 +64,53 @@ def donation_post_list(request):
         return JsonResponse(data=data_dict, safe=False)
 
     return render(
-        request, "reservation/reservation_home.html", {"posts": posts, "first": "True"}
+        request, "reservation/reservation_home.html", {
+            "posts": posts,
+            "first": "True",
+            "reservation_reserved_posts": reservation_reserved_list,
+            "reservation_pending_posts": reservation_pending_list,
+            "reservation_closed_posts": reservation_closed_list,
+        }
     )
 
 
-class ReservationPostListView(ListView):
-    # Basic list view
-    model = ReservationPost
-    # Assign tempalte otherwise it would look for post_list.html
-    # as default template
-    template_name = "reservation/reservation_list.html"
+# def reservation_post_list(request):
+#     # Getting posts based on filters or getting all posts
+#     url_parameter = request.GET.get("q")
+#     if url_parameter:
+#         reservation_list = ReservationPost.objects.filter(
+#             title__icontains=url_parameter
+#         ).order_by("-date_created")
+#     else:
+#         reservation_list = ReservationPost.objects.all().order_by("-date_created")
+#     return render(
+#         request, "reservation/reservation_list.html",
+#         {"reservation_posts": reservation_list, "test": "hello"}
+#     )
+# class ReservationPostListView(ListView):
+    # # Basic list view
+    # model = ReservationPost
+    # # Assign tempalte otherwise it would look for post_list.html
+    # # as default template
+    # template_name = "reservation/reservation_list.html"
 
-    # Set context_attribute to post object
-    context_object_name = "reservation_posts"
+    # # Set context_attribute to post object
+    # context_object_name = "reservation_posts"
 
-    # Add ordering attribute to put most recent post to top
-    ordering = ["-date_created"]
+    # # Add ordering attribute to put most recent post to top
+    # ordering = ["-date_created"]
 
-    # Add pagination
-    paginate_by = 5
+    # # Add pagination
+    # paginate_by = 5
 
-    def get_context_data(self, **kwargs):
-        # user = self.request.user
-        context = super().get_context_data(**kwargs)
-        context["pending_posts"] = ReservationPost.objects.filter(
-            helpseeker=self.request.user,
-            status__in=["Pending", "PENDING"],
-        )
-        return context
+    # def get_context_data(self, **kwargs):
+    #     # user = self.request.user
+    #     context = super().get_context_data(**kwargs)
+    #     context["pending_posts"] = ReservationPost.objects.filter(
+    #         helpseeker=self.request.user,
+    #         status__in=["Pending", "PENDING"],
+    #     )
+    #     return context
 
 
 def confirmation(request):
