@@ -8,6 +8,8 @@ from django.contrib import messages
 import os
 from django.utils import timezone
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.contrib.auth.decorators import login_required
+
 
 # , UserPassesTestMixin
 
@@ -103,6 +105,7 @@ class PostDetailView(DetailView):
     model = ResourcePost
 
 
+@login_required
 def getResourcePost(request):
     user = request.user
 
@@ -131,7 +134,7 @@ def getResourcePost(request):
 
 
 # funciton based view version of messagelistview
-def message_list_view(request):
+def watchlist_view(request):
     user = request.user
 
     time_now = timezone.now()
@@ -149,7 +152,7 @@ def message_list_view(request):
         ]
     ).order_by("-date_created")
 
-    post_list = post_list.filter(
+    new_post_list = post_list.filter(
         date_created__gte=timestamp_interval[0], date_created__lte=timestamp_interval[1]
     )
 
@@ -166,6 +169,7 @@ def message_list_view(request):
         "mapbox_access_token": "pk." + os.environ.get("MAPBOX_KEY"),
         "timestamp_interval": timestamp_interval,
         "posts": posts,
+        "new_posts": new_post_list,
     }
     return render(request, "donation/messages_home.html", context)
 

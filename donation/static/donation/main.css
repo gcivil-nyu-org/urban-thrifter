@@ -156,6 +156,12 @@ select option:hover, select option:focus, select option:active {
   background: #b3b3b3
 }
 
+.modal {
+  top: 20% !important;
+}
+
+/* site header */
+
 .site-header {
   height: 86px;
 }
@@ -240,7 +246,11 @@ select option:hover, select option:focus, select option:active {
   margin-left: 5px;
   display: inline-block;
   color: #fff;
-  font-size: 14px;
+  font-size: 13px;
+}
+
+#display:hover .message-number {
+  background-color: #f8d7da;
 }
 
 .message-map {
@@ -396,6 +406,10 @@ a.article-title:hover {
 /* Donation app style end */
 
 /* Reservation app style */
+
+.new-watchlist-post {
+  background-color: #bee5eb;
+}
 
 /* Reservation app style end */
 

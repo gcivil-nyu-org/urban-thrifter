@@ -24,7 +24,7 @@
           <a class="nav-item nav-link" href="{% url 'donation:donation-home' %}"><i class="fas fa-box-open"></i></a>
           <a class="nav-item nav-link" href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i></a>
           {% elif user.helpseekerprofile %}
-          <a id="display" class="nav-item nav-link" href="/messages"><i class="fas fa-bell"></i></a>
+          <a id="display" class="nav-item nav-link" href="{% url 'watchlist-home' %}"><i class="fas fa-bell"></i></a>
           <a class="nav-item nav-link" href="{% url 'register:helpseeker-profile' %}"><i
               class="fas fa-user-circle"></i></a>
           <a class="nav-item nav-link" href="{% url 'main-map' %}"><i class="fas fa-map-marker-alt"></i></a>
@@ -61,7 +61,9 @@
           for (i = 0; i < response.resource_posts.length; i++) {
             postCounter += 1
           }
-          $("#display").append('<span class="message-number">' + postCounter + '</span>')
+          if (postCounter > 0) {
+            $("#display").append('<span class="message-number">' + postCounter + '</span>')
+          }
         },
         error: function (response) {
           console.log("No DATA FOUND")
@@ -73,17 +75,17 @@
 {% endif %}
 {% if user.donorprofile %}
 <script type="text/javascript">
-    var ajaxLink = "{% url 'reservation:ajax-notification' %}";
-    setInterval(function () {
-        $.get(ajaxLink, function (data) {
-            if (data == 0) {
-                $("#donor-notification").html("<i class='fas fa-envelope'></i>");
+  var ajaxLink = "{% url 'reservation:ajax-notification' %}";
+  setInterval(function () {
+    $.get(ajaxLink, function (data) {
+      if (data == 0) {
+        $("#donor-notification").html("<i class='fas fa-envelope'></i>");
 
-            } else {
-                $("#donor-notification").html("<i class='fas fa-envelope-open-text'></i><span class='message-number'>" + data +
-                    "</span>");
-            }
-        });
-    }, 1000 * 2); // check notification every 2 seconds
+      } else {
+        $("#donor-notification").html("<i class='fas fa-envelope-open-text'></i><span class='message-number'>" + data +
+          "</span>");
+      }
+    });
+  }, 1000 * 2); // check notification every 2 seconds
 </script>
 {% endif %}

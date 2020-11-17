@@ -84,8 +84,9 @@
 								class="btn btn-dark btn-wide animated fadeInUp">Start your donation!</a>
 							{% elif user.helpseekerprofile %}
 							<a href="{% url 'main-map' %}" rel="nofollow"
-								class="btn btn-dark btn-wide animated fadeInUp">Checkout what we
-								have!</a>
+								class="btn btn-dark btn-wide animated fadeInUp">Checkout resource map!</a>
+							<a href="{% url 'reservation:reservation-home' %}" rel="nofollow"
+								class="btn btn-dark btn-wide animated fadeInUp">See what we have!</a>
 							{% else %}
 							<a href="/admin" rel="nofollow" class="btn btn-dark btn-wide animated fadeInUp">Go to
 								admin</a>
