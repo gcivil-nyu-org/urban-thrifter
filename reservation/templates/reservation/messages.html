@@ -33,9 +33,15 @@
                     {% endif %}
                 </div>
 				<div class="col-5">
-				{% csrf_token %}
-				<button name="read" class="btn btn-outline-success btn-wide mb-1 float-right"
-					type="submit">Mark As Read</button>
+					{% if notification.is_seen == False %}
+					<form method="POST" action="{% url 'reservation:read-message' notification.id %}">
+						{% csrf_token %}
+						<button name="read" class="btn btn-outline-success btn-wide mb-1 float-right"
+							type="submit">Mark As Read</button>
+					</form>
+					{% else %}
+					<p class="btn btn-wide btn-success float-right">Read</p>
+					{% endif %}
 				</div>
             </div>
         </div>
