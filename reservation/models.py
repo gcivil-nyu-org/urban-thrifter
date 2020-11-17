@@ -44,7 +44,6 @@ class ReservationPost(models.Model):
 
 class Notification(models.Model):
     NOTIFICATION_STATUS = ((1, "ACCEPT"), (2, "REJECT"), (3, "PENDING"))
-    helpseeker_noti_objects=[]
     post = models.ForeignKey(
         ReservationPost,
         on_delete=models.CASCADE,
@@ -74,12 +73,9 @@ class Notification(models.Model):
         if self.notificationstatus != self.__original_notificationstatus:
             # status changed 
             if self.notificationstatus ==1:
-                self.msg="Reservation status changed to accepted"
+                self.msg="Reservation status changed to accepted."
             elif self.notificationstatus==2:
-                self.msg=="Reservation status changed to denied"
-            else:
-                self.msg="Reservation pending"
-            Notification.helpseeker_noti_objects.append(self)
+                self.msg=="Reservation status changed to denied."
 
         super(Notification, self).save(force_insert, force_update, *args, **kwargs)
         self.__original_notificationstatus = self.notificationstatus

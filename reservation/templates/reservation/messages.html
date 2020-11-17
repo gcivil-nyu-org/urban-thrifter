@@ -25,10 +25,13 @@
                     <p>Accepted</p>
                     {% elif notification.notificationstatus == 2 %}
                     <p>Denied</p>
-                    {% else %}
-                    <p>Pending</p>
                     {% endif %}
                 </div>
+				<div class="col-5">
+				{% csrf_token %}
+				<button name="read" class="btn btn-outline-success btn-wide mb-1 float-right"
+					type="submit">Mark As Read</button>
+				</div>
             </div>
         </div>
     </div>
