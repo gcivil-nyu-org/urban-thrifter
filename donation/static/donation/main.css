@@ -221,16 +221,16 @@ select option:hover, select option:focus, select option:active {
   right: 10px;
 }
 
-#display, #donor-notification {
+#display, #donor-notification, #helpseeker-notification {
   position: relative;
 }
 
-#display i, #donor-notification i {
+#display i, #donor-notification i, #helpseeker-notification i {
   position: absolute;
   left: -15px;
 }
 
-#display span, #donor-notification span {
+#display span, #donor-notification span, #helpseeker-notification span {
   position: absolute;
   top: 0;
   left: -8px;
@@ -249,7 +249,7 @@ select option:hover, select option:focus, select option:active {
   font-size: 13px;
 }
 
-#display:hover .message-number {
+#display:hover .message-number, #donor-notification:hover .message-number, #helpseeker-notification:hover .message-number {
   background-color: #f8d7da;
 }
 

@@ -77,6 +77,8 @@ class Notification(models.Model):
                 notificationstatus=notification_status,
             )
             notify.save()
+        super(Notification, self).save(force_insert, force_update, *args, **kwargs)
+        self.__original_notificationstatus = self.notificationstatus
 
     def __str__(self):
         return (
@@ -93,8 +95,6 @@ class Notification(models.Model):
             if notification.is_seen==False:
                 return True
         return False"""
-        super(Notification, self).save(force_insert, force_update, *args, **kwargs)
-        self.__original_notificationstatus = self.notificationstatus
 
 
 post_save.connect(ReservationPost.give_notifications, sender=ReservationPost)
