@@ -182,7 +182,6 @@ class ReservationDetailView(DetailView):
 
 
 def show_notifications(request):
-    # print(request.user.id)
     receiver = request.user
     notifications = Notification.objects.filter(receiver=receiver).order_by("-date")
     template = loader.get_template("donation/notifications.html")
@@ -194,11 +193,28 @@ def show_notifications(request):
     return HttpResponse(template.render(context, request))
 
 
+def helpseeker_notifications(request):
+    notifications = Notification.objects.filter(receiver=request.user).order_by("-date")
+    template = loader.get_template("reservation/messages.html")
+
+    context = {
+        "notifications": notifications,
+    }
+
+    return HttpResponse(template.render(context, request))
+
+
+def read_message(request, id):
+    if request.method == "POST":
+        notification = Notification.objects.get(id=id)
+        notification.is_seen = True
+        notification.save()
+    return redirect("reservation:reservation-messages")
+
+
 @method_decorator(login_required, name="dispatch")
 class NotificationCheck(View):
     def get(self, request):
-        # print("Notification Count: ", Notification.objects.filter
-        # (is_seen=False, receiver=request.user).count())
         return HttpResponse(
             Notification.objects.filter(is_seen=False, receiver=request.user).count()
         )

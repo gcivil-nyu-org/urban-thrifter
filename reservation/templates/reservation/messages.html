@@ -1,0 +1,53 @@
+{% extends 'donation/base.html' %}
+{% block content %}
+{% if user.is_authenticated and user.helpseekerprofile %}
+{% for notification in notifications %}
+{% if notification.receiver == user %}
+<article class="card donation-card mb-2 animated fadeIn">
+    <div class="card-body ">
+        <div class='container'>
+            <div class="row">
+                <div class="col-2">
+                    <p class="article-img img-circle"><img class="img-thumbnail"
+                            src='{{notification.post.post.image.url}}'></i></p>
+                </div>
+                <div class="col-5">
+                    <b>Reservation Update:</b>
+					{% if notification.notificationstatus == 1 %}
+					<p>Reservation status changed to accepted.</p>
+					{% elif notification.notificationstatus == 2 %}
+					<p>Reservation status changed to denied.</p>
+					{% endif %}
+                    <p>{{ notification.msg }}</p>
+                    <b>Reservation Item:</b>
+                    <p>{{ notification.post.post.title }}</p>
+                    <b>Dropoff Request Time: </b>
+                    <p>{{ notification.post.dropoff_time_request }}</p>
+                    <b>Dropoff Location:</b>
+                    <p>{{ notification.post.post.dropoff_location.place }}</p>
+                    <b>Status:</b>
+                    {% if notification.notificationstatus == 1 %}
+                    <p>Accepted</p>
+                    {% elif notification.notificationstatus == 2 %}
+                    <p>Denied</p>
+                    {% endif %}
+                </div>
+				<div class="col-5">
+					{% if notification.is_seen == False %}
+					<form method="POST" action="{% url 'reservation:read-message' notification.id %}">
+						{% csrf_token %}
+						<button name="read" class="btn btn-outline-success btn-wide mb-1 float-right"
+							type="submit">Mark As Read</button>
+					</form>
+					{% else %}
+					<p class="btn btn-wide btn-success float-right">Read</p>
+					{% endif %}
+				</div>
+            </div>
+        </div>
+    </div>
+</article>
+{% endif %}
+{% endfor %}
+{% endif %}
+{% endblock %}
