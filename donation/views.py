@@ -112,11 +112,10 @@ def getResourcePost(request):
     posts = ResourcePost.objects.all()
     passingList = []
     for post in posts:
-        if (
-            post.resource_category == curr_user_rc_1
-            or post.resource_category == curr_user_rc_2
-            or post.resource_category == curr_user_rc_3
-        ):
+        if post.date_created >= user.helpseekerprofile.message_timer_before
+        and (post.resource_category == curr_user_rc_1
+             or post.resource_category == curr_user_rc_2
+             or post.resource_category == curr_user_rc_3):
             # sending id, title, description, because mabye we can use it to make a message popup
             notiPost = {
                 "id": post.id,
@@ -138,15 +137,19 @@ def message_list_view(request):
     user.helpseekerprofile.message_timer_before = time_now
     # https://stackoverflow.com/questions/53146840/change-model-field-value-after-button-click/53147979
     user.helpseekerprofile.save(update_fields=["message_timer_before"])
-    
+
     # https://stackoverflow.com/questions/64838254/making-multiple-filters-in-function-filter-django
     post_list = ResourcePost.objects.filter(
-        resource_category__in = [
+        resource_category__in=[
             user.helpseekerprofile.rc_1,
             user.helpseekerprofile.rc_2,
             user.helpseekerprofile.rc_3,
         ]
     ).order_by("-date_created")
+
+    post_list = post_list.filter(
+        date_created__gte=timestamp_interval[0], date_created__lte=timestamp_interval[1]
+    )
 
     page = request.GET.get("page", 1)
     paginator = Paginator(post_list, 5)
