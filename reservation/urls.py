@@ -21,7 +21,11 @@ urlpatterns = [
         name="confirm-notification",
     ),
     path("ajax_notification/", NotificationCheck.as_view(), name="ajax-notification"),
-    path("messages/", reservation_views.helpseeker_notifications, name="reservation-messages"),
+    path(
+        "messages/",
+        reservation_views.helpseeker_notifications,
+        name="reservation-messages",
+    ),
     path(
         "message/<int:id>",
         views.read_message,

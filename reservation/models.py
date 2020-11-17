@@ -1,18 +1,13 @@
 from django.db import models
 from django.utils import timezone
-
 from django.contrib.auth.models import User
 from donation.models import ResourcePost
-
-# from places.fields import PlacesField
 from django.urls import reverse
 from django.db.models.signals import post_save
-from django.http import HttpResponse
-from django.template import loader
+
 
 # Create your models here.
 class ReservationPost(models.Model):
-
     dropoff_time_request = models.DateTimeField(default=timezone.now)
     post = models.ForeignKey(ResourcePost, on_delete=models.CASCADE)
     donor = models.ForeignKey(User, on_delete=models.CASCADE, related_name="donor_id")
@@ -70,20 +65,21 @@ class Notification(models.Model):
 
     def save(self, force_insert=False, force_update=False, *args, **kwargs):
         if self.notificationstatus != self.__original_notificationstatus:
-            # status changed 
+            # status changed
             reservation_post = self.post
             helpseeker = self.sender
             donor = self.receiver
             notification_status = self.notificationstatus
             notify = Notification(
-                post=reservation_post, 
-                sender=donor, 
-                receiver=helpseeker, 
-                notificationstatus=notification_status
+                post=reservation_post,
+                sender=donor,
+                receiver=helpseeker,
+                notificationstatus=notification_status,
             )
             notify.save()
 
         super(Notification, self).save(force_insert, force_update, *args, **kwargs)
         self.__original_notificationstatus = self.notificationstatus
+
 
 post_save.connect(ReservationPost.give_notifications, sender=ReservationPost)
