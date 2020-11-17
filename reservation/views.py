@@ -188,4 +188,3 @@ class NotificationCheck(View):
         return HttpResponse(
             Notification.objects.filter(is_seen=False, receiver=request.user).count()
         )
-        
