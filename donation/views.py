@@ -24,9 +24,16 @@ def homepage(request):
 
 def home(request):
     user = request.user
-    post_list = ResourcePost.objects.filter(donor=user)
-    # .order_by("-date_created")
-
+    post_list = ResourcePost.objects.filter(donor=user).order_by("-date_created")
+    reserved_donation_posts = post_list.filter(
+        status__in=["Reserved", "RESERVED"]
+    )
+    available_donation_posts = post_list.filter(
+        status__in=["Available", "AVAILABLE"]
+    )
+    closed_donation_posts = post_list.filter(
+        status__in=["Closed", "CLOSED"]
+    )
     page = request.GET.get("page", 1)
     paginator = Paginator(post_list, 3)
     try:
@@ -37,7 +44,11 @@ def home(request):
         posts = paginator.page(paginator.num_pages)
 
     user = request.user
-    context = {"posts": posts}
+    context = {
+        "reserved_donation_posts": reserved_donation_posts,
+        "available_donation_posts": available_donation_posts,
+        "closed_donation_posts": closed_donation_posts
+    }
 
     return render(request, "donation/reservation_status_nav.html", context)
 
@@ -51,7 +62,7 @@ class PostListView(ListView):
     template_name = "donation/reservation_status_nav.html"
 
     # Set context_attribute to post object
-    context_object_name = "posts"
+    context_object_name = "donation_posts_2"
 
     # Add ordering attribute to put most recent post to top
     ordering = ["-date_created"]
@@ -61,7 +72,7 @@ class PostListView(ListView):
 
     def get_queryset(self):
         user = get_object_or_404(User, username=self.kwargs.get("username"))
-        return ResourcePost.objects.filter(author=user).order_by("-date_created")
+        return ResourcePost.objects.filter(donor=user).order_by("-date_created")
 
 
 # Post Donation View
