@@ -579,6 +579,22 @@ class DonorProfileTests(TestCase):
         profile = DonorProfile(user=user)
         self.assertTrue(profile.complaint_count == 0)
 
+    def test_donor_str(self):
+        form = DonorForm(
+            data={
+                "username": "Jonathan",
+                "email": "ponathanjun@gmail.com",
+                "password1": "peaches12",
+                "password2": "peaches12",
+            }
+        )
+        form.save()
+        user = User.objects.filter(id="1").first()
+        profile = DonorProfile(user=user)
+        self.assertEquals(
+            "%s" % (profile.user),
+            profile.__str__(),
+        )
 
 class DonorViewTests(TestCase):
     def test_successful_post_request(self):
