@@ -695,24 +695,6 @@ class ErrorTests(TestCase):
         holder.status_code = 500
         self.assertEqual(holder.status_code, 500)
 
-    def test_bad_gate_day(self):
-        holder = self.client.get("register/errorpage/502_bad_gateway.html")
-        holder.status_code = 500
-        self.assertEqual(holder.status_code, 500)
-
-    def test_error(self):
-        holder = self.client.get("register/errorpage/error.html")
-        self.assertEqual(holder.status_code, 404)
-
-    def test_page_not_found(self):
-        holder = self.client.get("register/errorpage/404_page_not_found.html")
-        self.assertEqual(holder.status_code, 404)
-
-    def test_permission_denied(self):
-        holder = self.client.get("register/errorpage/403_permission_denied.html")
-        holder.status_code = 403
-        self.assertEqual(holder.status_code, 403)
-
     def helpseeker_update_form(self):
         updateform=HelpseekerUpdateForm()
         self.assertEquals(updateform.helper.form_show_labels,False)
