@@ -111,6 +111,7 @@ class ReservationPostTests(TestCase):
         self.assertEqual(reservation.post.status, "AVAILABLE")
         self.assertEqual(reservation.dropoff_time_request, donation_post.dropoff_time_3)
 
+
 class NotificationTests(TestCase):
     def test_notification_model_isseen(self):
         donor = createdonor()
