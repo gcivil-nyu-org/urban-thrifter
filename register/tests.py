@@ -702,3 +702,7 @@ class ErrorTests(TestCase):
     def test_error(self):
         holder = self.client.get("register/errorpage/error.html")
         self.assertEqual(holder.status_code, 404)
+
+    def test_page_not_found(self):
+        holder = self.client.get("register/errorpage/404_page_not_found.html")
+        self.assertEqual(holder.status_code, 404)
