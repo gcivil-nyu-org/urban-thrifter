@@ -706,3 +706,8 @@ class ErrorTests(TestCase):
     def test_page_not_found(self):
         holder = self.client.get("register/errorpage/404_page_not_found.html")
         self.assertEqual(holder.status_code, 404)
+
+    def test_permission_denied(self):
+        holder = self.client.get("register/errorpage/403_permission_denied.html")
+        holder.status_code=403
+        self.assertEqual(holder.status_code, 403)
