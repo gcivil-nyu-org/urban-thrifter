@@ -3,8 +3,10 @@ from django.test import TestCase
 from .models import ReservationPost
 from donation.models import ResourcePost
 from register.models import DonorProfile, HelpseekerProfile
+from reservation.models import Notification
 from django.contrib.auth.models import User
-from django.urls import reverse
+
+# from django.urls import reverse
 from django.utils import timezone
 
 
@@ -68,10 +70,80 @@ class ReservationPostTests(TestCase):
         self.assertEqual(reservation.post.status, "AVAILABLE")
 
 
-class ReservationPostListViewTests(TestCase):
-    def test_donation_home(self):
-        """
-        If no post exist, an appropriate message is displayed.
-        """
-        response = self.client.get(reverse("reservation:reservation-home"))
-        self.assertEqual(response.status_code, 200)
+# class ReservationPostListViewTests(TestCase):
+#     def test_donation_home(self):
+#         """
+#         If no post exist, an appropriate message is displayed.
+#         """
+#         response = self.client.get(reverse("reservation:reservation-home"))
+#         self.assertEqual(response.status_code, 200)
+
+
+class NotificationTests(TestCase):
+    def test_notification_model_isseen(self):
+        donor = createdonor()
+        helpseeker = creathelpseeker()
+        donation_post = createdonation(donor)
+        reservation = ReservationPost(
+            dropoff_time_request=1,
+            post=donation_post,
+            donor=donor,
+            helpseeker=helpseeker,
+        )
+        notification = Notification(
+            post=reservation,
+            sender=helpseeker,
+            receiver=donor,
+            date=timezone.now(),
+        )
+        self.assertEqual(notification.is_seen, False)
+
+    def test_notification_model_status(self):
+        donor = createdonor()
+        helpseeker = creathelpseeker()
+        donation_post = createdonation(donor)
+        reservation = ReservationPost(
+            dropoff_time_request=1,
+            post=donation_post,
+            donor=donor,
+            helpseeker=helpseeker,
+        )
+        notification = Notification(
+            post=reservation,
+            sender=helpseeker,
+            receiver=donor,
+            date=timezone.now(),
+        )
+        self.assertEqual(notification.notificationstatus, 3)
+
+
+class ReservationPostListDeleteTests(TestCase):
+    def test_delete_reservation_with_delete_helpseeker(self):
+        donor = createdonor()
+        helpseeker = creathelpseeker()
+        donation_post = createdonation(donor)
+        ReservationPost(
+            dropoff_time_request=1,
+            post=donation_post,
+            donor=donor,
+            helpseeker=helpseeker,
+        )
+        user = User.objects.get(username=helpseeker.username)
+        user.delete()
+        rp = ReservationPost.objects.filter(helpseeker=user)
+        self.assertEqual(len(rp), 0)
+
+    def test_delete_notification_with_delete_helpseeker(self):
+        donor = createdonor()
+        helpseeker = creathelpseeker()
+        donation_post = createdonation(donor)
+        ReservationPost(
+            dropoff_time_request=1,
+            post=donation_post,
+            donor=donor,
+            helpseeker=helpseeker,
+        )
+        user = User.objects.get(username=helpseeker.username)
+        user.delete()
+        noti = Notification.objects.filter(sender=helpseeker)
+        self.assertEqual(len(noti), 0)

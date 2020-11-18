@@ -71,8 +71,32 @@ urlpatterns = [
         ),
         name="password_reset_complete",
     ),
+    path(
+        "watchlist/",
+        donation_view.watchlist_view,
+        name="watchlist-home",
+    ),
+    # path(
+    #     "messages/",
+    #     donation_view.MessageListView.as_view(
+    #         template_name="donation/messages_home.html"
+    #     ),
+    #     name="messages-home",
+    # ),
 ]
 
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+handler400 = "register.views.bad_request"
+handler401 = "register.views.error"
+handler403 = "register.views.permission_denied"
+handler404 = "register.views.page_not_found"
+handler408 = "register.views.error"
+handler500 = "register.views.server_error"
+handler501 = "register.views.error"
+handler502 = "register.views.bad_gateway"
+handler503 = "register.views.error"
+handler504 = "register.views.error"
+handler505 = "register.views.error"

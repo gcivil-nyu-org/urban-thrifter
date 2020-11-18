@@ -1,44 +1,110 @@
 {% extends 'donation/base.html' %}
+{% load static %}
 {% block content %}
-{% include "reservation/reservation_status_nav.html" %}
-<article class="media content-section">
-    <img class='rounded-circle article-img' src='{{ object.image.url }}'>
-    <!--  p>{{ object.image.url }}</p-->
-    <div class="media-body">
-        <div class="article-metadata">
-            <!--a class="mr-2" href="">Username</a-->
-            <h2 class="article-title">{{ object.title }}</h2>
-            <small class="text-muted">{{ object.date_created | date:'F d, Y'}}</small>
-            <!-- https://docs.djangoproject.com/en/2.0/ref/templates/builtins/#date -->
-            {% if object.author == user %}
-            <div>
-                <a class='btn btn-secondary btn-sm mt-1 mb-1' href=''>Update</a>
-                <a class='btn btn-danger btn-sm mt-1 mb-1' href=''>Delete</a>
-            </div>
-            {% endif %}
+<div class="content-section container animated fadeInUp">
+    <!-- <img class='rounded-circle article-img' src='{% static "donation/asset/user.svg" %}'> -->
+    <div class="row justify-content-around">
+        <div class="col-md-10">
+            <legend class='mb-4 font-weight-bold'>Reservation Details</legend>
         </div>
-        <p>Quantity: </p>
-        <p class="article-content graybox">{{ object.quantity }}</p>
-        <p>Status: </p>
-        <p class="article-content graybox">{{ object.status }}</p>
-        <p>Category: </p>
-        <p class="article-content graybox">{{ object.resource_category }}</p>
-        <p>Location: </p>
-        <p class="article-content graybox">{{ object.dropoff_location.place }}</p>
-        <p>Description: </p>
-        <p class="article-content graybox">{{ object.description }}</p>
-        <form method="POST" action="{% url 'reservation:reservation-function' object.id %}">
-			{% csrf_token %}
-            <p class="article-content">Drop-off Time: </p>
-			<input type="radio" id="dropoff_time_1" name="dropoff_time" value=1>
-			<label for="dropoff_time_1">{{ object.dropoff_time_1 }}</label><br>
-            <input type="radio" id="dropoff_time_2" name="dropoff_time" value=2>
-			<label for="dropoff_time_2">{{ object.dropoff_time_2 }}</label><br>
-            <input type="radio" id="dropoff_time_3" name="dropoff_time" value=3>
-			<label for="dropoff_time_3">{{ object.dropoff_time_3 }}</label><br>
-            <p><button class="mt-3 btn btn-dark btn-wide" type="submit">Reserve</button></p>
-        </form>
     </div>
-    
-</article>
+    <!-- Crispy filter to style the form -->
+    <div class="row justify-content-around">
+        <!-- <div class="col-md-4">
+            <img src="{{object.image.url}}" />
+        </div> -->
+        <div class="col-4">
+            <div id="donationModal" class="modal">
+                <!-- The Close Button -->
+                <span class="close-modal">&times;</span>
+                <!-- Modal Content (The Image) -->
+                <img class="modal-content" id="displayImg">
+                <!-- Modal Caption (Image Text) -->
+                <div id="caption"></div>
+            </div>
+            <label>Title</label>
+            <p class="graybox">{{ object.title }}</p>
+            <label>Dropoff Location <a class="location-toggle text-muted" style="cursor:pointer;"><i
+                        class="fas fa-eye"></i></a></label>
+            <p class="graybox">{{ object.dropoff_location.place }}</p>
+        </div>
+        <div class="col-4">
+            <label>Resource Category</label>
+            <p class="graybox">{{ object.resource_category }}</p>
+            <label>Quantity</label>
+            <p class="graybox">{{ object.quantity }}</p>
+            <label>Description</label>
+            <p class="graybox">{{ object.description }}</p>
+            <div class="article-img img-circle"><img class="img-thumbnail" id="donationImg" alt="{{object.title}}"
+                    src="{{object.image.url}}" style="display:block;width:100%;" />
+                <!-- <i class="fas fa-search-plus"></i> -->
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-around">
+        <div class="col-md-10">
+            <div id="dropoff-location" class="mt-3 mb-3"></div>
+            <form method="POST" action="{% url 'reservation:reservation-function' object.id %}">
+                {% csrf_token %}
+                <p>Drop-off Time*</p>
+                <input type="radio" id="dropoff_time_1" name="dropoff_time" value=1>
+                <label class="graybox" for="dropoff_time_1">{{ object.dropoff_time_1 }}</label>
+                {% if object.dropoff_time_2 != None %}
+                <input type="radio" id="dropoff_time_2" name="dropoff_time" value=2>
+                <label class="graybox" for="dropoff_time_2">{{ object.dropoff_time_2 }}</label>
+                {% endif %}
+                {% if object.dropoff_time_3 != None %}
+                <input type="radio" id="dropoff_time_3" name="dropoff_time" value=3>
+                <label class="graybox" for="dropoff_time_3">{{ object.dropoff_time_3 }}</label>
+                {% endif %}
+                <div class="text-center"><button class="mt-3 btn btn-dark btn-wide" type="submit">Reserve</button></div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $(".location-toggle").click(function () {
+            $("#dropoff-location").animate({ opacity: 'toggle' }, 'slow');
+            var eye = $('.location-toggle').html();
+            if (eye == '<i class="fas fa-eye"></i>') {
+                $('.location-toggle').html("<i class='fas fa-eye-slash'></i>");
+            } else {
+                $('.location-toggle').html('<i class="fas fa-eye"></i>');
+            }
+        });
+    });
+    mapboxgl.accessToken = "pk.eyJ1Ijoiamdpbm1iNyIsImEiOiJja2cybXpuNzAwMXFzMnFqdDFzbXBmNGszIn0.6UJeoJW2FwSS9LAOZN_QBw"
+    var map = new mapboxgl.Map({
+        container: 'dropoff-location',
+        style: 'mapbox://styles/jginmb7/ckgg1lsi02e2m1ao7bk8ov89z',
+        center: ["{{ object.dropoff_location.longitude}}", "{{ object.dropoff_location.latitude}}"],
+        // center: [-73.8648, 40.8448],
+        zoom: 15
+    });
+    new mapboxgl.Marker()
+        .setLngLat(["{{ object.dropoff_location.longitude}}", "{{ object.dropoff_location.latitude}}"])
+        .addTo(map)
+
+    var modal = document.getElementById("donationModal");
+
+    // Get the image and insert it inside the modal - use its "alt" text as a caption
+    var img = document.getElementById("donationImg");
+    var modalImg = document.getElementById("displayImg");
+    var captionText = document.getElementById("caption");
+    img.onclick = function () {
+        modal.style.display = "block";
+        modalImg.src = this.src;
+        captionText.innerHTML = this.alt;
+    }
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close-modal")[0];
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function () {
+        modal.style.display = "none";
+    }
+</script>
 {% endblock content %}

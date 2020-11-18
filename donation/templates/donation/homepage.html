@@ -7,6 +7,32 @@
 {% bootstrap_javascript jquery='full' %}
 
 <body>
+
+	{% if messages %}
+	{% for message in messages %}
+
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+							aria-hidden="true">&times;</span></button>
+				</div>
+				<div class="modal-body">
+					<h5>
+						{{message}}
+					</h5>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-outline-success btn-wide mb-1 float-right" id="deleteNo"
+						data-dismiss="modal">Dismiss</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	{% endfor %}
+	{% endif %}
+
 	<header id="home" class="hero-area">
 		<div class="overlay">
 			<span></span>
@@ -36,6 +62,11 @@
 						<li class="nav-item">
 							<a class="nav-link page-scroll" href="#contact">Contact</a>
 						</li>
+						{% if user.is_authenticated %}
+						<li class="nav-item">
+							<a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
+						</li>
+						{% endif %}
 					</ul>
 				</div>
 			</div>
@@ -44,17 +75,34 @@
 			<div class="row space-100">
 				<div class="col-lg-6 col-md-12 col-xs-12">
 					<div class="contents">
-						<h2 class="head-title">Urban Thrifter</h2>
-						<p>Connect the resource to the people in need.</p>
+						<h2 class="head-title animated fadeInDown">Urban Thrifter</h2>
+						<p class="animated fadeInDown">Connect the resource to the people in need.</p>
 						<div class="header-button">
-							<a href="{% url 'register:register' %}" rel="nofollow" class="btn btn-dark btn-wide">Join
+							{% if user.is_authenticated %}
+							{% if user.donorprofile %}
+							<a href="{% url 'donation:donation-home' %}" rel="nofollow"
+								class="btn btn-dark btn-wide animated fadeInUp">Start your donation!</a>
+							{% elif user.helpseekerprofile %}
+							<a href="{% url 'main-map' %}" rel="nofollow"
+								class="btn btn-dark btn-wide animated fadeInUp">Checkout resource map!</a>
+							<a href="{% url 'reservation:reservation-home' %}" rel="nofollow"
+								class="btn btn-dark btn-wide animated fadeInUp">See what we have!</a>
+							{% else %}
+							<a href="/admin" rel="nofollow" class="btn btn-dark btn-wide animated fadeInUp">Go to
+								admin</a>
+							{% endif %}
+							{% else %}
+							<a href="{% url 'register:register' %}" rel="nofollow"
+								class="btn btn-dark btn-wide animated fadeInUp">Join
 								Us</a>
-							<a href="{% url 'login' %}" rel="nofollow" class="btn btn-dark btn-wide">Login</a>
+							<a href="{% url 'login' %}" rel="nofollow"
+								class="btn btn-dark btn-wide animated fadeInUp">Sign In</a>
+							{% endif %}
 						</div>
 					</div>
 				</div>
 				<div class="col-lg-6 col-md-12 col-xs-12 p-0">
-					<div class="intro-img">
+					<div class="intro-img animated fadeInRight">
 						<img src="{% static 'homepage/img/intro.png' %}" alt="">
 					</div>
 				</div>
@@ -706,11 +754,15 @@
 	<script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
 	<script type="text/javascript" src="{% static 'js/owl.carousel.js' %}"></script>
 	<script type="text/javascript" src="{% static 'js/jquery.nav.js' %}"></script>
-	<script src="https://unpkg.com/scrollnav@3.0.1/dist/scrollnav.min.umd.js"></script>
 	<script type="text/javascript" src="{% static 'js/jquery.easing.min.js' %}"></script>
 	<script type="text/javascript" src="{% static 'js/nivo-lightbox.js' %}"></script>
 	<script type="text/javascript" src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
 	<script type="text/javascript" src="{% static 'js/main.js' %}"></script>
+	<script>
+		$(document).ready(function () {
+			$("#myModal").modal('show');
+		});
+	</script>
 </body>
 
 </html>

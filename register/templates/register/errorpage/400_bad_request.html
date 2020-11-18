@@ -1,0 +1,10 @@
+{% extends 'donation/base.html' %}
+{% load static %}
+{% block content %}
+<div class="mt-5 text-center">
+    <p><img class="w-25" src="{% static 'donation/asset/error.svg' %}" /></p>
+    <h2>OOPS! Bad request (400).</h2>
+    <p>Why not explore other awesome features from our site.</p>
+    <a class="btn btn-outline-dark btn-wide mt-3" href="{% url 'home' %}">Back to home</a>
+</div>
+{% endblock content %}

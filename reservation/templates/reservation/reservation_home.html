@@ -1,20 +1,170 @@
 {% extends 'donation/base.html' %}
+{% load static %}
 {% block content %}
 {% include "reservation/reservation_status_nav.html" %}
 {% if user.is_authenticated and user.helpseekerprofile %}
 {% if messages %}
-    {% for message in messages %}
-    <div class="container alert alert-info alert-{{ message.tags }}">
-      {{ message }}
-    </div>
-    {% endfor %}
-{% endif %}
-<div class="tab-content pt-2 pl-1" id="pills-tabContent">
-    <div class="tab-pane fade" id="pills-available" role="tabpanel" aria-labelledby="pills-available-tab">
-        {% include "reservation/donation_list.html" %}
-    </div>
-    {% include "reservation/reservation_list.html" %}
+{% for message in messages %}
+<div class="container alert alert-info alert-{{ message.tags }}">
+  {{ message }}
 </div>
-
+{% endfor %}
 {% endif %}
+<div class="tab-content animated fadeIn" id="pills-tabContent">
+  {% include "reservation/donation_list.html" %}
+  <div class="tab-pane fade" id="pills-reserved" role="tabpanel" aria-labelledby="pills-reserved-tab">
+    {% for post in reservation_reserved_posts %}
+    <article class="card donation-card mb-2">
+      <!-- <img class='rounded-circle article-img' src='{{ post.author.profile.image.url }}' > -->
+      <div class="card-header">
+        <div class='container'>
+          <div class="row text-center">
+            <div class="col">
+              <p>Title</p>
+              <p><a href="{% url 'reservation:reservation-detail' post.id %}">{{ post.post.title }}</a></p>
+            </div>
+            <div class="col">
+              <p>Quantity</p>
+              <p>{{ post.post.quantity }}</p>
+            </div>
+            <div class="col">
+              <p>Category</p>
+              <p>{{ post.post.resource_category }}</p>
+            </div>
+            <div class="col">
+              <p>Status</p>
+              <p>{{ post.post.status }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-body ">
+        <div class='container'>
+          <div class="row">
+            <div class="col-2">
+              <p class="article-img img-circle"><img class="img-thumbnail" src='{{post.post.image.url}}'></i>
+              </p>
+            </div>
+            <div class="col-5">
+              <p>Request Pickup Time: </p>
+              <p>{{ post.dropoff_time_request | date:'F d, Y H:m'}}</p>
+              <p>{{ post.post.dropoff_location.place}}</p>
+            </div>
+            <div class="col-5">
+              <button class='btn btn-outline-dark btn-wide mb-1 float-right'>Edit</button>
+              <button class='btn btn-danger btn-wide float-right'>Cancel</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+    {% empty %}
+    <div class="mt-3 alert alert-info text-center">You don't have any confirmed reservation currently.</div>
+    {% endfor %}
+  </div>
+
+  <div class="tab-pane fade" id="pills-pending" role="tabpanel" aria-labelledby="pills-pending-tab">
+    {% for post in reservation_pending_posts %}
+    <article class="card donation-card mb-2">
+      <!-- <img class='rounded-circle article-img' src='{{ post.author.profile.image.url }}' > -->
+      <div class="card-header">
+        <div class='container'>
+          <div class="row text-center">
+            <div class="col">
+              <p>Title</p>
+              <p><a href="{% url 'reservation:reservation-detail' post.id %}">{{ post.post.title }}</a></p>
+            </div>
+            <div class="col">
+              <p>Quantity</p>
+              <p>{{ post.post.quantity }}</p>
+            </div>
+            <div class="col">
+              <p>Category</p>
+              <p>{{ post.post.resource_category }}</p>
+            </div>
+            <div class="col">
+              <p>Status</p>
+              <p>{{ post.post.status }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-body ">
+        <div class='container'>
+          <div class="row">
+            <div class="col-2">
+              <p class="article-img img-circle"><img class="img-thumbnail" src='{{post.post.image.url}}'></i>
+              </p>
+            </div>
+            <div class="col-5">
+              <p>Request Pickup Time: </p>
+              <p>{{ post.dropoff_time_request | date:'F d, Y H:m'}}</p>
+              <p>{{ post.post.dropoff_location.place}}</p>
+            </div>
+            <div class="col-5">
+              <button class='btn btn-outline-dark btn-wide mb-1 float-right'>Edit</button>
+              <button class='btn btn-danger btn-wide float-right'>Cancel</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+    {% empty %}
+    <div class="mt-3 alert alert-info text-center">You don't have any pending reservation currently.</div>
+    {% endfor %}
+  </div>
+
+  <div class="tab-pane fade" id="pills-closed" role="tabpanel" aria-labelledby="pills-closed-tab">
+    {% for post in reservation_closed_posts %}
+    <article class="card donation-card mb-2">
+      <!-- <img class='rounded-circle article-img' src='{{ post.author.profile.image.url }}' > -->
+      <div class="card-header">
+        <div class='container'>
+          <div class="row text-center">
+            <div class="col">
+              <p>Title</p>
+              <p><a href="{% url 'reservation:reservation-detail' post.id %}">{{ post.post.title }}</a></p>
+            </div>
+            <div class="col">
+              <p>Quantity</p>
+              <p>{{ post.post.quantity }}</p>
+            </div>
+            <div class="col">
+              <p>Category</p>
+              <p>{{ post.post.resource_category }}</p>
+            </div>
+            <div class="col">
+              <p>Status</p>
+              <p>{{ post.post.status }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-body ">
+        <div class='container'>
+          <div class="row">
+            <div class="col-2">
+              <p class="article-img img-circle"><img class="img-thumbnail" src='{{post.post.image.url}}'></i>
+              </p>
+            </div>
+            <div class="col-5">
+              <p>Request Pickup Time: </p>
+              <p>{{ post.post.dropoff_time_request | date:'F d, Y H:m'}}</p>
+              <p>{{ post.post.dropoff_location.place}}</p>
+            </div>
+            <div class="col-5">
+              <button class='btn btn-warning mb-1 btn-wide float-right'><a
+                  href="{% url 'issue-complaint' %}">Complaint</a></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+    {% empty %}
+    <div class="mt-3 alert alert-info text-center">You don't have any completed reservation currently.</div>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+<script type="text/javascript" src="{% static 'javascript/search.js' %}"></script>
 {% endblock content %}

@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from places.fields import PlacesField
 from django.urls import reverse
+from django.utils import timezone
 
 
 class HelpseekerProfile(models.Model):
@@ -9,7 +10,7 @@ class HelpseekerProfile(models.Model):
         ("MAN", "Manhattan"),
         ("BRK", "Brooklyn"),
         ("QUN", "Queens"),
-        ("BRX", "The Bronx"),
+        ("BRX", "Bronx"),
         ("STN", "Staten Island"),
     ]
     RESOURCE_CATEGORY_CHOICES = [
@@ -43,6 +44,10 @@ class HelpseekerProfile(models.Model):
         blank=True,
         null=True,
     )
+    message_timer_before = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return "%s" % (self.user)
 
 
 class DonorProfile(models.Model):

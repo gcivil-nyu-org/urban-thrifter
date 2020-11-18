@@ -4,6 +4,7 @@ from .models import HelpseekerProfile
 from django.core.exceptions import ValidationError
 from django.contrib.auth.forms import UserCreationForm
 
+# from crispy_forms.layout import Layout, Field
 # from django.contrib.auth.forms import AuthenticationForm
 from crispy_forms.helper import FormHelper
 
@@ -11,7 +12,7 @@ BOROUGH_CHOICES = [
     ("MAN", "Manhattan"),
     ("BRK", "Brooklyn"),
     ("QUN", "Queens"),
-    ("BRX", "The Bronx"),
+    ("BRX", "Bronx"),
     ("STN", "Staten Island"),
 ]
 RESOURCE_CATEGORY_CHOICES = [
@@ -25,16 +26,28 @@ RESOURCE_CATEGORY_CHOICES = [
 
 class HelpseekerForm(UserCreationForm):
     username = forms.CharField(
-        label="Username", min_length=4, max_length=50, required=True
+        label="",
+        min_length=4,
+        max_length=50,
+        required=True,
+        widget=forms.TextInput(attrs={"placeholder": "Username*"}),
     )
-    email = forms.EmailField(label="Email", max_length=60, required=True)
+    email = forms.EmailField(
+        label="",
+        max_length=60,
+        required=True,
+        widget=forms.TextInput(attrs={"placeholder": "Email*"}),
+    )
     password1 = forms.CharField(
-        label="Password", max_length=30, widget=forms.PasswordInput, required=True
+        label="",
+        max_length=30,
+        required=True,
+        widget=forms.PasswordInput(attrs={"placeholder": "Password*"}),
     )
     password2 = forms.CharField(
-        label="Confirm Password",
+        label="",
         max_length=30,
-        widget=forms.PasswordInput,
+        widget=forms.PasswordInput(attrs={"placeholder": "Confirm Password*"}),
         required=True,
     )
     borough = forms.CharField(
@@ -43,7 +56,7 @@ class HelpseekerForm(UserCreationForm):
         required=True,
     )
     resource = forms.MultipleChoiceField(
-        label="Resources (Optional, select up to 3)",
+        label="",
         widget=forms.CheckboxSelectMultiple,
         choices=RESOURCE_CATEGORY_CHOICES,
         required=False,
@@ -72,17 +85,29 @@ class HelpseekerForm(UserCreationForm):
 
 class DonorForm(UserCreationForm):
     username = forms.CharField(
-        label="Username", min_length=4, max_length=50, required=True
+        label="",
+        min_length=4,
+        max_length=50,
+        required=True,
+        widget=forms.TextInput(attrs={"placeholder": "Username*"}),
     )
-    email = forms.EmailField(label="Email", max_length=60, required=True)
+    email = forms.EmailField(
+        label="",
+        max_length=60,
+        required=True,
+        widget=forms.TextInput(attrs={"placeholder": "Email*"}),
+    )
     password1 = forms.CharField(
-        label="Password", max_length=30, widget=forms.PasswordInput, required=True
+        label="",
+        max_length=30,
+        required=True,
+        widget=forms.PasswordInput(attrs={"placeholder": "Password*"}),
     )
     password2 = forms.CharField(
-        label="Confirm Password",
+        label="",
         max_length=30,
-        widget=forms.PasswordInput,
         required=True,
+        widget=forms.PasswordInput(attrs={"placeholder": "Confirm Password*"}),
     )
 
     def clean_email(self):
