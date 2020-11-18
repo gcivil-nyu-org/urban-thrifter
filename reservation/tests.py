@@ -97,6 +97,20 @@ class ReservationPostTests(TestCase):
         self.assertEqual(reservation.post.status, "AVAILABLE")
         self.assertEqual(reservation.dropoff_time_request, donation_post.dropoff_time_2)
 
+    def test_reservation_selected_slot_3(self):
+        donor = createdonor()
+        helpseeker = creathelpseeker()
+        donation_post = createdonation(donor)
+        reservation = ReservationPost(
+            post=donation_post,
+            donor=donor,
+            helpseeker=helpseeker,
+        )
+        selected_time = donation_post.dropoff_time_3
+        reservation.dropoff_time_request = selected_time
+        self.assertEqual(reservation.post.status, "AVAILABLE")
+        self.assertEqual(reservation.dropoff_time_request, donation_post.dropoff_time_3)
+
 class NotificationTests(TestCase):
     def test_notification_model_isseen(self):
         donor = createdonor()
