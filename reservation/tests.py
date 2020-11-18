@@ -135,7 +135,12 @@ class ReservationPostTests(TestCase):
             helpseeker=helpseeker,
         )
         reservation.save()
-        self.assertEquals(str(reservation.post.title) + " for " + str(reservation.helpseeker.username),reservation.__str__())
+        self.assertEquals(
+            str(reservation.post.title)
+            + " for "
+            + str(reservation.helpseeker.username),
+            reservation.__str__(),
+        )
 
 
 class NotificationTests(TestCase):
@@ -212,11 +217,14 @@ class NotificationTests(TestCase):
             date=timezone.now(),
         )
         notification.save()
-        self.assertEquals(str(notification.sender.username)
+        self.assertEquals(
+            str(notification.sender.username)
             + " to "
             + str(notification.receiver.username)
             + " for "
-            + str(notification.post.post.title),notification.__str__())
+            + str(notification.post.post.title),
+            notification.__str__(),
+        )
 
 
 class ReservationPostListDeleteTests(TestCase):
