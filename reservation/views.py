@@ -107,39 +107,28 @@ def confirm_notification(request, id):
     if request.method == "POST":
         notification = Notification.objects.get(id=id)
         resource_post = ResourcePost.objects.get(id=notification.post.post.id)
-        reserve_post = ReservationPost.objects.get(id=notification.post.id)
         if "accept" in request.POST:
             # do subscribe
             notification.is_seen = True
             notification.notificationstatus = 1
-            notification.is_seen = True
             resource_post.status = "RESERVED"
             resource_post.save()
             notification.save()
-            return render(request, "donation/notifications_confirm.html")
         elif "deny" in request.POST:
             # do unsubscribe
+            notification.is_seen = True
+            notification.notificationstatus = 2
             resource_post.status = "AVAILABLE"
             resource_post.save()
-            reserve_post.delete()
-            notification.delete()
-            return redirect("donation:donation-home")
+            notification.save()
+        return render(request, "donation/notifications_confirm.html")
 
 
 def reservation_function(request, id):
     if request.method == "POST":
         selected_timeslot = request.POST.get("dropoff_time")
         resource_post = ResourcePost.objects.get(id=id)
-        try:
-            holder = ReservationPost.objects.get(post=resource_post)
-        except ReservationPost.DoesNotExist:
-            holder = None
-        if holder is not None:
-            messages.error(
-                request, "A reservation for this donation has already been made."
-            )
-            return redirect("reservation:reservation-home")
-        else:
+        if resource_post.status == "Available" or resource_post.status == "AVAILABLE":
             if selected_timeslot == "1":
                 selected_time = resource_post.dropoff_time_1
             elif selected_timeslot == "2":
@@ -154,6 +143,11 @@ def reservation_function(request, id):
                 donor=donor_id,
                 helpseeker=helpseeker_id,
             )
+        else:
+            messages.error(
+                request, "A reservation for this donation has already been made."
+            )
+            return redirect("reservation:reservation-home")
         try:
             reservation.save()
             resource_post.status = "PENDING"
