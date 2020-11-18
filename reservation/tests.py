@@ -5,18 +5,19 @@ from donation.models import ResourcePost
 from register.models import DonorProfile, HelpseekerProfile
 from reservation.models import Notification
 from django.contrib.auth.models import User
-
-# from django.urls import reverse
+from django.urls import reverse
 from django.utils import timezone
+from django.test import Client
 
 
 def createdonor():
     donor = User(
         username="donor_unit_test",
-        password="Unittestpassword123!",
         is_active=True,
         email="unittest@unittest.com",
     )
+    donor.set_password("Unittestpassword123!")
+
     donor_prof = DonorProfile(user=donor, complaint_count=0, donation_count=0)
     donor.save()
     donor_prof.save()
@@ -26,10 +27,10 @@ def createdonor():
 def creathelpseeker():
     helpseeker = User(
         username="hs_unit_test",
-        password="Unittestpassword123!",
         is_active=True,
         email="hs_unittest@unittest.com",
     )
+    helpseeker.set_password("Unittestpassword123!")
 
     helpseeker_prof = HelpseekerProfile(
         user=helpseeker, borough="MANHATTAN", complaint_count=0, rc_1="FOOD"
@@ -257,3 +258,28 @@ class ReservationPostListDeleteTests(TestCase):
         user.delete()
         noti = Notification.objects.filter(sender=helpseeker)
         self.assertEqual(len(noti), 0)
+
+
+class ReservationPostViewTests(TestCase):
+    def test_reservation_home(self):
+        self.client = Client()
+        user = creathelpseeker()
+        self.client.force_login(user, backend=None)
+        holder = self.client.get(reverse("reservation:reservation-home"))
+        self.assertEqual(holder.status_code, 200)
+        self.assertContains(holder, "Available")
+
+
+class DonationTests(TestCase):
+    def test_donation_post_list(self):
+        self.client = Client()
+        # Create donor + donation
+        donor = createdonor()
+        createdonation(donor)
+        # Create helpseeker and login
+        user = creathelpseeker()
+        self.client.force_login(user, backend=None)
+        holder = self.client.get("/reservation/?q=test")
+        self.assertEqual(holder.status_code, 200)
+        self.assertContains(holder, "FOOD")
+        self.assertContains(holder, "hi")
