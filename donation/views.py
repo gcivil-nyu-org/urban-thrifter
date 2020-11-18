@@ -8,6 +8,8 @@ from django.contrib import messages
 import os
 from django.utils import timezone
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.contrib.auth.decorators import login_required
+
 
 # , UserPassesTestMixin
 
@@ -22,20 +24,24 @@ def homepage(request):
 
 def home(request):
     user = request.user
-    post_list = ResourcePost.objects.filter(donor=user)
-    # .order_by("-date_created")
-
-    page = request.GET.get("page", 1)
-    paginator = Paginator(post_list, 3)
-    try:
-        posts = paginator.page(page)
-    except PageNotAnInteger:
-        posts = paginator.page(1)
-    except EmptyPage:
-        posts = paginator.page(paginator.num_pages)
-
+    post_list = ResourcePost.objects.filter(donor=user).order_by("-date_created")
+    reserved_donation_posts = post_list.filter(status__in=["Reserved", "RESERVED"])
+    available_donation_posts = post_list.filter(status__in=["Available", "AVAILABLE"])
+    closed_donation_posts = post_list.filter(status__in=["Closed", "CLOSED"])
+    # page = request.GET.get("page", 1)
+    # paginator = Paginator(post_list, 3)
+    # try:
+    #     post_list = paginator.page(page)
+    # except PageNotAnInteger:
+    #     post_list = paginator.page(1)
+    # except EmptyPage:
+    #     post_list = paginator.page(paginator.num_pages)
     user = request.user
-    context = {"posts": posts}
+    context = {
+        "reserved_donation_posts": reserved_donation_posts,
+        "available_donation_posts": available_donation_posts,
+        "closed_donation_posts": closed_donation_posts,
+    }
 
     return render(request, "donation/reservation_status_nav.html", context)
 
@@ -49,7 +55,7 @@ class PostListView(ListView):
     template_name = "donation/reservation_status_nav.html"
 
     # Set context_attribute to post object
-    context_object_name = "posts"
+    context_object_name = "donation_posts_2"
 
     # Add ordering attribute to put most recent post to top
     ordering = ["-date_created"]
@@ -59,7 +65,7 @@ class PostListView(ListView):
 
     def get_queryset(self):
         user = get_object_or_404(User, username=self.kwargs.get("username"))
-        return ResourcePost.objects.filter(author=user).order_by("-date_created")
+        return ResourcePost.objects.filter(donor=user).order_by("-date_created")
 
 
 # Post Donation View
@@ -102,7 +108,13 @@ class PostDetailView(DetailView):
     # Basic detail view
     model = ResourcePost
 
+    def get_context_data(self, **kwargs):
+        context = super(PostDetailView, self).get_context_data(**kwargs)
+        context["mapbox_access_token"] = "pk." + os.environ.get("MAPBOX_KEY")
+        return context
 
+
+@login_required
 def getResourcePost(request):
     user = request.user
 
@@ -131,7 +143,7 @@ def getResourcePost(request):
 
 
 # funciton based view version of messagelistview
-def message_list_view(request):
+def watchlist_view(request):
     user = request.user
 
     time_now = timezone.now()
@@ -146,10 +158,11 @@ def message_list_view(request):
             user.helpseekerprofile.rc_1,
             user.helpseekerprofile.rc_2,
             user.helpseekerprofile.rc_3,
-        ]
+        ],
+        status__in=["AVAILABLE", "Available"],
     ).order_by("-date_created")
 
-    post_list = post_list.filter(
+    new_post_list = post_list.filter(
         date_created__gte=timestamp_interval[0], date_created__lte=timestamp_interval[1]
     )
 
@@ -166,6 +179,7 @@ def message_list_view(request):
         "mapbox_access_token": "pk." + os.environ.get("MAPBOX_KEY"),
         "timestamp_interval": timestamp_interval,
         "posts": posts,
+        "new_posts": new_post_list,
     }
     return render(request, "donation/messages_home.html", context)
 

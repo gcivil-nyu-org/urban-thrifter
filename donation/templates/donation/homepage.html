@@ -84,8 +84,9 @@
 								class="btn btn-dark btn-wide animated fadeInUp">Start your donation!</a>
 							{% elif user.helpseekerprofile %}
 							<a href="{% url 'main-map' %}" rel="nofollow"
-								class="btn btn-dark btn-wide animated fadeInUp">Checkout what we
-								have!</a>
+								class="btn btn-dark btn-wide animated fadeInUp">Checkout resource map!</a>
+							<a href="{% url 'reservation:reservation-home' %}" rel="nofollow"
+								class="btn btn-dark btn-wide animated fadeInUp">See what we have!</a>
 							{% else %}
 							<a href="/admin" rel="nofollow" class="btn btn-dark btn-wide animated fadeInUp">Go to
 								admin</a>
@@ -753,17 +754,15 @@
 	<script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
 	<script type="text/javascript" src="{% static 'js/owl.carousel.js' %}"></script>
 	<script type="text/javascript" src="{% static 'js/jquery.nav.js' %}"></script>
-	<!-- <script src="https://unpkg.com/scrollnav@3.0.1/dist/scrollnav.min.umd.js"></script> -->
 	<script type="text/javascript" src="{% static 'js/jquery.easing.min.js' %}"></script>
-	<script type="text/javascript" src="{% static 'js/scrolling-nav.js' %}"></script>
 	<script type="text/javascript" src="{% static 'js/nivo-lightbox.js' %}"></script>
 	<script type="text/javascript" src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/main.js' %}"></script>
 	<script>
 		$(document).ready(function () {
 			$("#myModal").modal('show');
 		});
 	</script>
 </body>
-<script type="text/javascript" src="{% static 'js/main.js' %}"></script>
 
 </html>

@@ -46,6 +46,9 @@ class HelpseekerProfile(models.Model):
     )
     message_timer_before = models.DateTimeField(default=timezone.now)
 
+    def __str__(self):
+        return "%s" % (self.user)
+
 
 class DonorProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)

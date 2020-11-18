@@ -12,6 +12,7 @@ body {
 
 html {
   overflow-x: hidden;
+  scroll-behavior: smooth;
 }
 
 p {
@@ -25,7 +26,7 @@ a:hover, a:focus {
   color: #000;
 }
 
-a {
+a, a>span {
   color: #000;
   -webkit-transition: all 0.3s ease-in-out;
   -moz-transition: all 0.3s ease-in-out;

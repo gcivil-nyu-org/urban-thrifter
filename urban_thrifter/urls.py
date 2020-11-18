@@ -72,9 +72,9 @@ urlpatterns = [
         name="password_reset_complete",
     ),
     path(
-        "messages/",
-        donation_view.message_list_view,
-        name="messages-home",
+        "watchlist/",
+        donation_view.watchlist_view,
+        name="watchlist-home",
     ),
     # path(
     #     "messages/",

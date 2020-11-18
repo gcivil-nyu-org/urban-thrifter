@@ -154,6 +154,15 @@
 {% if post.status == "AVAILABLE" or post.status == "Available" %}
 <script>
   // console.log({{post.resource_category}})
+  var dropoff_time_2 = "";
+  var dropoff_time_3 = "";
+
+  if ("{{ post.dropoff_time_2 }}" != "None") {
+    dropoff_time_2 = "<p>{{ post.dropoff_time_2 }}</p>";
+  }
+  if ("{{ post.dropoff_time_3 }}" != "None") {
+    dropoff_time_3 = "<p>{{ post.dropoff_time_3 }}</p>";
+  }
   var personalEl = document.createElement('div');
   personal_donation_html = "<div class='container donation-popup'>" +
     "<h5 class='mb-3'><b>{{ post.title }}</b> * {{ post.quantity }}</h5>" +
@@ -163,8 +172,8 @@
     "<p><img src='{{ post.image.url }}' /></p>" +
     "</div><div class='col'>" +
     "<p>{{ post.dropoff_time_1 }}</p>" +
-    "<p>{{ post.dropoff_time_2 }}</p>" +
-    "<p>{{ post.dropoff_time_3 }}</p>" +
+    dropoff_time_2 +
+    dropoff_time_3 +
     "</div></div>" +
     "<a href='{% url 'reservation:reservation-request' post.id %}' class='btn btn-dark btn-wide' type='submit'>" +
     "Detail</button></a>"

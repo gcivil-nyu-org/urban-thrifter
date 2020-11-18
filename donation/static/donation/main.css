@@ -24,6 +24,11 @@
     src: url(d-din/D-DIN-Italic.otf) format("opentype");
 }*/
 
+html {
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
 body {
   background: #fafafa;
   color: #333333;
@@ -58,7 +63,22 @@ p, a, li, input, label, textarea {
   font-size: 16px;
 }
 
+.form-control {
+  height: 32px !important;
+  padding: .25rem .75rem;
+}
+
+textarea.form-control {
+  height: auto !important;
+  min-height: 100px !important;
+}
+
 /********** Common Element *************/
+
+.btn {
+  padding: .25rem .75rem !important;
+  font-size: 16px !important;
+}
 
 .btn:focus {
   box-shadow: none !important;
@@ -70,10 +90,25 @@ p, a, li, input, label, textarea {
   width: 200px;
 }
 
+.btn-delete:hover {
+  background-color: #BD2231 !important;
+  color: #fff !important;
+  border-color: #BD2231 !important;
+}
+
 .graybox {
   background: #e6e6e6;
   border-radius: 5px;
-  padding: .375rem .75rem;
+  padding: .25rem .75rem;
+  border: none;
+  vertical-align: center;
+}
+
+.graybox-textarea {
+  background: #e6e6e6;
+  border-radius: 5px;
+  padding: .25rem .75rem;
+  border: none;
 }
 
 .gray-bg {
@@ -120,6 +155,12 @@ select option {
 select option:hover, select option:focus, select option:active {
   background: #b3b3b3
 }
+
+.modal {
+  top: 20% !important;
+}
+
+/* site header */
 
 .site-header {
   height: 86px;
@@ -175,21 +216,21 @@ select option:hover, select option:focus, select option:active {
   padding-left: 16px;
 }
 
-.side-bar a:hover:after, .side-bar a:active:after {
+.side-bar a:hover:after, .side-bar a.active:after {
   opacity: 1;
   right: 10px;
 }
 
-#display, #donor-notification {
+#display, #donor-notification, #helpseeker-notification {
   position: relative;
 }
 
-#display i, #donor-notification i {
+#display i, #donor-notification i, #helpseeker-notification i {
   position: absolute;
   left: -15px;
 }
 
-#display span, #donor-notification span {
+#display span, #donor-notification span, #helpseeker-notification span {
   position: absolute;
   top: 0;
   left: -8px;
@@ -205,7 +246,11 @@ select option:hover, select option:focus, select option:active {
   margin-left: 5px;
   display: inline-block;
   color: #fff;
-  font-size: 14px;
+  font-size: 13px;
+}
+
+#display:hover .message-number, #donor-notification:hover .message-number, #helpseeker-notification:hover .message-number {
+  background-color: #f8d7da;
 }
 
 .message-map {
@@ -287,7 +332,11 @@ a.article-title:hover {
   background: #e6e6e6;
   border: none;
   border-radius: 5px;
-  padding: .375rem .75rem;
+  padding: .25rem .75rem;
+}
+
+.form-group textarea {
+  height: auto;
 }
 
 .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
@@ -321,6 +370,7 @@ a.article-title:hover {
 
 .places-widget>input:first-child {
   width: 100% !important;
+  height: 32px !important;
 }
 
 .places-widget>input:nth-child(2) {
@@ -349,9 +399,125 @@ a.article-title:hover {
   color: #333 !important;
 }
 
+#dropoff-location {
+  min-height: 450px;
+}
+
 /* Donation app style end */
 
 /* Reservation app style */
+
+.new-post {
+  background-color: #bee5eb !important;
+}
+
+.read-button:hover .unread, .read-button .read {
+  display: none;
+}
+
+.read-button:hover .read {
+  display: inline;
+}
+
+#donationImg {
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+#donationImg:hover {
+  opacity: 0.7;
+}
+
+/* The Modal (background) */
+
+#donationModal {
+  display: none;
+  /* Hidden by default */
+  position: fixed;
+  /* Stay in place */
+  z-index: 1;
+  /* Sit on top */
+  padding-top: 100px;
+  /* Location of the box */
+  left: 0;
+  top: 0 !important;
+  width: 100%;
+  /* Full width */
+  height: 100%;
+  /* Full height */
+  overflow: auto;
+  /* Enable scroll if needed */
+  background-color:#333;
+  /* Fallback color */
+  background-color: #333;
+  /* Black w/ opacity */
+}
+
+/* Modal Content (Image) */
+
+.modal-content {
+  margin: auto;
+  display: block;
+  width: 80%;
+  max-width: 700px;
+}
+
+/* Caption of Modal Image (Image Text) - Same Width as the Image */
+
+#caption {
+  margin: auto;
+  display: block;
+  width: 80%;
+  max-width: 700px;
+  text-align: center;
+  color: #ccc;
+  padding: 10px 0;
+  height: 150px;
+}
+
+/* Add Animation - Zoom in the Modal */
+
+.modal-content, #caption {
+  animation-name: zoom;
+  animation-duration: 0.6s;
+}
+
+@keyframes zoom {
+  from {
+    transform: scale(0)
+  }
+  to {
+    transform: scale(1)
+  }
+}
+
+/* The Close Button */
+
+.close-modal {
+  position: absolute;
+  top: 15px;
+  right: 35px;
+  color: #f1f1f1 !important;
+  font-size: 40px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.close-modal:hover, .close-modal:focus {
+  color: #bbb;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* 100% Image Width on Smaller Screens */
+
+@media only screen and (max-width: 700px) {
+  .modal-content {
+    width: 100%;
+  }
+}
+
 
 /* Reservation app style end */
 
@@ -644,11 +810,11 @@ a.article-title:hover {
 /* Register app style */
 
 #id_borough {
-  -moz-column-count: 2;
+  -moz-column-count: 3;
   -moz-column-gap: 20px;
-  -webkit-column-count: 2;
+  -webkit-column-count: 3;
   -webkit-column-gap: 20px;
-  column-count: 2;
+  column-count: 3;
   column-gap: 20px;
 }
 
@@ -657,16 +823,16 @@ a.article-title:hover {
 }
 
 #div_id_resource div>div {
-  width: 50%;
+  width: 33%;
   display: inline-block;
 }
 
-#div_id_resource div>div:nth-child(odd) {
-  float: right;
+#div_id_resource div>div:nth-child(1), #div_id_resource div>div:nth-child(4) {
+  float: left;
 }
 
-#div_id_resource div>div:nth-child(odd) {
-  float: left;
+#div_id_resource div>div:nth-child(3) {
+  float: right;
 }
 
 /* Register app style end */

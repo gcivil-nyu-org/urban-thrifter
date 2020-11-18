@@ -4,7 +4,11 @@
 
 {% include "register/profile_nav.html" %}
 <div class="content-section animated fadeIn">
-  <legend class="mb-3 font-weight-bold">Account Details</legend>
+  <div class="row justify-content-around">
+    <div class="col-md-10">
+      <legend class="mb-3 font-weight-bold">Account Details</legend>
+    </div>
+  </div>
   <div class="media-body">
     {% if messages %}
     {% for message in messages %}
@@ -13,41 +17,45 @@
     </div>
     {% endfor %}
     {% endif %}
-    <div class="row">
-      <div class="col">
+    <div class="row justify-content-around">
+      <div class="col-4">
         <label>Username:</label>
         <p class="graybox">{{ user.username }}</p>
       </div>
-      <div class="col">
+      <div class="col-4">
         <label>Email:</label>
         <p class="graybox">{{ user.email }}</p>
       </div>
     </div>
   </div>
-  {{ form.media }}
-  <form method='POST' enctype='multipart/form-data'>
-    {% csrf_token %}
-    <fieldset class='form-group'>
-      <!-- Crispy filter to style the form -->
-      {{ form |crispy }}
-    </fieldset>
-    <div class='form-group'>
-      <!-- https://stackoverflow.com/questions/5629805/disabling-enter-key-for-form -->
-      <script type="text/javascript">
-        window.addEventListener('keydown', function (e) {
-          if (e.keyIdentifier == 'U+000A' || e.keyIdentifier == 'Enter' || e.keyCode == 13) {
-            if (e.target.nodeName == 'INPUT' && e.target.type == 'text') {
-              e.preventDefault();
-              return false;
-            }
-          }
-        }, true);
-      </script>
-      <button class='btn btn-dark btn-wide' type='submit'>
-        Save
-      </button>
+  <div class="row justify-content-around">
+    <div class="col-md-10">
+      {{ form.media }}
+      <form method='POST' enctype='multipart/form-data'>
+        {% csrf_token %}
+        <fieldset class='form-group'>
+          <!-- Crispy filter to style the form -->
+          {{ form |crispy }}
+        </fieldset>
+        <div class='form-group'>
+          <!-- https://stackoverflow.com/questions/5629805/disabling-enter-key-for-form -->
+          <script type="text/javascript">
+            window.addEventListener('keydown', function (e) {
+              if (e.keyIdentifier == 'U+000A' || e.keyIdentifier == 'Enter' || e.keyCode == 13) {
+                if (e.target.nodeName == 'INPUT' && e.target.type == 'text') {
+                  e.preventDefault();
+                  return false;
+                }
+              }
+            }, true);
+          </script>
+          <button class='btn btn-dark btn-wide' type='submit'>
+            Save
+          </button>
+        </div>
+      </form>
     </div>
-  </form>
+  </div>
 </div>
 
 {% endblock content %}
