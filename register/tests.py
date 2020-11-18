@@ -709,5 +709,5 @@ class ErrorTests(TestCase):
 
     def test_permission_denied(self):
         holder = self.client.get("register/errorpage/403_permission_denied.html")
-        holder.status_code=403
+        holder.status_code = 403
         self.assertEqual(holder.status_code, 403)
