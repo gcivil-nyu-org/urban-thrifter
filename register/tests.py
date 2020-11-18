@@ -6,6 +6,7 @@ from django.urls import reverse
 from django.utils.http import urlsafe_base64_encode
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.utils.encoding import force_bytes
+from crispy_forms.helper import FormHelper
 
 
 class EmailTests(TestCase):
@@ -714,5 +715,9 @@ class ErrorTests(TestCase):
 
     def helpseeker_update_form(self):
         updateform=HelpseekerUpdateForm()
-        self.assertEquals(updateform.helpser.form_show_labels,False)
+        self.assertEquals(updateform.helper.form_show_labels,False)
+
+    def helpseeker_update_form_2(self):
+        updateform=HelpseekerUpdateForm()
+        self.assertEquals(updateform.helper,FormHelper(updateform))
 
