@@ -1,8 +1,9 @@
 from django.test import TestCase
 from django.urls import reverse
 from .models import ResourcePost, User
-from register.models import DonorProfile
+from register.models import DonorProfile, HelpseekerProfile
 from django.utils import timezone
+
 
 # from django.core.files.uploadedfile import SimpleUploadedFile
 # import tempfile
@@ -159,3 +160,120 @@ class ResourcePostDeleteViewTests(TestCase):
             if i.donor.username == uname:
                 length += 1
         self.assertEqual(length, 0)
+
+
+def createdonor_1():
+    donor = User(
+        username="donor_unit_test_1",
+        password="Unittestpassword123!",
+        is_active=True,
+        email="unittest1@unittest.com",
+    )
+    donor_prof = DonorProfile(user=donor, complaint_count=0, donation_count=0)
+    donor.save()
+    donor_prof.save()
+    return donor
+
+
+def createdonor_2():
+    donor = User(
+        username="donor_unit_test_2",
+        password="Unittestpassword123!",
+        is_active=True,
+        email="unittest2@unittest.com",
+    )
+    donor_prof = DonorProfile(user=donor, complaint_count=0, donation_count=0)
+    donor.save()
+    donor_prof.save()
+    return donor
+
+
+def createdonor_3():
+    donor = User(
+        username="donor_unit_test_3",
+        password="Unittestpassword123!",
+        is_active=True,
+        email="unittest3@unittest.com",
+    )
+    donor_prof = DonorProfile(user=donor, complaint_count=0, donation_count=0)
+    donor.save()
+    donor_prof.save()
+    return donor
+
+
+def createhelpseeker():
+    helpseeker = User(
+        username="helpseeker_unit_test_1",
+        password="Unittestpassword123!",
+        is_active=True,
+        email="unittest_help@unittest.com",
+    )
+    helpseeker_prof = HelpseekerProfile(
+        user=helpseeker,
+        borough="MAN",
+        complaint_count=0,
+        rc_1="FOOD",
+        message_timer_before=timezone.now(),
+    )
+    helpseeker.save()
+    helpseeker_prof.save()
+    return helpseeker
+
+
+class ResourcePost_Ajax_Wathclist_Tests(TestCase):
+    def setUp(self):
+        ResourcePost.objects.create(
+            title="test1",
+            description="test",
+            quantity=10,
+            dropoff_time_1=timezone.now(),
+            dropoff_time_2=timezone.now(),
+            dropoff_time_3=timezone.now(),
+            date_created=timezone.now(),
+            donor=createdonor_1(),
+            resource_category="FOOD",
+            status="AVAILABLE",
+        )
+        ResourcePost.objects.create(
+            title="test2",
+            description="test",
+            quantity=10,
+            dropoff_time_1=timezone.now(),
+            dropoff_time_2=timezone.now(),
+            dropoff_time_3=timezone.now(),
+            date_created=timezone.now(),
+            donor=createdonor_2(),
+            resource_category="FOOD",
+            status="AVAILABLE",
+        )
+        ResourcePost.objects.create(
+            title="test3",
+            description="test",
+            quantity=10,
+            dropoff_time_1=timezone.now(),
+            dropoff_time_2=timezone.now(),
+            dropoff_time_3=timezone.now(),
+            date_created=timezone.now(),
+            donor=createdonor_3(),
+            resource_category="OTHR",
+            status="AVAILABLE",
+        )
+
+        self.user = createhelpseeker()
+
+    # def testLogin(self):
+    #     self.client.login(username='john', password='Unittestpassword123!')
+    #     response = self.client.get(reverse('testlogin-view'))
+    #     self.assertEqual(response.status_code, 200)
+
+    def test_getResourcePost(self):
+        self.client.force_login(self.user, backend=None)
+        # self.client.login(username='helpseeker_unit_test_1', password='Unittestpassword123!')
+        response = self.client.get(reverse("donation:getResourcePosts"))
+
+        self.assertEqual(response.status_code, 200)
+
+    def test_watchlist_view(self):
+        self.client.force_login(self.user, backend=None)
+        response = self.client.get(reverse("watchlist-home"))
+        self.assertEqual(response.status_code, 200)
