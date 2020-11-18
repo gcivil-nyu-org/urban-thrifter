@@ -1,22 +1,30 @@
 {% extends 'donation/nav.html' %}
+{% load crispy_forms_tags %}
 {% block content %}
-<h1>Donor Registration</h1>
-	<div class="content-section">
-		<form method="POST">
-			{% csrf_token %}
-			<fieldset class="form-group">
-				<legend class="border-bottom mb-4">Join Today</legend>
-				{{ form.as_p }}
-			</fieldset>
-			<div class="form-group">
-				<button class="btn btn-dark btn-wide" type="submit">Sign Up</button>
+<div class="container animated fadeIn">
+	<div class="text-center">
+		<p><i class="far fa-user-circle fa-5x mb-3 mt-5"></i></p>
+		<legend class="mb-3">Join Today as a Donor</legend>
+	</div>
+	<form method="POST">
+		{% csrf_token %}
+		<fieldset class="form-group">
+			<div class="row justify-content-around">
+				<div class="col-md-5">
+					{{ form.username|as_crispy_field }}
+					{{ form.email|as_crispy_field }}
+					{{ form.password1|as_crispy_field }}
+					{{ form.password2|as_crispy_field }}
+				</div>
 			</div>
-		</form>
-		<div class="border-top pt-3">
-			<p class="text-muted">
-				Already Have An Account? <a class="ml-2" href="{% url 'login' %}">Sign In</a>
-			</p>
+		</fieldset>
+		<div class="form-group text-center">
+			<button class="btn btn-dark btn-wide" type="submit">Sign Up</button>
+		</div>
+	</form>
+	<div class="text-center">
+		<p class="text-muted">
+			Already Have An Account? <a class="ml-2" href="{% url 'login' %}">Sign In</a>
 		</p>
-	</div>	
-{% endblock content %}
-
+	</div>
+	{% endblock content %}

@@ -15,4 +15,5 @@ urlpatterns = [
     path(
         "donor/profile/<str:username>", DonorUpdateView.as_view(), name="donor-profile"
     ),
+    path("delete/", views.delete_profile, name="user-delete"),
 ]

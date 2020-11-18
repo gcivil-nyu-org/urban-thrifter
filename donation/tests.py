@@ -113,7 +113,7 @@ class HomepageViewTests(TestCase):
 class ResourcePostDetailViewTests(TestCase):
     def test_regular_post(self):
         """
-        The detail view of a question with a pub_date in the future
+        The detail view of a resource post by donor
         returns a 404 not found.
         """
         create_resource_post = ResourcePost(
@@ -132,3 +132,30 @@ class ResourcePostDetailViewTests(TestCase):
         url = reverse("donation:donation-detail", args=(create_resource_post.pk,))
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
+
+
+class ResourcePostDeleteViewTests(TestCase):
+    def test_delete_post_with_delete_donor(self):
+        create_resource_post = ResourcePost(
+            title="test",
+            description="test",
+            quantity=10,
+            dropoff_time_1=timezone.now(),
+            dropoff_time_2=timezone.now(),
+            dropoff_time_3=timezone.now(),
+            date_created=timezone.now(),
+            donor=createdonor(),
+            resource_category="FOOD",
+            status="AVAILABLE",
+        )
+        tempdonor = create_resource_post.donor
+        create_resource_post.save()
+        user = User.objects.get(id=tempdonor.pk)
+        uname = user.username
+        user.delete()
+        allposts = ResourcePost.objects.all()
+        length = 0
+        for i in allposts:
+            if i.donor.username == uname:
+                length += 1
+        self.assertEqual(length, 0)

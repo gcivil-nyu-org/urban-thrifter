@@ -1,21 +1,24 @@
 {% extends 'donation/nav.html' %}
 {% load crispy_forms_tags %}
 {% block content %}
-<div class="text-center">
+<div class="text-center animated fadeIn">
   <p><i class="far fa-user-circle fa-5x mb-5 mt-5"></i></p>
   <div class="container">
-    <form method="POST">
-      {% csrf_token %}
-      <fieldset class="form-group">
-        {{form.as_p}}
-        <p class="text-muted">
-          Forget Password?<a class="ml-2" href="{% url 'password-reset' %}">Reset Password</a>
-        </p>
-      </fieldset>
-
-      <button class="btn btn-dark btn-wide mb-3" type="submit">Login</button>
-      <p><a class="btn btn-outline-dark btn-wide" href="/register">Sign Up</a></p>
-    </form>
+    <div class="row justify-content-around">
+      <div class="col-md-5">
+        <form method="POST">
+          {% csrf_token %}
+          <fieldset class="form-group">
+            {{form.as_p}}
+            <p class="text-muted">
+              Forget Password?<a class="ml-2" href="{% url 'password-reset' %}">Reset Password</a>
+            </p>
+          </fieldset>
+          <button class="btn btn-dark btn-wide mb-3" type="submit">Sign In</button>
+          <p><a class="btn btn-outline-dark btn-wide" href="/register">Sign Up</a></p>
+        </form>
+      </div>
+    </div>
   </div>
 </div>
 {% endblock %}
