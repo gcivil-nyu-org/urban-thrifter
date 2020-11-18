@@ -693,3 +693,12 @@ class ErrorTests(TestCase):
         holder = self.client.get("register/errorpage/500_server_error.html")
         holder.status_code = 500
         self.assertEqual(holder.status_code, 500)
+
+    def test_bad_gate_day(self):
+        holder = self.client.get("register/errorpage/502_bad_gateway.html")
+        holder.status_code = 500
+        self.assertEqual(holder.status_code, 500)
+
+    def test_error(self):
+        holder = self.client.get("register/errorpage/error.html")
+        self.assertEqual(holder.status_code, 404)
