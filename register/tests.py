@@ -330,6 +330,7 @@ class HelpseekerProfileTests(TestCase):
             profile.__str__(),
         )
 
+
 class HelpseekerViewTests(TestCase):
     def test_successful_post_request(self):
         holder = self.client.post(
@@ -596,6 +597,7 @@ class DonorProfileTests(TestCase):
             profile.__str__(),
         )
 
+
 class DonorViewTests(TestCase):
     def test_successful_post_request(self):
         holder = self.client.post(
@@ -670,6 +672,7 @@ class DonorViewTests(TestCase):
     def test_helpseeker_register_home(self):
         holder = self.client.get(reverse("register:register"))
         self.assertEqual(holder.status_code, 200)
+
 
 class UserDeleteTests(TestCase):
     def test_delete_user(self):
