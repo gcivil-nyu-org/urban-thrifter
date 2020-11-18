@@ -162,6 +162,25 @@ class NotificationTests(TestCase):
         )
         self.assertEqual(notification.notificationstatus, 3)
 
+    def test_notification_model_save(self):
+        donor = createdonor()
+        helpseeker = creathelpseeker()
+        donation_post = createdonation(donor)
+        reservation = ReservationPost(
+            dropoff_time_request=donation_post.dropoff_time_1,
+            post=donation_post,
+            donor=donor,
+            helpseeker=helpseeker,
+        )
+        reservation.save()
+        notification = Notification(
+            post=reservation,
+            sender=helpseeker,
+            receiver=donor,
+            date=timezone.now(),
+        )
+        self.assertIsNone(notification.save())
+
 
 class ReservationPostListDeleteTests(TestCase):
     def test_delete_reservation_with_delete_helpseeker(self):
