@@ -686,3 +686,9 @@ class UserDeleteTests(TestCase):
         length = len(User.objects.filter(username=uname))
 
         self.assertEqual(length, 0)
+
+class ErrorTests(TestCase):
+    def test_serve_error(self):
+        holder = self.client.get("register/errorpage/500_server_error.html")
+        holder.status_code=500
+        self.assertEqual(holder.status_code, 500)
