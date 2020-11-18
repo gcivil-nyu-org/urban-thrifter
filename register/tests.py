@@ -1,6 +1,6 @@
 from django.test import TestCase
 from .models import HelpseekerProfile, DonorProfile
-from .forms import HelpseekerForm, DonorForm
+from .forms import HelpseekerForm, DonorForm, HelpseekerUpdateForm
 from django.contrib.auth.models import User
 from django.urls import reverse
 from django.utils.http import urlsafe_base64_encode
@@ -711,3 +711,8 @@ class ErrorTests(TestCase):
         holder = self.client.get("register/errorpage/403_permission_denied.html")
         holder.status_code = 403
         self.assertEqual(holder.status_code, 403)
+
+    def helpseeker_update_form(self):
+        updateform=HelpseekerUpdateForm()
+        self.assertEquals(updateform.helpser.form_show_labels,False)
+
