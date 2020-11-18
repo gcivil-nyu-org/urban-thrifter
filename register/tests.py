@@ -714,10 +714,9 @@ class ErrorTests(TestCase):
         self.assertEqual(holder.status_code, 403)
 
     def helpseeker_update_form(self):
-        updateform=HelpseekerUpdateForm()
-        self.assertEquals(updateform.helper.form_show_labels,False)
+        updateform = HelpseekerUpdateForm()
+        self.assertEquals(updateform.helper.form_show_labels, False)
 
     def helpseeker_update_form_2(self):
-        updateform=HelpseekerUpdateForm()
-        self.assertEquals(updateform.helper,FormHelper(updateform))
-
+        updateform = HelpseekerUpdateForm()
+        self.assertEquals(updateform.helper, FormHelper(updateform))
