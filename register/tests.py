@@ -311,6 +311,24 @@ class HelpseekerProfileTests(TestCase):
         profile = HelpseekerProfile(user=user)
         self.assertTrue(profile.complaint_count == 0)
 
+    def test_helpseeker_str(self):
+        form = HelpseekerForm(
+            data={
+                "username": "Jonathan",
+                "email": "ponathanjun@gmail.com",
+                "password1": "peaches12",
+                "password2": "peaches12",
+                "borough": "MAN",
+                "resource": ["FOOD", "MDCL"],
+            }
+        )
+        form.save()
+        user = User.objects.filter(id="1").first()
+        profile = HelpseekerProfile(user=user)
+        self.assertEquals(
+            "%s" % (profile.user),
+            profile.__str__(),
+        )
 
 class HelpseekerViewTests(TestCase):
     def test_successful_post_request(self):
