@@ -5,6 +5,8 @@ from donation.models import ResourcePost
 from register.models import DonorProfile, HelpseekerProfile
 from reservation.models import Notification
 from django.contrib.auth.models import User
+from django.urls import reverse
+from reservation.apps import ReservationConfig
 
 # from django.urls import reverse
 from django.utils import timezone
@@ -110,6 +112,19 @@ class ReservationPostTests(TestCase):
         reservation.dropoff_time_request = selected_time
         self.assertEqual(reservation.post.status, "AVAILABLE")
         self.assertEqual(reservation.dropoff_time_request, donation_post.dropoff_time_3)
+
+    def test_reservation_give_notifications(self):
+        donor = createdonor()
+        helpseeker = creathelpseeker()
+        donation_post = createdonation(donor)
+        reservation = ReservationPost(
+            dropoff_time_request=donation_post.dropoff_time_1,
+            post=donation_post,
+            donor=donor,
+            helpseeker=helpseeker,
+        )
+        reservation.save()
+        self.assertIsNone(reservation.give_notifications(reservation))
 
 
 class NotificationTests(TestCase):
