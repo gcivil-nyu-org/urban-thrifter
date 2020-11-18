@@ -239,7 +239,7 @@ def createhelpseeker():
     return helpseeker
 
 
-class getResourcePostTests(TestCase):
+class ResourcePost_Ajax_Wathclist_Tests(TestCase):
     def setUp(self):
         ResourcePost.objects.create(
             title="test1",
@@ -290,4 +290,9 @@ class getResourcePostTests(TestCase):
         # self.client.login(username='helpseeker_unit_test_1', password='Unittestpassword123!')
         response = self.client.get(reverse("donation:getResourcePosts"))
 
+        self.assertEqual(response.status_code, 200)
+
+    def test_watchlist_view(self):
+        self.client.force_login(self.user, backend=None)
+        response = self.client.get(reverse("watchlist-home"))
         self.assertEqual(response.status_code, 200)
