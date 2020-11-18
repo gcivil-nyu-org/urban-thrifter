@@ -283,3 +283,15 @@ class DonationTests(TestCase):
         self.assertEqual(holder.status_code, 200)
         self.assertContains(holder, "FOOD")
         self.assertContains(holder, "hi")
+
+
+class ReservationTests(TestCase):
+    def test_reservation_function(self):
+        self.client = Client()
+        donor = createdonor()
+        createdonation(donor)
+        user = creathelpseeker()
+        self.client.force_login(user, backend=None)
+        holder = self.client.post("/reservation/function/1", data={"dropoff_time": 1})
+        self.assertEqual(holder.status_code, 302)
+        self.assertEqual(holder["Location"], "/reservation/confirmed/")
