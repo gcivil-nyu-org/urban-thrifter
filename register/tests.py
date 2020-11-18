@@ -667,6 +667,9 @@ class DonorViewTests(TestCase):
         self.assertEqual(holder.status_code, 200)
         # self.assertContains(holder, "Donor Registration")
 
+    def test_helpseeker_register_home(self):
+        holder = self.client.get(reverse("register:register"))
+        self.assertEqual(holder.status_code, 200)
 
 class UserDeleteTests(TestCase):
     def test_delete_user(self):
