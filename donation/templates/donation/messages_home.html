@@ -15,8 +15,14 @@
             <div class='container'>
                 <div class="row pt-2 pb-2">
                     {% if post in new_posts %}
-                    <p class="pl-4"><i class="fas fa-star" style="color:#0c5460;"></i> New watchlist item in
-                        {{ post.resource_category }}</p>
+                    <div class="col">
+                        <p><i class="fas fa-star" style="color:#0c5460;"></i> New watchlist item in
+                            {{ post.resource_category }}</p>
+                    </div>
+                    <div class="col">
+                        <p class="btn btn-sm btn-outline-success float-right"><i class="read far fa-envelope"
+                                style="color:#0c5460"></i></p>
+                    </div>
                     {% else %}
                     <div class="col">
                         <p><i class="far fa-star"></i> Watchlist item in {{ post.resource_category }}</p>

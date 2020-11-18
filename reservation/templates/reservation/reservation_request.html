@@ -3,7 +3,6 @@
 {% block content %}
 <div class="content-section container animated fadeInUp">
     <!-- <img class='rounded-circle article-img' src='{% static "donation/asset/user.svg" %}'> -->
-    <!--  p>{{ object.image.url }}</p-->
     <div class="row justify-content-around">
         <div class="col-md-10">
             <legend class='mb-4 font-weight-bold'>Reservation Details</legend>
@@ -15,9 +14,18 @@
             <img src="{{object.image.url}}" />
         </div> -->
         <div class="col-4">
+            <div id="donationModal" class="modal">
+                <!-- The Close Button -->
+                <span class="close-modal">&times;</span>
+                <!-- Modal Content (The Image) -->
+                <img class="modal-content" id="displayImg">
+                <!-- Modal Caption (Image Text) -->
+                <div id="caption"></div>
+            </div>
             <label>Title</label>
             <p class="graybox">{{ object.title }}</p>
-            <label>Dropoff Location</label>
+            <label>Dropoff Location <a class="location-toggle text-muted" style="cursor:pointer;"><i
+                        class="fas fa-eye"></i></a></label>
             <p class="graybox">{{ object.dropoff_location.place }}</p>
         </div>
         <div class="col-4">
@@ -27,6 +35,10 @@
             <p class="graybox">{{ object.quantity }}</p>
             <label>Description</label>
             <p class="graybox">{{ object.description }}</p>
+            <div class="article-img img-circle"><img class="img-thumbnail" id="donationImg" alt="{{object.title}}"
+                    src="{{object.image.url}}" style="display:block;width:100%;" />
+                <!-- <i class="fas fa-search-plus"></i> -->
+            </div>
         </div>
     </div>
     <div class="row justify-content-around">
@@ -49,10 +61,20 @@
             </form>
         </div>
     </div>
-
 </div>
 
 <script>
+    $(document).ready(function () {
+        $(".location-toggle").click(function () {
+            $("#dropoff-location").animate({ opacity: 'toggle' }, 'slow');
+            var eye = $('.location-toggle').html();
+            if (eye == '<i class="fas fa-eye"></i>') {
+                $('.location-toggle').html("<i class='fas fa-eye-slash'></i>");
+            } else {
+                $('.location-toggle').html('<i class="fas fa-eye"></i>');
+            }
+        });
+    });
     mapboxgl.accessToken = "pk.eyJ1Ijoiamdpbm1iNyIsImEiOiJja2cybXpuNzAwMXFzMnFqdDFzbXBmNGszIn0.6UJeoJW2FwSS9LAOZN_QBw"
     var map = new mapboxgl.Map({
         container: 'dropoff-location',
@@ -64,5 +86,25 @@
     new mapboxgl.Marker()
         .setLngLat(["{{ object.dropoff_location.longitude}}", "{{ object.dropoff_location.latitude}}"])
         .addTo(map)
+
+    var modal = document.getElementById("donationModal");
+
+    // Get the image and insert it inside the modal - use its "alt" text as a caption
+    var img = document.getElementById("donationImg");
+    var modalImg = document.getElementById("displayImg");
+    var captionText = document.getElementById("caption");
+    img.onclick = function () {
+        modal.style.display = "block";
+        modalImg.src = this.src;
+        captionText.innerHTML = this.alt;
+    }
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close-modal")[0];
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function () {
+        modal.style.display = "none";
+    }
 </script>
 {% endblock content %}

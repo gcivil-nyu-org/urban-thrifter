@@ -2,44 +2,43 @@
 <header class="site-header clearfix">
   <nav class="navbar fixed-top bg-white navbar-expand-md">
     <div class="container">
-      <a class="navbar-brand mr-4" href="{% url 'home' %}"><img src="{% static 'homepage/img/logo.png' %}" alt=""></a>
+      <a class="navbar-brand mr-4" href="{% url 'home' %}"><img src="{% static 'homepage/img/logo.png' %}" alt="Home" title="Home"></a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle"
         aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarToggle">
         <div class="navbar-nav mr-auto">
-          <a class="nav-item nav-link" href="{% url 'home' %}">Home</a>
-          <a class="nav-item nav-link" href="">About</a>
+          <a class="nav-item nav-link" title="Home" href="{% url 'home' %}">Home</a>
         </div>
         <!-- Navbar Right Side -->
         <div class="navbar-nav">
           <!-- Add conditional statement to present different tab dependiing on the login status -->
           {% if user.is_authenticated %}
           {% if user.donorprofile %}
-          <a id="donor-notification" class="nav-item nav-link" href="{% url 'donation:donation-messages' %}"><i
-              class="fas fa-envelope"></i></a>
-          <a class="nav-item nav-link" href="{% url 'register:donor-profile' user.username %}"><i
+          <a id="donor-notification" class="nav-item nav-link" href="{% url 'donation:donation-messages' %}" title="Message"><i
+              class="fas fa-envelope-open-text"></i></a>
+          <a class="nav-item nav-link" href="{% url 'register:donor-profile' user.username %}" title="Profile"><i
               class="fas fa-user-circle"></i></a>
-          <a class="nav-item nav-link" href="{% url 'donation:donation-home' %}"><i class="fas fa-box-open"></i></a>
-          <a class="nav-item nav-link" href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i></a>
+          <a class="nav-item nav-link" href="{% url 'donation:donation-home' %}" title="Donation"><i class="fas fa-box-open"></i></a>
+          <a class="nav-item nav-link" href="{% url 'logout' %}" title="Sign Out"><i class="fas fa-sign-out-alt"></i></a>
           {% elif user.helpseekerprofile %}
-          <a id="helpseeker-notification" class="nav-item nav-link pr-4 mr-3"
-            href="{% url 'reservation:reservation-messages' %}"><i class="fas fa-envelope"></i></a>
-          <a id="display" class="nav-item nav-link" href="{% url 'watchlist-home' %}"><i class="fas fa-bell"></i></a>
-          <a class="nav-item nav-link" href="{% url 'register:helpseeker-profile' %}"><i
+          <a id="helpseeker-notification" class="nav-item nav-link pr-3 mr-3"
+            href="{% url 'reservation:reservation-messages' %}" title="Message"><i class="fas fa-envelope-open-text"></i></a>
+          <a id="display" class="nav-item nav-link" href="{% url 'watchlist-home' %}" title="Watchlist"><i class="fas fa-bell"></i></a>
+          <a class="nav-item nav-link" href="{% url 'register:helpseeker-profile' %}" title="Profile"><i
               class="fas fa-user-circle"></i></a>
-          <a class="nav-item nav-link" href="{% url 'main-map' %}"><i class="fas fa-map-marker-alt"></i></a>
-          <a class="nav-item nav-link" href="{% url 'reservation:reservation-home' %}"><i
+          <a class="nav-item nav-link" href="{% url 'main-map' %}" title="Resource Map"><i class="fas fa-map-marker-alt"></i></a>
+          <a class="nav-item nav-link" href="{% url 'reservation:reservation-home' %}" title="Reservation"><i
               class="fas fa-box-open"></i></a>
-          <a class="nav-item nav-link" href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i></a>
+          <a class="nav-item nav-link" href="{% url 'logout' %}" title="Sign Out"><i class="fas fa-sign-out-alt"></i></a>
           {% else %}
-          <a class="nav-item nav-link" href="/admin"><i class="fas fa-user-circle"></i></a>
-          <a class="nav-item nav-link" href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i></a>
+          <a class="nav-item nav-link" href="/admin" title="Admin Portal"><i class="fas fa-user-circle"></i></a>
+          <a class="nav-item nav-link" href="{% url 'logout' %}" title="Sign Out"><i class="fas fa-sign-out-alt"></i></a>
           {% endif %}
           {% else %}
-          <a class="nav-item nav-link" href="{% url 'login' %}"><i class="fas fa-sign-in-alt"></i></a>
-          <a class="nav-item nav-link" href="{% url 'register:register' %}"><i class="fas fa-user-plus"></i></a>
+          <a class="nav-item nav-link" href="{% url 'login' %}" title="Sign In"><i class="fas fa-sign-in-alt"></i></a>
+          <a class="nav-item nav-link" href="{% url 'register:register' %}" title="Sign Up"><i class="fas fa-user-plus"></i></a>
           {% endif %}
         </div>
       </div>
@@ -53,10 +52,10 @@
   setInterval(function () {
     $.get(ajaxLink, function (data) {
       if (data == 0) {
-        $("#helpseeker-notification").html("<i class='fas fa-envelope'></i>");
+        $("#helpseeker-notification").html("<i class='fas fa-envelope-open-text'></i>");
 
       } else {
-        $("#helpseeker-notification").html("<i class='fas fa-envelope-open-text'></i><span class='message-number'>" + data +
+        $("#helpseeker-notification").html("<i class='fas fa-envelope'></i><span class='message-number'>" + data +
           "</span>");
       }
     });
@@ -91,9 +90,9 @@
   setInterval(function () {
     $.get(ajaxLink, function (data) {
       if (data <= 0) {
-        $("#donor-notification").html("<i class='fas fa-envelope'></i>");
+        $("#donor-notification").html("<i class='fas fa-envelope-open-text'></i>");
       } else {
-        $("#donor-notification").html("<i class='fas fa-envelope-open-text'></i><span class='message-number'>" + data +
+        $("#donor-notification").html("<i class='fas fa-envelope'></i><span class='message-number'>" + data +
           "</span>");
       }
     });

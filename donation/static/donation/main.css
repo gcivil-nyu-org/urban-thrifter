@@ -411,13 +411,114 @@ a.article-title:hover {
   background-color: #bee5eb !important;
 }
 
-.read-button:hover .unread,
-.read-button .read {
-    display: none;
+.read-button:hover .unread, .read-button .read {
+  display: none;
 }
+
 .read-button:hover .read {
-    display: inline;
+  display: inline;
 }
+
+#donationImg {
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+#donationImg:hover {
+  opacity: 0.7;
+}
+
+/* The Modal (background) */
+
+#donationModal {
+  display: none;
+  /* Hidden by default */
+  position: fixed;
+  /* Stay in place */
+  z-index: 1;
+  /* Sit on top */
+  padding-top: 100px;
+  /* Location of the box */
+  left: 0;
+  top: 0 !important;
+  width: 100%;
+  /* Full width */
+  height: 100%;
+  /* Full height */
+  overflow: auto;
+  /* Enable scroll if needed */
+  background-color:#333;
+  /* Fallback color */
+  background-color: #333;
+  /* Black w/ opacity */
+}
+
+/* Modal Content (Image) */
+
+.modal-content {
+  margin: auto;
+  display: block;
+  width: 80%;
+  max-width: 700px;
+}
+
+/* Caption of Modal Image (Image Text) - Same Width as the Image */
+
+#caption {
+  margin: auto;
+  display: block;
+  width: 80%;
+  max-width: 700px;
+  text-align: center;
+  color: #ccc;
+  padding: 10px 0;
+  height: 150px;
+}
+
+/* Add Animation - Zoom in the Modal */
+
+.modal-content, #caption {
+  animation-name: zoom;
+  animation-duration: 0.6s;
+}
+
+@keyframes zoom {
+  from {
+    transform: scale(0)
+  }
+  to {
+    transform: scale(1)
+  }
+}
+
+/* The Close Button */
+
+.close-modal {
+  position: absolute;
+  top: 15px;
+  right: 35px;
+  color: #f1f1f1 !important;
+  font-size: 40px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.close-modal:hover, .close-modal:focus {
+  color: #bbb;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* 100% Image Width on Smaller Screens */
+
+@media only screen and (max-width: 700px) {
+  .modal-content {
+    width: 100%;
+  }
+}
+
+
 /* Reservation app style end */
 
 /* Map app style */
