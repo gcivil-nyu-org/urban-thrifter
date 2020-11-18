@@ -8,14 +8,14 @@
 <article class="card donation-card mb-2 animated fadeIn">
     <!-- <img class='rounded-circle article-img' src='{{ post.author.profile.image.url }}' > -->
     {% if post in new_posts %}
-    <div class="card-header new-watchlist-post">
+    <div class="card-header new-post">
         {% else %}
         <div class="card-header">
             {% endif %}
             <div class='container'>
                 <div class="row pt-2 pb-2">
                     {% if post in new_posts %}
-                    <p><i class="fas fa-star" style="color:#0c5460;"></i> New watchlist item in
+                    <p class="pl-4"><i class="fas fa-star" style="color:#0c5460;"></i> New watchlist item in
                         {{ post.resource_category }}</p>
                     {% else %}
                     <div class="col">

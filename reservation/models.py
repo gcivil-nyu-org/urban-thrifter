@@ -14,6 +14,7 @@ class ReservationPost(models.Model):
     helpseeker = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="helpseeker_id"
     )
+    date_created = models.DateTimeField(default=timezone.now)
 
     # TODO: generate reservation ID token as primary key?
     # TODO: return reservation ID in __str__
@@ -34,7 +35,7 @@ class ReservationPost(models.Model):
 
     def get_absolute_url(self):
         # return the path of the specific post
-        return reverse("reservation-detail", kwargs={"pk": self.pk})
+        return reverse("reservation:reservation-detail", kwargs={"pk": self.pk})
 
 
 class Notification(models.Model):
