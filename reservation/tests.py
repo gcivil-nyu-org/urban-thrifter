@@ -124,6 +124,19 @@ class ReservationPostTests(TestCase):
         reservation.save()
         self.assertIsNone(reservation.give_notifications(reservation))
 
+    def test_reservation_str(self):
+        donor = createdonor()
+        helpseeker = creathelpseeker()
+        donation_post = createdonation(donor)
+        reservation = ReservationPost(
+            dropoff_time_request=donation_post.dropoff_time_1,
+            post=donation_post,
+            donor=donor,
+            helpseeker=helpseeker,
+        )
+        reservation.save()
+        self.assertEquals(str(reservation.post.title) + " for " + str(reservation.helpseeker.username),reservation.__str__())
+
 
 class NotificationTests(TestCase):
     def test_notification_model_isseen(self):
