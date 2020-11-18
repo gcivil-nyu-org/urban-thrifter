@@ -162,25 +162,6 @@ class ResourcePostDeleteViewTests(TestCase):
         self.assertEqual(length, 0)
 
 
-# import datetime
-# from django.test import TestCase
-# from django.utils import timezone
-# from django.urls import reverse
-# from .models import Post, Comment
-
-# # Create your tests here.
-# class PostListViewTest(TestCase):
-
-#     def test_published_post(self):
-#         self.client.post('/post/compose/', {'author':"manualvarado22", 'title': "Super Important Test", 'content':"This is really important.", 'published_date':timezone.now()})
-#         self.assertEqual(Post.objects.last().title, "Super Important Test")
-
-#     def test_display_post(self):
-#         post = Post.objects.create(...whatever...)
-#         response = self.client.get(reverse('blog:post_detail', pk=post.pk))
-#         self.assertContains(response, "really important")
-
-
 def createdonor_1():
     donor = User(
         username="donor_unit_test_1",
