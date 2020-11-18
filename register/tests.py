@@ -1,11 +1,12 @@
 from django.test import TestCase
 from .models import HelpseekerProfile, DonorProfile
-from .forms import HelpseekerForm, DonorForm
+from .forms import HelpseekerForm, DonorForm, HelpseekerUpdateForm
 from django.contrib.auth.models import User
 from django.urls import reverse
 from django.utils.http import urlsafe_base64_encode
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.utils.encoding import force_bytes
+from crispy_forms.helper import FormHelper
 
 
 class EmailTests(TestCase):
@@ -311,6 +312,25 @@ class HelpseekerProfileTests(TestCase):
         profile = HelpseekerProfile(user=user)
         self.assertTrue(profile.complaint_count == 0)
 
+    def test_helpseeker_str(self):
+        form = HelpseekerForm(
+            data={
+                "username": "Jonathan",
+                "email": "ponathanjun@gmail.com",
+                "password1": "peaches12",
+                "password2": "peaches12",
+                "borough": "MAN",
+                "resource": ["FOOD", "MDCL"],
+            }
+        )
+        form.save()
+        user = User.objects.filter(id="1").first()
+        profile = HelpseekerProfile(user=user)
+        self.assertEquals(
+            "%s" % (profile.user),
+            profile.__str__(),
+        )
+
 
 class HelpseekerViewTests(TestCase):
     def test_successful_post_request(self):
@@ -561,6 +581,23 @@ class DonorProfileTests(TestCase):
         profile = DonorProfile(user=user)
         self.assertTrue(profile.complaint_count == 0)
 
+    def test_donor_str(self):
+        form = DonorForm(
+            data={
+                "username": "Jonathan",
+                "email": "ponathanjun@gmail.com",
+                "password1": "peaches12",
+                "password2": "peaches12",
+            }
+        )
+        form.save()
+        user = User.objects.filter(id="1").first()
+        profile = DonorProfile(user=user)
+        self.assertEquals(
+            "%s" % (profile.user),
+            profile.__str__(),
+        )
+
 
 class DonorViewTests(TestCase):
     def test_successful_post_request(self):
@@ -633,6 +670,10 @@ class DonorViewTests(TestCase):
         self.assertEqual(holder.status_code, 200)
         # self.assertContains(holder, "Donor Registration")
 
+    def test_helpseeker_register_home(self):
+        holder = self.client.get(reverse("register:register"))
+        self.assertEqual(holder.status_code, 200)
+
 
 class UserDeleteTests(TestCase):
     def test_delete_user(self):
@@ -646,3 +687,36 @@ class UserDeleteTests(TestCase):
         length = len(User.objects.filter(username=uname))
 
         self.assertEqual(length, 0)
+
+
+class ErrorTests(TestCase):
+    def test_serve_error(self):
+        holder = self.client.get("register/errorpage/500_server_error.html")
+        holder.status_code = 500
+        self.assertEqual(holder.status_code, 500)
+
+    def test_bad_gate_day(self):
+        holder = self.client.get("register/errorpage/502_bad_gateway.html")
+        holder.status_code = 500
+        self.assertEqual(holder.status_code, 500)
+
+    def test_error(self):
+        holder = self.client.get("register/errorpage/error.html")
+        self.assertEqual(holder.status_code, 404)
+
+    def test_page_not_found(self):
+        holder = self.client.get("register/errorpage/404_page_not_found.html")
+        self.assertEqual(holder.status_code, 404)
+
+    def test_permission_denied(self):
+        holder = self.client.get("register/errorpage/403_permission_denied.html")
+        holder.status_code = 403
+        self.assertEqual(holder.status_code, 403)
+
+    def helpseeker_update_form(self):
+        updateform = HelpseekerUpdateForm()
+        self.assertEquals(updateform.helper.form_show_labels, False)
+
+    def helpseeker_update_form_2(self):
+        updateform = HelpseekerUpdateForm()
+        self.assertEquals(updateform.helper, FormHelper(updateform))
