@@ -42,7 +42,7 @@ class ResourcePost(models.Model):
         default="donation-pics/default.jpg", upload_to="donation-pics", blank=True
     )
     status = models.CharField(
-        max_length=100, choices=STATUS_CHOICES, default="Available"
+        max_length=100, choices=STATUS_CHOICES, default="AVAILABLE"
     )
 
     # Dunder (abbr. for Double Under)/Magic str method
