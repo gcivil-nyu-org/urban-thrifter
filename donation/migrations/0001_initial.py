@@ -29,7 +29,13 @@ class Migration(migrations.Migration):
                 ('dropoff_time_3', models.DateTimeField(blank=True, null=True)),
                 ('date_created', models.DateTimeField(default=django.utils.timezone.now)),
                 ('dropoff_location', places.fields.PlacesField(blank=True, max_length=255, null=True)),
-                ('resource_category', models.CharField(choices=[('FOOD', 'Food'), ('MDCL', 'Medical/ PPE'), ('CLTH', 'Clothing/ Covers'), ('ELEC', 'Electronics'), ('OTHR', 'Others')], max_length=100)),
+                ('resource_category', models.CharField(choices=[
+                    ('FOOD', 'Food'),
+                    ('MDCL', 'Medical/ PPE'),
+                    ('CLTH', 'Clothing/ Covers'),
+                    ('ELEC', 'Electronics'),
+                    ('OTHR', 'Others')],
+                    max_length=100)),
                 ('image', models.ImageField(blank=True, default='donation-pics/default.jpg', upload_to='donation-pics')),
                 ('status', models.CharField(choices=[
                     ('AVAILABLE', 'Available'),
