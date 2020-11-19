@@ -12,10 +12,10 @@ from django.contrib.auth.models import User
 # User Models save database specifically for USERS
 RESROUCE_CATEGORY_CHOICES = (
     ("FOOD", "Food"),
-    ("MDCL", "Medical/ PPE"),
-    ("CLTH", "Clothing/ Covers"),
-    ("ELEC", "Electronics"),
-    ("OTHR", "Others"),
+    ("MEDICAL/ PPE", "Medical/ PPE"),
+    ("CLOTHING/ COVERS", "Clothing/ Covers"),
+    ("ELECTRONICS", "Electronics"),
+    ("OTHERS", "Others"),
 )
 STATUS_CHOICES = (
     ("AVAILABLE", "Available"),
