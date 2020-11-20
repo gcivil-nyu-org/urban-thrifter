@@ -26,9 +26,12 @@ def donation_post_list(request):
     # Getting posts based on filters or getting all posts
     url_parameter = request.GET.get("q")
     if url_parameter:
-        combined_list = (ResourcePost.objects.filter(title__icontains=url_parameter) |
-            ResourcePost.objects.filter(resource_category__icontains=url_parameter))
-        post_list = combined_list.filter(status__in=["Available", "AVAILABLE"]).order_by("-date_created")
+        combined_list = ResourcePost.objects.filter(
+            title__icontains=url_parameter
+        ) | ResourcePost.objects.filter(resource_category__icontains=url_parameter)
+        post_list = combined_list.filter(
+            status__in=["Available", "AVAILABLE"]
+        ).order_by("-date_created")
     else:
         post_list = ResourcePost.objects.filter(
             status__in=["Available", "AVAILABLE"]
