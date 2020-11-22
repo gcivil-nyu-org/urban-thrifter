@@ -124,7 +124,7 @@ def confirm_notification(request, id):
             notification.notificationstatus = 1
             resource_post.status = "RESERVED"
             resource_post.save()
-            reserve_post= 1
+            reserve_post.reservationstatus= 1
             reserve_post.save()
             notification.save()
         elif "deny" in request.POST:
@@ -133,7 +133,7 @@ def confirm_notification(request, id):
             notification.notificationstatus = 2
             resource_post.status = "AVAILABLE"
             resource_post.save()
-            reserve_post= 2
+            reserve_post.reservationstatus= 2
             reserve_post.save()
             notification.save()
         return render(request, "donation/notifications_confirm.html")
