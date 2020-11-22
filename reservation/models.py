@@ -8,6 +8,7 @@ from django.db.models.signals import post_save
 
 # Create your models here.
 class ReservationPost(models.Model):
+    reservation_status = ((1, "accept"), (2, "reject"), (3, "pending"))
     dropoff_time_request = models.DateTimeField(default=timezone.now)
     post = models.ForeignKey(ResourcePost, on_delete=models.CASCADE)
     donor = models.ForeignKey(User, on_delete=models.CASCADE, related_name="donor_id")
