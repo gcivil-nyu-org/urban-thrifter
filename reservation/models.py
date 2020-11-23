@@ -8,7 +8,7 @@ from django.db.models.signals import post_save
 
 # Create your models here.
 class ReservationPost(models.Model):
-    Reservation_Status = ((1, "ACCEPT"), (2, "REJECT"), (3, "PENDING"))
+    Reservation_Status = ((1, "accept"), (2, "reject"), (3, "pending"))
     dropoff_time_request = models.DateTimeField(default=timezone.now)
     post = models.ForeignKey(ResourcePost, on_delete=models.CASCADE)
     donor = models.ForeignKey(User, on_delete=models.CASCADE, related_name="donor_id")
@@ -27,6 +27,8 @@ class ReservationPost(models.Model):
 
     def give_notifications(sender, instance, *args, **kwargs):
         reservationpost = instance
+        if reservationpost.reservationstatus == 1 or reservationpost.reservationstatus == 2:
+            return
         reservepost = reservationpost.post
         helpseker = reservationpost.helpseeker
         notify = Notification(
