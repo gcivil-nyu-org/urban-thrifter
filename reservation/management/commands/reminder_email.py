@@ -17,7 +17,7 @@ class Command(BaseCommand):
                 reservationstatus=1,
                 dropoff_time_request__gt=datetime.datetime.now(),
                 dropoff_time_request__lte=datetime.datetime.now()
-                + datetime.timedelta(minutes=10),
+                + datetime.timedelta(hours=10),
             )
             email_subject = "Reminder for your incoming donation dropoff"
             for acceptedpost in acceptedposts:
@@ -29,19 +29,19 @@ class Command(BaseCommand):
                     ).strftime("%-I:%M")
                 )
                 message = (
-                    "Just a quick reminder. The dropoff time of your donation of "
+                    "<h1>Just a quick reminder. The dropoff time for donation of "
                     + str(acceptedpost.post.title)
                     + " for "
                     + str(acceptedpost.helpseeker)
                     + " is at "
                     + dropoff_time
-                    + " today."
+                    + " today.</h1>"
                 )
                 send_mail(
                     email_subject,
                     message,
                     "nyu.django.unchained@gmail.com",
-                    [to_email[0]["email"]],
+                    [to_email[0]["email"]], html_message=message,
                     fail_silently=False,
                 )
         except Exception as e:
