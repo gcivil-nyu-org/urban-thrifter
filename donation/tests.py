@@ -161,7 +161,7 @@ class ResourcePostDeleteViewTests(TestCase):
                 length += 1
         self.assertEqual(length, 0)
 
-        
+
 def createdonor_1():
     donor = User(
         username="donor_unit_test_1",
