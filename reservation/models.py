@@ -27,7 +27,10 @@ class ReservationPost(models.Model):
 
     def give_notifications(sender, instance, *args, **kwargs):
         reservationpost = instance
-        if reservationpost.reservationstatus == 1 or reservationpost.reservationstatus == 2:
+        if (
+            reservationpost.reservationstatus == 1
+            or reservationpost.reservationstatus == 2
+        ):
             return
         reservepost = reservationpost.post
         helpseker = reservationpost.helpseeker
