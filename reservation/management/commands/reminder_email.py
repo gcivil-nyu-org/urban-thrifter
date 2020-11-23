@@ -29,13 +29,7 @@ class Command(BaseCommand):
                     ).strftime("%-I:%M")
                 )
                 message = (
-                    "<h1>Just a quick reminder. The dropoff time for donation of "
-                    + str(acceptedpost.post.title)
-                    + " for "
-                    + str(acceptedpost.helpseeker)
-                    + " is at "
-                    + dropoff_time
-                    + " today.</h1>"
+                    "<h1>DONATION DROPOFF REMINDER</h1><p>Just a quick reminder. The dropoff time for donation of <strong>" + str(acceptedpost.post.title)+ "</strong> to <strong>" + str(acceptedpost.helpseeker) + "</strong> is at <strong>"+ dropoff_time+ "</strong> today. </p>"
                 )
                 send_mail(
                     email_subject,
