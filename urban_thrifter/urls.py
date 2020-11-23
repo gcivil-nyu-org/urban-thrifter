@@ -20,6 +20,7 @@ from django.conf.urls.static import static
 from complaint import views
 from donation import views as donation_view
 from django.contrib.auth import views as auth_views
+from complaint.views import ComplaintCreateView
 
 urlpatterns = [
     path("donation/", include(("donation.urls", "donation"), namespace="donation")),
@@ -30,7 +31,8 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("map/", include("map.urls")),
     path("", donation_view.homepage, name="home"),
-    path("issue-complaint/", views.issue_complaint, name="issue-complaint"),
+    path("issue-complaint/", ComplaintCreateView.as_view(), name="issue-complaint"),
+    # path("issue-complaint/", views.issue_complaint, name="issue-complaint"),
     path("register/", include(("register.urls", "register"), namespace="register")),
     path(
         "login/",
