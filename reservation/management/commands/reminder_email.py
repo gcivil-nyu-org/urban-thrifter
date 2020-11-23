@@ -17,7 +17,7 @@ class Command(BaseCommand):
                 reservationstatus=1,
                 dropoff_time_request__gt=datetime.datetime.now(),
                 dropoff_time_request__lte=datetime.datetime.now()
-                + datetime.timedelta(hours=10),
+                + datetime.timedelta(hours=1),
             )
             email_subject = "Reminder for your incoming donation dropoff"
             for acceptedpost in acceptedposts:
@@ -26,10 +26,10 @@ class Command(BaseCommand):
                 dropoff_time = str(
                     acceptedpost.dropoff_time_request.astimezone(
                         pytz.timezone("US/Eastern")
-                    ).strftime("%-I:%M")
+                    ).strftime("%-I:%M %p")
                 )
                 message = (
-                    "<h1>DONATION DROPOFF REMINDER</h1><p>Just a quick reminder. The dropoff time for donation of <strong>" + str(acceptedpost.post.title)+ "</strong> to <strong>" + str(acceptedpost.helpseeker) + "</strong> is at <strong>"+ dropoff_time+ "</strong> today. </p>"
+                    "<h1>DONATION DROPOFF REMINDER</h1><p><h3>Just a quick reminder. The dropoff time for donation of <strong>" + str(acceptedpost.post.title)+ "</strong> to <strong>" + str(acceptedpost.helpseeker) + "</strong> is at <strong>"+ dropoff_time+ "</strong> today. </h3></p>"
                 )
                 send_mail(
                     email_subject,
