@@ -215,4 +215,6 @@ def get_reminder(request):
         message=" resource dropoff time approaching soon" 
         messages.append(message)
     context = {"messages": messages,}
+    data=posts.count()
+    print(data)
     return render( request,"donation/messages.html", context)
