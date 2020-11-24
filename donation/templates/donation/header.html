@@ -91,9 +91,9 @@
   setInterval(function () {
     $.get(ajaxLink, function (data) {
       if (data <= 0) {
-        $("#donor-notification").html("<i class='fas fa-bell'></i>");
+        $("#donor-notification").html("<i class='fas fa-envelope-open-text'></i>");
       } else {
-        $("#donor-notification").html("<i class='fas fa-bell'></i><span class='message-number'>" + data +
+        $("#donor-notification").html("<i class='fas fa-envelope'></i><span class='message-number'>" + data +
           "</span>");
       }
     });
@@ -116,9 +116,9 @@
   setInterval(function () {
     $.get(ajaxLink, function (data) {
       if (data <= 0) {
-        $("#display").html("<i class='fas fa-envelope-open-text'></i>");
+        $("#display").html("<i class='fas fa-bell'></i>");
       } else {
-        $("#display").html("<i class='fas fa-envelope'></i><span class='message-number'>" + data +
+        $("#display").html("<i class='fas fa-bell'></i><span class='message-number'>" + data +
           "</span>");
       }
     });
