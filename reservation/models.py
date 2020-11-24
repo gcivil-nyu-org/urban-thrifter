@@ -98,13 +98,4 @@ class Notification(models.Model):
             + " for "
             + str(self.post.post.title)
         )
-
-    """def get_unseen_messages_status(self):
-        notifications = Notification.objects.all()
-        for notification in notifications:
-            if notification.is_seen==False:
-                return True
-        return False"""
-
-
 post_save.connect(ReservationPost.give_notifications, sender=ReservationPost)
