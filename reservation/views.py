@@ -27,8 +27,11 @@ def donation_post_list(request):
     post_list = ResourcePost.objects.all()
     url_parameter = request.GET.get("q")
     if url_parameter:
-        post_list = post_list.filter(
-            title__icontains=url_parameter, status__in=["Available", "AVAILABLE"]
+        combined_list = ResourcePost.objects.filter(
+            title__icontains=url_parameter
+        ) | ResourcePost.objects.filter(resource_category__icontains=url_parameter)
+        post_list = combined_list.filter(
+            status__in=["Available", "AVAILABLE"]
         ).order_by("-date_created")
     else:
         post_list = post_list.filter(status__in=["Available", "AVAILABLE"]).order_by(
@@ -47,7 +50,7 @@ def donation_post_list(request):
         post__status__in=["Reserved", "RESERVED"]
     )
     reservation_pending_list = reservation_list.filter(reservationstatus=3)
-    print(reservation_pending_list)
+    # print(reservation_pending_list)
     reservation_closed_list = reservation_list.filter(
         post__status__in=["Closed", "CLOSED"]
     )
