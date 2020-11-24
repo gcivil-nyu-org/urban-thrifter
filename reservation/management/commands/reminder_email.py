@@ -18,7 +18,7 @@ class Command(BaseCommand):
                 reservationstatus=1,
                 dropoff_time_request__gt=datetime.datetime.now(),
                 dropoff_time_request__lte=datetime.datetime.now()
-                + datetime.timedelta(minutes=10),
+                + datetime.timedelta(hours=24),
             )
             email_subject = "Reminder for your incoming donation dropoff"
             for acceptedpost in acceptedposts:
@@ -36,15 +36,14 @@ class Command(BaseCommand):
                     + str(acceptedpost.pk)
                 )
                 message = (
-                    "<h1>DONATION DROPOFF REMINDER</h1><p><h3>Just a quick reminder. The dropoff time for donation of <strong>"
+                    "<h1>DONATION DROP-OFF REMINDER</h1><p><h3>Just a quick reminder. The dropoff time for donation of <strong>"
                     + str(acceptedpost.post.title)
                     + "</strong> to <strong>"
                     + str(acceptedpost.helpseeker)
                     + "</strong> is at <strong>"
                     + dropoff_time
-                    + "</strong>. Here is the link to your post: "
-                    + LINK
-                    + "</h3></p><p><h3>NOTE: You must be logged in to view the post.</h3></p>"
+                    + ".</strong></h3></p><p><h3><a href=" + LINK + ">Click on this link to view your upcoming donation drop-off details</a></h3></p>"
+                    + "</h3></p><p><h3>NOTE: You must be logged in to view the post.</h3></p><p><h3>Best,</h3></p><p><h3>Team Urban Thrifter</h3></p>"
                 )
                 send_mail(
                     email_subject,
