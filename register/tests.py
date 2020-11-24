@@ -293,7 +293,9 @@ class HelpseekerProfileTests(TestCase):
         profile.rc_2 = d["resource1"]
         profile.rc_3 = d["resource2"]
         self.assertTrue(
-            profile.rc_1 == "FOOD" and profile.rc_2 == "MEDICAL/ PPE" and profile.rc_3 == "OTHERS"
+            profile.rc_1 == "FOOD"
+            and profile.rc_2 == "MEDICAL/ PPE"
+            and profile.rc_3 == "OTHERS"
         )
 
     def test_helpseeker_profile_complaint_count(self):
