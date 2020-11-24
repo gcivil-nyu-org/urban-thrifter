@@ -18,6 +18,7 @@
           {% if user.donorprofile %}
           <a id="donor-notification" class="nav-item nav-link" href="{% url 'donation:donation-messages' %}" title="Message"><i
               class="fas fa-envelope-open-text"></i></a>
+          <a id="display" class="nav-item nav-link" href="{% url 'watchlist-home' %}" title="Watchlist"><i class="fas fa-bell"></i></a>
           <a class="nav-item nav-link" href="{% url 'register:donor-profile' user.username %}" title="Profile"><i
               class="fas fa-user-circle"></i></a>
           <a class="nav-item nav-link" href="{% url 'donation:donation-home' %}" title="Donation"><i class="fas fa-box-open"></i></a>
