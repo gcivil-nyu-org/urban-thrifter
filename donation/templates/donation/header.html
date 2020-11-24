@@ -107,11 +107,6 @@
       })
     }, 1000 * 2)
   })
-
-</script>
-{% endif %}
-{% if user.donorprofile %}
-<script>
   var ajaxLink1 = "{% url 'donation:get-reminder-count' %}";
   setInterval(function () {
     $.get(ajaxLink1, function (data) {
