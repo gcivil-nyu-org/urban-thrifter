@@ -10,4 +10,5 @@ urlpatterns = [
     path("post/<int:pk>", PostDetailView.as_view(), name="donation-detail"),
     path("ajax/getResourcePosts", views.getResourcePost, name="getResourcePosts"),
     path("messages/", reservation_views.show_notifications, name="donation-messages"),
+    path("reminder_notification/", views.get_reminder, name="get-reminder"),
 ]
