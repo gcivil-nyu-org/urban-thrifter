@@ -222,7 +222,7 @@ def get_reminder(request):
     posts = ReservationPost.objects.filter(reservationstatus=1,dropoff_time_request__gt=datetime.datetime.now(),dropoff_time_request__lte=datetime.datetime.now()+datetime.timedelta(minutes=10),)
     messages = []
     for post in posts:
-        message=" resource dropoff time approaching soon" 
+        message=post.post.title+" resource dropoff time approaching soon" + ", Receiver: " + post.helpseeker.username
         messages.append(message)
     context = {"messages": messages,}
     data=posts.count()
