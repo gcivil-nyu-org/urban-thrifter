@@ -4,6 +4,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import CreateView
 from .models import Complaint
 from django.urls import reverse
+from django.contrib.auth.decorators import login_required
+
 
 
 # class ComplaintCreateView(LoginRequiredMixin, CreateView):
@@ -18,6 +20,7 @@ from django.urls import reverse
 #     def get_success_url(self):
 #         return redirect('issue-complaint')
 
+@login_required
 def issue_complaint(request):
     if request.method == "POST":
         filled_form = ComplaintForm(request.POST, request.FILES)
@@ -30,18 +33,16 @@ def issue_complaint(request):
             new_form = ComplaintForm
             final_form = filled_form.save(commit=False)
             final_form.issuer = request.user
-            if request.user.helpseekerprofile:
-                final_form.receiver = final_form.reservation_post.donor
-            elif request.user.donorprofile:
-                final_form.receiver = final_form.reservation_post.helpseeker
-            else: #if admin
-                final_form.receiver = final_form.issuer
 
+            try:
+                if request.user.helpseekerprofile:
+                    final_form.receiver = final_form.reservation_post.donor
+            except Exception:
+                if request.user.donorprofile:
+                    final_form.receiver = final_form.reservation_post.helpseeker
 
             final_form.save()
-            # filled_form.issuer = request.user
-            # print(filled_form.issuer)
-            # filled_form.save()
+
             return render(
                 request,
                 "complaint/complaint_form.html",
