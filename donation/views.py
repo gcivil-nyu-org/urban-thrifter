@@ -10,6 +10,9 @@ import os
 from django.utils import timezone
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.decorators import login_required
+from django.views import View
+from django.utils.decorators import method_decorator
+from django.http import HttpResponse
 import datetime
 
 # , UserPassesTestMixin
