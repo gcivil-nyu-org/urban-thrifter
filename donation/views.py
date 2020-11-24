@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, CreateView, DetailView
 from .models import ResourcePost, User
+from reservation.models import ReservationPost
 from bootstrap_datepicker_plus import DateTimePickerInput
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse
@@ -25,7 +26,12 @@ def homepage(request):
 def home(request):
     user = request.user
     post_list = ResourcePost.objects.filter(donor=user).order_by("-date_created")
-    reserved_donation_posts = post_list.filter(status__in=["Reserved", "RESERVED"])
+    reserve_post_list = ReservationPost.objects.filter(donor=user).order_by(
+        "-date_created"
+    )
+    reserved_donation_posts = reserve_post_list.filter(
+        post__status__in=["Reserved", "RESERVED"]
+    )
     available_donation_posts = post_list.filter(status__in=["Available", "AVAILABLE"])
     closed_donation_posts = post_list.filter(status__in=["Closed", "CLOSED"])
     # page = request.GET.get("page", 1)
@@ -100,6 +106,34 @@ class PostCreateView(LoginRequiredMixin, CreateView):
         ):
             messages.error(self.request, "Please input your dropoff location.")
             return super().form_invalid(form)
+
+        dropoff_time_1 = form.cleaned_data["dropoff_time_1"]
+        dropoff_time_2 = form.cleaned_data["dropoff_time_2"]
+        dropoff_time_3 = form.cleaned_data["dropoff_time_3"]
+        if (
+            dropoff_time_1
+            and dropoff_time_1 <= timezone.now()
+            or dropoff_time_2
+            and dropoff_time_2 <= timezone.now()
+            or dropoff_time_3
+            and dropoff_time_3 <= timezone.now()
+        ):
+            messages.error(
+                self.request, "Please ensure your dropoff time is in the future."
+            )
+            return super().form_invalid(form)
+        if (
+            dropoff_time_1 == dropoff_time_2
+            or dropoff_time_2
+            and dropoff_time_3
+            and dropoff_time_2 == dropoff_time_3
+            or dropoff_time_3 == dropoff_time_1
+        ):
+            messages.error(
+                self.request, "Please ensure your dropoff time aren't repetitive."
+            )
+            return super().form_invalid(form)
+
         return super().form_valid(form)
 
 
@@ -115,14 +149,14 @@ class PostDetailView(DetailView):
 
 
 @login_required
-def getResourcePost(request):
+def get_resource_post(request):
     user = request.user
 
     curr_user_rc_1 = user.helpseekerprofile.rc_1
     curr_user_rc_2 = user.helpseekerprofile.rc_2
     curr_user_rc_3 = user.helpseekerprofile.rc_3
 
-    posts = ResourcePost.objects.all()
+    posts = ResourcePost.objects.filter(status__in=["Available", "AVAILABLE"])
     passingList = []
     for post in posts:
         if post.date_created >= user.helpseekerprofile.message_timer_before and (

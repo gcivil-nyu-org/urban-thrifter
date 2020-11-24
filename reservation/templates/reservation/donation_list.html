@@ -1,7 +1,7 @@
 <div class="tab-pane fade show active" id="pills-available" role="tabpanel" aria-labelledby="pills-available-tab">
 	{% if first %}
-	<div class="mb-2">
-		<form class="form-group">
+	<div>
+		<form class="mb-2 form-group">
 			<input id="user-input" class="form-control form-control" type="text" placeholder="&#xF002; Search"
 				style="font-family:DINFont, FontAwesome; font-size: 16px;" aria-label="Search">
 		</form>
@@ -62,7 +62,7 @@
 			</div>
 		</article>
 		{% empty %}
-		<div class="mt-3 alert alert-info text-center">There aren't any available donation currently.</div>
+		<div class="alert alert-info text-center">There aren't any available donation currently.</div>
 		{% endfor %}
 	</div>
 </div>

@@ -266,10 +266,10 @@ class ResourcePost_Ajax_Wathclist_Tests(TestCase):
     #     response = self.client.get(reverse('testlogin-view'))
     #     self.assertEqual(response.status_code, 200)
 
-    def test_getResourcePost(self):
+    def test_get_resource_post(self):
         self.client.force_login(self.user, backend=None)
         # self.client.login(username='helpseeker_unit_test_1', password='Unittestpassword123!')
-        response = self.client.get(reverse("donation:getResourcePosts"))
+        response = self.client.get(reverse("donation:get-resource-post"))
 
         self.assertEqual(response.status_code, 200)
 

@@ -1,6 +1,8 @@
 {% extends 'donation/base.html' %}
 {% load static %}
 {% block content %}
+{% if user.is_authenticated %}
+{% if object.donor == user or object.helpseeker == user %}
 <div class="content-section container animated fadeInUp">
     <!-- <img class='rounded-circle article-img' src='{% static "donation/asset/user.svg" %}'> -->
     <div class="row justify-content-around">
@@ -49,6 +51,20 @@
         </div>
     </div>
 </div>
+{% else %}
+<div class="container animated fadeInUp">
+    <div class="alert alert-info text-center">You do not have authorization to view this post.</div>
+</div>
+{% endif %}
+{% else %}
+<div class="mt-5 container animated fadeInUp">
+    <div class="alert alert-info text-center">You are not signed in.</div>
+    <div class="pt-3 text-center">
+        <a class="btn btn-wide btn-dark" href="{% url 'login' %}">Sign In Here<i
+                class="fas fa-sign-in-alt pl-2"></i></a>
+    </div>
+</div>
+{% endif %}
 <script>
     $(document).ready(function () {
         $(".location-toggle").click(function () {

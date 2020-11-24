@@ -24,6 +24,7 @@ def home(request):
 
 def donation_post_list(request):
     # Getting posts based on filters or getting all posts
+    post_list = ResourcePost.objects.all()
     url_parameter = request.GET.get("q")
     if url_parameter:
         combined_list = ResourcePost.objects.filter(
@@ -33,9 +34,9 @@ def donation_post_list(request):
             status__in=["Available", "AVAILABLE"]
         ).order_by("-date_created")
     else:
-        post_list = ResourcePost.objects.filter(
-            status__in=["Available", "AVAILABLE"]
-        ).order_by("-date_created")
+        post_list = post_list.filter(status__in=["Available", "AVAILABLE"]).order_by(
+            "-date_created"
+        )
     # print(len(post_list))
     # reservation_list = ReservationPost.objects.order_by("-date_created").values('post__id').annotate(
     #     name_count=Count('post__id')
@@ -48,9 +49,7 @@ def donation_post_list(request):
     reservation_reserved_list = reservation_list.filter(
         post__status__in=["Reserved", "RESERVED"]
     )
-    reservation_pending_list = reservation_list.filter(
-        post__status__in=["Pending", "PENDING"]
-    )
+    reservation_pending_list = reservation_list.filter(reservationstatus=3)
     # print(reservation_pending_list)
     reservation_closed_list = reservation_list.filter(
         post__status__in=["Closed", "CLOSED"]
@@ -120,12 +119,15 @@ def confirm_notification(request, id):
     if request.method == "POST":
         notification = Notification.objects.get(id=id)
         resource_post = ResourcePost.objects.get(id=notification.post.post.id)
+        reserve_post = ReservationPost.objects.get(id=notification.post.id)
         if "accept" in request.POST:
             # do subscribe
             notification.is_seen = True
             notification.notificationstatus = 1
             resource_post.status = "RESERVED"
             resource_post.save()
+            reserve_post.reservationstatus = 1
+            reserve_post.save()
             notification.save()
         elif "deny" in request.POST:
             # do unsubscribe
@@ -133,6 +135,8 @@ def confirm_notification(request, id):
             notification.notificationstatus = 2
             resource_post.status = "AVAILABLE"
             resource_post.save()
+            reserve_post.reservationstatus = 2
+            reserve_post.save()
             notification.save()
         return render(request, "donation/notifications_confirm.html")
 
