@@ -29,13 +29,20 @@ class Command(BaseCommand):
                     ).strftime("%b %d %Y %-I:%M %p")
                 )
                 message = (
-                    "<h1>DONATION DROPOFF REMINDER</h1><p><h3>Just a quick reminder. The dropoff time for donation of <strong>" + str(acceptedpost.post.title)+ "</strong> to <strong>" + str(acceptedpost.helpseeker) + "</strong> is at <strong>"+ dropoff_time+ "</strong>. </h3></p>"
+                    "<h1>DONATION DROPOFF REMINDER</h1><p><h3>Just a quick reminder. The dropoff time for donation of <strong>"
+                    + str(acceptedpost.post.title)
+                    + "</strong> to <strong>"
+                    + str(acceptedpost.helpseeker)
+                    + "</strong> is at <strong>"
+                    + dropoff_time
+                    + "</strong>. </h3></p>"
                 )
                 send_mail(
                     email_subject,
                     message,
                     "nyu.django.unchained@gmail.com",
-                    [to_email[0]["email"]], html_message=message,
+                    [to_email[0]["email"]],
+                    html_message=message,
                     fail_silently=False,
                 )
         except Exception as e:
