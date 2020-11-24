@@ -206,3 +206,6 @@ def watchlist_view(request):
 #         context["mapbox_access_token"] = "pk." + os.environ.get("MAPBOX_KEY")
 #         context["timestamp_now"] = datetime.datetime.now()
 #         return context
+
+def get_reminder(request):
+    return render( request,"donation/messages.html")
