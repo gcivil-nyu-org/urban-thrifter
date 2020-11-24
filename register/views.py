@@ -137,6 +137,8 @@ def helpseeker_edit_profile(request):
             hs_form.save()
             messages.success(request, "Account updated successfully.")
             return redirect("register:helpseeker-profile")
+        else:
+            messages.warning(request, "Repetitive resource category.")
     else:
         hs_form = HelpseekerUpdateForm(instance=request.user.helpseekerprofile)
 
