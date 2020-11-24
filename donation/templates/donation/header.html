@@ -112,9 +112,9 @@
 {% endif %}
 {% if user.donorprofile %}
 <script>
-  var ajaxLink = "{% url 'donation:get-reminder-count' %}";
+  var ajaxLink1 = "{% url 'donation:get-reminder-count' %}";
   setInterval(function () {
-    $.get(ajaxLink, function (data) {
+    $.get(ajaxLink1, function (data) {
       if (data <= 0) {
         $("#display1").html("<i class='fas fa-bell'></i>");
       } else {
