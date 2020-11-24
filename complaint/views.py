@@ -21,7 +21,6 @@ from django.urls import reverse
 def issue_complaint(request):
     if request.method == "POST":
         filled_form = ComplaintForm(request.POST, request.FILES)
-        filled_form.issuer = request.user
         if filled_form.is_valid():
             note = (
                 "Your complaint about %s has been received. \

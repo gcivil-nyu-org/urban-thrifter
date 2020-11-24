@@ -7,4 +7,4 @@ class ComplaintForm(forms.ModelForm):
 
     class Meta:
         model = Complaint
-        fields = ["subject", "message", "image", "resource_post"]
+        fields = ["subject", "message", "image", "reservation_post"]

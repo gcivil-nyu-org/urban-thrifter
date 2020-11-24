@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from donation.models import ResourcePost
+from reservation.models import ReservationPost
 
 
 
@@ -19,4 +19,17 @@ class Complaint(models.Model):
     status = models.CharField(max_length=100, choices=STATUS_CHOICES, default="PENDING")
     issuer = models.ForeignKey(User, on_delete=models.CASCADE, related_name="issuer_id")
     receiver = models.ForeignKey(User, on_delete=models.CASCADE, related_name="receiver_id")
-    resource_post = models.ForeignKey(ResourcePost, on_delete=models.CASCADE)
+    reservation_post = models.ForeignKey(ReservationPost, on_delete=models.CASCADE)
+
+    def save(self, *args, **kwargs):
+        if not self.issuer:
+            self.issuer = self.user
+        if not self.receiver:
+            if self.user.helpseekerprofile:
+                self.receiver = self.reservation_post.donor
+            elif self.user.donorprofile:
+                self.receiver = self.reservation_post.helpseeker
+            else: #if admin
+                self.receiver = self.issuer
+
+        super().save(*args, **kwargs)
