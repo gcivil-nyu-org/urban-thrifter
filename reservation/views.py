@@ -24,15 +24,16 @@ def home(request):
 
 def donation_post_list(request):
     # Getting posts based on filters or getting all posts
+    post_list = ResourcePost.objects.all()
     url_parameter = request.GET.get("q")
     if url_parameter:
-        post_list = ResourcePost.objects.filter(
+        post_list = post_list.filter(
             title__icontains=url_parameter, status__in=["Available", "AVAILABLE"]
         ).order_by("-date_created")
     else:
-        post_list = ResourcePost.objects.filter(
-            status__in=["Available", "AVAILABLE"]
-        ).order_by("-date_created")
+        post_list = post_list.filter(status__in=["Available", "AVAILABLE"]).order_by(
+            "-date_created"
+        )
     # print(len(post_list))
     # reservation_list = ReservationPost.objects.order_by("-date_created").values('post__id').annotate(
     #     name_count=Count('post__id')
