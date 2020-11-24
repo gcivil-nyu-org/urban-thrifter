@@ -97,5 +97,15 @@
       }
     });
   }, 1000 * 2); // check notification every 2 seconds
+
+  $(document).ready(function () {
+    setInterval(() => {
+      $.ajax({
+        type: 'GET',
+        url: "{% url 'donation:get-reminder' %}",
+      })
+    }, 1000 * 2)
+  })
+
 </script>
 {% endif %}
