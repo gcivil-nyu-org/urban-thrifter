@@ -210,5 +210,9 @@ def watchlist_view(request):
 
 def get_reminder(request):
     posts = ReservationPost.objects.filter(reservationstatus=1,dropoff_time_request__gt=datetime.datetime.now(),dropoff_time_request__lte=datetime.datetime.now()+datetime.timedelta(minutes=10),)
+    messages = []
+    for post in posts:
+        message=" resource dropoff time approaching soon" 
+        messages.append(message)
     context = {"messages": messages,}
     return render( request,"donation/messages.html", context)
