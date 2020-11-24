@@ -109,6 +109,7 @@
 
 </script>
 {% endif %}
+{% if user.donorprofile %}
 <script>
   var ajaxLink = "{% url 'donation:get-reminder-count' %}";
   setInterval(function () {
@@ -122,3 +123,4 @@
     });
   }, 1000 * 2); // check notification every 2 seconds
 </script>
+{% endif %}
