@@ -18,7 +18,7 @@ class Command(BaseCommand):
                 reservationstatus=1,
                 dropoff_time_request__gt=datetime.datetime.now(),
                 dropoff_time_request__lte=datetime.datetime.now()
-                + datetime.timedelta(minutes=10),
+                + datetime.timedelta(hours=24),
             )
             email_subject = "Reminder for your incoming donation dropoff"
             for acceptedpost in acceptedposts:
@@ -44,7 +44,7 @@ class Command(BaseCommand):
                     + dropoff_time
                     + "</strong>. Here is the link to your post: "
                     + LINK
-                    + "</h3></p>"
+                    + "</h3></p><p><h3>NOTE: You must be logged in to view the post.</h3></p>"
                 )
                 send_mail(
                     email_subject,
