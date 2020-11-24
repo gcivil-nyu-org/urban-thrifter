@@ -29,7 +29,12 @@ class Command(BaseCommand):
                         pytz.timezone("US/Eastern")
                     ).strftime("%b %d %Y %-I:%M %p")
                 )
-                LINK = "https://" + str(os.environ.get("DOMAIN_NAME")) + "/donation/post/" + str(acceptedpost.pk)
+                LINK = (
+                    "https://"
+                    + str(os.environ.get("DOMAIN_NAME"))
+                    + "/donation/post/"
+                    + str(acceptedpost.pk)
+                )
                 message = (
                     "<h1>DONATION DROPOFF REMINDER</h1><p><h3>Just a quick reminder. The dropoff time for donation of <strong>"
                     + str(acceptedpost.post.title)
@@ -37,7 +42,9 @@ class Command(BaseCommand):
                     + str(acceptedpost.helpseeker)
                     + "</strong> is at <strong>"
                     + dropoff_time
-                    + "</strong>. Here is the link to your post: " + LINK + "</h3></p>"
+                    + "</strong>. Here is the link to your post: "
+                    + LINK
+                    + "</h3></p>"
                 )
                 send_mail(
                     email_subject,
