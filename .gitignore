@@ -149,3 +149,4 @@ staticfiles/*
 # our donation images
 media/donation-pics/*
 */migrations/__pycache__/*
+*.pyc
