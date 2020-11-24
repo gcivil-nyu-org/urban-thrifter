@@ -26,10 +26,10 @@ class Command(BaseCommand):
                 dropoff_time = str(
                     acceptedpost.dropoff_time_request.astimezone(
                         pytz.timezone("US/Eastern")
-                    ).strftime("%-I:%M %p")
+                    ).strftime("%b %d %Y %-I:%M %p")
                 )
                 message = (
-                    "<h1>DONATION DROPOFF REMINDER</h1><p><h3>Just a quick reminder. The dropoff time for donation of <strong>" + str(acceptedpost.post.title)+ "</strong> to <strong>" + str(acceptedpost.helpseeker) + "</strong> is at <strong>"+ dropoff_time+ "</strong> today. </h3></p>"
+                    "<h1>DONATION DROPOFF REMINDER</h1><p><h3>Just a quick reminder. The dropoff time for donation of <strong>" + str(acceptedpost.post.title)+ "</strong> to <strong>" + str(acceptedpost.helpseeker) + "</strong> is at <strong>"+ dropoff_time+ "</strong>. </h3></p>"
                 )
                 send_mail(
                     email_subject,
