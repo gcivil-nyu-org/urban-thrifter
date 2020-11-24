@@ -42,7 +42,7 @@ class Command(BaseCommand):
                     + str(acceptedpost.helpseeker)
                     + "</strong> is at <strong>"
                     + dropoff_time
-                    + ".</strong></h3></p><p><h3><a href=" + LINK + ">Click on this link to view your upcoming donation drop-off details</a></h3></p>"
+                    + ".</strong></h3></p><p><h3><a href=" + LINK + ">Click here to view your upcoming donation drop-off details</a></h3></p>"
                     + "</h3></p><p><h3>NOTE: You must be logged in to view the post.</h3></p><p><h3>Best,</h3></p><p><h3>Team Urban Thrifter</h3></p>"
                 )
                 send_mail(
