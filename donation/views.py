@@ -208,4 +208,5 @@ def watchlist_view(request):
 #         return context
 
 def get_reminder(request):
-    return render( request,"donation/messages.html")
+    context = {"messages": messages,}
+    return render( request,"donation/messages.html", context)
