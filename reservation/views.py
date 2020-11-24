@@ -12,6 +12,8 @@ from django.template import loader
 from django.http import HttpResponse
 from django.views import View
 from django.utils.decorators import method_decorator
+from django.db.models import Q
+from django.utils import timezone
 
 # from donor_notifications.models import Notification
 from django.contrib.auth.decorators import login_required
@@ -24,13 +26,14 @@ def home(request):
 
 def donation_post_list(request):
     # Getting posts based on filters or getting all posts
+    post_list = ResourcePost.objects.all()
     url_parameter = request.GET.get("q")
     if url_parameter:
-        post_list = ResourcePost.objects.filter(
+        post_list = post_list.filter(
             title__icontains=url_parameter, status__in=["Available", "AVAILABLE"]
         ).order_by("-date_created")
     else:
-        post_list = ResourcePost.objects.filter(
+        post_list = post_list.filter(
             status__in=["Available", "AVAILABLE"]
         ).order_by("-date_created")
     # print(len(post_list))

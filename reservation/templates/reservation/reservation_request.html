@@ -1,6 +1,8 @@
 {% extends 'donation/base.html' %}
 {% load static %}
 {% block content %}
+{% if user.isauthenticated and user.helpseekerprofile %}
+{% if object.status == "Available" or object.status == "AVAILABLE" %}
 <div class="content-section container animated fadeInUp">
     <!-- <img class='rounded-circle article-img' src='{% static "donation/asset/user.svg" %}'> -->
     <div class="row justify-content-around">
@@ -62,7 +64,16 @@
         </div>
     </div>
 </div>
-
+{% else %}
+<div class="container animated fadeInUp">
+    <div class="alert alert-info text-center">This post is no longer available for reservation.</div>
+</div>
+{% endif %}
+{% else %}
+<div class="container animated fadeInUp">
+    <div class="alert alert-info text-center">This post is only available for helpseekers.</div>
+</div>
+{% endif %}
 <script>
     $(document).ready(function () {
         $(".location-toggle").click(function () {
