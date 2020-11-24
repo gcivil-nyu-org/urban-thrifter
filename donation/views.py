@@ -208,5 +208,6 @@ def watchlist_view(request):
 #         return context
 
 def get_reminder(request):
+    posts = ReservationPost.objects.filter(reservationstatus=1,dropoff_time_request__gt=datetime.datetime.now(),dropoff_time_request__lte=datetime.datetime.now()+datetime.timedelta(minutes=10),)
     context = {"messages": messages,}
     return render( request,"donation/messages.html", context)
