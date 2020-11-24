@@ -17,10 +17,10 @@ BOROUGH_CHOICES = [
 ]
 RESOURCE_CATEGORY_CHOICES = [
     ("FOOD", "Food"),
-    ("MDCL", "Medical/ PPE"),
-    ("CLTH", "Clothing/ Covers"),
-    ("ELEC", "Electronics"),
-    ("OTHR", "Others"),
+    ("MEDICAL/ PPE", "Medical/ PPE"),
+    ("CLOTHING/ COVERS", "Clothing/ Covers"),
+    ("ELECTRONICS", "Electronics"),
+    ("OTHERS", "Others"),
 ]
 
 

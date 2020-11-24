@@ -15,9 +15,9 @@ class HelpseekerProfile(models.Model):
     ]
     RESOURCE_CATEGORY_CHOICES = [
         ("FOOD", "Food"),
-        ("MDCL", "Medical/ PPE"),
-        ("CLTH", "Clothing/ Covers"),
-        ("ELEC", "Electronics"),
+        ("MEDICAL/ PPE", "Medical/ PPE"),
+        ("CLOTHING/ COVERS", "Clothing/ Covers"),
+        ("ELECTRONICS", "Electronics"),
         ("OTHR", "Others"),
     ]
     user = models.OneToOneField(User, on_delete=models.CASCADE)
