@@ -12,8 +12,6 @@ from django.template import loader
 from django.http import HttpResponse
 from django.views import View
 from django.utils.decorators import method_decorator
-from django.db.models import Q
-from django.utils import timezone
 
 # from donor_notifications.models import Notification
 from django.contrib.auth.decorators import login_required
@@ -33,9 +31,9 @@ def donation_post_list(request):
             title__icontains=url_parameter, status__in=["Available", "AVAILABLE"]
         ).order_by("-date_created")
     else:
-        post_list = post_list.filter(
-            status__in=["Available", "AVAILABLE"]
-        ).order_by("-date_created")
+        post_list = post_list.filter(status__in=["Available", "AVAILABLE"]).order_by(
+            "-date_created"
+        )
     # print(len(post_list))
     # reservation_list = ReservationPost.objects.order_by("-date_created").values('post__id').annotate(
     #     name_count=Count('post__id')

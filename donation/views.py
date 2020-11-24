@@ -26,8 +26,12 @@ def homepage(request):
 def home(request):
     user = request.user
     post_list = ResourcePost.objects.filter(donor=user).order_by("-date_created")
-    reserve_post_list = ReservationPost.objects.filter(donor=user).order_by("-date_created")
-    reserved_donation_posts = reserve_post_list.filter(post__status__in=["Reserved", "RESERVED"])
+    reserve_post_list = ReservationPost.objects.filter(donor=user).order_by(
+        "-date_created"
+    )
+    reserved_donation_posts = reserve_post_list.filter(
+        post__status__in=["Reserved", "RESERVED"]
+    )
     available_donation_posts = post_list.filter(status__in=["Available", "AVAILABLE"])
     closed_donation_posts = post_list.filter(status__in=["Closed", "CLOSED"])
     # page = request.GET.get("page", 1)
@@ -107,19 +111,27 @@ class PostCreateView(LoginRequiredMixin, CreateView):
         dropoff_time_2 = form.cleaned_data["dropoff_time_2"]
         dropoff_time_3 = form.cleaned_data["dropoff_time_3"]
         if (
-            dropoff_time_1 and dropoff_time_1 <= timezone.now() or
-            dropoff_time_2 and dropoff_time_2 <= timezone.now() or
-            dropoff_time_3 and dropoff_time_3 <= timezone.now()
+            dropoff_time_1
+            and dropoff_time_1 <= timezone.now()
+            or dropoff_time_2
+            and dropoff_time_2 <= timezone.now()
+            or dropoff_time_3
+            and dropoff_time_3 <= timezone.now()
         ):
-            messages.error(self.request, "Please ensure your dropoff time is in the future.")
+            messages.error(
+                self.request, "Please ensure your dropoff time is in the future."
+            )
             return super().form_invalid(form)
         if (
-            dropoff_time_1 == dropoff_time_2 or
-            dropoff_time_2 and dropoff_time_3 and
-            dropoff_time_2 == dropoff_time_3 or
-            dropoff_time_3 == dropoff_time_1
+            dropoff_time_1 == dropoff_time_2
+            or dropoff_time_2
+            and dropoff_time_3
+            and dropoff_time_2 == dropoff_time_3
+            or dropoff_time_3 == dropoff_time_1
         ):
-            messages.error(self.request, "Please ensure your dropoff time aren't repetitive.")
+            messages.error(
+                self.request, "Please ensure your dropoff time aren't repetitive."
+            )
             return super().form_invalid(form)
 
         return super().form_valid(form)
