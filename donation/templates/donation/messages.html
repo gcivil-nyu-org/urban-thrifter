@@ -1,3 +1,5 @@
+{% extends 'donation/base.html' %}
+{% block content %}
 {% for message in messages %}
 <article class="card donation-card mb-2 animated fadeIn">
     <div class="card-body ">
@@ -12,3 +14,4 @@
     </div>
 </article>
 {% endfor %}
+{% endblock %}
