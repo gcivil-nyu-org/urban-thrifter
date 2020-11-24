@@ -114,7 +114,8 @@ class PostCreateView(LoginRequiredMixin, CreateView):
             messages.error(self.request, "Please ensure your dropoff time is in the future.")
             return super().form_invalid(form)
         if (
-            dropoff_time_1 ==  dropoff_time_2 or
+            dropoff_time_1 == dropoff_time_2 or
+            dropoff_time_2 and dropoff_time_3 and
             dropoff_time_2 == dropoff_time_3 or
             dropoff_time_3 == dropoff_time_1
         ):
@@ -136,14 +137,14 @@ class PostDetailView(DetailView):
 
 
 @login_required
-def getResourcePost(request):
+def get_resource_post(request):
     user = request.user
 
     curr_user_rc_1 = user.helpseekerprofile.rc_1
     curr_user_rc_2 = user.helpseekerprofile.rc_2
     curr_user_rc_3 = user.helpseekerprofile.rc_3
 
-    posts = ResourcePost.objects.all()
+    posts = ResourcePost.objects.filter(status__in=["Available", "AVAILABLE"])
     passingList = []
     for post in posts:
         if post.date_created >= user.helpseekerprofile.message_timer_before and (

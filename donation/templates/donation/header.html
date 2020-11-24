@@ -65,7 +65,7 @@
     setInterval(() => {
       $.ajax({
         type: 'GET',
-        url: "{% url 'donation:getResourcePosts' %}",
+        url: "{% url 'donation:get-resource-post' %}",
         success: function (response) {
           $("#display").html('<i class="fas fa-bell"></i>')
           let postCounter = 0

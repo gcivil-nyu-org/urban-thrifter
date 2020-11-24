@@ -8,6 +8,6 @@ urlpatterns = [
     path("all/", PostListView.as_view(), name="donation-all"),
     path("new/", PostCreateView.as_view(), name="donation-new"),
     path("post/<int:pk>", PostDetailView.as_view(), name="donation-detail"),
-    path("ajax/getResourcePosts", views.getResourcePost, name="getResourcePosts"),
+    path("ajax/getResourcePosts", views.get_resource_post, name="get-resource-post"),
     path("messages/", reservation_views.show_notifications, name="donation-messages"),
 ]
