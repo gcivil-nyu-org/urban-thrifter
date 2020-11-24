@@ -118,12 +118,15 @@ def confirm_notification(request, id):
     if request.method == "POST":
         notification = Notification.objects.get(id=id)
         resource_post = ResourcePost.objects.get(id=notification.post.post.id)
+        reserve_post = ReservationPost.objects.get(id=notification.post.id)
         if "accept" in request.POST:
             # do subscribe
             notification.is_seen = True
             notification.notificationstatus = 1
             resource_post.status = "RESERVED"
             resource_post.save()
+            reserve_post.reservationstatus = 1
+            reserve_post.save()
             notification.save()
         elif "deny" in request.POST:
             # do unsubscribe
@@ -131,6 +134,8 @@ def confirm_notification(request, id):
             notification.notificationstatus = 2
             resource_post.status = "AVAILABLE"
             resource_post.save()
+            reserve_post.reservationstatus = 2
+            reserve_post.save()
             notification.save()
         return render(request, "donation/notifications_confirm.html")
 
