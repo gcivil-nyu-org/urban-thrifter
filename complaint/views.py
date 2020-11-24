@@ -28,8 +28,20 @@ def issue_complaint(request):
                 % (filled_form.cleaned_data["subject"],)
             )
             new_form = ComplaintForm
+            final_form = filled_form.save(commit=False)
+            final_form.issuer = request.user
+            if request.user.helpseekerprofile:
+                final_form.receiver = final_form.reservation_post.donor
+            elif request.user.donorprofile:
+                final_form.receiver = final_form.reservation_post.helpseeker
+            else: #if admin
+                final_form.receiver = final_form.issuer
 
-            filled_form.save()
+
+            final_form.save()
+            # filled_form.issuer = request.user
+            # print(filled_form.issuer)
+            # filled_form.save()
             return render(
                 request,
                 "complaint/complaint_form.html",
