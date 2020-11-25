@@ -98,4 +98,6 @@ class Notification(models.Model):
             + " for "
             + str(self.post.post.title)
         )
+
+
 post_save.connect(ReservationPost.give_notifications, sender=ReservationPost)
