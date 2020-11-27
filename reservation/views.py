@@ -47,8 +47,7 @@ def donation_post_list(request):
     # reservation_list = reservation_list.values("post__id", flat=True).first()
 
     reservation_reserved_list = reservation_list.filter(
-        post__status__in=["Reserved", "RESERVED"],
-        reservationstatus__exact=1
+        post__status__in=["Reserved", "RESERVED"], reservationstatus__exact=1
     )
     reservation_pending_list = reservation_list.filter(reservationstatus=3)
     # print(reservation_pending_list)
@@ -146,9 +145,7 @@ def reservation_function(request, id):
     if request.method == "POST":
         selected_timeslot = request.POST.get("dropoff_time")
         if selected_timeslot is None:
-            messages.error(
-                request, "Please select a drop-off time."
-            )
+            messages.error(request, "Please select a drop-off time.")
             return redirect("reservation:reservation-request", pk=id)
         resource_post = ResourcePost.objects.get(id=id)
         if resource_post.status == "Available" or resource_post.status == "AVAILABLE":
