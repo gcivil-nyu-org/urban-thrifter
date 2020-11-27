@@ -144,6 +144,11 @@ def confirm_notification(request, id):
 def reservation_function(request, id):
     if request.method == "POST":
         selected_timeslot = request.POST.get("dropoff_time")
+        if selected_timeslot is None:
+            messages.error(
+                request, "Please select a drop-off time."
+            )
+            return redirect("reservation:reservation-request", pk=id)
         resource_post = ResourcePost.objects.get(id=id)
         if resource_post.status == "Available" or resource_post.status == "AVAILABLE":
             if selected_timeslot == "1":
