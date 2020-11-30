@@ -192,6 +192,7 @@ def page_not_found(request, exception):
 
 
 def server_error(request):
+    #print(request)
     response = render(request, "register/errorpage/500_server_error.html")
     response.status_code = 500
     return response
