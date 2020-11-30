@@ -6,13 +6,15 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('reservation', '0002_reservationpost_reservationstatus'),
+        ("reservation", "0002_reservationpost_reservationstatus"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='reservationpost',
-            name='reservationstatus',
-            field=models.IntegerField(choices=[(1, 'ACCEPT'), (2, 'REJECT'), (3, 'PENDING')], default=3),
+            model_name="reservationpost",
+            name="reservationstatus",
+            field=models.IntegerField(
+                choices=[(1, "ACCEPT"), (2, "REJECT"), (3, "PENDING")], default=3
+            ),
         ),
     ]
