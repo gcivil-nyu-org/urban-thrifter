@@ -1,8 +1,8 @@
 {% extends 'donation/base.html' %}
 {% load static %}
 {% block content %}
-{% include "reservation/reservation_status_nav.html" %}
 {% if user.is_authenticated and user.helpseekerprofile %}
+{% include "reservation/reservation_status_nav.html" %}
 {% if messages %}
 {% for message in messages %}
 <div class="container alert alert-info alert-{{ message.tags }}">
@@ -165,6 +165,8 @@
     {% endfor %}
   </div>
 </div>
+{% elif user.donorprofile %}
+
 {% endif %}
 <script type="text/javascript" src="{% static 'javascript/search.js' %}"></script>
 {% endblock content %}
