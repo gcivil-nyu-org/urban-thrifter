@@ -48,7 +48,6 @@ def donation_post_list(request):
     reservation_pending_list = reservation_list.filter(
         post__status__in=["Pending", "PENDING"]
     )
-    print(reservation_pending_list)
     reservation_closed_list = reservation_list.filter(
         post__status__in=["Closed", "CLOSED"]
     )

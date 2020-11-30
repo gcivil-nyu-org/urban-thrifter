@@ -110,7 +110,6 @@ def activate_account(request, uidb64, token):
     try:
         uid = force_text(urlsafe_base64_decode(uidb64))
         user = User.objects.get(pk=uid)
-        print(user.username)
     except (TypeError, ValueError, OverflowError, user.DoesNotExist):
         user = None
     if user is not None and generate_token.check_token(user, token):
