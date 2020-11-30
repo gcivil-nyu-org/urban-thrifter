@@ -18,6 +18,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.http import Http404
 from reservation.models import ReservationPost
 
+
 def register(request):
     # Redirect to login page
     return render(request, "register/register_main.html")
@@ -163,9 +164,9 @@ class DonorUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
 def delete_profile(request):
     user = request.user
     if user.donorprofile:
-    	reservationposts = ReservationPost.objects.filter(donor=user)
+        reservationposts = ReservationPost.objects.filter(donor=user)
     elif user.helpseekerprofile:
-    	reservationposts = ReservationPost.objects.filter(helpseeker=user)
+        reservationposts = ReservationPost.objects.filter(helpseeker=user)
     confirmed = 0
 
     for reservationpost in reservationposts:
@@ -174,7 +175,10 @@ def delete_profile(request):
             confirmed += 1
     if confirmed == 0:
         for reservationpost in reservationposts:
-            if reservationpost.post.status != "CLOSED" and reservationpost.post.status != "RESERVED":
+            if (
+                reservationpost.post.status != "CLOSED"
+                and reservationpost.post.status != "RESERVED"
+            ):
                 reservationpost.post.status = "AVAILABLE"
                 reservationpost.post.save()
                 print(reservationpost.post.status)
@@ -183,15 +187,20 @@ def delete_profile(request):
         return redirect("/")
     elif confirmed > 0:
         messages.error(
-        request, "You can not delete your profile because you have " + str(confirmed) + " confirmed reservation" + "s." if confirmed > 0 else "."
-    )
+            request,
+            "You can not delete your profile because you have "
+            + str(confirmed)
+            + " confirmed reservation"
+            + "s."
+            if confirmed > 0
+            else ".",
+        )
         return HttpResponseRedirect(request.META.get("HTTP_REFERER"))
     else:
         messages.error(
-        request, "Your profile deletion was unsuccessful. Please try again!"
-    )
+            request, "Your profile deletion was unsuccessful. Please try again!"
+        )
         return HttpResponseRedirect(request.META.get("HTTP_REFERER"))
-
 
 
 def bad_request(request, exception):
