@@ -233,7 +233,6 @@
 </script>
 {% elif user.donorprofile %}
 <article class="card donation-card mb-2">
-  <!-- <img class='rounded-circle article-img' src='{{ post.author.profile.image.url }}' > -->
   <div class="card-header">
       <div class='container'>
           <div class="row text-center">
@@ -245,20 +244,6 @@
       </div>
   </div>
 </article>
-<!-- <html>
-<head>
-  <script type="text/javascript">
-    function Redirect() {
-      window.location = "{{DOMAIN_NAME}}" + "/donation/";
-    }
-    setTimeout('Redirect()', 0);
-  </script>
-</head>
-
-<body>
-</body>
-
-</html> -->
 {% else %}
 <meta http-equiv="refresh" content="0; URL=/login"/>
 {% endif %}
