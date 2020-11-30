@@ -158,8 +158,6 @@ class DonorUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
         return get_object_or_404(DonorProfile, user__username__iexact=username)
 
 
-
-
 def delete_profile(request):
     user = request.user
     try:
