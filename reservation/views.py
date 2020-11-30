@@ -21,7 +21,7 @@ from django.contrib.auth.decorators import login_required
 def home(request):
     return render(request, "reservation/reservation_home.html")
 
-
+@login_required
 def donation_post_list(request):
     # Getting posts based on filters or getting all posts
     post_list = ResourcePost.objects.all()
