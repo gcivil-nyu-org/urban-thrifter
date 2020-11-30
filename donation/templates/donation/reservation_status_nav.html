@@ -31,7 +31,8 @@
                     <div class="row text-center">
                         <div class="col">
                             <p>Title</p>
-                            <p><a href="{% url 'reservation:reservation-detail' post.id %}">{{ post.post.title }}</a></p>
+                            <p><a href="{% url 'reservation:reservation-detail' post.id %}">{{ post.post.title }}</a>
+                            </p>
                         </div>
                         <div class="col">
                             <p>Quantity</p>
@@ -52,19 +53,16 @@
                 <div class='container'>
                     <div class="row">
                         <div class="col-2">
-                            <p class="article-img img-circle"><img class="img-thumbnail" src='{{post.post.image.url}}'></i>
+                            <p class="article-img img-circle"><img class="img-thumbnail"
+                                    src='{{post.post.image.url}}'></i>
                             </p>
                         </div>
                         <div class="col-5">
                             <p>Request Dropoff Time: </p>
                             <ul>
-                                <li>{{ post.dropoff_time_request | date:'F d, Y H:m'}}</li>                                
+                                <li>{{ post.dropoff_time_request | date:'F d, Y H:m'}}</li>
                             </ul>
                             <p>{{ post.post.dropoff_location.place}}</p>
-                        </div>
-                        <div class="col-5">
-                            <button class='btn btn-outline-dark btn-wide mb-1 float-right'>Edit</button>
-                            <button class='btn btn-danger btn-wide float-right'>Cancel</button>
                         </div>
                     </div>
                 </div>
@@ -129,7 +127,8 @@
                             <p>{{ post.dropoff_location.place}}</p>
                         </div>
                         <div class="col-5">
-                            <button class='btn btn-outline-dark btn-wide mb-1 float-right'>Edit</button>
+                            <a class='btn btn-outline-dark btn-wide mb-1 float-right'
+                                href="{% url 'donation:donation-update' post.id %}">Update</a>
                             <button class='btn btn-danger btn-wide float-right'>Cancel</button>
                         </div>
                     </div>
@@ -137,8 +136,8 @@
             </div>
         </article>
         {% empty %}
-        <div class="alert alert-info text-center">You don't have any donation listed currently. If you would like to list your donation, please go to <a
-                    href="{%  url 'donation:donation-new' %}">here</a></div>
+        <div class="alert alert-info text-center">You don't have any donation listed currently. If you would like to
+            list your donation, please go to <a href="{%  url 'donation:donation-new' %}">here</a></div>
         {% endfor %}
         <!-- pagination -->
         <!-- {% if posts.paginator.num_pages > 1 %}

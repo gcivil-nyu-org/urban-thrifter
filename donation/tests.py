@@ -132,7 +132,7 @@ class ResourcePostDetailViewTests(TestCase):
         create_resource_post.save()
         url = reverse("donation:donation-detail", args=(create_resource_post.pk,))
         response = self.client.get(url)
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 302)
 
 
 class ResourcePostDeleteViewTests(TestCase):

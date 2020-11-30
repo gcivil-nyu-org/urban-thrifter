@@ -1,18 +1,16 @@
 from django.shortcuts import render, get_object_or_404
-from django.views.generic import ListView, CreateView, DetailView
+from django.views.generic import ListView, CreateView, DetailView, UpdateView
 from .models import ResourcePost, User
 from reservation.models import ReservationPost
 from bootstrap_datepicker_plus import DateTimePickerInput
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.messages.views import SuccessMessageMixin
 from django.http import JsonResponse
 from django.contrib import messages
 import os
 from django.utils import timezone
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.decorators import login_required
-
-
-# , UserPassesTestMixin
 
 
 # Create your views here.
@@ -95,9 +93,9 @@ class PostCreateView(LoginRequiredMixin, CreateView):
         form.fields["dropoff_time_1"].widget = DateTimePickerInput()
         form.fields["dropoff_time_2"].widget = DateTimePickerInput()
         form.fields["dropoff_time_3"].widget = DateTimePickerInput()
-        form.fields['dropoff_time_1'].label = "Dropoff Time 1 (EST)"
-        form.fields['dropoff_time_2'].label = "Dropoff Time 2 (EST)"
-        form.fields['dropoff_time_3'].label = "Dropoff Time 3 (EST)"
+        form.fields["dropoff_time_1"].label = "Dropoff Time 1 (EST)"
+        form.fields["dropoff_time_2"].label = "Dropoff Time 2 (EST)"
+        form.fields["dropoff_time_3"].label = "Dropoff Time 3 (EST)"
         return form
 
     # Overwrite form valid method
@@ -141,7 +139,7 @@ class PostCreateView(LoginRequiredMixin, CreateView):
 
 
 # Donation Detail View
-class PostDetailView(DetailView):
+class PostDetailView(LoginRequiredMixin, DetailView):
     # Basic detail view
     model = ResourcePost
 
@@ -149,6 +147,39 @@ class PostDetailView(DetailView):
         context = super(PostDetailView, self).get_context_data(**kwargs)
         context["mapbox_access_token"] = "pk." + os.environ.get("MAPBOX_KEY")
         return context
+
+
+# Donation Update View
+class PostUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+    # Basic detail view
+    model = ResourcePost
+    fields = [
+        "title",
+        "quantity",
+        "description",
+        "dropoff_time_1",
+        "resource_category",
+        "dropoff_time_2",
+        "dropoff_time_3",
+        "dropoff_location",
+    ]
+    template_name = "donation/resourcepost_update.html"
+    success_message = "Donation post updated successfully."
+
+    # Overwrite form valid method
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+    def get_form(self):
+        form = super().get_form()
+        form.fields["dropoff_time_1"].widget = DateTimePickerInput()
+        form.fields["dropoff_time_2"].widget = DateTimePickerInput()
+        form.fields["dropoff_time_3"].widget = DateTimePickerInput()
+        form.fields["dropoff_time_1"].label = "Dropoff Time 1 (EST)"
+        form.fields["dropoff_time_2"].label = "Dropoff Time 2 (EST)"
+        form.fields["dropoff_time_3"].label = "Dropoff Time 3 (EST)"
+        return form
 
 
 @login_required
