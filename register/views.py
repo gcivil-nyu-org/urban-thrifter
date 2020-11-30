@@ -155,7 +155,8 @@ class DonorUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
         self,
     ):
         username = self.kwargs.get("username")
-        if username is None:
+        user=User.objects.get(username=username)
+        if user.helpseeker:
             raise Http404
         return get_object_or_404(DonorProfile, user__username__iexact=username)
 
