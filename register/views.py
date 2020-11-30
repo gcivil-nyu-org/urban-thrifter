@@ -203,9 +203,10 @@ def delete_profile(request):
             return HttpResponseRedirect(request.META.get("HTTP_REFERER"))
     except Exception:
         messages.error(
-                request, "Your profile deletion was unsuccessful. Please try again!"
-            )
+            request, "Your profile deletion was unsuccessful. Please try again!"
+        )
         return HttpResponseRedirect(request.META.get("HTTP_REFERER"))
+
 
 def bad_request(request, exception):
     response = render(request, "register/errorpage/error.html")
