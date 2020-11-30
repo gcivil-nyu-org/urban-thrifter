@@ -1,12 +1,9 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from .forms import ComplaintForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import CreateView
-from .models import Complaint
 from reservation.models import ReservationPost
-from django.urls import reverse
+
 
 @login_required
 def issue_complaint(request, **kwargs):
@@ -24,7 +21,7 @@ def issue_complaint(request, **kwargs):
             new_form = ComplaintForm
             final_form = filled_form.save(commit=False)
             final_form.issuer = request.user
-            final_form.reservation_post = ReservationPost.objects.get(id=kwargs['pk']) 
+            final_form.reservation_post = ReservationPost.objects.get(id=kwargs["pk"])
 
             try:
                 if request.user.helpseekerprofile:
