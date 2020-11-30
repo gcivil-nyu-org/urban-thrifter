@@ -160,7 +160,7 @@ class DonorUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
             raise Http404
         return get_object_or_404(DonorProfile, user__username__iexact=username)
 
-
+@login_required
 def delete_profile(request):
     user = request.user
     if user.donorprofile:
@@ -191,9 +191,9 @@ def delete_profile(request):
             "You can not delete your profile because you have "
             + str(confirmed)
             + " confirmed reservation"
-            + "s."
-            if confirmed > 0
-            else ".",
+            + ("s."
+            if confirmed > 1
+            else "."),
         )
         return HttpResponseRedirect(request.META.get("HTTP_REFERER"))
     else:
