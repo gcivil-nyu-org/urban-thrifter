@@ -15,6 +15,7 @@ from django.views.generic import UpdateView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
+from django.http import Http404
 
 
 def register(request):
@@ -154,6 +155,8 @@ class DonorUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
         self,
     ):
         username = self.kwargs.get("username")
+        if username is None:
+            raise Http404
         return get_object_or_404(DonorProfile, user__username__iexact=username)
 
 
