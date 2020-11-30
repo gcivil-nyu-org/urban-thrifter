@@ -155,7 +155,6 @@ class DonorUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
         self,
     ):
         username = self.kwargs.get("username")
-        user=User.objects.get(username=username)
         return get_object_or_404(DonorProfile, user__username__iexact=username)
 
 
