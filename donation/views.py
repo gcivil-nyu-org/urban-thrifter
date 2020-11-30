@@ -9,7 +9,7 @@ from django.contrib import messages
 import os
 from django.utils import timezone
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.contrib.auth.decorators import login_required,user_passes_test
+from django.contrib.auth.decorators import login_required, user_passes_test
 
 
 # , UserPassesTestMixin
@@ -51,6 +51,7 @@ def home(request):
 
     return render(request, "donation/reservation_status_nav.html", context)
 
+
 # All Donations View
 class PostListView(ListView):
     # Basic list view
@@ -72,6 +73,7 @@ class PostListView(ListView):
         user = get_object_or_404(User, username=self.kwargs.get("username"))
         return ResourcePost.objects.filter(donor=user).order_by("-date_created")
 
+
 # Post Donation View
 class PostCreateView(LoginRequiredMixin, CreateView):
     # Basic create view
@@ -87,13 +89,14 @@ class PostCreateView(LoginRequiredMixin, CreateView):
         "resource_category",
         "dropoff_location",
     ]
+
     def get_form(self):
         form = super().get_form()
         form.fields["dropoff_time_1"].widget = DateTimePickerInput()
         form.fields["dropoff_time_2"].widget = DateTimePickerInput()
         form.fields["dropoff_time_3"].widget = DateTimePickerInput()
         return form
-    
+
     # Overwrite form valid method
     def form_valid(self, form):
         form.instance.donor = self.request.user
