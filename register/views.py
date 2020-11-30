@@ -159,8 +159,7 @@ class DonorUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
         if username is None:
             raise Http404
         return get_object_or_404(DonorProfile, user__username__iexact=username)
-
-
+@login_required
 def delete_profile(request):
     user = request.user
     if user.donorprofile:
