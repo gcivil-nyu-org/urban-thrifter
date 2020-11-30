@@ -232,7 +232,18 @@
   }
 </script>
 {% elif user.donorprofile %}
-
+<article class="card donation-card mb-2">
+  <!-- <img class='rounded-circle article-img' src='{{ post.author.profile.image.url }}' > -->
+  <div class="card-header">
+      <div class='container'>
+          <div class="row text-center">
+              <div class="col">
+                  <p><a href="{% url 'login' %}">Button</a></p>
+              </div>
+          </div>
+      </div>
+  </div>
+</article>
 <!-- <html>
 <head>
   <script type="text/javascript">
