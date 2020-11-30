@@ -13,15 +13,15 @@
             class="fas fa-house-user"></i></button></li>
       <li><button class="feature-icon ppe-icon" onclick="resourceFilter('ppe', this)">PPE</br><i
             class="fas fa-head-side-mask"></i></button></li>
-      <li><a href="http://m3.mappler.net/nyrestroom/" target="_blank"><button class="feature-icon restroom-icon">Restroom</br><i
-            class="fas fa-restroom"></i></button></a></li>
+      <li><button class="feature-icon computer-icon" onclick="resourceFilter('computer', this)">E-Center</br><i
+            class="fas fa-desktop"></i></button></a></li>
       <li><button class="feature-icon electronics-icon" onclick="resourceFilter('electronics', this)">Electronics</br><i
             class="fas fa-mobile-alt"></i></button></li>
       <li><button class="feature-icon wifi-icon" onclick="resourceFilter('wifi', this)">Internet</br><i
             class="fas fa-wifi"></i></button></li>
       <li><button class="feature-icon cloth-icon" onclick="resourceFilter('clothes', this)">Clothes</br><i
             class="fas fa-tshirt"></i></button></li>
-      <li><button class="feature-icon reeducation-icon" onclick="resourceFilter('reeducation', this)">Programs</br><i
+      <li><button class="feature-icon reeducation-icon" onclick="resourceFilter('reeducation', this)">Program</br><i
             class="fas fa-book-open"></i></button></li>
       <li><button class="feature-icon others-icon" onclick="resourceFilter('others', this)">Others</br><i
             class="fas fa-question"></i></button></li>
@@ -52,10 +52,10 @@
 <!-- computer center / electronics data-->
 {% for center in computer_centers %}
 <script>
-  var electronicEl = document.createElement('div');
-  electronicEl.className = 'electronics-marker';
-  new mapboxgl.Marker(electronicEl)
-    .setLngLat([{{ center.lon }}, {{ center.lat }}])
+  var computerEl = document.createElement('div');
+  computerEl.className = 'computer-marker';
+  new mapboxgl.Marker(computerEl)
+    .setLngLat(["{{ center.lon }}", "{{ center.lat }}"])
     .setPopup(new mapboxgl.Popup({ offset: 50 })
       .setHTML(
         "<div class='container'>" +
@@ -80,7 +80,7 @@
   var wifiEl = document.createElement('div');
   wifiEl.className = 'wifi-marker';
   new mapboxgl.Marker(wifiEl)
-    .setLngLat([{{ center.longitude }}, {{ center.latitude }}])
+    .setLngLat(["{{ center.longitude }}", "{{ center.latitude }}"])
     .setPopup(new mapboxgl.Popup({ offset: 50 })
       .setHTML(
         "<div class='container'>" +

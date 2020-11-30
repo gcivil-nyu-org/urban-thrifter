@@ -255,7 +255,7 @@ class ResourcePost_Ajax_Wathclist_Tests(TestCase):
             dropoff_time_3=timezone.now(),
             date_created=timezone.now(),
             donor=createdonor_3(),
-            resource_category="OTHR",
+            resource_category="OTHERS",
             status="AVAILABLE",
         )
 

@@ -749,11 +749,11 @@ button:focus {
   border: 1px solid #E0C35C;
 }
 
-#resource .feature-item:hover .restroom-icon i {
+#resource .feature-item:hover .computer-icon i {
   color: #155889;
 }
 
-#resource .feature-item:hover .restroom-icon {
+#resource .feature-item:hover .computer-icon {
   background: #fff;
   border: 1px solid #155889;
 }
@@ -802,7 +802,7 @@ button:focus {
   background: #E0C35C;
 }
 
-#resource .feature-item .restroom-icon {
+#resource .feature-item .computer-icon {
   background: #155889;
 }
 

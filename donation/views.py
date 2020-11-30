@@ -95,6 +95,9 @@ class PostCreateView(LoginRequiredMixin, CreateView):
         form.fields["dropoff_time_1"].widget = DateTimePickerInput()
         form.fields["dropoff_time_2"].widget = DateTimePickerInput()
         form.fields["dropoff_time_3"].widget = DateTimePickerInput()
+        form.fields['dropoff_time_1'].label = "Dropoff Time 1 (EST)"
+        form.fields['dropoff_time_2'].label = "Dropoff Time 2 (EST)"
+        form.fields['dropoff_time_3'].label = "Dropoff Time 3 (EST)"
         return form
 
     # Overwrite form valid method
