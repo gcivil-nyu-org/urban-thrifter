@@ -1,9 +1,9 @@
-from django.shortcuts import render, get_object_or_404
-from django.views.generic import ListView, CreateView, DetailView, UpdateView
+from django.shortcuts import render, redirect, get_object_or_404
+from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 from .models import ResourcePost, User
 from reservation.models import ReservationPost
 from bootstrap_datepicker_plus import DateTimePickerInput
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.http import JsonResponse
 from django.contrib import messages
@@ -11,7 +11,7 @@ import os
 from django.utils import timezone
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.decorators import login_required
-
+from django.http import HttpResponseRedirect
 
 # Create your views here.
 
@@ -19,6 +19,11 @@ from django.contrib.auth.decorators import login_required
 def homepage(request):
     # Redirect to login page
     return render(request, "donation/homepage.html")
+
+
+def login_redirect_view(request):
+    # Redirect to login page
+    return render(request, "donation/login_redirect.html")
 
 
 def home(request):
@@ -180,6 +185,23 @@ class PostUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
         form.fields["dropoff_time_2"].label = "Dropoff Time 2 (EST)"
         form.fields["dropoff_time_3"].label = "Dropoff Time 3 (EST)"
         return form
+
+
+class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    # Basic delete view
+    model = ResourcePost
+
+    # Redirect to homepage after delete succesfully
+    success_url = '/donation'
+
+    # Make sure the post owner can delete the post
+    def test_func(self):
+        # Retrieve the current post
+        post = self.get_object()
+        # Check if the current user is the author of the post
+        if self.request.user == post.donor:
+            return True
+        return False
 
 
 @login_required

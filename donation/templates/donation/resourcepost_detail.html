@@ -57,7 +57,7 @@
         {% if object.donor == user and object.status == "AVAILABLE"%}
         <div>
             <a class='btn btn-outline-dark mt-5 mb-3 btn-wide' href='{% url "donation:donation-update" object.id %}'>Update</a>
-            <a class='btn btn-danger mt-5 mb-3 btn-wide' href=''>Delete</a>
+            <a class='btn btn-danger mt-5 mb-3 btn-wide' href='{% url "donation:donation-delete" object.id %}'>Cancel</a>
         </div>
         {% endif %}
     </div>

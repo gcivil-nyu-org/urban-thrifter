@@ -1,6 +1,7 @@
-{% extends 'donation/reservation_status_nav.html' %}
+{% extends 'donation/base.html' %}
 {% load crispy_forms_tags %}
 {% block content %}
+{% if object.donor == user %}
 {% if object.status == "AVAILABLE" or object.status == "Available" %}
 {% if not user.donorprofile.dropoff_location.place %}
 <div class="container alert alert-info text-center">
@@ -35,6 +36,9 @@
         </script>
         <div class="row justify-content-around">
             <div class='form-group'>
+                <a class='btn btn-outline-dark btn-wide' href='{% url "donation:donation-detail" object.id %}'>
+                    Back
+                </a>
                 <button class='btn btn-dark btn-wide center' type='submit'>
                     Save
                 </button>
@@ -46,5 +50,10 @@
 <div class="container alert alert-info text-center animated fadeIn">
     I'm sorry. This donation post is pending, confirmed, or has been
     closed. Therefore you cannot update any more.</div>
+{% endif %}
+{% else %}
+<div class="container alert alert-info text-center animated fadeIn">
+    You are not authorized to operate on this post.
+</div>
 {% endif %}
 {% endblock content %}

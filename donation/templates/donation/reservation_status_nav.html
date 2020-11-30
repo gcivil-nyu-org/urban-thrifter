@@ -129,7 +129,8 @@
                         <div class="col-5">
                             <a class='btn btn-outline-dark btn-wide mb-1 float-right'
                                 href="{% url 'donation:donation-update' post.id %}">Update</a>
-                            <button class='btn btn-danger btn-wide float-right'>Cancel</button>
+                            <a class='btn btn-danger btn-wide float-right'
+                                href='{% url "donation:donation-delete" post.id %}'>Cancel</a>
                         </div>
                     </div>
                 </div>
@@ -225,7 +226,32 @@
     </div>
 </div>
 {% elif user.is_authenticated and user.helpseekerprofile %}
-<a class="btn align-middle btn-outline-dark" type="button" href='{% url "reservation" %}'>Pending</a>
-<a class="btn align-middle btn-outline-dark" type="button" href='{% url "reservation" %}'>Closed</a>
+<html>
+   <head>
+      <script type = "text/javascript">
+            function Redirect() {
+               window.location = "{{DOMAIN_NAME}}" + "/reservation/";
+            }            
+            setTimeout('Redirect()', 0);
+      </script>
+   </head>
+   
+   <body>
+   </body>
+</html>
+{% else %}
+<html>
+   <head>
+      <script type = "text/javascript">
+            function Redirect() {
+               window.location = "{{DOMAIN_NAME}}" + "/admin/";
+            }            
+            setTimeout('Redirect()', 0);
+      </script>
+   </head>
+   
+   <body>
+   </body>
+</html>
 {% endif %}
 {% endblock content %}
