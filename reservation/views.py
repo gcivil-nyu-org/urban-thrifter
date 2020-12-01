@@ -272,5 +272,5 @@ class NotificationCheck(View):
             Notification.objects.filter(
                 is_seen=False,
                 receiver=request.user
-            ).distinct("post_id").count()
+            ).order_by("-post_id").distinct("post_id").count()
         )
