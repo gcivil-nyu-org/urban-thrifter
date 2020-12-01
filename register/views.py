@@ -16,6 +16,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.http import Http404
+from reservation.models import ReservationPost
 
 
 def register(request):
@@ -160,12 +161,46 @@ class DonorUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
         return get_object_or_404(DonorProfile, user__username__iexact=username)
 
 
+@login_required
 def delete_profile(request):
-    user = request.user
+    # user = request.user
+    if DonorProfile.objects.filter(user=request.user):
+        reservationposts = ReservationPost.objects.filter(donor=request.user)
+    elif HelpseekerProfile.objects.filter(user=request.user):
+        reservationposts = ReservationPost.objects.filter(helpseeker=request.user)
+    confirmed = 0
+
+    for reservationpost in reservationposts:
+        print(reservationpost.post.status)
+        if reservationpost.post.status == "RESERVED":
+            confirmed += 1
     try:
-        user.delete()
-        messages.success(request, "Account deleted successfully.")
-        return redirect("/")
+        if confirmed == 0:
+            for reservationpost in reservationposts:
+                if (
+                    reservationpost.post.status != "CLOSED"
+                    and reservationpost.post.status != "RESERVED"
+                ):
+                    reservationpost.post.status = "AVAILABLE"
+                    reservationpost.post.save()
+                    print(reservationpost.post.status)
+            request.user.delete()
+            messages.success(request, "Account deleted successfully.")
+            return redirect("/")
+        elif confirmed > 0:
+            messages.info(
+                request,
+                "You can not delete your profile because you have "
+                + str(confirmed)
+                + " confirmed reservation"
+                + ("s." if confirmed > 1 else "."),
+            )
+            return HttpResponseRedirect(request.META.get("HTTP_REFERER"))
+        else:
+            messages.error(
+                request, "Your profile deletion was unsuccessful. Please try again!"
+            )
+            return HttpResponseRedirect(request.META.get("HTTP_REFERER"))
     except Exception:
         messages.error(
             request, "Your profile deletion was unsuccessful. Please try again!"
