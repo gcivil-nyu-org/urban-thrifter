@@ -159,7 +159,7 @@ class NotificationTests(TestCase):
             post=reservation,
             sender=helpseeker,
             receiver=donor,
-            date=timezone.now(),
+            date_created=timezone.now(),
         )
         self.assertEqual(notification.is_seen, False)
 
@@ -177,7 +177,7 @@ class NotificationTests(TestCase):
             post=reservation,
             sender=helpseeker,
             receiver=donor,
-            date=timezone.now(),
+            date_created=timezone.now(),
         )
         self.assertEqual(notification.notificationstatus, 3)
 
@@ -196,7 +196,7 @@ class NotificationTests(TestCase):
             post=reservation,
             sender=helpseeker,
             receiver=donor,
-            date=timezone.now(),
+            date_created=timezone.now(),
         )
         self.assertIsNone(notification.save())
 
@@ -215,7 +215,7 @@ class NotificationTests(TestCase):
             post=reservation,
             sender=helpseeker,
             receiver=donor,
-            date=timezone.now(),
+            date_created=timezone.now(),
         )
         notification.save()
         self.assertEquals(

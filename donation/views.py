@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, get_object_or_404
 from django.views.generic import (
     ListView,
     CreateView,
@@ -17,7 +17,6 @@ import os
 from django.utils import timezone
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect
 
 # Create your views here.
 
@@ -38,9 +37,7 @@ def home(request):
     reserve_post_list = ReservationPost.objects.filter(donor=user).order_by(
         "-date_created"
     )
-    reserved_donation_posts = reserve_post_list.filter(
-        reservationstatus=1
-    )
+    reserved_donation_posts = reserve_post_list.filter(reservationstatus=1)
     available_donation_posts = post_list.filter(status__in=["Available", "AVAILABLE"])
     closed_donation_posts = post_list.filter(status__in=["Closed", "CLOSED"])
     # page = request.GET.get("page", 1)
