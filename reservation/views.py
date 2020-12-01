@@ -50,7 +50,7 @@ def donation_post_list(request):
     # reservation_list = reservation_list.values("post__id", flat=True).first()
 
     reservation_reserved_list = reservation_list.filter(
-        # reservationstatus=1,
+        reservationstatus=1,
         post__status__in=["Reserved", "RESERVED"]
     )
     reservation_pending_list = reservation_list.filter(
