@@ -21,7 +21,6 @@
                     <!-- <p>{{ notification.msg }}</p> -->
                 </div>
                 {% endif %}
-
                 <div class="col mr-3">
                     {% if notification.is_seen == False %}
                     <form method="POST" action="{% url 'reservation:read-message' notification.id %}">

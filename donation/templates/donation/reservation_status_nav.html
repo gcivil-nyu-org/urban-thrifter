@@ -60,7 +60,7 @@
                         <div class="col-5">
                             <p>Request Dropoff Time: </p>
                             <ul>
-                                <li>{{ post.dropoff_time_request | date:'F d, Y H:m'}}</li>
+                                <li>{{ post.dropoff_time_request }}</li>
                             </ul>
                             <p>{{ post.post.dropoff_location.place}}</p>
                         </div>
@@ -116,12 +116,12 @@
                         <div class="col-5">
                             <p>Available Dropoff Time: </p>
                             <ul>
-                                <li>{{ post.dropoff_time_1 | date:'F d, Y H:m'}}</li>
+                                <li>{{ post.dropoff_time_1 }}</li>
                                 {% if post.dropoff_time_2 != None %}
-                                <li>{{ post.dropoff_time_2 | date:'F d, Y H:m'}}</li>
+                                <li>{{ post.dropoff_time_2 }}</li>
                                 {% endif %}
                                 {% if post.dropoff_time_3 != None %}
-                                <li>{{ post.dropoff_time_3 | date:'F d, Y H:m'}}</li>
+                                <li>{{ post.dropoff_time_3 }}</li>
                                 {% endif %}
                             </ul>
                             <p>{{ post.dropoff_location.place}}</p>
@@ -130,7 +130,7 @@
                             <a class='btn btn-outline-dark btn-wide mb-1 float-right'
                                 href="{% url 'donation:donation-update' post.id %}">Update</a>
                             <a class='btn btn-danger btn-wide float-right'
-                                href='{% url "donation:donation-delete" post.id %}'>Cancel</a>
+                                href='{% url "donation:donation-delete" post.id %}'>Delete</a>
                         </div>
                     </div>
                 </div>
@@ -202,12 +202,12 @@
                         <div class="col-5">
                             <p>Available Dropoff Time: </p>
                             <ul>
-                                <li>{{ post.dropoff_time_1 | date:'F d, Y H:m'}}</li>
+                                <li>{{ post.dropoff_time_1 }}</li>
                                 {% if post.dropoff_time_2 != None %}
-                                <li>{{ post.dropoff_time_2 | date:'F d, Y H:m'}}</li>
+                                <li>{{ post.dropoff_time_2 }}</li>
                                 {% endif %}
                                 {% if post.dropoff_time_3 != None %}
-                                <li>{{ post.dropoff_time_3 | date:'F d, Y H:m'}}</li>
+                                <li>{{ post.dropoff_time_3 }}</li>
                                 {% endif %}
                             </ul>
                             <p>{{ post.dropoff_location.place}}</p>

@@ -7,10 +7,8 @@
 {% bootstrap_javascript jquery='full' %}
 
 <body>
-
 	{% if messages %}
 	{% for message in messages %}
-
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -76,7 +74,7 @@
 				<div class="col-lg-6 col-md-12 col-xs-12">
 					<div class="contents">
 						<h2 class="head-title animated fadeInDown">Urban Thrifter</h2>
-						<p class="animated fadeInDown">Connect the resource to the people in need.</p>
+						<p class="animated fadeInDown">Connect the resource to the people in need in the Great New York Area.</p>
 						<div class="header-button">
 							{% if user.is_authenticated %}
 							{% if user.donorprofile %}

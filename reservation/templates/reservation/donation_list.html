@@ -43,12 +43,12 @@
 						<div class="col-5">
 							<p>Available Dropoff Time: </p>
 							<ul>
-								<li>{{ post.dropoff_time_1 | date:'F d, Y H:m'}}</li>
+								<li>{{ post.dropoff_time_1 }}</li>
 								{% if post.dropoff_time_2 != None %}
-								<li>{{ post.dropoff_time_2 | date:'F d, Y H:m'}}</li>
+								<li>{{ post.dropoff_time_2 }}</li>
 								{% endif %}
 								{% if post.dropoff_time_3 != None %}
-								<li>{{ post.dropoff_time_3 | date:'F d, Y H:m'}}</li>
+								<li>{{ post.dropoff_time_3 }}</li>
 								{% endif %}
 							</ul>
 							<p>{{ post.dropoff_location.place}}</p>

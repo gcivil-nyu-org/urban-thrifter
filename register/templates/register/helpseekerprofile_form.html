@@ -16,20 +16,19 @@
       <legend class="mb-3 font-weight-bold">Account Details</legend>
     </div>
   </div>
-  <div class="media-body">
-    <div class="row justify-content-around">
-      <div class="col-4">
-        <label>Username:</label>
-        <p class="graybox">{{ user.username }}</p>
-      </div>
-      <div class="col-4">
-        <label>Email:</label>
-        <p class="graybox">{{ user.email }}</p>
-      </div>
-    </div>
-  </div>
   <form method='POST' enctype='multipart/form-data'>
     {% csrf_token %}
+    <div class="media-body">
+      <div class="row justify-content-around">
+        <div class="col-4">
+          <label>Username:</label>
+          <p class="graybox">{{ user.username }}</p>
+        </div>
+        <div class="col-4">
+          {{ hs_user_form.email | as_crispy_field }}
+        </div>
+      </div>
+    </div>
     <fieldset class='form-group'>
       <!-- Crispy filter to style the form -->
       <div class="row justify-content-around">

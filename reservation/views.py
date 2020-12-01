@@ -1,6 +1,6 @@
 from donation.models import ResourcePost
 from .models import ReservationPost, Notification
-from django.views.generic import DetailView
+from django.views.generic import DetailView, UpdateView
 from django.shortcuts import redirect
 from django.contrib.auth.models import User
 from django.shortcuts import render
@@ -180,6 +180,42 @@ def reservation_function(request, id):
     return redirect("reservation:reservation-confirmation")
 
 
+def reservation_update(request, **kwargs):
+    if request.method == "GET":
+        selected_timeslot = request.GET.get("dropoff_time")
+        reservation = ReservationPost.objects.get(id=kwargs['pk'])
+        print("reservation::", selected_timeslot)
+        if reservation.post.status == "Pending" or reservation.post.status == "PENDING":
+            if selected_timeslot == "1":
+                selected_time = reservation.post.dropoff_time_1
+            elif selected_timeslot == "2":
+                selected_time = reservation.post.dropoff_time_2
+            elif selected_timeslot == "3":
+                selected_time = reservation.post.dropoff_time_3
+            reservation.dropoff_time_request = selected_time
+        else:
+            messages.error(
+                request, "A reservation for this donation has already been made."
+            )
+            return redirect("reservation:reservation-home")
+        try:
+            reservation.save()
+            reservation.post.status = "PENDING"
+            reservation.post.save()
+            messages.success(
+                request, "Your reservation request has been succesfully rescheduled."
+            )
+        except Exception:
+            reservation.post.status = "AVAILABLE"
+            reservation.post.save()
+            reservation.delete()
+            messages.error(
+                request, "Your reservation was unsuccessful. Please try again!"
+            )
+            return redirect("reservation:reservation-home")
+    return redirect("reservation:reservation-detail", kwargs['pk'])
+
+
 class PostDetailView(DetailView):
     # Basic detail view
     model = ResourcePost
@@ -192,13 +228,24 @@ class ReservationDetailView(DetailView):
     template_name = "reservation/reservation_detail.html"
 
 
-def show_notifications(request):
-    receiver = request.user
-    notifications = Notification.objects.filter(receiver=receiver).order_by("-date")
-    template = loader.get_template("donation/notifications.html")
+class ReservationUpdateView(DetailView):
+    # Basic detail view
+    model = ReservationPost
+    template_name = "reservation/reservation_update.html"
 
+
+def show_notifications(request):
+    notifications = Notification.objects.filter(
+        is_seen=False,
+        receiver=request.user
+    ).distinct("post_id")
+    # notifications = notifications.values("post").distinct()
+    # notifications = Notification.objects.filter(post_id__in=post_list)
+    # print("hi  ", len(post_list))
+    template = loader.get_template("donation/notifications.html")
     context = {
-        "notifications": notifications,
+        "donor_notifications": notifications,
+        # "post_list": post_list
     }
 
     return HttpResponse(template.render(context, request))
@@ -227,5 +274,8 @@ def read_message(request, id):
 class NotificationCheck(View):
     def get(self, request):
         return HttpResponse(
-            Notification.objects.filter(is_seen=False, receiver=request.user).count()
+            Notification.objects.filter(
+                is_seen=False,
+                receiver=request.user
+            ).values_list("post__id", flat=True).distinct().count()
         )

@@ -1,8 +1,9 @@
 {% extends 'donation/base.html' %}
 {% load static %}
 {% block content %}
-{% if user.is_authenticated %}
-{% if object.donor == user or object.helpseeker == user %}
+{% if object.post.status == "PENDING" or object.post.status == "Pending"%}
+{% if object.post.dropoff_time_2 != None and object.post.dropoff_time_3 != None %}
+{% if user.is_authenticated and object.helpseeker == user %}
 {% if messages %}
 {% for message in messages %}
 <div class="container alert alert-info text-center">
@@ -36,8 +37,6 @@
             <label>Dropoff Location <a class="location-toggle text-muted" style="cursor:pointer;"><i
                         class="fas fa-eye"></i></a></label>
             <p class="graybox">{{ object.post.dropoff_location.place }}</p>
-            <label>Dropoff Time</label>
-            <p class="graybox">{{ object.dropoff_time_request }}</p>
         </div>
         <div class="col-4">
             <label>Resource Category</label>
@@ -55,22 +54,34 @@
     <div class="row justify-content-around">
         <div class="col-md-10">
             <div id="dropoff-location" class="mt-3 mb-3"></div>
+            <form method="GET" action="{% url 'reservation:reservation-update-request' object.id %}">
+                {% csrf_token %}
+                <p>Drop-off Time*</p>
+                <input type="radio" id="dropoff_time_1" name="dropoff_time" value=1>
+                <label class="graybox" for="dropoff_time_1">{{ object.post.dropoff_time_1 }}</label>
+                {% if object.post.dropoff_time_2 != None %}
+                <input type="radio" id="dropoff_time_2" name="dropoff_time" value=2>
+                <label class="graybox" for="dropoff_time_2">{{ object.post.dropoff_time_2 }}</label>
+                {% endif %}
+                {% if object.post.dropoff_time_3 != None %}
+                <input type="radio" id="dropoff_time_3" name="dropoff_time" value=3>
+                <label class="graybox" for="dropoff_time_3">{{ object.post.dropoff_time_3 }}</label>
+                {% endif %}
+                <div class="text-center"><button class="mt-3 btn btn-dark btn-wide" type="submit">Reschedule</button></div>
+            </form>
         </div>
     </div>
 </div>
 {% else %}
 <div class="container animated fadeInUp">
-    <div class="alert alert-info text-center">You do not have authorization to view this post.</div>
+    <div class="alert alert-info text-center">You do not have accesss to this post.</div>
 </div>
 {% endif %}
 {% else %}
-<div class="mt-5 container animated fadeInUp">
-    <div class="alert alert-info text-center">You are not signed in.</div>
-    <div class="pt-3 text-center">
-        <a class="btn btn-wide btn-dark" href="{% url 'login' %}">Sign In Here<i
-                class="fas fa-sign-in-alt pl-2"></i></a>
-    </div>
-</div>
+<div class="alert alert-info text-center">There are no alternative timeslots for reschedule.</div>
+{% endif %}
+{% else %}
+<div class="alert alert-info text-center">Only pending reservation allows reschedule.</div>
 {% endif %}
 <script>
     $(document).ready(function () {

@@ -1,9 +1,9 @@
 {% extends 'donation/base.html' %}
 {% block content %}
 {% if user.is_authenticated and user.donorprofile %}
-{% for notification in notifications %}
-{% if notification.receiver == user %}
+{% for notification in donor_notifications %}
 <article class="card donation-card mb-2 animated fadeIn">
+    {{ notification }}
     <!-- <img class='rounded-circle article-img' src='{{ post.author.profile.image.url }}' > -->
     <div class="card-header">
         <div class='container'>
@@ -51,21 +51,12 @@
                     <p>{{ notification.post.post.dropoff_location.place}}</p>
                 </div>
                 <div class="col-5">
-                    <form method="POST" action="{% url 'reservation:confirm-notification' notification.id %}">
-                        {% csrf_token %}
-                        {% if notification.notificationstatus == 3 %}
-                        <button name="accept" class="btn btn-outline-success btn-wide mb-1 float-right"
-                            type="submit">Accept</button>
-                        <button name="deny" class="btn btn-outline-danger btn-wide float-right"
-                            type="submit">Decline</button>
-                        {% endif %}
-                    </form>
+                    
                 </div>
             </div>
         </div>
     </div>
 </article>
-{% endif %}
 {% empty %}
 <div class="alert alert-info text-center">You have not received any messages yet.</div>
 {% endfor %}

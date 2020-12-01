@@ -98,7 +98,7 @@ class PostCreateView(LoginRequiredMixin, CreateView):
         form.fields["dropoff_time_1"].widget = DateTimePickerInput()
         form.fields["dropoff_time_2"].widget = DateTimePickerInput()
         form.fields["dropoff_time_3"].widget = DateTimePickerInput()
-        form.fields["dropoff_time_1"].label = "Dropoff Time 1 (EST)"
+        form.fields["dropoff_time_1"].label = "<span class='ut-tooltip'>Dropoff Time 1 (EST)<span class='tooltiptext'>Currently our service only supports users in the Greater New York Area</span></span>"
         form.fields["dropoff_time_2"].label = "Dropoff Time 2 (EST)"
         form.fields["dropoff_time_3"].label = "Dropoff Time 3 (EST)"
         return form
