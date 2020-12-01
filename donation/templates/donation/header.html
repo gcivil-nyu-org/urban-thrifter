@@ -97,7 +97,7 @@
           "</span>");
       }
     });
-  }, 1000 * 2); // check notification every 2 seconds
+  }, 1000 * 0.5); // check notification every 0.5 seconds
 
   $(document).ready(function () {
     setInterval(() => {
@@ -105,7 +105,7 @@
         type: 'GET',
         url: "{% url 'donation:get-reminder' %}",
       })
-    }, 1000 * 2)
+    }, 1000 * 0.5)
   })
   var ajaxLink1 = "{% url 'donation:get-reminder-count' %}";
   setInterval(function () {
@@ -117,6 +117,6 @@
           "</span>");
       }
     });
-  }, 1000 * 2); // check notification every 2 seconds
+  }, 1000 * 0.5); // check notification every 0.5 seconds
 </script>
 {% endif %}
