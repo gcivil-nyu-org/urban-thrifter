@@ -18,7 +18,6 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.http import Http404
 from reservation.models import ReservationPost
 
-
 def register(request):
     # Redirect to login page
     return render(request, "register/register_main.html")
@@ -188,7 +187,7 @@ def delete_profile(request):
             messages.success(request, "Account deleted successfully.")
             return redirect("/")
         elif confirmed > 0:
-            messages.error(
+            messages.info(
                 request,
                 "You can not delete your profile because you have "
                 + str(confirmed)
@@ -197,12 +196,12 @@ def delete_profile(request):
             )
             return HttpResponseRedirect(request.META.get("HTTP_REFERER"))
         else:
-            messages.error(
+            messages.info(
                 request, "Your profile deletion was unsuccessful. Please try again!"
             )
             return HttpResponseRedirect(request.META.get("HTTP_REFERER"))
     except Exception:
-        messages.error(
+        messages.info(
             request, "Your profile deletion was unsuccessful. Please try again!"
         )
         return HttpResponseRedirect(request.META.get("HTTP_REFERER"))
