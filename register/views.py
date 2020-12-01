@@ -188,7 +188,7 @@ def delete_profile(request):
             messages.success(request, "Account deleted successfully.")
             return redirect("/")
         elif confirmed > 0:
-            messages.info(
+            messages.error(
                 request,
                 "You can not delete your profile because you have "
                 + str(confirmed)
@@ -197,12 +197,12 @@ def delete_profile(request):
             )
             return HttpResponseRedirect(request.META.get("HTTP_REFERER"))
         else:
-            messages.info(
+            messages.error(
                 request, "Your profile deletion was unsuccessful. Please try again!"
             )
             return HttpResponseRedirect(request.META.get("HTTP_REFERER"))
     except Exception:
-        messages.info(
+        messages.error(
             request, "Your profile deletion was unsuccessful. Please try again!"
         )
         return HttpResponseRedirect(request.META.get("HTTP_REFERER"))
