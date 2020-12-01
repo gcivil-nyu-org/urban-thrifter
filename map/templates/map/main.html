@@ -232,20 +232,19 @@
   }
 </script>
 {% elif user.donorprofile %}
-
-<!-- <html>
-<head>
-  <script type="text/javascript">
-    function Redirect() {
-      window.location = "{{DOMAIN_NAME}}" + "/donation/";
-    }
-    setTimeout('Redirect()', 0);
-  </script>
-</head>
-
-<body>
-</body>
-
-</html> -->
+<article class="card donation-card mb-2">
+  <div class="card-header">
+      <div class='container'>
+          <div class="row text-center">
+              <div class="col">
+                  <p>Please register as Helpseeker to view map</p>
+                  <p><a href="{% url 'login' %}">Redirect to login</a></p>
+              </div>
+          </div>
+      </div>
+  </div>
+</article>
+{% else %}
+<meta http-equiv="refresh" content="0; URL=/login"/>
 {% endif %}
 {% endblock content %}
