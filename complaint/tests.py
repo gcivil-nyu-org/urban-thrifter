@@ -37,6 +37,7 @@ def createdonor():
     donor.save()
     return donor
 
+
 def createhelpseeker():
     subuser = User(
         username="helpseeker_unit_test",
@@ -50,11 +51,8 @@ def createhelpseeker():
         is_active=True,
         email="unittest2@unittest.com",
         helpseekerprofile=HelpseekerProfile(
-            user=subuser,
-            complaint_count=0,
-            borough="MAN",
-            rc_1="FOOD"
-        )
+            user=subuser, complaint_count=0, borough="MAN", rc_1="FOOD"
+        ),
     )
     helpseeker.save()
     return helpseeker
@@ -92,30 +90,27 @@ def create_reservation_post():
 
 
 class ComplaintViewTests(TestCase):
-
-
     def test_map_view_works(self):
         donor = createdonor()
         create_resource_post = createdonation(donor)
-        url = reverse("issue-complaint", kwargs={'pk': create_resource_post.id})
+        url = reverse("issue-complaint", kwargs={"pk": create_resource_post.id})
         response = self.client.get(url)
         self.assertEqual(response.status_code, 302)
         # self.assertEqual(response.status_code, 200)
-
 
     def test_right_complaint_post_request(self):
         reservation_post = create_reservation_post()
         issuer = reservation_post.helpseeker
         receiver = reservation_post.donor
         holder = self.client.post(
-            reverse("issue-complaint", kwargs={'pk': reservation_post.post.id}),
+            reverse("issue-complaint", kwargs={"pk": reservation_post.post.id}),
             data={
                 "subject": "Subject1",
                 "message": "I have a problem",
                 "image": "",
                 "issuer": issuer,
                 "receiver": receiver,
-                "reservation_post": reservation_post
+                "reservation_post": reservation_post,
             },
         )
         self.assertEqual(holder.status_code, 302)
@@ -134,15 +129,18 @@ class ComplaintModelTests(TestCase):
             image=None,
             issuer=issuer,
             receiver=receiver,
-            reservation_post=reservation_post
+            reservation_post=reservation_post,
         )
         test_complaint_1.save()
 
         self.assertEquals(
-            str(test_complaint_1.issuer.username) + " to " + str(test_complaint_1.receiver.username) + " about " + str(test_complaint_1.reservation_post.__str__()),
-            test_complaint_1.__str__()
+            str(test_complaint_1.issuer.username)
+            + " to "
+            + str(test_complaint_1.receiver.username)
+            + " about "
+            + str(test_complaint_1.reservation_post.__str__()),
+            test_complaint_1.__str__(),
         )
-
 
     def test_complaint_contains_no_data(self):
         form = Complaint()
