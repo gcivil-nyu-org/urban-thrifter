@@ -235,9 +235,10 @@ class ReservationUpdateView(DetailView):
 
 
 def show_notifications(request):
-    notifications = Notification.objects.filter(
+    notifications =  Notification.objects.order_by("-date")
+    notifications = notifications.objects.filter(
         receiver=request.user
-    ).order_by("-post_id").distinct("post_id")
+    ).distinct("post_id")
     template = loader.get_template("donation/notifications.html")
     context = {
         "donor_notifications": notifications,
@@ -268,8 +269,9 @@ def read_message(request, id):
 @method_decorator(login_required, name="dispatch")
 class NotificationCheck(View):
     def get(self, request):
-        notification = Notification.objects.order_by("-post_id").distinct("post_id")
-        notification = notification.filter(
+        notification =  Notification.objects.order_by("-date")
+        notification = notification.objects.distinct("post_id")
+        notification = notification.objects.filter(
             is_seen=False,
             receiver=request.user
         ).count()
