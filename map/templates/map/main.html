@@ -13,8 +13,8 @@
             class="fas fa-house-user"></i></button></li>
       <li><button class="feature-icon ppe-icon" onclick="resourceFilter('ppe', this)">PPE</br><i
             class="fas fa-head-side-mask"></i></button></li>
-      <li><button class="feature-icon restroom-icon" onclick="resourceFilter('restroom', this)">Restroom</br><i
-            class="fas fa-restroom"></i></button></li>
+      <li><a href="http://m3.mappler.net/nyrestroom/" target="_blank"><button class="feature-icon restroom-icon">Restroom</br><i
+            class="fas fa-restroom"></i></button></a></li>
       <li><button class="feature-icon electronics-icon" onclick="resourceFilter('electronics', this)">Electronics</br><i
             class="fas fa-mobile-alt"></i></button></li>
       <li><button class="feature-icon wifi-icon" onclick="resourceFilter('wifi', this)">Internet</br><i
@@ -183,19 +183,19 @@
 <script>
   personalEl.className = 'food-marker';
 </script>
-{% elif post.resource_category == "MDCL" %}
+{% elif post.resource_category == "MEDICAL/ PPE" %}
 <script>
   personalEl.className = 'ppe-marker';
 </script>
-{% elif post.resource_category == "CLTH" %}
+{% elif post.resource_category == "CLOTHING/ COVERS" %}
 <script>
   personalEl.className = 'clothes-marker';
 </script>
-{% elif post.resource_category == "ELEC" %}
+{% elif post.resource_category == "ELECTRONICS" %}
 <script>
   personalEl.className = 'electronics-marker';
 </script>
-{% elif post.resource_category == "OTHR" %}
+{% elif post.resource_category == "OTHERS" %}
 <script>
   personalEl.className = 'others-marker';
 </script>
@@ -232,20 +232,19 @@
   }
 </script>
 {% elif user.donorprofile %}
-
-<!-- <html>
-<head>
-  <script type="text/javascript">
-    function Redirect() {
-      window.location = "{{DOMAIN_NAME}}" + "/donation/";
-    }
-    setTimeout('Redirect()', 0);
-  </script>
-</head>
-
-<body>
-</body>
-
-</html> -->
+<article class="card donation-card mb-2">
+  <div class="card-header">
+      <div class='container'>
+          <div class="row text-center">
+              <div class="col">
+                  <p>Please register as Helpseeker to view map</p>
+                  <p><a href="{% url 'login' %}">Redirect to login</a></p>
+              </div>
+          </div>
+      </div>
+  </div>
+</article>
+{% else %}
+<meta http-equiv="refresh" content="0; URL=/login"/>
 {% endif %}
 {% endblock content %}

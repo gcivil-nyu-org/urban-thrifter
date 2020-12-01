@@ -203,6 +203,9 @@ select option:hover, select option:focus, select option:active {
   font-weight: 900;
 }
 
+.side-bar .list-group-item:first-child{
+  margin-top: 0px;
+}
 .side-bar a, .side-bar a:hover {
   color: #333;
   text-decoration: none;

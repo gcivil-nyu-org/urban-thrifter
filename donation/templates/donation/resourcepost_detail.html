@@ -1,7 +1,8 @@
 {% extends 'donation/base.html' %}
 {% load static %}
 {% block content %}
-
+{% if user.is_authenticated %}
+{% if object.donor == user %}
 <div class="content-section container animated fadeInUp">
     <!-- <img class='rounded-circle article-img' src='{% static "donation/asset/user.svg" %}'> -->
     <!--  p>{{ object.image.url }}</p-->
@@ -13,8 +14,8 @@
     <!-- Crispy filter to style the form -->
     <div class="row justify-content-around">
         <!-- <div class="col-md-4">
-            <img src="{{object.image.url}}" />
-        </div> -->
+                <img src="{{object.image.url}}" />
+            </div> -->
         <div class="col-4">
             <label>Title</label>
             <p class="graybox">{{ object.title }}</p>
@@ -54,7 +55,20 @@
         {% endif %}
     </div>
 </div>
-
+{% else %}
+<div class="content-section container animated fadeInUp">
+    <div class="alert alert-info text-center">You do not have authorization to view this post.</div>
+</div>
+{% endif %}
+{% else %}
+<div class="mt-5 container animated fadeInUp">
+    <div class="alert alert-info text-center">You are not signed in.</div>
+    <div class="pt-3 text-center">
+        <a class="btn btn-wide btn-dark" href="{% url 'login' %}">Sign In Here<i
+                class="fas fa-sign-in-alt pl-2"></i></a>
+    </div>
+</div>
+{% endif %}
 <script>
     mapboxgl.accessToken = '{{mapbox_access_token}}'
     var map = new mapboxgl.Map({

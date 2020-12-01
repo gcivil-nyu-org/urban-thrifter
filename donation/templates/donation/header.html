@@ -2,14 +2,14 @@
 <header class="site-header clearfix">
   <nav class="navbar fixed-top bg-white navbar-expand-md">
     <div class="container">
-      <a class="navbar-brand mr-4" href="{% url 'home' %}"><img src="{% static 'homepage/img/logo.png' %}" alt="Home" title="Home"></a>
+      <a class="navbar-brand nav-item mr-0 pb-3" href="{% url 'home' %}"><img src="{% static 'homepage/img/logo.png' %}" alt="Home" title="Home"></a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle"
         aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarToggle">
         <div class="navbar-nav mr-auto">
-          <a class="nav-item nav-link" title="Home" href="{% url 'home' %}">Home</a>
+          <!-- <a class="nav-item nav-link pl-0" title="Home" href="{% url 'home' %}">Urban Thrifter</a> -->
         </div>
         <!-- Navbar Right Side -->
         <div class="navbar-nav">
@@ -18,6 +18,7 @@
           {% if user.donorprofile %}
           <a id="donor-notification" class="nav-item nav-link" href="{% url 'donation:donation-messages' %}" title="Message"><i
               class="fas fa-envelope-open-text"></i></a>
+              <a id="display1" class="nav-item nav-link" href="{% url 'donation:get-reminder' %}" title="Watchlist"><i class="fas fa-bell"></i></a>
           <a class="nav-item nav-link" href="{% url 'register:donor-profile' user.username %}" title="Profile"><i
               class="fas fa-user-circle"></i></a>
           <a class="nav-item nav-link" href="{% url 'donation:donation-home' %}" title="Donation"><i class="fas fa-box-open"></i></a>
@@ -65,7 +66,7 @@
     setInterval(() => {
       $.ajax({
         type: 'GET',
-        url: "{% url 'donation:getResourcePosts' %}",
+        url: "{% url 'donation:get-resource-post' %}",
         success: function (response) {
           $("#display").html('<i class="fas fa-bell"></i>')
           let postCounter = 0
@@ -96,6 +97,26 @@
           "</span>");
       }
     });
-  }, 1000 * 0.5); // check notification every 0.5 seconds
+  }, 1000 * 2); // check notification every 2 seconds
+
+  $(document).ready(function () {
+    setInterval(() => {
+      $.ajax({
+        type: 'GET',
+        url: "{% url 'donation:get-reminder' %}",
+      })
+    }, 1000 * 2)
+  })
+  var ajaxLink1 = "{% url 'donation:get-reminder-count' %}";
+  setInterval(function () {
+    $.get(ajaxLink1, function (data) {
+      if (data <= 0) {
+        $("#display1").html("<i class='fas fa-bell'></i>");
+      } else {
+        $("#display1").html("<i class='fas fa-bell'></i><span class='message-number'>" + data +
+          "</span>");
+      }
+    });
+  }, 1000 * 2); // check notification every 2 seconds
 </script>
 {% endif %}

@@ -22,17 +22,22 @@ def home(request):
     return render(request, "reservation/reservation_home.html")
 
 
+@login_required
 def donation_post_list(request):
     # Getting posts based on filters or getting all posts
+    post_list = ResourcePost.objects.all()
     url_parameter = request.GET.get("q")
     if url_parameter:
-        post_list = ResourcePost.objects.filter(
-            title__icontains=url_parameter, status__in=["Available", "AVAILABLE"]
-        ).order_by("-date_created")
-    else:
-        post_list = ResourcePost.objects.filter(
+        combined_list = ResourcePost.objects.filter(
+            title__icontains=url_parameter
+        ) | ResourcePost.objects.filter(resource_category__icontains=url_parameter)
+        post_list = combined_list.filter(
             status__in=["Available", "AVAILABLE"]
         ).order_by("-date_created")
+    else:
+        post_list = post_list.filter(status__in=["Available", "AVAILABLE"]).order_by(
+            "-date_created"
+        )
     # print(len(post_list))
     # reservation_list = ReservationPost.objects.order_by("-date_created").values('post__id').annotate(
     #     name_count=Count('post__id')
@@ -43,11 +48,10 @@ def donation_post_list(request):
     # reservation_list = reservation_list.values("post__id", flat=True).first()
 
     reservation_reserved_list = reservation_list.filter(
-        post__status__in=["Reserved", "RESERVED"]
+        post__status__in=["Reserved", "RESERVED"], reservationstatus__exact=1
     )
-    reservation_pending_list = reservation_list.filter(
-        post__status__in=["Pending", "PENDING"]
-    )
+    reservation_pending_list = reservation_list.filter(reservationstatus=3)
+    # print(reservation_pending_list)
     reservation_closed_list = reservation_list.filter(
         post__status__in=["Closed", "CLOSED"]
     )
@@ -116,12 +120,15 @@ def confirm_notification(request, id):
     if request.method == "POST":
         notification = Notification.objects.get(id=id)
         resource_post = ResourcePost.objects.get(id=notification.post.post.id)
+        reserve_post = ReservationPost.objects.get(id=notification.post.id)
         if "accept" in request.POST:
             # do subscribe
             notification.is_seen = True
             notification.notificationstatus = 1
             resource_post.status = "RESERVED"
             resource_post.save()
+            reserve_post.reservationstatus = 1
+            reserve_post.save()
             notification.save()
         elif "deny" in request.POST:
             # do unsubscribe
@@ -129,6 +136,8 @@ def confirm_notification(request, id):
             notification.notificationstatus = 2
             resource_post.status = "AVAILABLE"
             resource_post.save()
+            reserve_post.reservationstatus = 2
+            reserve_post.save()
             notification.save()
         return render(request, "donation/notifications_confirm.html")
 
@@ -136,6 +145,9 @@ def confirm_notification(request, id):
 def reservation_function(request, id):
     if request.method == "POST":
         selected_timeslot = request.POST.get("dropoff_time")
+        if selected_timeslot is None:
+            messages.error(request, "Please select a drop-off time.")
+            return redirect("reservation:reservation-request", pk=id)
         resource_post = ResourcePost.objects.get(id=id)
         if resource_post.status == "Available" or resource_post.status == "AVAILABLE":
             if selected_timeslot == "1":

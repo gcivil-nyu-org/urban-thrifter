@@ -17,10 +17,10 @@ BOROUGH_CHOICES = [
 ]
 RESOURCE_CATEGORY_CHOICES = [
     ("FOOD", "Food"),
-    ("MDCL", "Medical/ PPE"),
-    ("CLTH", "Clothing/ Covers"),
-    ("ELEC", "Electronics"),
-    ("OTHR", "Others"),
+    ("MEDICAL/ PPE", "Medical/ PPE"),
+    ("CLOTHING/ COVERS", "Clothing/ Covers"),
+    ("ELECTRONICS", "Electronics"),
+    ("OTHERS", "Others"),
 ]
 
 
@@ -131,6 +131,22 @@ class HelpseekerUpdateForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper(self)
         self.helper.form_show_labels = False
+
+    def clean(self):
+        cleaned_data = super().clean()
+        rc_1 = cleaned_data.get("rc_1")
+        rc_2 = cleaned_data.get("rc_2")
+        rc_3 = cleaned_data.get("rc_3")
+
+        if (
+            rc_1 is not None
+            and rc_1 in [rc_2, rc_3]
+            or rc_2 is not None
+            and rc_2 in [rc_1, rc_3]
+            or rc_3 is not None
+            and rc_3 in [rc_1, rc_2]
+        ):
+            raise ValidationError("Repetitive resource category")
 
     class Meta:
         model = HelpseekerProfile
