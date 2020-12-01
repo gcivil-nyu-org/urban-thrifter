@@ -130,7 +130,7 @@ class PostCreateView(LoginRequiredMixin, CreateView):
             or dropoff_time_3 == dropoff_time_1
         ):
             messages.error(
-                self.request, "Please ensure your dropoff time aren't repetitive."
+                self.request, "Please ensure your dropoff times aren't repetitive."
             )
             return super().form_invalid(form)
 
