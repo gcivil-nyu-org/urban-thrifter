@@ -25,10 +25,4 @@ class Complaint(models.Model):
     reservation_post = models.ForeignKey(ReservationPost, on_delete=models.CASCADE)
 
     def __str__(self):
-        return (
-            str(self.issuer.username)
-            + " to "
-            + str(self.receiver.username)
-            + " about "
-            + str(self.reservation_post.__str__())
-        )
+        return str(self.issuer.username) + " to " + str(self.receiver.username) + " about " + str(self.reservation_post.__str__())
