@@ -8,9 +8,7 @@ from django.core.mail import send_mail
 
 
 class Command(BaseCommand):
-    help = (
-        "Send reminder emails to donors before 15 minutes of the actual donation time"
-    )
+    help = "Send reminder emails to donors when <=10 minutes left for their actual donation time"
 
     def handle(self, *args, **options):
         try:
@@ -18,7 +16,7 @@ class Command(BaseCommand):
                 reservationstatus=1,
                 dropoff_time_request__gt=datetime.datetime.now(),
                 dropoff_time_request__lte=datetime.datetime.now()
-                + datetime.timedelta(hours=24),
+                + datetime.timedelta(minutes=10),
             )
             email_subject = "Reminder for your incoming donation dropoff"
             for acceptedpost in acceptedposts:
