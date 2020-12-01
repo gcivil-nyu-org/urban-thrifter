@@ -272,6 +272,8 @@ def read_message(request, id):
 class NotificationCheck(View):
     def get(self, request):
         notification = Notification.objects.filter(
-            is_seen=False, receiver=request.user
+            is_seen=False,
+            post__post__status__in = ["Available", "AVAILABLE"],
+            receiver=request.user
         ).order_by("-post_id").distinct("post_id").count()
         return HttpResponse(notification)
