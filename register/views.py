@@ -188,7 +188,7 @@ def delete_profile(request):
             messages.success(request, "Account deleted successfully.")
             return redirect("/")
         elif confirmed > 0:
-            messages.error(
+            messages.info(
                 request,
                 "You can not delete your profile because you have "
                 + str(confirmed)
