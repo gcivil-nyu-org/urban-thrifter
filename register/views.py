@@ -147,10 +147,7 @@ def helpseeker_edit_profile(request):
         hs_form = HelpseekerUpdateForm(instance=request.user.helpseekerprofile)
         hs_user_form = UserUpdateForm(instance=request.user)
 
-    context = {
-        "hs_form": hs_form,
-        "hs_user_form": hs_user_form
-    }
+    context = {"hs_form": hs_form, "hs_user_form": hs_user_form}
     return render(request, "register/helpseekerprofile_form.html", context)
 
 

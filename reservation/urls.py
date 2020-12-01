@@ -15,7 +15,11 @@ urlpatterns = [
     path("post/<int:pk>", PostDetailView.as_view(), name="reservation-request"),
     path("detail/<int:pk>", ReservationDetailView.as_view(), name="reservation-detail"),
     path("update/<int:pk>", ReservationUpdateView.as_view(), name="reservation-update"),
-    path("update/request/<int:pk>", views.reservation_update, name="reservation-update-request"),
+    path(
+        "update/request/<int:pk>",
+        views.reservation_update,
+        name="reservation-update-request",
+    ),
     path("function/<int:id>", views.reservation_function, name="reservation-function"),
     path("notification/", views.show_notifications, name="reservation-notification"),
     path(

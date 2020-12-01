@@ -183,7 +183,7 @@ def reservation_function(request, id):
 def reservation_update(request, **kwargs):
     if request.method == "GET":
         selected_timeslot = request.GET.get("dropoff_time")
-        reservation = ReservationPost.objects.get(id=kwargs['pk'])
+        reservation = ReservationPost.objects.get(id=kwargs["pk"])
         print("reservation::", selected_timeslot)
         if reservation.post.status == "Pending" or reservation.post.status == "PENDING":
             if selected_timeslot == "1":
@@ -213,7 +213,7 @@ def reservation_update(request, **kwargs):
                 request, "Your reservation was unsuccessful. Please try again!"
             )
             return redirect("reservation:reservation-home")
-    return redirect("reservation:reservation-detail", kwargs['pk'])
+    return redirect("reservation:reservation-detail", kwargs["pk"])
 
 
 class PostDetailView(DetailView):
@@ -235,10 +235,12 @@ class ReservationUpdateView(DetailView):
 
 
 def show_notifications(request):
-    notifications =  Notification.objects.order_by("-id")
-    notifications = notifications.objects.filter(
-        receiver=request.user
-    ).distinct("post_id")
+    notifications = (
+        Notification.objects.filter(receiver=request.user)
+        .order_by("-date_created")
+        .distinct("post_id")
+    )
+
     template = loader.get_template("donation/notifications.html")
     context = {
         "donor_notifications": notifications,
@@ -269,10 +271,8 @@ def read_message(request, id):
 @method_decorator(login_required, name="dispatch")
 class NotificationCheck(View):
     def get(self, request):
-        notification =  Notification.objects.order_by("-id")
-        notification = notification.objects.distinct("post_id")
+        notification = Notification.objects.order_by("-date_created").distinct("post_id")
         notification = notification.objects.filter(
-            is_seen=False,
-            receiver=request.user
+            is_seen=False, receiver=request.user
         ).count()
         return HttpResponse(notification)

@@ -1,5 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
+from django.views.generic import (
+    ListView,
+    CreateView,
+    DetailView,
+    UpdateView,
+    DeleteView,
+)
 from .models import ResourcePost, User
 from reservation.models import ReservationPost
 from bootstrap_datepicker_plus import DateTimePickerInput
@@ -98,7 +104,9 @@ class PostCreateView(LoginRequiredMixin, CreateView):
         form.fields["dropoff_time_1"].widget = DateTimePickerInput()
         form.fields["dropoff_time_2"].widget = DateTimePickerInput()
         form.fields["dropoff_time_3"].widget = DateTimePickerInput()
-        form.fields["dropoff_time_1"].label = "<span class='ut-tooltip'>Dropoff Time 1 (EST)<span class='tooltiptext'>Currently our service only supports users in the Greater New York Area</span></span>"
+        form.fields[
+            "dropoff_time_1"
+        ].label = "<span class='ut-tooltip'>Dropoff Time 1 (EST)<span class='tooltiptext'>Currently our service only supports users in the Greater New York Area</span></span>"
         form.fields["dropoff_time_2"].label = "Dropoff Time 2 (EST)"
         form.fields["dropoff_time_3"].label = "Dropoff Time 3 (EST)"
         return form
@@ -192,7 +200,7 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = ResourcePost
 
     # Redirect to homepage after delete succesfully
-    success_url = '/donation'
+    success_url = "/donation"
 
     # Make sure the post owner can delete the post
     def test_func(self):
