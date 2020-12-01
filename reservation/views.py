@@ -238,14 +238,10 @@ def show_notifications(request):
     notifications = Notification.objects.filter(
         is_seen=False,
         receiver=request.user
-    ).distinct("post_id")
-    # notifications = notifications.values("post").distinct()
-    # notifications = Notification.objects.filter(post_id__in=post_list)
-    # print("hi  ", len(post_list))
+    ).order_by("-post_id").distinct("post_id")
     template = loader.get_template("donation/notifications.html")
     context = {
         "donor_notifications": notifications,
-        # "post_list": post_list
     }
 
     return HttpResponse(template.render(context, request))
