@@ -46,9 +46,7 @@ def donation_post_list(request):
     )
     # reservation_list = reservation_list.values("post__id", flat=True).first()
 
-    reservation_reserved_list = reservation_list.filter(
-        post__status__in=["Reserved", "RESERVED"]
-    )
+    reservation_reserved_list = reservation_list.filter(reservationstatus=1)
     reservation_pending_list = reservation_list.filter(reservationstatus=3)
     # print(reservation_pending_list)
     reservation_closed_list = reservation_list.filter(
@@ -250,7 +248,9 @@ def show_notifications(request):
 
 
 def helpseeker_notifications(request):
-    notifications = Notification.objects.filter(receiver=request.user).order_by("-date_created")
+    notifications = Notification.objects.filter(receiver=request.user).order_by(
+        "-date_created"
+    )
     template = loader.get_template("reservation/messages.html")
 
     context = {
@@ -271,9 +271,10 @@ def read_message(request, id):
 @method_decorator(login_required, name="dispatch")
 class NotificationCheck(View):
     def get(self, request):
-        notification = Notification.objects.filter(
-            is_seen=False,
-            post__post__status__in = ["Available", "AVAILABLE"],
-            receiver=request.user
-        ).order_by("-post_id").distinct("post_id").count()
+        notification = (
+            Notification.objects.order_by("-post_id")
+            .distinct("post_id")
+            .filter(is_seen=False, receiver=request.user)
+            .count()
+        )
         return HttpResponse(notification)
