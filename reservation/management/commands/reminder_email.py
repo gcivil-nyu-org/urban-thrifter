@@ -8,9 +8,7 @@ from django.core.mail import send_mail
 
 
 class Command(BaseCommand):
-    help = (
-        "Send reminder emails to donors before 15 minutes of the actual donation time"
-    )
+    help = "Send reminder emails to donors when <=10 minutes left for their actual donation time"
 
     def handle(self, *args, **options):
         try:
@@ -36,15 +34,16 @@ class Command(BaseCommand):
                     + str(acceptedpost.pk)
                 )
                 message = (
-                    "<h1>DONATION DROPOFF REMINDER</h1><p><h3>Just a quick reminder. The dropoff time for donation of <strong>"
+                    "<h1>DONATION DROP-OFF REMINDER</h1><p><h3>Just a quick reminder. The dropoff time for donation of <strong>"
                     + str(acceptedpost.post.title)
                     + "</strong> to <strong>"
                     + str(acceptedpost.helpseeker)
                     + "</strong> is at <strong>"
                     + dropoff_time
-                    + "</strong>. Here is the link to your post: "
+                    + ".</strong></h3></p><p><h3><a href="
                     + LINK
-                    + "</h3></p><p><h3>NOTE: You must be logged in to view the post.</h3></p>"
+                    + ">Click here to view your upcoming donation drop-off details</a></h3></p>"
+                    + "</h3></p><p><h3>NOTE: You must be logged in to view the post.</h3></p><p><h3>Best,</h3></p><p><h3>Team Urban Thrifter</h3></p>"
                 )
                 send_mail(
                     email_subject,
