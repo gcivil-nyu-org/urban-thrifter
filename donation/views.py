@@ -39,7 +39,7 @@ def home(request):
         "-date_created"
     )
     reserved_donation_posts = reserve_post_list.filter(
-        post__status__in=["Reserved", "RESERVED"]
+        reservationstatus=1
     )
     available_donation_posts = post_list.filter(status__in=["Available", "AVAILABLE"])
     closed_donation_posts = post_list.filter(status__in=["Closed", "CLOSED"])
