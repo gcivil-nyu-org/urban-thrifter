@@ -10,7 +10,8 @@ import os
 from django.utils import timezone
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.decorators import login_required
-
+from django.http import HttpResponse
+import datetime
 
 # , UserPassesTestMixin
 
@@ -240,3 +241,37 @@ def watchlist_view(request):
 #         context["mapbox_access_token"] = "pk." + os.environ.get("MAPBOX_KEY")
 #         context["timestamp_now"] = datetime.datetime.now()
 #         return context
+@login_required
+def get_reminders_count(request):
+    posts = ReservationPost.objects.filter(
+        reservationstatus=1,
+        dropoff_time_request__gt=datetime.datetime.now(),
+        dropoff_time_request__lte=datetime.datetime.now()
+        + datetime.timedelta(minutes=10),
+    )
+    data = posts.count()
+    return HttpResponse(data)
+
+
+@login_required
+def get_reminder(request):
+    posts = ReservationPost.objects.filter(
+        reservationstatus=1,
+        dropoff_time_request__gt=datetime.datetime.now(),
+        dropoff_time_request__lte=datetime.datetime.now()
+        + datetime.timedelta(minutes=10),
+    )
+    messages = []
+    for post in posts:
+        message = {
+            "resource": post.post.title,
+            "receiver": post.helpseeker.username,
+            "dropofftime": post.dropoff_time_request,
+        }
+        messages.append(message)
+    context = {
+        "messages": messages,
+    }
+    data = posts.count()
+    print(data)
+    return render(request, "donation/messages.html", context)

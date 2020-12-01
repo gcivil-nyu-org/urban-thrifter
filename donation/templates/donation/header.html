@@ -18,6 +18,7 @@
           {% if user.donorprofile %}
           <a id="donor-notification" class="nav-item nav-link" href="{% url 'donation:donation-messages' %}" title="Message"><i
               class="fas fa-envelope-open-text"></i></a>
+              <a id="display1" class="nav-item nav-link" href="{% url 'donation:get-reminder' %}" title="Watchlist"><i class="fas fa-bell"></i></a>
           <a class="nav-item nav-link" href="{% url 'register:donor-profile' user.username %}" title="Profile"><i
               class="fas fa-user-circle"></i></a>
           <a class="nav-item nav-link" href="{% url 'donation:donation-home' %}" title="Donation"><i class="fas fa-box-open"></i></a>
@@ -93,6 +94,26 @@
         $("#donor-notification").html("<i class='fas fa-envelope-open-text'></i>");
       } else {
         $("#donor-notification").html("<i class='fas fa-envelope'></i><span class='message-number'>" + data +
+          "</span>");
+      }
+    });
+  }, 1000 * 2); // check notification every 2 seconds
+
+  $(document).ready(function () {
+    setInterval(() => {
+      $.ajax({
+        type: 'GET',
+        url: "{% url 'donation:get-reminder' %}",
+      })
+    }, 1000 * 2)
+  })
+  var ajaxLink1 = "{% url 'donation:get-reminder-count' %}";
+  setInterval(function () {
+    $.get(ajaxLink1, function (data) {
+      if (data <= 0) {
+        $("#display1").html("<i class='fas fa-bell'></i>");
+      } else {
+        $("#display1").html("<i class='fas fa-bell'></i><span class='message-number'>" + data +
           "</span>");
       }
     });
