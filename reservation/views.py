@@ -268,9 +268,9 @@ def read_message(request, id):
 @method_decorator(login_required, name="dispatch")
 class NotificationCheck(View):
     def get(self, request):
-        return HttpResponse(
-            Notification.objects.filter(
-                is_seen=False,
-                receiver=request.user
-            ).order_by("-post_id").distinct("post_id").count()
-        )
+        notification = Notification.objects.order_by("-post_id").distinct("post_id")
+        notification = notification.filter(
+            is_seen=False,
+            receiver=request.user
+        ).count()
+        return HttpResponse(notification)
