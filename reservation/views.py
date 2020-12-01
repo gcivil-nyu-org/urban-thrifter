@@ -236,7 +236,6 @@ class ReservationUpdateView(DetailView):
 
 def show_notifications(request):
     notifications = Notification.objects.filter(
-        is_seen=False,
         receiver=request.user
     ).order_by("-post_id").distinct("post_id")
     template = loader.get_template("donation/notifications.html")
