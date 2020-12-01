@@ -18,6 +18,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.http import Http404
 from reservation.models import ReservationPost
 
+
 def register(request):
     # Redirect to login page
     return render(request, "register/register_main.html")
