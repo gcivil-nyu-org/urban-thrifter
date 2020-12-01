@@ -269,7 +269,7 @@ def read_message(request, id):
 class NotificationCheck(View):
     def get(self, request):
         notification = Notification.objects.order_by("-date").distinct("post")
-        notification = notification.filter(
+        notification = notification.objects.filter(
             is_seen=False,
             receiver=request.user
         ).count()
