@@ -38,6 +38,10 @@
             <p class="graybox">{{ object.post.dropoff_location.place }}</p>
             <label>Dropoff Time</label>
             <p class="graybox">{{ object.dropoff_time_request }}</p>
+            <div class="article-img img-circle"><img class="img-thumbnail" id="donationImg" alt="{{object.post.title}}"
+                    src="{{object.post.image.url}}" style="display:block;width:100%;" />
+                <!-- <i class="fas fa-search-plus"></i> -->
+            </div>
         </div>
         <div class="col-4">
             <label>Resource Category</label>
@@ -46,10 +50,6 @@
             <p class="graybox">{{ object.post.quantity }}</p>
             <label>Description</label>
             <p class="graybox">{{ object.post.description }}</p>
-            <div class="article-img img-circle"><img class="img-thumbnail" id="donationImg" alt="{{object.post.title}}"
-                    src="{{object.post.image.url}}" style="display:block;width:100%;" />
-                <!-- <i class="fas fa-search-plus"></i> -->
-            </div>
         </div>
     </div>
     <div class="row justify-content-around">

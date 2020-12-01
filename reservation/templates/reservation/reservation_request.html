@@ -36,6 +36,10 @@
             <label>Dropoff Location <a class="location-toggle text-muted" style="cursor:pointer;"><i
                         class="fas fa-eye"></i></a></label>
             <p class="graybox">{{ object.dropoff_location.place }}</p>
+            <div class="article-img img-circle"><img class="img-thumbnail" id="donationImg" alt="{{object.title}}"
+                    src="{{object.image.url}}" style="display:block;width:100%;" />
+                <!-- <i class="fas fa-search-plus"></i> -->
+            </div>
         </div>
         <div class="col-4">
             <label>Resource Category</label>
@@ -44,10 +48,6 @@
             <p class="graybox">{{ object.quantity }}</p>
             <label>Description</label>
             <p class="graybox">{{ object.description }}</p>
-            <div class="article-img img-circle"><img class="img-thumbnail" id="donationImg" alt="{{object.title}}"
-                    src="{{object.image.url}}" style="display:block;width:100%;" />
-                <!-- <i class="fas fa-search-plus"></i> -->
-            </div>
         </div>
     </div>
     <div class="row justify-content-around">
