@@ -156,7 +156,7 @@
 						</ol>
 						{% if user.is_authenticated %}
 						{% if user.helpseekerprofile %}
-						<a class="btn btn-dark btn-wide" href="{% url 'reservation:reservation-home' %}">See your reservations</a>
+						<a class="btn btn-dark btn-wide" href="{% url 'reservation:reservation-home' %}">See other listings</a>
 						{% endif %}
 						{% else %}
 						<a class="btn btn-dark btn-wide" href="{% url 'register:helpseeker-register' %}">Join as

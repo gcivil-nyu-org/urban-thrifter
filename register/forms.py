@@ -163,3 +163,6 @@ class UserUpdateForm(forms.ModelForm):
         model = User
         # field on the form
         fields = ["username", "email"]
+        help_texts = {
+            'username': None,
+        }
