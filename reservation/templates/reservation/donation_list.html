@@ -2,7 +2,9 @@
 	{% if first %}
 	<div>
 		<form class="mb-2 form-group">
-			<input id="user-input" class="form-control form-control" type="text" placeholder="&#xF002; Search"
+			<input id="user-input" class="form-control form-control" type="text"
+                onkeydown="return (event.keyCode!=13);"
+                placeholder="&#xF002; Search"
 				style="font-family:DINFont, FontAwesome; font-size: 16px;" aria-label="Search">
 		</form>
 	</div>
@@ -62,7 +64,7 @@
 			</div>
 		</article>
 		{% empty %}
-		<div class="alert alert-info text-center">There aren't any available donation currently.</div>
+		<div class="alert alert-info text-center">There aren't any available donations currently.</div>
 		{% endfor %}
 	</div>
 </div>

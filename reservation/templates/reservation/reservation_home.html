@@ -1,8 +1,8 @@
 {% extends 'donation/base.html' %}
 {% load static %}
 {% block content %}
-{% include "reservation/reservation_status_nav.html" %}
 {% if user.is_authenticated and user.helpseekerprofile %}
+{% include "reservation/reservation_status_nav.html" %}
 {% if messages %}
 {% for message in messages %}
 <div class="container alert alert-info alert-{{ message.tags }}">
@@ -59,7 +59,7 @@
       </div>
     </article>
     {% empty %}
-    <div class="alert alert-info text-center">You don't have any confirmed reservation currently.</div>
+    <div class="alert alert-info text-center">You don't have any confirmed reservations currently.</div>
     {% endfor %}
   </div>
 
@@ -113,7 +113,7 @@
       </div>
     </article>
     {% empty %}
-    <div class="alert alert-info text-center">You don't have any pending reservation currently.</div>
+    <div class="alert alert-info text-center">You don't have any pending reservations currently.</div>
     {% endfor %}
   </div>
 
@@ -164,10 +164,12 @@
       </div>
     </article>
     {% empty %}
-    <div class="alert alert-info text-center">You don't have any completed reservation currently.</div>
+    <div class="alert alert-info text-center">You don't have any completed reservations.</div>
     {% endfor %}
   </div>
 </div>
+{% else %}
+<meta http-equiv="Refresh" content="0; url='/login'" />
 {% endif %}
 <script type="text/javascript" src="{% static 'javascript/search.js' %}"></script>
 {% endblock content %}

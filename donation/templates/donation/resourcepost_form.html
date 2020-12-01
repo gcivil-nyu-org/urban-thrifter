@@ -2,6 +2,7 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
+{% if user.donorprofile %}
 {% if not user.donorprofile.dropoff_location.place %}
 <div class="container alert alert-info text-center">
     <h4>No Default Address Given.</h4>
@@ -74,4 +75,5 @@
         </div>
     </form>
 </div>
+{% endif %}
 {% endblock content %}

@@ -19,6 +19,8 @@
           {% if user.donorprofile %}
           <a id="donor-notification" class="nav-item nav-link" href="{% url 'donation:donation-messages' %}"><span
               class="tooltiptext">Notifications</span><i class="fas fa-bell"></i></a>
+          <a id="display1" class="nav-item nav-link" href="{% url 'donation:get-reminder' %}"><span
+            class="tooltiptext">Reminder</span><i class="fas fa-clock"></i></a>
           <a class="nav-item nav-link" href="{% url 'register:donor-profile' user.username %}"><span
               class="tooltiptext">Profile</span><i class="fas fa-user-circle"></i></a>
           <a class="nav-item nav-link" href="{% url 'donation:donation-home' %}"><span
@@ -107,6 +109,26 @@
           "</span>");
       }
     });
-  }, 500); // check notification every .5 seconds
+  }, 500); // check notification every 2 seconds
+
+  $(document).ready(function () {
+    setInterval(() => {
+      $.ajax({
+        type: 'GET',
+        url: "{% url 'donation:get-reminder' %}",
+      })
+    }, 500)
+  })
+  var ajaxLink1 = "{% url 'donation:get-reminder-count' %}";
+  setInterval(function () {
+    $.get(ajaxLink1, function (data) {
+      if (data <= 0) {
+        $("#display1").html("<i class='fas fa-clock'></i>");
+      } else {
+        $("#display1").html("<i class='fas fa-clock'></i><span class='message-number'>" + data +
+          "</span>");
+      }
+    });
+  }, 500); // check notification every 2 seconds
 </script>
 {% endif %}

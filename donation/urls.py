@@ -20,4 +20,6 @@ urlpatterns = [
     path(
         "notifications/", reservation_views.show_notifications, name="donation-messages"
     ),
+    path("reminder_notification/", views.get_reminder, name="get-reminder"),
+    path("ajax/getremindercount", views.get_reminders_count, name="get-reminder-count"),
 ]
