@@ -162,7 +162,7 @@ class UserUpdateForm(forms.ModelForm):
     class Meta:
         model = User
         # field on the form
-        fields = ["username", "email"]
+        fields = ["username"]
         help_texts = {
-            'username': None,
+            "username": None,
         }

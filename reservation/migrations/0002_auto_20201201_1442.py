@@ -7,17 +7,17 @@ import django.utils.timezone
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('reservation', '0001_initial'),
+        ("reservation", "0001_initial"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='notification',
-            name='date',
+            model_name="notification",
+            name="date",
         ),
         migrations.AddField(
-            model_name='notification',
-            name='date_created',
+            model_name="notification",
+            name="date_created",
             field=models.DateTimeField(default=django.utils.timezone.now),
         ),
     ]
