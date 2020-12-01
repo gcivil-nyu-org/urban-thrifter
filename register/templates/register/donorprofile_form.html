@@ -1,7 +1,7 @@
 {% extends 'donation/base.html' %}
 {% load crispy_forms_tags %}
 {% block content %}
-
+{% if user.donorprofile %}
 {% include "register/profile_nav.html" %}
 {% if messages %}
 {% for message in messages %}
@@ -57,5 +57,5 @@
     </div>
   </div>
 </div>
-
+{% endif %}
 {% endblock content %}
