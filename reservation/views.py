@@ -46,7 +46,7 @@ def donation_post_list(request):
     )
     # reservation_list = reservation_list.values("post__id", flat=True).first()
 
-    reservation_reserved_list = reservation_list.filter(reservationstatus=1)
+    reservation_reserved_list = reservation_list.filter(reservationstatus=1).distinct("post_id")
     reservation_pending_list = reservation_list.filter(reservationstatus=3)
     # print(reservation_pending_list)
     reservation_closed_list = reservation_list.filter(
