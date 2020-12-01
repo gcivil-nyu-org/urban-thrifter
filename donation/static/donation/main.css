@@ -196,7 +196,8 @@ select option:hover, select option:focus, select option:active {
 }
 
 .site-header .nav-item .tooltiptext,
-.ut-tooltip .tooltiptext {
+.ut-tooltip .tooltiptext,
+.ut-tooltip .map-tooltiptext {
   visibility: hidden;
   width: 200px;
   background-color: #fff;
@@ -210,12 +211,23 @@ select option:hover, select option:focus, select option:active {
   z-index: 1;
 }
 
+.ut-tooltip .map-tooltiptext{
+  margin-top: 75px;
+  margin-left: 20px;
+  width: auto;
+  text-align: center;
+  font-size: 14px;
+  color: #333;
+  background:#fff;
+}
+
 .site-header .navbar-brand .tooltiptext {
   margin-top: 50px !important;
 }
 
 .nav-item:hover .tooltiptext,
-.ut-tooltip:hover .tooltiptext {
+.ut-tooltip:hover .tooltiptext,
+.ut-tooltip:hover .map-tooltiptext {
   visibility: visible;
 }
 
@@ -583,8 +595,7 @@ a.article-title:hover {
 }
 
 .map-filter i {
-  font-size: 25px;
-  padding-top: 5px;
+  padding: 5px 0;
 }
 
 .map-filter li button {
