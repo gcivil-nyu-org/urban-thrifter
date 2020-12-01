@@ -4,6 +4,7 @@ from .models import ResourcePost, User
 from register.models import DonorProfile, HelpseekerProfile
 from reservation.models import ReservationPost
 from django.utils import timezone
+from django.http import HttpResponse
 
 
 # from django.core.files.uploadedfile import SimpleUploadedFile
@@ -310,4 +311,4 @@ class Donor_Ajax_Reminder_Tests(TestCase):
         reservation.save()
         posts=ReservationPost.objects.filter(reservationstatus=1)
         data=posts.count()
-        self.assertEqual(data,1 )
+        self.assertEqual(HttpResponse(data).status_code,200 )
