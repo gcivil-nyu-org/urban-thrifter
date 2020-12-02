@@ -312,3 +312,10 @@ class Donor_Ajax_Reminder_Tests(TestCase):
         posts=ReservationPost.objects.filter(reservationstatus=1)
         data=posts.count()
         self.assertEqual(HttpResponse(data).status_code,200 )
+
+    def test_get_reminder(self):
+        self.user = createhelpseeker()
+        self.client.force_login(self.user, backend=None)
+        response = self.client.get(reverse("donation:get-reminder"))
+        self.assertEqual(response.status_code, 200)
+
