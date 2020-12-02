@@ -6,6 +6,7 @@
             <li class="list-group-item list-group-item-light"><a href="{% url 'donation:donation-home' %}">Donations</a></li>
             <li class="list-group-item list-group-item-light"><a href="{% url 'register:donor-profile' user.username  %}">Profile</a></li>
             <li class="list-group-item list-group-item-light"><a href="{% url 'donation:donation-messages' %}">Messages</a></li>
+            <li class="list-group-item list-group-item-light"><a href="{% url 'donation:get-reminder' %}">Reminders</a></li>
             {% elif user.helpseekerprofile %}
             <li class="list-group-item list-group-item-light"><a href="{% url 'reservation:reservation-home' %}">Reservations</a></li>
             <li class="list-group-item list-group-item-light"><a href="{% url 'register:helpseeker-profile' %}">Profile</a></li>
