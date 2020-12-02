@@ -269,6 +269,12 @@ class NotificationTests(TestCase):
         response = self.client.get(reverse("reservation:reservation-notification"))
         self.assertEqual(response.status_code, 200)
 
+    def test_ajax_notification(self):
+        self.user=creathelpseeker()
+        self.client.force_login(self.user, backend=None)
+        response = self.client.get(reverse("reservation:ajax-notification"))
+        self.assertEqual(response.status_code, 200)
+
 
 class ReservationPostListDeleteTests(TestCase):
     def test_delete_reservation_with_delete_helpseeker(self):
