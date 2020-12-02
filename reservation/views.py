@@ -42,20 +42,16 @@ def donation_post_list(request):
     # reservation_list = ReservationPost.objects.order_by("-date_created").values('post__id').annotate(
     #     name_count=Count('post__id')
     # ).filter(name_count=1)
-    reservation_list = ReservationPost.objects.filter(
-        helpseeker=request.user
-    ).order_by(
+    reservation_list = ReservationPost.objects.filter(helpseeker=request.user).order_by(
         "-date_created"
     )
     # reservation_list = reservation_list.values("post__id", flat=True).first()
 
     reservation_reserved_list = reservation_list.filter(
-        reservationstatus=1,
-        post__status__in=["Reserved", "RESERVED"]
+        reservationstatus=1, post__status__in=["Reserved", "RESERVED"]
     )
     reservation_pending_list = reservation_list.filter(
-        reservationstatus=3,
-        post__status__in=["Pending", "PENDING"]
+        reservationstatus=3, post__status__in=["Pending", "PENDING"]
     )
     # print(reservation_pending_list)
     reservation_closed_list = reservation_list.filter(

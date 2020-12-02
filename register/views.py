@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 import os
-from .forms import HelpseekerForm, DonorForm, HelpseekerUpdateForm, UserUpdateForm
+from .forms import HelpseekerForm, DonorForm, HelpseekerUpdateForm
+
+# , UserUpdateForm
 from .models import HelpseekerProfile, DonorProfile
 from django.http import HttpResponseRedirect
 from django.urls import reverse
@@ -147,9 +149,10 @@ def helpseeker_edit_profile(request):
         hs_form = HelpseekerUpdateForm(instance=request.user.helpseekerprofile)
         # hs_user_form = UserUpdateForm(instance=request.user)
 
-    context = {"hs_form": hs_form
-               # "hs_user_form": hs_user_form
-               }
+    context = {
+        "hs_form": hs_form
+        # "hs_user_form": hs_user_form
+    }
     return render(request, "register/helpseekerprofile_form.html", context)
 
 
