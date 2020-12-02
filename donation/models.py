@@ -12,10 +12,10 @@ from django.contrib.auth.models import User
 # User Models save database specifically for USERS
 RESROUCE_CATEGORY_CHOICES = (
     ("FOOD", "Food"),
-    ("MDCL", "Medical/ PPE"),
-    ("CLTH", "Clothing/ Covers"),
-    ("ELEC", "Electronics"),
-    ("OTHR", "Others"),
+    ("MEDICAL/ PPE", "Medical/ PPE"),
+    ("CLOTHING/ COVERS", "Clothing/ Covers"),
+    ("ELECTRONICS", "Electronics"),
+    ("OTHERS", "Others"),
 )
 STATUS_CHOICES = (
     ("AVAILABLE", "Available"),
@@ -42,7 +42,7 @@ class ResourcePost(models.Model):
         default="donation-pics/default.jpg", upload_to="donation-pics", blank=True
     )
     status = models.CharField(
-        max_length=100, choices=STATUS_CHOICES, default="Available"
+        max_length=100, choices=STATUS_CHOICES, default="AVAILABLE"
     )
 
     # Dunder (abbr. for Double Under)/Magic str method

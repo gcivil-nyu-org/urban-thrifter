@@ -144,7 +144,7 @@ cython_debug/
 # Database
 *.sqlite3
 staticfiles/*
-*/migrations/*.py
+# */migrations/*.py
 
 # our donation images
 media/donation-pics/*

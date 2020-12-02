@@ -24,6 +24,20 @@ def createdonor():
     return donor
 
 
+def createdonor_2():
+    donor = User(
+        username="donor_unit_test_2",
+        is_active=True,
+        email="unittest@unittest2.com",
+    )
+    donor.set_password("Unittestpassword123!")
+
+    donor_prof = DonorProfile(user=donor, complaint_count=0, donation_count=0)
+    donor.save()
+    donor_prof.save()
+    return donor
+
+
 def creathelpseeker():
     helpseeker = User(
         username="hs_unit_test",
@@ -226,6 +240,63 @@ class NotificationTests(TestCase):
             + str(notification.post.post.title),
             notification.__str__(),
         )
+
+    def test_helpseeker_notifications(self):
+        self.user = creathelpseeker()
+        self.client.force_login(self.user, backend=None)
+        response = self.client.get(reverse("reservation:reservation-messages"))
+        self.assertEqual(response.status_code, 200)
+
+    def test_show_notifications(self):
+        self.user = createdonor_2()
+        self.client.force_login(self.user, backend=None)
+        response = self.client.get(reverse("reservation:reservation-notification"))
+        self.assertEqual(response.status_code, 200)
+
+    def test_ajax_notification(self):
+        self.user = creathelpseeker()
+        self.client.force_login(self.user, backend=None)
+        response = self.client.get(reverse("reservation:ajax-notification"))
+        self.assertEqual(response.status_code, 200)
+
+    def test_reservation_function(self):
+        donor = createdonor()
+        helpseeker = creathelpseeker()
+        donation_post = createdonation(donor)
+        reservation = ReservationPost(
+            dropoff_time_request=donation_post.dropoff_time_1,
+            post=donation_post,
+            donor=donor,
+            helpseeker=helpseeker,
+        )
+        reservation.save()
+        response = self.client.get(
+            reverse("reservation:reservation-function", args=(reservation.id,))
+        )
+        self.assertEqual(response.status_code, 302)
+
+    def test_read_messages(self):
+        donor = createdonor()
+        helpseeker = creathelpseeker()
+        donation_post = createdonation(donor)
+        reservation = ReservationPost(
+            dropoff_time_request=donation_post.dropoff_time_1,
+            post=donation_post,
+            donor=donor,
+            helpseeker=helpseeker,
+        )
+        reservation.save()
+        notification = Notification(
+            post=reservation,
+            sender=helpseeker,
+            receiver=donor,
+            date=timezone.now(),
+        )
+        notification.save()
+        response = self.client.get(
+            reverse("reservation:read-message", args=(notification.id,))
+        )
+        self.assertEqual(response.status_code, 302)
 
 
 class ReservationPostListDeleteTests(TestCase):

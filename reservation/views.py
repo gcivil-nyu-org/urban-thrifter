@@ -22,13 +22,17 @@ def home(request):
     return render(request, "reservation/reservation_home.html")
 
 
+@login_required
 def donation_post_list(request):
     # Getting posts based on filters or getting all posts
     post_list = ResourcePost.objects.all()
     url_parameter = request.GET.get("q")
     if url_parameter:
-        post_list = post_list.filter(
-            title__icontains=url_parameter, status__in=["Available", "AVAILABLE"]
+        combined_list = ResourcePost.objects.filter(
+            title__icontains=url_parameter
+        ) | ResourcePost.objects.filter(resource_category__icontains=url_parameter)
+        post_list = combined_list.filter(
+            status__in=["Available", "AVAILABLE"]
         ).order_by("-date_created")
     else:
         post_list = post_list.filter(status__in=["Available", "AVAILABLE"]).order_by(
@@ -44,10 +48,9 @@ def donation_post_list(request):
     # reservation_list = reservation_list.values("post__id", flat=True).first()
 
     reservation_reserved_list = reservation_list.filter(
-        post__status__in=["Reserved", "RESERVED"]
+        post__status__in=["Reserved", "RESERVED"], reservationstatus__exact=1
     )
     reservation_pending_list = reservation_list.filter(reservationstatus=3)
-    print(reservation_pending_list)
     reservation_closed_list = reservation_list.filter(
         post__status__in=["Closed", "CLOSED"]
     )
@@ -141,6 +144,9 @@ def confirm_notification(request, id):
 def reservation_function(request, id):
     if request.method == "POST":
         selected_timeslot = request.POST.get("dropoff_time")
+        if selected_timeslot is None:
+            messages.error(request, "Please select a drop-off time.")
+            return redirect("reservation:reservation-request", pk=id)
         resource_post = ResourcePost.objects.get(id=id)
         if resource_post.status == "Available" or resource_post.status == "AVAILABLE":
             if selected_timeslot == "1":

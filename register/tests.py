@@ -71,7 +71,7 @@ class HelpseekerRegistrationTests(TestCase):
                 "password1": "peaches12",
                 "password2": "peaches12",
                 "borough": "MAN",
-                "resource": ["FOOD", "MDCL"],
+                "resource": ["FOOD", "MEDICAL/ PPE"],
             }
         )
         self.assertTrue(form.is_valid())
@@ -84,7 +84,7 @@ class HelpseekerRegistrationTests(TestCase):
                 "password1": "peaches12",
                 "password2": "peaches12",
                 "borough": "MAN",
-                "resource": ["FOOD", "MDCL"],
+                "resource": ["FOOD", "MEDICAL/ PPE"],
             }
         )
         self.assertFalse(form.is_valid())
@@ -97,7 +97,7 @@ class HelpseekerRegistrationTests(TestCase):
                 "password1": "peaches12",
                 "password2": "peaches12",
                 "borough": "MAN",
-                "resource": ["FOOD", "MDCL"],
+                "resource": ["FOOD", "MEDICAL/ PPE"],
             }
         )
         self.assertFalse(form.is_valid())
@@ -110,7 +110,7 @@ class HelpseekerRegistrationTests(TestCase):
                 "password1": "dog",
                 "password2": "dog",
                 "borough": "MAN",
-                "resource": ["FOOD", "MDCL"],
+                "resource": ["FOOD", "MEDICAL/ PPE"],
             }
         )
         self.assertFalse(form.is_valid())
@@ -123,7 +123,7 @@ class HelpseekerRegistrationTests(TestCase):
                 "password1": "peaches12",
                 "password2": "peaches13",
                 "borough": "MAN",
-                "resource": ["FOOD", "MDCL"],
+                "resource": ["FOOD", "MEDICAL/ PPE"],
             }
         )
         self.assertFalse(form.is_valid())
@@ -148,7 +148,7 @@ class HelpseekerRegistrationTests(TestCase):
                 "password1": "peaches12",
                 "password2": "peaches12",
                 "borough": "MAN",
-                "resource": ["FOOD", "MDCL"],
+                "resource": ["FOOD", "MEDICAL/ PPE"],
             }
         )
         self.assertFalse(form.is_valid())
@@ -160,7 +160,7 @@ class HelpseekerRegistrationTests(TestCase):
                 "password1": "peaches12",
                 "password2": "peaches12",
                 "borough": "MAN",
-                "resource": ["FOOD", "MDCL"],
+                "resource": ["FOOD", "MEDICAL/ PPE"],
             }
         )
         self.assertFalse(form.is_valid())
@@ -172,7 +172,7 @@ class HelpseekerRegistrationTests(TestCase):
                 "email": "ponathanjun@gmail.com",
                 "password2": "peaches12",
                 "borough": "MAN",
-                "resource": ["FOOD", "MDCL"],
+                "resource": ["FOOD", "MEDICAL/ PPE"],
             }
         )
         self.assertFalse(form.is_valid())
@@ -184,7 +184,7 @@ class HelpseekerRegistrationTests(TestCase):
                 "email": "ponathanjun@gmail.com",
                 "password1": "peaches12",
                 "borough": "MAN",
-                "resource": ["FOOD", "MDCL"],
+                "resource": ["FOOD", "MEDICAL/ PPE"],
             }
         )
         self.assertFalse(form.is_valid())
@@ -196,7 +196,7 @@ class HelpseekerRegistrationTests(TestCase):
                 "email": "ponathanjun@gmail.com",
                 "password1": "peaches12",
                 "password2": "peaches12",
-                "resource": ["FOOD", "MDCL"],
+                "resource": ["FOOD", "MEDICAL/ PPE"],
             }
         )
         self.assertFalse(form.is_valid())
@@ -209,7 +209,7 @@ class HelpseekerRegistrationTests(TestCase):
                 "password1": "peaches12",
                 "password2": "peaches12",
                 "borough": "MAN",
-                "resource": ["FOOD", "MDCL"],
+                "resource": ["FOOD", "MEDICAL/ PPE"],
             }
         )
         form.save()
@@ -220,7 +220,7 @@ class HelpseekerRegistrationTests(TestCase):
                 "password1": "peaches12",
                 "password2": "peaches12",
                 "borough": "MAN",
-                "resource": ["FOOD", "MDCL"],
+                "resource": ["FOOD", "MEDICAL/ PPE"],
             }
         )
         self.assertFalse(duplicate.is_valid())
@@ -233,7 +233,7 @@ class HelpseekerRegistrationTests(TestCase):
                 "password1": "peaches12",
                 "password2": "peaches12",
                 "borough": "MAN",
-                "resource": ["FOOD", "MDCL"],
+                "resource": ["FOOD", "MEDICAL/ PPE"],
             }
         )
         form.save()
@@ -244,7 +244,7 @@ class HelpseekerRegistrationTests(TestCase):
                 "password1": "peaches12",
                 "password2": "peaches12",
                 "borough": "MAN",
-                "resource": ["FOOD", "MDCL"],
+                "resource": ["FOOD", "MEDICAL/ PPE"],
             }
         )
         self.assertFalse(duplicate.is_valid())
@@ -259,7 +259,7 @@ class HelpseekerProfileTests(TestCase):
                 "password1": "peaches12",
                 "password2": "peaches12",
                 "borough": "MAN",
-                "resource": ["FOOD", "MDCL"],
+                "resource": ["FOOD", "MEDICAL/ PPE"],
             }
         )
         form.save()
@@ -276,7 +276,7 @@ class HelpseekerProfileTests(TestCase):
                 "password1": "peaches12",
                 "password2": "peaches12",
                 "borough": "MAN",
-                "resource": ["FOOD", "MDCL", "OTHR"],
+                "resource": ["FOOD", "MEDICAL/ PPE", "OTHERS"],
             }
         )
         form.save()
@@ -293,7 +293,9 @@ class HelpseekerProfileTests(TestCase):
         profile.rc_2 = d["resource1"]
         profile.rc_3 = d["resource2"]
         self.assertTrue(
-            profile.rc_1 == "FOOD" and profile.rc_2 == "MDCL" and profile.rc_3 == "OTHR"
+            profile.rc_1 == "FOOD"
+            and profile.rc_2 == "MEDICAL/ PPE"
+            and profile.rc_3 == "OTHERS"
         )
 
     def test_helpseeker_profile_complaint_count(self):
@@ -304,7 +306,7 @@ class HelpseekerProfileTests(TestCase):
                 "password1": "peaches12",
                 "password2": "peaches12",
                 "borough": "MAN",
-                "resource": ["FOOD", "MDCL"],
+                "resource": ["FOOD", "MEDICAL/ PPE"],
             }
         )
         form.save()
@@ -320,7 +322,7 @@ class HelpseekerProfileTests(TestCase):
                 "password1": "peaches12",
                 "password2": "peaches12",
                 "borough": "MAN",
-                "resource": ["FOOD", "MDCL"],
+                "resource": ["FOOD", "MEDICAL/ PPE"],
             }
         )
         form.save()
@@ -342,7 +344,7 @@ class HelpseekerViewTests(TestCase):
                 "password1": "peaches12",
                 "password2": "peaches12",
                 "borough": "MAN",
-                "resource": ["FOOD", "MDCL"],
+                "resource": ["FOOD", "MEDICAL/ PPE"],
             },
         )
         self.assertEqual(holder.status_code, 302)
@@ -357,7 +359,7 @@ class HelpseekerViewTests(TestCase):
                 "password1": "peaches12",
                 "password2": "peaches12",
                 "borough": "MAN",
-                "resource": ["FOOD", "MDCL"],
+                "resource": ["FOOD", "MEDICAL/ PPE"],
             },
         )
         self.assertEqual(holder.status_code, 200)
@@ -372,7 +374,7 @@ class HelpseekerViewTests(TestCase):
                 "password1": "peaches12",
                 "password2": "peaches12",
                 "borough": "MAN",
-                "resource": ["FOOD", "MDCL"],
+                "resource": ["FOOD", "MEDICAL/ PPE"],
             },
         )
         self.assertEqual(holder.status_code, 200)
@@ -387,7 +389,7 @@ class HelpseekerViewTests(TestCase):
                 "password1": "dog",
                 "password2": "dog",
                 "borough": "MAN",
-                "resource": ["FOOD", "MDCL"],
+                "resource": ["FOOD", "MEDICAL/ PPE"],
             },
         )
         self.assertEqual(holder.status_code, 200)
