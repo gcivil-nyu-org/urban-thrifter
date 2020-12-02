@@ -2,8 +2,8 @@
 {% block content %}
 
 {% load crispy_forms_tags %}
-  <div class="container">
-    <h1>Issue Complaint</h1></br>
+  <div class="container mb-5">
+    <legend class='mb-4 font-weight-bold'>Complaint</legend>
     {% if messages %}
     {% for message in messages %}
     <div class="alert alert-{{ message.tags }}">
@@ -16,7 +16,7 @@
       <div class="form-group">
         {{ form|crispy }}
       </div>
-      <input class="btn btn-dark btn-wide" type="submit" value="Submit Complaint">
+      <input class="btn btn-dark btn-wide" type="submit" value="Submit">
     </form>
 
   </div>

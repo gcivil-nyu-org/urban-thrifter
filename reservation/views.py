@@ -55,7 +55,7 @@ def donation_post_list(request):
     )
     # print(reservation_pending_list)
     reservation_closed_list = reservation_list.filter(
-        post__status__in=["Closed", "CLOSED"]
+        reservationstatus=1, post__status__in=["Closed", "CLOSED"]
     )
     # Paginator
     page = request.GET.get("page", 1)

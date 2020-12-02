@@ -42,9 +42,16 @@ def home(request):
     reserve_post_list = ReservationPost.objects.filter(donor=user).order_by(
         "-date_created"
     )
-    reserved_donation_posts = reserve_post_list.filter(reservationstatus=1)
+    reserved_donation_posts = reserve_post_list.filter(
+        reservationstatus=1,
+        post__status__in=["Reserved", "RESERVED"]
+    )
     available_donation_posts = post_list.filter(status__in=["Available", "AVAILABLE"])
     closed_donation_posts = post_list.filter(status__in=["Closed", "CLOSED"])
+    closed_reservation_posts = reserve_post_list.filter(
+        reservationstatus=1,
+        post__status__in=["Closed", "CLOSED"]
+    )
     # page = request.GET.get("page", 1)
     # paginator = Paginator(post_list, 3)
     # try:
@@ -58,6 +65,7 @@ def home(request):
         "reserved_donation_posts": reserved_donation_posts,
         "available_donation_posts": available_donation_posts,
         "closed_donation_posts": closed_donation_posts,
+        "closed_reservation_posts": closed_reservation_posts
     }
 
     return render(request, "donation/reservation_status_nav.html", context)

@@ -167,7 +167,7 @@
         </div>
     </div>
     <div class="tab-pane fade" id="pills-closed" role="tabpanel" aria-labelledby="pills-closed-tab">
-        {% for post in closed_donation_posts %}
+        {% for post in closed_reservation_posts %}
         <article class="card donation-card mb-2">
             <!-- <img class='rounded-circle article-img' src='{{ post.author.profile.image.url }}' > -->
             <div class="card-header">
@@ -175,19 +175,19 @@
                     <div class="row text-center">
                         <div class="col">
                             <p>Title</p>
-                            <p><a href="{% url 'donation:donation-detail' post.id %}">{{ post.title }}</a></p>
+                            <p><a href="{% url 'donation:donation-detail' post.post.id %}">{{ post.post.title }}</a></p>
                         </div>
                         <div class="col">
                             <p>Quantity</p>
-                            <p>{{ post.quantity }}</p>
+                            <p>{{ post.post.quantity }}</p>
                         </div>
                         <div class="col">
                             <p>Category</p>
-                            <p>{{ post.resource_category }}</p>
+                            <p>{{ post.post.resource_category }}</p>
                         </div>
                         <div class="col">
                             <p>Status</p>
-                            <p>{{ post.status }}</p>
+                            <p>{{ post.post.status }}</p>
                         </div>
                     </div>
                 </div>
@@ -196,24 +196,18 @@
                 <div class='container'>
                     <div class="row">
                         <div class="col-2">
-                            <p class="article-img img-circle"><img class="img-thumbnail" src='{{post.image.url}}'></i>
+                            <p class="article-img img-circle"><img class="img-thumbnail" src='{{post.post.image.url}}'></i>
                             </p>
                         </div>
                         <div class="col-5">
-                            <p>Available Dropoff Time: </p>
+                            <p>Dropoff Time: </p>
                             <ul>
-                                <li>{{ post.dropoff_time_1 }}</li>
-                                {% if post.dropoff_time_2 != None %}
-                                <li>{{ post.dropoff_time_2 }}</li>
-                                {% endif %}
-                                {% if post.dropoff_time_3 != None %}
-                                <li>{{ post.dropoff_time_3 }}</li>
-                                {% endif %}
+                                <li>{{ post.dropoff_time_request }}</li>
                             </ul>
-                            <p>{{ post.dropoff_location.place}}</p>
+                            <p>{{ post.post.dropoff_location.place}}</p>
                         </div>
                         <div class="col-5">
-                            <button class='btn btn-outline-warning mb-1 btn-wide float-right'><a
+                            <button class='btn btn-warning mb-1 btn-wide float-right'><a
                                     href="{% url 'issue-complaint' post.id %}">Complaint</a></button>
                         </div>
                     </div>
