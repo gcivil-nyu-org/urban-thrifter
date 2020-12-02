@@ -244,7 +244,7 @@ def show_notifications(request):
     notifications = (
         Notification.objects.filter(receiver=request.user)
         .order_by("-post_id")
-        .distinct("post_id")
+        # .distinct("post_id")
     )
 
     template = loader.get_template("donation/notifications.html")
@@ -281,7 +281,7 @@ class NotificationCheck(View):
     def get(self, request):
         notification = (
             Notification.objects.order_by("-post_id")
-            .distinct("post_id")
+            # .distinct("post_id")
             .filter(is_seen=False, receiver=request.user)
             .count()
         )

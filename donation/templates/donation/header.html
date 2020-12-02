@@ -17,7 +17,7 @@
           <!-- Add conditional statement to present different tab dependiing on the login status -->
           {% if user.is_authenticated %}
           {% if user.donorprofile %}
-          <a class="nav-item nav-link" id="donor-notification" href="{% url 'donation:donation-messages' %}"><span
+          <a class="nav-item nav-link pr-4" id="donor-notification" href="{% url 'donation:donation-messages' %}"><span
               class="tooltiptext">Notification</span><i class="fas fa-bell"></i></a>
           <a class="nav-item nav-link" id="display1" href="{% url 'donation:get-reminder' %}"><span
               class="tooltiptext">Reminder</span><i class="fas fa-clock"></i></a>
@@ -65,7 +65,7 @@
   setInterval(function () {
     $.get(ajaxLink, function (data) {
       if (data == 0) {
-        $("#helpseeker-notification").html("<i class='fas fa-bell'></i><span class='tooltiptext'>Message</span>");
+        $("#helpseeker-notification").html("<i class='fas fa-bell'></i><span class='tooltiptext'>Notifications</span>");
 
       } else {
         $("#helpseeker-notification").html("<i class='fas fa-bell'></i><span class='message-number'>" + data +

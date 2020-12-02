@@ -19,6 +19,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 import datetime
+from django.utils import timezone
 
 # , UserPassesTestMixin
 
@@ -43,14 +44,12 @@ def home(request):
         "-date_created"
     )
     reserved_donation_posts = reserve_post_list.filter(
-        reservationstatus=1,
-        post__status__in=["Reserved", "RESERVED"]
+        reservationstatus=1, post__status__in=["Reserved", "RESERVED"]
     )
     available_donation_posts = post_list.filter(status__in=["Available", "AVAILABLE"])
     closed_donation_posts = post_list.filter(status__in=["Closed", "CLOSED"])
     closed_reservation_posts = reserve_post_list.filter(
-        reservationstatus=1,
-        post__status__in=["Closed", "CLOSED"]
+        reservationstatus=1, post__status__in=["Closed", "CLOSED"]
     )
     # page = request.GET.get("page", 1)
     # paginator = Paginator(post_list, 3)
@@ -65,7 +64,7 @@ def home(request):
         "reserved_donation_posts": reserved_donation_posts,
         "available_donation_posts": available_donation_posts,
         "closed_donation_posts": closed_donation_posts,
-        "closed_reservation_posts": closed_reservation_posts
+        "closed_reservation_posts": closed_reservation_posts,
     }
 
     return render(request, "donation/reservation_status_nav.html", context)
@@ -318,8 +317,8 @@ def watchlist_view(request):
 def get_reminders_count(request):
     posts = ReservationPost.objects.filter(
         reservationstatus=1,
-        dropoff_time_request__gt=datetime.datetime.now(),
-        dropoff_time_request__lte=datetime.datetime.now()
+        dropoff_time_request__gt=timezone.now(),
+        dropoff_time_request__lte=timezone.now()
         + datetime.timedelta(minutes=10),
     )
     data = posts.count()
@@ -330,8 +329,8 @@ def get_reminders_count(request):
 def get_reminder(request):
     posts = ReservationPost.objects.filter(
         reservationstatus=1,
-        dropoff_time_request__gt=datetime.datetime.now(),
-        dropoff_time_request__lte=datetime.datetime.now()
+        dropoff_time_request__gt=timezone.now(),
+        dropoff_time_request__lte=timezone.now()
         + datetime.timedelta(minutes=10),
     )
     messages = []
@@ -346,5 +345,5 @@ def get_reminder(request):
         "messages": messages,
     }
     data = posts.count()
-    print(data)
+    # print(data)
     return render(request, "donation/messages.html", context)

@@ -3,12 +3,12 @@
 {% if user.is_authenticated and user.donorprofile %}
 {% for message in messages %}
 <article class="card donation-card mb-2 animated fadeIn">
-    <div class="card-header new-post">
+    <div class="card-header">
             <div class='container'>
                 <div class="row pt-2 pb-2">
                     <div class="col">
-                        <p><i class="fas fa-star"></i>
-                            REMINDER: Resource dropoff time approaching !!</p>
+                        <p><i class="fas fa-clock"></i>
+                            REMINDER: {{ message.resource }} dropoff time is within 10 minutes</p>
                     </div>
                 </div>
             </div>
