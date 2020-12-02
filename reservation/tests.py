@@ -227,6 +227,12 @@ class NotificationTests(TestCase):
             notification.__str__(),
         )
 
+    def test_helpseeker_notifications(self):
+        self.user=creathelpseeker()
+        self.client.force_login(self.user, backend=None)
+        response = self.client.get(reverse("reservation:reservation-messages"))
+        self.assertEqual(response.status_code, 200)
+
 
 class ReservationPostListDeleteTests(TestCase):
     def test_delete_reservation_with_delete_helpseeker(self):
