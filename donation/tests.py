@@ -280,6 +280,7 @@ class ResourcePost_Ajax_Wathclist_Tests(TestCase):
         response = self.client.get(reverse("watchlist-home"))
         self.assertEqual(response.status_code, 200)
 
+
 def createdonation(donor):
     donation = ResourcePost(
         title="test",
@@ -296,6 +297,7 @@ def createdonation(donor):
     donation.save()
     return donation
 
+
 class Donor_Ajax_Reminder_Tests(TestCase):
     def test_get_reminder_count(self):
         donor = createdonor_1()
@@ -309,9 +311,9 @@ class Donor_Ajax_Reminder_Tests(TestCase):
             reservationstatus=1,
         )
         reservation.save()
-        posts=ReservationPost.objects.filter(reservationstatus=1)
-        data=posts.count()
-        self.assertEqual(HttpResponse(data).status_code,200 )
+        posts = ReservationPost.objects.filter(reservationstatus=1)
+        data = posts.count()
+        self.assertEqual(HttpResponse(data).status_code, 200)
 
     def test_get_reminder(self):
         self.user = createhelpseeker()
