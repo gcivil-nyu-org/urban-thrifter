@@ -259,6 +259,41 @@ class NotificationTests(TestCase):
         response = self.client.get(reverse("reservation:ajax-notification"))
         self.assertEqual(response.status_code, 200)
 
+    def test_reservation_function(self):
+        donor = createdonor()
+        helpseeker = creathelpseeker()
+        donation_post = createdonation(donor)
+        reservation = ReservationPost(
+            dropoff_time_request=donation_post.dropoff_time_1,
+            post=donation_post,
+            donor=donor,
+            helpseeker=helpseeker,
+        )
+        reservation.save()
+        response = self.client.get(reverse("reservation:reservation-function",args=(reservation.id,)))
+        self.assertEqual(response.status_code, 302)
+
+    def test_read_messages(self):
+        donor = createdonor()
+        helpseeker = creathelpseeker()
+        donation_post = createdonation(donor)
+        reservation = ReservationPost(
+            dropoff_time_request=donation_post.dropoff_time_1,
+            post=donation_post,
+            donor=donor,
+            helpseeker=helpseeker,
+        )
+        reservation.save()
+        notification = Notification(
+            post=reservation,
+            sender=helpseeker,
+            receiver=donor,
+            date=timezone.now(),
+        )
+        notification.save()
+        response = self.client.get(reverse("reservation:read-message",args=(notification.id,)))
+        self.assertEqual(response.status_code, 302)
+
 
 class ReservationPostListDeleteTests(TestCase):
     def test_delete_reservation_with_delete_helpseeker(self):
