@@ -23,6 +23,7 @@ def createdonor():
     donor_prof.save()
     return donor
 
+
 def createdonor_2():
     donor = User(
         username="donor_unit_test_2",
@@ -241,7 +242,7 @@ class NotificationTests(TestCase):
         )
 
     def test_helpseeker_notifications(self):
-        self.user=creathelpseeker()
+        self.user = creathelpseeker()
         self.client.force_login(self.user, backend=None)
         response = self.client.get(reverse("reservation:reservation-messages"))
         self.assertEqual(response.status_code, 200)
@@ -264,13 +265,13 @@ class NotificationTests(TestCase):
             date=timezone.now(),
         )
         notification.save()
-        self.user=createdonor_2()
+        self.user = createdonor_2()
         self.client.force_login(self.user, backend=None)
         response = self.client.get(reverse("reservation:reservation-notification"))
         self.assertEqual(response.status_code, 200)
 
     def test_ajax_notification(self):
-        self.user=creathelpseeker()
+        self.user = creathelpseeker()
         self.client.force_login(self.user, backend=None)
         response = self.client.get(reverse("reservation:ajax-notification"))
         self.assertEqual(response.status_code, 200)
