@@ -45,7 +45,11 @@ def main_map(request):
     resource_post_model = apps.get_model(
         "donation", "ResourcePost"
     )  # getting model from donation app
-    post_context = {"resource_posts": resource_post_model.objects.all()}
+    post_context = {
+        "resource_posts": resource_post_model.objects.filter(
+            status__in=["Available", "AVAILABLE"]
+        )
+    }
 
     # Shelter API GET
     drop_in_center_URL = "https://data.cityofnewyork.us/resource/bmxf-3rd4.json"

@@ -169,7 +169,6 @@
 
 <!-- personal donation data-->
 {% for post in post_context %}
-{% if post.status == "AVAILABLE" or post.status == "Available" %}
 <script>
   // console.log({{post.resource_category}})
   var dropoff_time_2 = "";
@@ -226,7 +225,6 @@
       .setHTML(personal_donation_html))
     .addTo(map)
 </script>
-{% endif %}
 {% endfor %}
 
 <script>
