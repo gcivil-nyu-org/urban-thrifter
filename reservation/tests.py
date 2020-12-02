@@ -270,7 +270,9 @@ class NotificationTests(TestCase):
             helpseeker=helpseeker,
         )
         reservation.save()
-        response = self.client.get(reverse("reservation:reservation-function",args=(reservation.id,)))
+        response = self.client.get(
+            reverse("reservation:reservation-function", args=(reservation.id,))
+        )
         self.assertEqual(response.status_code, 302)
 
     def test_read_messages(self):
@@ -291,7 +293,9 @@ class NotificationTests(TestCase):
             date=timezone.now(),
         )
         notification.save()
-        response = self.client.get(reverse("reservation:read-message",args=(notification.id,)))
+        response = self.client.get(
+            reverse("reservation:read-message", args=(notification.id,))
+        )
         self.assertEqual(response.status_code, 302)
 
 
