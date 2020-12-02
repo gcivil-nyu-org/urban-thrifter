@@ -133,22 +133,24 @@ def helpseeker_edit_profile(request):
         hs_form = HelpseekerUpdateForm(
             request.POST, instance=request.user.helpseekerprofile
         )
-        hs_user_form = UserUpdateForm(request.POST, instance=request.user)
-        if hs_form.is_valid() and hs_user_form.is_valid():
+        # hs_user_form = UserUpdateForm(request.POST, instance=request.user)
+        if hs_form.is_valid():
             hs_form.save()
-            hs_user_form.save()
+            # hs_user_form.save()
             messages.success(request, "Account updated successfully.")
             return redirect("register:helpseeker-profile")
         else:
             if not hs_form.is_valid():
                 messages.warning(request, "Repetitive resource category.")
-            if not hs_user_form.is_valid():
-                messages.warning(request, "Invalid Email Entry.")
+            # if not hs_user_form.is_valid():
+            #     messages.warning(request, "Invalid Email Entry.")
     else:
         hs_form = HelpseekerUpdateForm(instance=request.user.helpseekerprofile)
-        hs_user_form = UserUpdateForm(instance=request.user)
+        # hs_user_form = UserUpdateForm(instance=request.user)
 
-    context = {"hs_form": hs_form, "hs_user_form": hs_user_form}
+    context = {"hs_form": hs_form
+               # "hs_user_form": hs_user_form
+               }
     return render(request, "register/helpseekerprofile_form.html", context)
 
 

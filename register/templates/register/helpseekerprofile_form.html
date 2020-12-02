@@ -21,7 +21,8 @@
     <div class="media-body">
       <div class="row justify-content-around">
         <div class="col-4">
-          {{ hs_user_form.username | as_crispy_field }}
+          <label>Username:</label>
+          <p class="graybox">{{ user.username }}</p>
         </div>
         <div class="col-4">
           <label>Email:</label>

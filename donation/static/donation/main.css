@@ -190,14 +190,11 @@ select option:hover, select option:focus, select option:active {
   font-weight: 500;
 }
 
-.site-header .nav-item,
-.ut-tooltip {
+.site-header .nav-item, .ut-tooltip {
   position: relative;
 }
 
-.site-header .nav-item .tooltiptext,
-.ut-tooltip .tooltiptext,
-.ut-tooltip .map-tooltiptext {
+.site-header .nav-item .tooltiptext, .ut-tooltip .tooltiptext, .ut-tooltip .map-tooltiptext {
   visibility: hidden;
   width: 200px;
   background-color: #fff;
@@ -211,23 +208,20 @@ select option:hover, select option:focus, select option:active {
   z-index: 1;
 }
 
-.ut-tooltip .map-tooltiptext{
+.ut-tooltip .map-tooltiptext {
   margin-top: 75px;
-  margin-left: 20px;
   width: auto;
   text-align: center;
   font-size: 14px;
   color: #333;
-  background:#fff;
+  background: #fff;
 }
 
 .site-header .navbar-brand .tooltiptext {
   margin-top: 50px !important;
 }
 
-.nav-item:hover .tooltiptext,
-.ut-tooltip:hover .tooltiptext,
-.ut-tooltip:hover .map-tooltiptext {
+.nav-item:hover .tooltiptext, .ut-tooltip:hover .tooltiptext, .ut-tooltip:hover .map-tooltiptext {
   visibility: visible;
 }
 
@@ -960,3 +954,29 @@ a.article-title:hover {
 }
 
 /* Register app style end */
+
+/* Responsive Design */
+
+@media only screen and (max-width: 1000px) {
+  .col-lg-2 {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .card .col-2 {
+    width: 500px;
+    max-width: 100%;
+    flex: none
+  }
+  .card .col-2 .article-img {
+    height: 100%;
+    width: 100%;
+  }
+  .card .col-2 .article-img img {
+    width: 100%;
+    display: block;
+    max-height: 100%;
+    max-width: 100%;
+  }
+}

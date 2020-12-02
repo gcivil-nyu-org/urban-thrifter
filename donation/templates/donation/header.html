@@ -17,10 +17,10 @@
           <!-- Add conditional statement to present different tab dependiing on the login status -->
           {% if user.is_authenticated %}
           {% if user.donorprofile %}
-          <a id="donor-notification" class="nav-item nav-link" href="{% url 'donation:donation-messages' %}"><span
-              class="tooltiptext">Notifications</span><i class="fas fa-bell"></i></a>
-          <a id="display1" class="nav-item nav-link" href="{% url 'donation:get-reminder' %}"><span
-            class="tooltiptext">Reminder</span><i class="fas fa-clock"></i></a>
+          <a class="nav-item nav-link" id="donor-notification" href="{% url 'donation:donation-messages' %}"><span
+              class="tooltiptext">Notification</span><i class="fas fa-bell"></i></a>
+          <a class="nav-item nav-link" id="display1" href="{% url 'donation:get-reminder' %}"><span
+              class="tooltiptext">Reminder</span><i class="fas fa-clock"></i></a>
           <a class="nav-item nav-link" href="{% url 'register:donor-profile' user.username %}"><span
               class="tooltiptext">Profile</span><i class="fas fa-user-circle"></i></a>
           <a class="nav-item nav-link" href="{% url 'donation:donation-home' %}"><span
@@ -28,8 +28,8 @@
           <a class="nav-item nav-link" href="{% url 'logout' %}"><span class="tooltiptext">Sign Out</span><i
               class="fas fa-sign-out-alt"></i></a>
           {% elif user.helpseekerprofile %}
-          <a id="helpseeker-notification" class="nav-item nav-link pr-3 mr-3"
-            href="{% url 'reservation:reservation-messages' %}"><span class="tooltiptext">Notifications</span><i
+          <a class="nav-item nav-link pr-3 mr-3" id="helpseeker-notification"
+            href="{% url 'reservation:reservation-messages' %}"><span class="tooltiptext">Notification</span><i
               class="fas fa-bell"></i></a>
           <a id="display" class="nav-item nav-link" href="{% url 'watchlist-home' %}"><span
               class="tooltiptext">Watchlist</span><i class="fas fa-eye"></i></a>
@@ -123,9 +123,9 @@
   setInterval(function () {
     $.get(ajaxLink1, function (data) {
       if (data <= 0) {
-        $("#display1").html("<i class='fas fa-clock'></i>");
+        $("#display1").html("<span class='tooltiptext'>Reminder</span><i class='fas fa-clock'></i>");
       } else {
-        $("#display1").html("<i class='fas fa-clock'></i><span class='message-number'>" + data +
+        $("#display1").html("<span class='tooltiptext'>Reminder</span><i class='fas fa-clock'></i><span class='message-number'>" + data +
           "</span>");
       }
     });
