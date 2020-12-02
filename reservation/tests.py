@@ -23,6 +23,19 @@ def createdonor():
     donor_prof.save()
     return donor
 
+def createdonor_2():
+    donor = User(
+        username="donor_unit_test_2",
+        is_active=True,
+        email="unittest@unittest2.com",
+    )
+    donor.set_password("Unittestpassword123!")
+
+    donor_prof = DonorProfile(user=donor, complaint_count=0, donation_count=0)
+    donor.save()
+    donor_prof.save()
+    return donor
+
 
 def creathelpseeker():
     helpseeker = User(
@@ -231,6 +244,29 @@ class NotificationTests(TestCase):
         self.user=creathelpseeker()
         self.client.force_login(self.user, backend=None)
         response = self.client.get(reverse("reservation:reservation-messages"))
+        self.assertEqual(response.status_code, 200)
+
+    def test_show_notifications(self):
+        donor = createdonor()
+        helpseeker = creathelpseeker()
+        donation_post = createdonation(donor)
+        reservation = ReservationPost(
+            dropoff_time_request=timezone.now(),
+            post=donation_post,
+            donor=donor,
+            helpseeker=helpseeker,
+        )
+        reservation.save()
+        notification = Notification(
+            post=reservation,
+            sender=helpseeker,
+            receiver=donor,
+            date=timezone.now(),
+        )
+        notification.save()
+        self.user=createdonor_2()
+        self.client.force_login(self.user, backend=None)
+        response = self.client.get(reverse("reservation:reservation-notification"))
         self.assertEqual(response.status_code, 200)
 
 
