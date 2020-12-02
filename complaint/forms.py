@@ -6,4 +6,3 @@ class ComplaintForm(forms.ModelForm):
     class Meta:
         model = Complaint
         fields = ["subject", "message", "image"]
-        widgets = {"message": forms.Textarea}
