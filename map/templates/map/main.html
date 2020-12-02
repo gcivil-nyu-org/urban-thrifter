@@ -7,25 +7,34 @@
 <section role="main animated fadeIn">
   <div class="row">
     <ul class='map-filter'>
-      <li class="ut-tooltip"><span class="map-tooltiptext">Reservation Available</span><button class="feature-icon food-icon"
-          onclick="resourceFilter('food', this)">Food</br><i class="fas fa-apple-alt fa-lg"></i></button></li>
-      <li class="ut-tooltip"><span class="map-tooltiptext">Reservation Available</span><button class="feature-icon ppe-icon"
-          onclick="resourceFilter('ppe', this)">PPE</br><i class="fas fa-head-side-mask fa-lg"></i></button></li>
-      <li class="ut-tooltip"><span class="map-tooltiptext">Reservation Available</span><button class="feature-icon electronics-icon"
-          onclick="resourceFilter('electronics', this)">Electronics</br><i class="fas fa-mobile-alt fa-lg"></i></button>
+      <li class="ut-tooltip"><span class="map-tooltiptext">Reservation Available</span><button
+          class="feature-icon food-icon" onclick="resourceFilter('food', this)">Food</br><i
+            class="fas fa-apple-alt fa-lg"></i></button></li>
+      <li class="ut-tooltip"><span class="map-tooltiptext">Reservation Available</span><button
+          class="feature-icon ppe-icon" onclick="resourceFilter('ppe', this)">PPE</br><i
+            class="fas fa-head-side-mask fa-lg"></i></button></li>
+      <li class="ut-tooltip"><span class="map-tooltiptext">Reservation Available</span><button
+          class="feature-icon electronics-icon" onclick="resourceFilter('electronics', this)">Electronics</br><i
+            class="fas fa-mobile-alt fa-lg"></i></button>
       </li>
-      <li class="ut-tooltip"><span class="map-tooltiptext">Reservation Available</span><button class="feature-icon cloth-icon"
-          onclick="resourceFilter('clothes', this)">Clothes</br><i class="fas fa-tshirt fa-lg"></i></button></li>
-      <li class="ut-tooltip"><span class="map-tooltiptext">Reservation Available</span><button class="feature-icon others-icon"
-          onclick="resourceFilter('others', this)">Others</br><i class="fas fa-question fa-lg"></i></button></li>
-      <li class="ut-tooltip"><span class="map-tooltiptext">Infomation Lookup</span><button class="feature-icon shelter-icon"
-          onclick="resourceFilter('shelter', this)">Shelter</br><i class="fas fa-house-user fa-lg"></i></button></li>
-      <li class="ut-tooltip"><span class="map-tooltiptext">Infomation Lookup</span><button class="feature-icon computer-icon"
-          onclick="resourceFilter('computer', this)">E-Center</br><i class="fas fa-desktop fa-lg"></i></button></li>
-      <li class="ut-tooltip"><span class="map-tooltiptext">Infomation Lookup</span><button class="feature-icon wifi-icon"
-          onclick="resourceFilter('wifi', this)">Internet</br><i class="fas fa-wifi fa-lg"></i></button></li>
-      <li class="ut-tooltip"><span class="map-tooltiptext">Infomation Lookup</span><button class="feature-icon reeducation-icon"
-          onclick="resourceFilter('reeducation', this)">Program</br><i class="fas fa-book-open fa-lg"></i></button></li>
+      <li class="ut-tooltip"><span class="map-tooltiptext">Reservation Available</span><button
+          class="feature-icon cloth-icon" onclick="resourceFilter('clothes', this)">Clothes</br><i
+            class="fas fa-tshirt fa-lg"></i></button></li>
+      <li class="ut-tooltip"><span class="map-tooltiptext">Reservation Available</span><button
+          class="feature-icon others-icon" onclick="resourceFilter('others', this)">Others</br><i
+            class="fas fa-question fa-lg"></i></button></li>
+      <li class="ut-tooltip"><span class="map-tooltiptext">Infomation Lookup</span><button
+          class="feature-icon shelter-icon" onclick="resourceFilter('shelter', this)">Shelter</br><i
+            class="fas fa-house-user fa-lg"></i></button></li>
+      <li class="ut-tooltip"><span class="map-tooltiptext">Infomation Lookup</span><button
+          class="feature-icon computer-icon" onclick="resourceFilter('computer', this)">E-Center</br><i
+            class="fas fa-desktop fa-lg"></i></button></li>
+      <li class="ut-tooltip"><span class="map-tooltiptext">Infomation Lookup</span><button
+          class="feature-icon wifi-icon" onclick="resourceFilter('wifi', this)">Internet</br><i
+            class="fas fa-wifi fa-lg"></i></button></li>
+      <li class="ut-tooltip"><span class="map-tooltiptext">Infomation Lookup</span><button
+          class="feature-icon reeducation-icon" onclick="resourceFilter('reeducation', this)">Program</br><i
+            class="fas fa-book-open fa-lg"></i></button></li>
     </ul>
     <div id='map'></div>
   </div>
@@ -241,17 +250,12 @@
   }
 </script>
 {% elif user.donorprofile %}
-<article class="card donation-card mb-2">
-  <div class="card-header">
-    <div class='container'>
-      <div class="row text-center">
-        <div class="col">
-          <p>Please register as Helpseeker to view map</p>
-          <p><a href="{% url 'login' %}">Redirect to login</a></p>
-        </div>
-      </div>
-    </div>
-  </div>
+
+<div class="container alert alert-info text-center">
+  <p>Please register as Helpseeker to view map</p>
+  <p><a class="btn btn-wide btn-dark" href="{% url 'login-redirect' %}">Redirect to donation</a></p>
+</div>
+
 </article>
 {% else %}
 <meta http-equiv="refresh" content="0; URL=/login" />
