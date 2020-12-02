@@ -319,3 +319,8 @@ class Donor_Ajax_Reminder_Tests(TestCase):
         response = self.client.get(reverse("donation:get-reminder"))
         self.assertEqual(response.status_code, 200)
 
+    def test_get_reminder_count_view(self):
+        self.user = createhelpseeker()
+        self.client.force_login(self.user, backend=None)
+        response = self.client.get(reverse("donation:get-reminder-count"))
+        self.assertEqual(response.status_code, 200)
