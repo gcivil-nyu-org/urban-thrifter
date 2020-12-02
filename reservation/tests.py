@@ -248,23 +248,6 @@ class NotificationTests(TestCase):
         self.assertEqual(response.status_code, 200)
 
     def test_show_notifications(self):
-        donor = createdonor()
-        helpseeker = creathelpseeker()
-        donation_post = createdonation(donor)
-        reservation = ReservationPost(
-            dropoff_time_request=timezone.now(),
-            post=donation_post,
-            donor=donor,
-            helpseeker=helpseeker,
-        )
-        reservation.save()
-        notification = Notification(
-            post=reservation,
-            sender=helpseeker,
-            receiver=donor,
-            date=timezone.now(),
-        )
-        notification.save()
         self.user = createdonor_2()
         self.client.force_login(self.user, backend=None)
         response = self.client.get(reverse("reservation:reservation-notification"))
