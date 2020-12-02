@@ -112,6 +112,15 @@ class HomepageViewTests(TestCase):
         response = self.client.get(reverse("home"))
         self.assertEqual(response.status_code, 200)
 
+    def test_home(self):
+        """
+        If no post exist, an appropriate message is displayed.
+        """
+        self.user = createdonor_1()
+        self.client.force_login(self.user, backend=None)
+        response = self.client.get(reverse("donation:donation-home"))
+        self.assertEqual(response.status_code, 200)
+
 
 class ResourcePostDetailViewTests(TestCase):
     def test_regular_post(self):
