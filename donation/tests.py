@@ -2,7 +2,9 @@ from django.test import TestCase
 from django.urls import reverse
 from .models import ResourcePost, User
 from register.models import DonorProfile, HelpseekerProfile
+from reservation.models import ReservationPost
 from django.utils import timezone
+from django.http import HttpResponse
 
 
 # from django.core.files.uploadedfile import SimpleUploadedFile
@@ -108,6 +110,15 @@ class HomepageViewTests(TestCase):
         If no post exist, an appropriate message is displayed.
         """
         response = self.client.get(reverse("home"))
+        self.assertEqual(response.status_code, 200)
+
+    def test_home(self):
+        """
+        If no post exist, an appropriate message is displayed.
+        """
+        self.user = createdonor_1()
+        self.client.force_login(self.user, backend=None)
+        response = self.client.get(reverse("donation:donation-home"))
         self.assertEqual(response.status_code, 200)
 
 
@@ -276,4 +287,51 @@ class ResourcePost_Ajax_Wathclist_Tests(TestCase):
     def test_watchlist_view(self):
         self.client.force_login(self.user, backend=None)
         response = self.client.get(reverse("watchlist-home"))
+        self.assertEqual(response.status_code, 200)
+
+
+def createdonation(donor):
+    donation = ResourcePost(
+        title="test",
+        description="hi",
+        quantity=1,
+        dropoff_time_1=timezone.now(),
+        dropoff_time_2=timezone.now(),
+        dropoff_time_3=timezone.now(),
+        date_created=timezone.now(),
+        resource_category="FOOD",
+        donor=donor,
+        status="AVAILABLE",
+    )
+    donation.save()
+    return donation
+
+
+class Donor_Ajax_Reminder_Tests(TestCase):
+    def test_get_reminder_count(self):
+        donor = createdonor_1()
+        helpseeker = createhelpseeker()
+        donation_post = createdonation(donor)
+        reservation = ReservationPost(
+            dropoff_time_request=timezone.now(),
+            post=donation_post,
+            donor=donor,
+            helpseeker=helpseeker,
+            reservationstatus=1,
+        )
+        reservation.save()
+        posts = ReservationPost.objects.filter(reservationstatus=1)
+        data = posts.count()
+        self.assertEqual(HttpResponse(data).status_code, 200)
+
+    def test_get_reminder(self):
+        self.user = createhelpseeker()
+        self.client.force_login(self.user, backend=None)
+        response = self.client.get(reverse("donation:get-reminder"))
+        self.assertEqual(response.status_code, 200)
+
+    def test_get_reminder_count_view(self):
+        self.user = createhelpseeker()
+        self.client.force_login(self.user, backend=None)
+        response = self.client.get(reverse("donation:get-reminder-count"))
         self.assertEqual(response.status_code, 200)

@@ -72,7 +72,7 @@
           "</span><span class='tooltiptext'>Notifications</span>");
       }
     });
-  }, 500); // check notification every 1 second
+  }, 1000 * 0.5); // check notification every 0.5 second
 
   $(document).ready(function () {
     setInterval(() => {
@@ -93,7 +93,7 @@
           console.log("No DATA FOUND")
         }
       })
-    }, 500)
+    }, 1000 * 0.5)
   })
 </script>
 {% endif %}
@@ -109,7 +109,7 @@
           "</span>");
       }
     });
-  }, 500); // check notification every 2 seconds
+  }, 1000 * 0.5); // check notification every 0.5 seconds
 
   $(document).ready(function () {
     setInterval(() => {
@@ -117,7 +117,7 @@
         type: 'GET',
         url: "{% url 'donation:get-reminder' %}",
       })
-    }, 500)
+    }, 1000 * 0.5)
   })
   var ajaxLink1 = "{% url 'donation:get-reminder-count' %}";
   setInterval(function () {
@@ -129,6 +129,6 @@
           "</span>");
       }
     });
-  }, 500); // check notification every 2 seconds
+  }, 1000 * 0.5); // check notification every 0.5 seconds
 </script>
 {% endif %}
