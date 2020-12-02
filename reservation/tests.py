@@ -247,11 +247,11 @@ class NotificationTests(TestCase):
         response = self.client.get(reverse("reservation:reservation-messages"))
         self.assertEqual(response.status_code, 200)
 
-    def test_show_notifications(self):
-        self.user = createdonor_2()
-        self.client.force_login(self.user, backend=None)
-        response = self.client.get(reverse("reservation:reservation-notification"))
-        self.assertEqual(response.status_code, 200)
+    # def test_show_notifications(self):
+    #     self.user = createdonor_2()
+    #     self.client.force_login(self.user, backend=None)
+    #     response = self.client.get(reverse("reservation:reservation-notification"))
+    #     self.assertEqual(response.status_code, 200)
 
     def test_ajax_notification(self):
         self.user = creathelpseeker()
@@ -290,7 +290,7 @@ class NotificationTests(TestCase):
             post=reservation,
             sender=helpseeker,
             receiver=donor,
-            date=timezone.now(),
+            date_created=timezone.now(),
         )
         notification.save()
         response = self.client.get(

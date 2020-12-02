@@ -5,6 +5,7 @@ import datetime
 import pytz
 import os
 from django.core.mail import send_mail
+from django.utils import timezone
 
 
 class Command(BaseCommand):

@@ -19,7 +19,6 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 import datetime
-from django.utils import timezone
 
 # , UserPassesTestMixin
 
@@ -318,8 +317,7 @@ def get_reminders_count(request):
     posts = ReservationPost.objects.filter(
         reservationstatus=1,
         dropoff_time_request__gt=timezone.now(),
-        dropoff_time_request__lte=timezone.now()
-        + datetime.timedelta(minutes=10),
+        dropoff_time_request__lte=timezone.now() + datetime.timedelta(minutes=10),
     )
     data = posts.count()
     return HttpResponse(data)
@@ -330,8 +328,7 @@ def get_reminder(request):
     posts = ReservationPost.objects.filter(
         reservationstatus=1,
         dropoff_time_request__gt=timezone.now(),
-        dropoff_time_request__lte=timezone.now()
-        + datetime.timedelta(minutes=10),
+        dropoff_time_request__lte=timezone.now() + datetime.timedelta(minutes=10),
     )
     messages = []
     for post in posts:
@@ -344,6 +341,6 @@ def get_reminder(request):
     context = {
         "messages": messages,
     }
-    data = posts.count()
+    # data = posts.count()
     # print(data)
     return render(request, "donation/messages.html", context)
