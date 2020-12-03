@@ -7,24 +7,34 @@
 <section role="main animated fadeIn">
   <div class="row">
     <ul class='map-filter'>
-      <li><button class="feature-icon food-icon" onclick="resourceFilter('food', this)">Food</br><i
-            class="fas fa-apple-alt"></i></button></li>
-      <li><button class="feature-icon shelter-icon" onclick="resourceFilter('shelter', this)">Shelter</br><i
-            class="fas fa-house-user"></i></button></li>
-      <li><button class="feature-icon ppe-icon" onclick="resourceFilter('ppe', this)">PPE</br><i
-            class="fas fa-head-side-mask"></i></button></li>
-      <li><button class="feature-icon restroom-icon" onclick="resourceFilter('restroom', this)">Restroom</br><i
-            class="fas fa-restroom"></i></button></li>
-      <li><button class="feature-icon electronics-icon" onclick="resourceFilter('electronics', this)">Electronics</br><i
-            class="fas fa-mobile-alt"></i></button></li>
-      <li><button class="feature-icon wifi-icon" onclick="resourceFilter('wifi', this)">Internet</br><i
-            class="fas fa-wifi"></i></button></li>
-      <li><button class="feature-icon cloth-icon" onclick="resourceFilter('clothes', this)">Clothes</br><i
-            class="fas fa-tshirt"></i></button></li>
-      <li><button class="feature-icon reeducation-icon" onclick="resourceFilter('reeducation', this)">Programs</br><i
-            class="fas fa-book-open"></i></button></li>
-      <li><button class="feature-icon others-icon" onclick="resourceFilter('others', this)">Others</br><i
-            class="fas fa-question"></i></button></li>
+      <li class="ut-tooltip"><span class="map-tooltiptext">Reservation Available</span><button
+          class="feature-icon food-icon" onclick="resourceFilter('food', this)">Food</br><i
+            class="fas fa-apple-alt fa-lg"></i></button></li>
+      <li class="ut-tooltip"><span class="map-tooltiptext">Reservation Available</span><button
+          class="feature-icon ppe-icon" onclick="resourceFilter('ppe', this)">PPE</br><i
+            class="fas fa-head-side-mask fa-lg"></i></button></li>
+      <li class="ut-tooltip"><span class="map-tooltiptext">Reservation Available</span><button
+          class="feature-icon electronics-icon" onclick="resourceFilter('electronics', this)">Electronics</br><i
+            class="fas fa-mobile-alt fa-lg"></i></button>
+      </li>
+      <li class="ut-tooltip"><span class="map-tooltiptext">Reservation Available</span><button
+          class="feature-icon cloth-icon" onclick="resourceFilter('clothes', this)">Clothes</br><i
+            class="fas fa-tshirt fa-lg"></i></button></li>
+      <li class="ut-tooltip"><span class="map-tooltiptext">Reservation Available</span><button
+          class="feature-icon others-icon" onclick="resourceFilter('others', this)">Others</br><i
+            class="fas fa-question fa-lg"></i></button></li>
+      <li class="ut-tooltip"><span class="map-tooltiptext">Infomation Lookup</span><button
+          class="feature-icon shelter-icon" onclick="resourceFilter('shelter', this)">Shelter</br><i
+            class="fas fa-house-user fa-lg"></i></button></li>
+      <li class="ut-tooltip"><span class="map-tooltiptext">Infomation Lookup</span><button
+          class="feature-icon computer-icon" onclick="resourceFilter('computer', this)">E-Center</br><i
+            class="fas fa-desktop fa-lg"></i></button></li>
+      <li class="ut-tooltip"><span class="map-tooltiptext">Infomation Lookup</span><button
+          class="feature-icon wifi-icon" onclick="resourceFilter('wifi', this)">Internet</br><i
+            class="fas fa-wifi fa-lg"></i></button></li>
+      <li class="ut-tooltip"><span class="map-tooltiptext">Infomation Lookup</span><button
+          class="feature-icon reeducation-icon" onclick="resourceFilter('reeducation', this)">Program</br><i
+            class="fas fa-book-open fa-lg"></i></button></li>
     </ul>
     <div id='map'></div>
   </div>
@@ -47,19 +57,23 @@
     center: user_loc["{{user.helpseekerprofile.borough}}"],
     zoom: 12.5
   });
+
+  // mapboxgl.mapbox.legendControl({ position: 'bottomright' }).addLegend('<strong>test</strong>').addTo(map);
 </script>
 
 <!-- computer center / electronics data-->
 {% for center in computer_centers %}
 <script>
-  var electronicEl = document.createElement('div');
-  electronicEl.className = 'electronics-marker';
-  new mapboxgl.Marker(electronicEl)
-    .setLngLat([{{ center.lon }}, {{ center.lat }}])
+  var computerEl = document.createElement('div');
+  computerEl.className = 'computer-marker';
+  new mapboxgl.Marker(computerEl)
+    .setLngLat(["{{ center.lon }}", "{{ center.lat }}"])
     .setPopup(new mapboxgl.Popup({ offset: 50 })
       .setHTML(
-        "<div class='container'>" +
-        "<h5 class='mb-3'><b>{{center.oversight_agency}}</b></h5>" +
+        '<div class="mt-3 card">' +
+        '<div class="card-header">' +
+        '<h6>Public: <b>{{center.oversight_agency}}</b></h6></div>' +
+        '<div class="card-body">' +
         "<div class='row'>" +
         "<div class='col'>" +
         "<p>Operator: <b>{{center.operator_name}}</b></p>" +
@@ -67,33 +81,33 @@
         "</div><div class='col'>" +
         "<p>Wifi availability: <b>{{center.wi_fi_available}}</b></p>" +
         "<p>Wheel chair access: <b>{{center.wheelchair_accessible}}</b></p>" +
-        "<p>Access requirements: <b>{{center.access_requirements}}</b></p>" +
-        "</div></div></div>"
+        "</div></div></div></div></div>"
       ))
     .addTo(map)
 </script>
 {% endfor %}
-
 <!-- wifi data-->
 {% for center in internet_centers %}
 <script>
   var wifiEl = document.createElement('div');
   wifiEl.className = 'wifi-marker';
   new mapboxgl.Marker(wifiEl)
-    .setLngLat([{{ center.longitude }}, {{ center.latitude }}])
+    .setLngLat(["{{ center.longitude }}", "{{ center.latitude }}"])
     .setPopup(new mapboxgl.Popup({ offset: 50 })
       .setHTML(
-        "<div class='container'>" +
-        "<h5 class='mb-3'><b>{{center.name}}</b></h5>" +
+        '<div class="mt-3 card">' +
+        '<div class="card-header">' +
+        '<h6>Public: <b>{{center.name}}</b></h6></div>' +
+        '<div class="card-body">' +
         "<div class='row'>" +
         "<div class='col'>" +
         "<p>Provider: <b>{{center.provider}}</b></p>" +
         "<p>Location: <b>{{center.location}}</b></p>" +
-        "</div><div class='col'>" +
         "<p>Borough: <b>{{center.boroname}}</b></p>" +
+        "</div><div class='col'>" +
         "<p>Type: <b>{{center.type}}</b></p>" +
         "<p>Remarks: <b>{{center.remarks}}</b></p>" +
-        "</div></div></div>"
+        "</div></div></div></div></div>"
       ))
     .addTo(map)
 </script>
@@ -108,8 +122,10 @@
     .setLngLat([String({{ center.location_1.longitude }}), String({{ center.location_1.latitude }})])
     .setPopup(new mapboxgl.Popup({ offset: 50 })
       .setHTML(
-        "<div class='container'>" +
-        "<h5 class='mb-3'><b>{{center.program}}</b></h5>" +
+        '<div class="mt-3 card">' +
+        '<div class="card-header">' +
+        '<h6>Public: <b>{{center.program}}</b></h6></div>' +
+        '<div class="card-body">' +
         "<div class='row'>" +
         "<div class='col'>" +
         "<p>Agency: <b>{{center.agency}}</b></p>" +
@@ -118,7 +134,7 @@
         "<p>Program type: <b>{{center.program_type}}</b></p>" +
         "<p>Contact: <b>{{center.contact_number}}</b></p>" +
         "<p>Site name: <b>{{center.site_name}}</b></p>" +
-        "</div></div></div>"
+        "</div></div></div></div></div>"
       ))
     .addTo(map)
 </script>
@@ -134,8 +150,10 @@
     .setLngLat({{ center.geometry.coordinates.0 }})
     .setPopup(new mapboxgl.Popup({ offset: 50 })
       .setHTML(
-        "<div class='container'>" +
-        "<h5 class='mb-3'><b>{{center.properties.center_name}}</b></h5>" +
+        '<div class="mt-3 card">' +
+        '<div class="card-header">' +
+        '<h6>Public: <b>{{center.properties.center_name}}</b></h6></div>' +
+        '<div class="card-body">' +
         "<div class='row'>" +
         "<div class='col'>" +
         "<p>Address: <b>{{center.properties.address}}</b></p>" +
@@ -143,7 +161,7 @@
         "</div><div class='col'>" +
         "<p>Zip: <b>{{center.properties.postcode}}</b></p>" +
         "<p>Hours: <b>{{center.properties.comments}}</b></p>" +
-        "</div></div></div>"
+        "</div></div></div></div></div>"
       ))
     .addTo(map);
 </script>
@@ -151,7 +169,6 @@
 
 <!-- personal donation data-->
 {% for post in post_context %}
-{% if post.status == "AVAILABLE" or post.status == "Available" %}
 <script>
   // console.log({{post.resource_category}})
   var dropoff_time_2 = "";
@@ -183,19 +200,19 @@
 <script>
   personalEl.className = 'food-marker';
 </script>
-{% elif post.resource_category == "MDCL" %}
+{% elif post.resource_category == "MEDICAL/ PPE" %}
 <script>
   personalEl.className = 'ppe-marker';
 </script>
-{% elif post.resource_category == "CLTH" %}
+{% elif post.resource_category == "CLOTHING/ COVERS" %}
 <script>
   personalEl.className = 'clothes-marker';
 </script>
-{% elif post.resource_category == "ELEC" %}
+{% elif post.resource_category == "ELECTRONICS" %}
 <script>
   personalEl.className = 'electronics-marker';
 </script>
-{% elif post.resource_category == "OTHR" %}
+{% elif post.resource_category == "OTHERS" %}
 <script>
   personalEl.className = 'others-marker';
 </script>
@@ -208,7 +225,6 @@
       .setHTML(personal_donation_html))
     .addTo(map)
 </script>
-{% endif %}
 {% endfor %}
 
 <script>
@@ -233,19 +249,13 @@
 </script>
 {% elif user.donorprofile %}
 
-<!-- <html>
-<head>
-  <script type="text/javascript">
-    function Redirect() {
-      window.location = "{{DOMAIN_NAME}}" + "/donation/";
-    }
-    setTimeout('Redirect()', 0);
-  </script>
-</head>
+<div class="container alert alert-info text-center">
+  <p>Please register as Helpseeker to view map</p>
+  <p><a class="btn btn-wide btn-dark" href="{% url 'login-redirect' %}">Redirect to donation</a></p>
+</div>
 
-<body>
-</body>
-
-</html> -->
+</article>
+{% else %}
+<meta http-equiv="refresh" content="0; URL=/login" />
 {% endif %}
 {% endblock content %}

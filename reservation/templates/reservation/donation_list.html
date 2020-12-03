@@ -1,8 +1,10 @@
 <div class="tab-pane fade show active" id="pills-available" role="tabpanel" aria-labelledby="pills-available-tab">
 	{% if first %}
-	<div class="mb-2">
-		<form class="form-group">
-			<input id="user-input" class="form-control form-control" type="text" placeholder="&#xF002; Search"
+	<div>
+		<form class="mb-2 form-group">
+			<input id="user-input" class="form-control form-control" type="text"
+                onkeydown="return (event.keyCode!=13);"
+                placeholder="&#xF002; Search"
 				style="font-family:DINFont, FontAwesome; font-size: 16px;" aria-label="Search">
 		</form>
 	</div>
@@ -43,12 +45,12 @@
 						<div class="col-5">
 							<p>Available Dropoff Time: </p>
 							<ul>
-								<li>{{ post.dropoff_time_1 | date:'F d, Y H:m'}}</li>
+								<li>{{ post.dropoff_time_1 }}</li>
 								{% if post.dropoff_time_2 != None %}
-								<li>{{ post.dropoff_time_2 | date:'F d, Y H:m'}}</li>
+								<li>{{ post.dropoff_time_2 }}</li>
 								{% endif %}
 								{% if post.dropoff_time_3 != None %}
-								<li>{{ post.dropoff_time_3 | date:'F d, Y H:m'}}</li>
+								<li>{{ post.dropoff_time_3 }}</li>
 								{% endif %}
 							</ul>
 							<p>{{ post.dropoff_location.place}}</p>
@@ -62,7 +64,7 @@
 			</div>
 		</article>
 		{% empty %}
-		<div class="mt-3 alert alert-info text-center">There aren't any available donation currently.</div>
+		<div class="alert alert-info text-center">There aren't any available donations currently.</div>
 		{% endfor %}
 	</div>
 </div>

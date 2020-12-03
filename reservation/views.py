@@ -22,8 +22,10 @@ def home(request):
     return render(request, "reservation/reservation_home.html")
 
 
+@login_required
 def donation_post_list(request):
     # Getting posts based on filters or getting all posts
+    post_list = ResourcePost.objects.all()
     url_parameter = request.GET.get("q")
     if url_parameter:
         combined_list = ResourcePost.objects.filter(
@@ -33,9 +35,9 @@ def donation_post_list(request):
             status__in=["Available", "AVAILABLE"]
         ).order_by("-date_created")
     else:
-        post_list = ResourcePost.objects.filter(
-            status__in=["Available", "AVAILABLE"]
-        ).order_by("-date_created")
+        post_list = post_list.filter(status__in=["Available", "AVAILABLE"]).order_by(
+            "-date_created"
+        )
     # print(len(post_list))
     # reservation_list = ReservationPost.objects.order_by("-date_created").values('post__id').annotate(
     #     name_count=Count('post__id')
@@ -46,14 +48,14 @@ def donation_post_list(request):
     # reservation_list = reservation_list.values("post__id", flat=True).first()
 
     reservation_reserved_list = reservation_list.filter(
-        post__status__in=["Reserved", "RESERVED"]
+        reservationstatus=1, post__status__in=["Reserved", "RESERVED"]
     )
     reservation_pending_list = reservation_list.filter(
-        post__status__in=["Pending", "PENDING"]
+        reservationstatus=3, post__status__in=["Pending", "PENDING"]
     )
     # print(reservation_pending_list)
     reservation_closed_list = reservation_list.filter(
-        post__status__in=["Closed", "CLOSED"]
+        reservationstatus=1, post__status__in=["Closed", "CLOSED"]
     )
     # Paginator
     page = request.GET.get("page", 1)
@@ -120,12 +122,15 @@ def confirm_notification(request, id):
     if request.method == "POST":
         notification = Notification.objects.get(id=id)
         resource_post = ResourcePost.objects.get(id=notification.post.post.id)
+        reserve_post = ReservationPost.objects.get(id=notification.post.id)
         if "accept" in request.POST:
             # do subscribe
             notification.is_seen = True
             notification.notificationstatus = 1
             resource_post.status = "RESERVED"
             resource_post.save()
+            reserve_post.reservationstatus = 1
+            reserve_post.save()
             notification.save()
         elif "deny" in request.POST:
             # do unsubscribe
@@ -133,6 +138,8 @@ def confirm_notification(request, id):
             notification.notificationstatus = 2
             resource_post.status = "AVAILABLE"
             resource_post.save()
+            reserve_post.reservationstatus = 2
+            reserve_post.save()
             notification.save()
         return render(request, "donation/notifications_confirm.html")
 
@@ -140,6 +147,9 @@ def confirm_notification(request, id):
 def reservation_function(request, id):
     if request.method == "POST":
         selected_timeslot = request.POST.get("dropoff_time")
+        if selected_timeslot is None:
+            messages.error(request, "Please select a drop-off time.")
+            return redirect("reservation:reservation-request", pk=id)
         resource_post = ResourcePost.objects.get(id=id)
         if resource_post.status == "Available" or resource_post.status == "AVAILABLE":
             if selected_timeslot == "1":
@@ -176,6 +186,42 @@ def reservation_function(request, id):
     return redirect("reservation:reservation-confirmation")
 
 
+def reservation_update(request, **kwargs):
+    if request.method == "GET":
+        selected_timeslot = request.GET.get("dropoff_time")
+        reservation = ReservationPost.objects.get(id=kwargs["pk"])
+        print("reservation::", selected_timeslot)
+        if reservation.post.status == "Pending" or reservation.post.status == "PENDING":
+            if selected_timeslot == "1":
+                selected_time = reservation.post.dropoff_time_1
+            elif selected_timeslot == "2":
+                selected_time = reservation.post.dropoff_time_2
+            elif selected_timeslot == "3":
+                selected_time = reservation.post.dropoff_time_3
+            reservation.dropoff_time_request = selected_time
+        else:
+            messages.error(
+                request, "A reservation for this donation has already been made."
+            )
+            return redirect("reservation:reservation-home")
+        try:
+            reservation.save()
+            reservation.post.status = "PENDING"
+            reservation.post.save()
+            messages.success(
+                request, "Your reservation request has been succesfully rescheduled."
+            )
+        except Exception:
+            reservation.post.status = "AVAILABLE"
+            reservation.post.save()
+            reservation.delete()
+            messages.error(
+                request, "Your reservation was unsuccessful. Please try again!"
+            )
+            return redirect("reservation:reservation-home")
+    return redirect("reservation:reservation-detail", kwargs["pk"])
+
+
 class PostDetailView(DetailView):
     # Basic detail view
     model = ResourcePost
@@ -188,20 +234,31 @@ class ReservationDetailView(DetailView):
     template_name = "reservation/reservation_detail.html"
 
 
-def show_notifications(request):
-    receiver = request.user
-    notifications = Notification.objects.filter(receiver=receiver).order_by("-date")
-    template = loader.get_template("donation/notifications.html")
+class ReservationUpdateView(DetailView):
+    # Basic detail view
+    model = ReservationPost
+    template_name = "reservation/reservation_update.html"
 
+
+def show_notifications(request):
+    notifications = (
+        Notification.objects.filter(receiver=request.user)
+        .order_by("-post_id")
+        .distinct("post_id")
+    )
+
+    template = loader.get_template("donation/notifications.html")
     context = {
-        "notifications": notifications,
+        "donor_notifications": notifications,
     }
 
     return HttpResponse(template.render(context, request))
 
 
 def helpseeker_notifications(request):
-    notifications = Notification.objects.filter(receiver=request.user).order_by("-date")
+    notifications = Notification.objects.filter(receiver=request.user).order_by(
+        "-date_created"
+    )
     template = loader.get_template("reservation/messages.html")
 
     context = {
@@ -222,6 +279,9 @@ def read_message(request, id):
 @method_decorator(login_required, name="dispatch")
 class NotificationCheck(View):
     def get(self, request):
-        return HttpResponse(
-            Notification.objects.filter(is_seen=False, receiver=request.user).count()
+        notification = (
+            Notification.objects.order_by("-post_id")
+            # .distinct("post_id")
+            .filter(is_seen=False, receiver=request.user).count()
         )
+        return HttpResponse(notification)

@@ -30,7 +30,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("map/", include("map.urls")),
     path("", donation_view.homepage, name="home"),
-    path("issue-complaint/", views.issue_complaint, name="issue-complaint"),
+    path("issue-complaint/<int:pk>", views.issue_complaint, name="issue-complaint"),
     path("register/", include(("register.urls", "register"), namespace="register")),
     path(
         "login/",
@@ -75,6 +75,11 @@ urlpatterns = [
         "watchlist/",
         donation_view.watchlist_view,
         name="watchlist-home",
+    ),
+    path(
+        "login/redirect/",
+        donation_view.login_redirect_view,
+        name="login-redirect",
     ),
     # path(
     #     "messages/",

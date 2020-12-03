@@ -3,33 +3,33 @@
 {% block content %}
 
 {% include "register/profile_nav.html" %}
+{% if messages %}
+{% for message in messages %}
+<div class="mb-2 alert alert-{{ message.tags }} text-center">
+  {{ message }}
+</div>
+{% endfor %}
+{% endif %}
 <div class="content-section animated fadeIn">
   <div class="row justify-content-around">
-    <div class="col-10">
+    <div class="col-md-10">
       <legend class="mb-3 font-weight-bold">Account Details</legend>
-    </div>
-  </div>
-  <div class="media-body">
-    {% if messages %}
-    {% for message in messages %}
-    <div class="alert alert-{{ message.tags }}">
-      {{ message }}
-    </div>
-    {% endfor %}
-    {% endif %}
-    <div class="row justify-content-around">
-      <div class="col-4">
-        <label>Username:</label>
-        <p class="graybox">{{ user.username }}</p>
-      </div>
-      <div class="col-4">
-        <label>Email:</label>
-        <p class="graybox">{{ user.email }}</p>
-      </div>
     </div>
   </div>
   <form method='POST' enctype='multipart/form-data'>
     {% csrf_token %}
+    <div class="media-body">
+      <div class="row justify-content-around">
+        <div class="col-4">
+          <label>Username:</label>
+          <p class="graybox">{{ user.username }}</p>
+        </div>
+        <div class="col-4">
+          <label>Email:</label>
+          <p class="graybox">{{ user.email }}</p>
+        </div>
+      </div>
+    </div>
     <fieldset class='form-group'>
       <!-- Crispy filter to style the form -->
       <div class="row justify-content-around">

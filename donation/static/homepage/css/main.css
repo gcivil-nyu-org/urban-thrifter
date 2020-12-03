@@ -446,7 +446,7 @@ button:focus {
 }
 
 .navbar-brand img {
-  max-width: 50px;
+  max-width: 35px;
 }
 
 .navbar-expand-md .navbar-nav .nav-link:focus, .navbar-expand-md .navbar-nav .nav-link:hover, .navbar-expand-md .navbar-nav .nav-link:hover:before {
@@ -749,11 +749,11 @@ button:focus {
   border: 1px solid #E0C35C;
 }
 
-#resource .feature-item:hover .restroom-icon i {
+#resource .feature-item:hover .computer-icon i {
   color: #155889;
 }
 
-#resource .feature-item:hover .restroom-icon {
+#resource .feature-item:hover .computer-icon {
   background: #fff;
   border: 1px solid #155889;
 }
@@ -802,7 +802,7 @@ button:focus {
   background: #E0C35C;
 }
 
-#resource .feature-item .restroom-icon {
+#resource .feature-item .computer-icon {
   background: #155889;
 }
 
@@ -1897,4 +1897,12 @@ button:focus {
   -webkit-transition: all 300ms;
   -o-transition: all 300ms;
   transition: all 300ms;
+}
+
+@media only screen and (max-width: 768px) {
+  #team .row:nth-child(2) .col {
+    min-width: 50%;
+    max-width: 50%;
+    padding: 10px;
+  }
 }
