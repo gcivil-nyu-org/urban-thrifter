@@ -339,7 +339,7 @@ select option:hover, select option:focus, select option:active {
   width: 100%;
 }
 
-.profile-nav {
+.profile-nav .btn{
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
