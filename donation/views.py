@@ -46,12 +46,12 @@ def home(request):
     reserved_donation_posts = reserve_post_list.filter(
         reservationstatus=1, post__status__in=["Reserved", "RESERVED"]
     )
-    available_donation_posts = post_list.filter(
+    available_donations = post_list.filter(
         status__in=["Available", "AVAILABLE"],
-        dropoff_time_1__gte=current_time,
-        dropoff_time_2__gte=current_time,
-        dropoff_time_3__gte=current_time,
     )
+    available_donation_posts = (available_donations.filter(dropoff_time_1__gte=current_time) |
+        available_donations.filter(dropoff_time_2__gte=current_time) |
+        available_donations.filter(dropoff_time_3__gte=current_time))
     closed_donation_posts = post_list.filter(status__in=["Closed", "CLOSED"])
     closed_reservation_posts = reserve_post_list.filter(
         reservationstatus=1, post__status__in=["Closed", "CLOSED"]
