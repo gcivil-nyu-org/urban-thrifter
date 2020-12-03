@@ -3,33 +3,55 @@
 {% block content %}
 
 {% include "register/profile_nav.html" %}
-<div class="content-section">
-  <legend class="mb-3 font-weight-bold">Account Details</legend>
-  <div class="media-body">
-    {% if messages %}
-    {% for message in messages %}
-    <div class="alert alert-{{ message.tags }}">
-      {{ message }}
+{% if messages %}
+{% for message in messages %}
+<div class="mb-2 alert alert-{{ message.tags }} text-center">
+  {{ message }}
+</div>
+{% endfor %}
+{% endif %}
+<div class="content-section animated fadeIn">
+  <div class="row justify-content-around">
+    <div class="col-md-10">
+      <legend class="mb-3 font-weight-bold">Account Details</legend>
     </div>
-    {% endfor %}
-    {% endif %}
-    <label>Username:</label>
-    <p class="graybox">{{ user.username }}</p>
-    <label>Email:</label>
-    <p class="graybox">{{ user.email }}</p>
   </div>
   <form method='POST' enctype='multipart/form-data'>
     {% csrf_token %}
+    <div class="media-body">
+      <div class="row justify-content-around">
+        <div class="col-4">
+          <label>Username:</label>
+          <p class="graybox">{{ user.username }}</p>
+        </div>
+        <div class="col-4">
+          <label>Email:</label>
+          <p class="graybox">{{ user.email }}</p>
+        </div>
+      </div>
+    </div>
     <fieldset class='form-group'>
       <!-- Crispy filter to style the form -->
-      {{ hs_form |crispy }}
+      <div class="row justify-content-around">
+        <div class="col-4">
+          <label>Borough*:</label>
+          {{ hs_form.borough | as_crispy_field }}
+          <label>Resource Category 2:</label>
+          {{ hs_form.rc_2 | as_crispy_field }}
+        </div>
+        <div class="col-4">
+          <label>Resource Category 1:</label>
+          {{ hs_form.rc_1 | as_crispy_field }}
+          <label>Resource Category 3:</label>
+          {{ hs_form.rc_3 | as_crispy_field }}
+        </div>
+      </div>
     </fieldset>
-    <div class='form-group'>
-      <button class='btn btn-dark btn-wide' type='submit'>
+    <div class="pb-3 text-center">
+      <button class='btn btn-dark btn-wide center' type='submit'>
         Save
       </button>
     </div>
   </form>
 </div>
-
 {% endblock content %}

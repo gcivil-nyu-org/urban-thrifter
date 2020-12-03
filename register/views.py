@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 import os
 from .forms import HelpseekerForm, DonorForm, HelpseekerUpdateForm
+
+# , UserUpdateForm
 from .models import HelpseekerProfile, DonorProfile
 from django.http import HttpResponseRedirect
 from django.urls import reverse
@@ -16,6 +18,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.http import Http404
+from reservation.models import ReservationPost
 
 
 def register(request):
@@ -110,7 +113,6 @@ def activate_account(request, uidb64, token):
     try:
         uid = force_text(urlsafe_base64_decode(uidb64))
         user = User.objects.get(pk=uid)
-        print(user.username)
     except (TypeError, ValueError, OverflowError, user.DoesNotExist):
         user = None
     if user is not None and generate_token.check_token(user, token):
@@ -132,15 +134,25 @@ def helpseeker_edit_profile(request):
         hs_form = HelpseekerUpdateForm(
             request.POST, instance=request.user.helpseekerprofile
         )
-
+        # hs_user_form = UserUpdateForm(request.POST, instance=request.user)
         if hs_form.is_valid():
             hs_form.save()
+            # hs_user_form.save()
             messages.success(request, "Account updated successfully.")
             return redirect("register:helpseeker-profile")
+        else:
+            if not hs_form.is_valid():
+                messages.warning(request, "Repetitive resource category.")
+            # if not hs_user_form.is_valid():
+            #     messages.warning(request, "Invalid Email Entry.")
     else:
         hs_form = HelpseekerUpdateForm(instance=request.user.helpseekerprofile)
+        # hs_user_form = UserUpdateForm(instance=request.user)
 
-    context = {"hs_form": hs_form}
+    context = {
+        "hs_form": hs_form
+        # "hs_user_form": hs_user_form
+    }
     return render(request, "register/helpseekerprofile_form.html", context)
 
 
@@ -156,3 +168,85 @@ class DonorUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
         if username is None:
             raise Http404
         return get_object_or_404(DonorProfile, user__username__iexact=username)
+
+
+@login_required
+def delete_profile(request):
+    # user = request.user
+    if DonorProfile.objects.filter(user=request.user):
+        reservationposts = ReservationPost.objects.filter(donor=request.user)
+    elif HelpseekerProfile.objects.filter(user=request.user):
+        reservationposts = ReservationPost.objects.filter(helpseeker=request.user)
+    confirmed = 0
+
+    for reservationpost in reservationposts:
+        print(reservationpost.post.status)
+        if reservationpost.post.status == "RESERVED":
+            confirmed += 1
+    try:
+        if confirmed == 0:
+            for reservationpost in reservationposts:
+                if (
+                    reservationpost.post.status != "CLOSED"
+                    and reservationpost.post.status != "RESERVED"
+                ):
+                    reservationpost.post.status = "AVAILABLE"
+                    reservationpost.post.save()
+                    print(reservationpost.post.status)
+            request.user.delete()
+            messages.success(request, "Account deleted successfully.")
+            return redirect("/")
+        elif confirmed > 0:
+            messages.info(
+                request,
+                "You can not delete your profile because you have "
+                + str(confirmed)
+                + " confirmed reservation"
+                + ("s." if confirmed > 1 else "."),
+            )
+            return HttpResponseRedirect(request.META.get("HTTP_REFERER"))
+        else:
+            messages.error(
+                request, "Your profile deletion was unsuccessful. Please try again!"
+            )
+            return HttpResponseRedirect(request.META.get("HTTP_REFERER"))
+    except Exception:
+        messages.error(
+            request, "Your profile deletion was unsuccessful. Please try again!"
+        )
+        return HttpResponseRedirect(request.META.get("HTTP_REFERER"))
+
+
+def bad_request(request, exception):
+    response = render(request, "register/errorpage/error.html")
+    response.status_code = 400
+    return response
+
+
+def permission_denied(request, exception):
+    response = render(request, "register/errorpage/403_permission_denied.html")
+    response.status_code = 403
+    return response
+
+
+def page_not_found(request, exception):
+    response = render(request, "register/errorpage/404_page_not_found.html")
+    response.status_code = 404
+    return response
+
+
+def server_error(request):
+    # print(request)
+    response = render(request, "register/errorpage/500_server_error.html")
+    response.status_code = 500
+    return response
+
+
+def bad_gateday(request):
+    response = render(request, "register/errorpage/502_bad_gateway.html")
+    response.status_code = 500
+    return response
+
+
+def error(request, exception):
+    return render(request, "register/errorpage/error.html")

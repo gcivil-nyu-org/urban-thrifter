@@ -83,7 +83,7 @@ profile_default/
 ipython_config.py
 
 #pyc files
-*.pyc 
+*.pyc
 
 # pyenv
 #   For a library or package, you might want to ignore these files since the code is
@@ -144,4 +144,9 @@ cython_debug/
 # Database
 *.sqlite3
 staticfiles/*
-*/migrations/*.py
+# */migrations/*.py
+
+# our donation images
+media/donation-pics/*
+*/migrations/__pycache__/*
+*.pyc

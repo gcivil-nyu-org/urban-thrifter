@@ -30,7 +30,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("map/", include("map.urls")),
     path("", donation_view.homepage, name="home"),
-    path("issue-complaint/", views.issue_complaint, name="issue-complaint"),
+    path("issue-complaint/<int:pk>", views.issue_complaint, name="issue-complaint"),
     path("register/", include(("register.urls", "register"), namespace="register")),
     path(
         "login/",
@@ -71,8 +71,37 @@ urlpatterns = [
         ),
         name="password_reset_complete",
     ),
+    path(
+        "watchlist/",
+        donation_view.watchlist_view,
+        name="watchlist-home",
+    ),
+    path(
+        "login/redirect/",
+        donation_view.login_redirect_view,
+        name="login-redirect",
+    ),
+    # path(
+    #     "messages/",
+    #     donation_view.MessageListView.as_view(
+    #         template_name="donation/messages_home.html"
+    #     ),
+    #     name="messages-home",
+    # ),
 ]
 
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+handler400 = "register.views.bad_request"
+handler401 = "register.views.error"
+handler403 = "register.views.permission_denied"
+handler404 = "register.views.page_not_found"
+handler408 = "register.views.error"
+handler500 = "register.views.server_error"
+handler501 = "register.views.error"
+handler502 = "register.views.bad_gateway"
+handler503 = "register.views.error"
+handler504 = "register.views.error"
+handler505 = "register.views.error"

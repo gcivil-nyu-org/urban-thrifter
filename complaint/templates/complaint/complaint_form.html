@@ -1,0 +1,22 @@
+{% extends 'donation/base.html' %}
+{% block content %}
+{% load crispy_forms_tags %}
+  <div class='content-section animated fadeIn'>
+    <legend class='mb-4 font-weight-bold'>Complaint</legend>
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }}">
+      {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
+    <form enctype="multipart/form-data" method="POST">
+      {% csrf_token %}
+      <div class="form-group">
+        {{ form|crispy }}
+      </div>
+      <input class="btn btn-dark btn-wide" type="submit" value="Submit">
+    </form>
+
+  </div>
+{% endblock content %}

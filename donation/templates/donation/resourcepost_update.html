@@ -1,0 +1,59 @@
+{% extends 'donation/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+{% if object.donor == user %}
+{% if object.status == "AVAILABLE" or object.status == "Available" %}
+{% if not user.donorprofile.dropoff_location.place %}
+<div class="container alert alert-info text-center">
+    <h4>No Default Address Given.</h4>
+    <h6>Please make sure you set a dropoff location when you make a listing.</h6>
+    <h6>Please go to your <a href="{% url 'register:donor-profile' user.username %}">Profile <i
+                class="fas fa-user-circle"></i></a> to set your default address.</h6>
+</div>
+{% endif %}
+<div class='content-section animated fadeIn'>
+    <!-- Need to add CSRF token, a hidden tag for security required by django -->
+    {{ form.media }}
+    <form method='POST' enctype='multipart/form-data'>
+        {% csrf_token %}
+        <fieldset class='form-group'>
+            <div class="row justify-content-around">
+                <div class="col-md-10">
+                    <legend class='mb-4 font-weight-bold'>Donation Details</legend>
+                    {{ form| crispy }}
+                </div>
+            </div>
+        </fieldset>
+        <script type="text/javascript">
+            window.addEventListener('keydown', function (e) {
+                if (e.keyIdentifier == 'U+000A' || e.keyIdentifier == 'Enter' || e.keyCode == 13) {
+                    if (e.target.nodeName == 'INPUT' && e.target.type == 'text') {
+                        e.preventDefault();
+                        return false;
+                    }
+                }
+            }, true);
+        </script>
+        <div class="row justify-content-around">
+            <div class='form-group'>
+                <a class='btn btn-outline-dark btn-wide' href='{% url "donation:donation-detail" object.id %}'>
+                    Back
+                </a>
+                <button class='btn btn-dark btn-wide center' type='submit'>
+                    Save
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+{% else %}
+<div class="container alert alert-info text-center animated fadeIn">
+    I'm sorry. This donation post is pending, confirmed, or has been
+    closed. Therefore you cannot update any more.</div>
+{% endif %}
+{% else %}
+<div class="container alert alert-info text-center animated fadeIn">
+    You are not authorized to operate on this post.
+</div>
+{% endif %}
+{% endblock content %}
