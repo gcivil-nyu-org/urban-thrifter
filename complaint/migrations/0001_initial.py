@@ -10,23 +10,69 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('reservation', '0001_initial'),
+        ("reservation", "0001_initial"),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Complaint',
+            name="Complaint",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('subject', models.CharField(max_length=100)),
-                ('message', models.TextField()),
-                ('uploaded_at', models.DateTimeField(auto_now_add=True, null=True)),
-                ('image', models.ImageField(blank=True, null=True, upload_to='images/')),
-                ('status', models.CharField(choices=[('PENDING', 'Pending'), ('VALID', 'Valid'), ('INVALID', 'Invlaid')], default='PENDING', max_length=100)),
-                ('issuer', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='issuer_id', to=settings.AUTH_USER_MODEL)),
-                ('receiver', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, related_name='receiver_id', to=settings.AUTH_USER_MODEL)),
-                ('reservation_post', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to='reservation.reservationpost')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("subject", models.CharField(max_length=100)),
+                ("message", models.TextField()),
+                ("uploaded_at", models.DateTimeField(auto_now_add=True, null=True)),
+                (
+                    "image",
+                    models.ImageField(blank=True, null=True, upload_to="images/"),
+                ),
+                (
+                    "status",
+                    models.CharField(
+                        choices=[
+                            ("PENDING", "Pending"),
+                            ("VALID", "Valid"),
+                            ("INVALID", "Invlaid"),
+                        ],
+                        default="PENDING",
+                        max_length=100,
+                    ),
+                ),
+                (
+                    "issuer",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="issuer_id",
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
+                (
+                    "receiver",
+                    models.ForeignKey(
+                        null=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="receiver_id",
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
+                (
+                    "reservation_post",
+                    models.ForeignKey(
+                        null=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="reservation.reservationpost",
+                    ),
+                ),
             ],
         ),
     ]

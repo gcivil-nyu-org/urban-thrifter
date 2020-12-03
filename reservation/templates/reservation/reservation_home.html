@@ -156,8 +156,8 @@
               <p>{{ post.post.dropoff_location.place}}</p>
             </div>
             <div class="col-5">
-              <button class='btn btn-warning mb-1 btn-wide float-right'><a
-                  href="{% url 'issue-complaint' post.id %}">Complaint</a></button>
+              <a class='btn btn-warning mb-1 btn-wide float-right'
+                href="{% url 'issue-complaint' post.id %}">Complaint</a>
             </div>
           </div>
         </div>

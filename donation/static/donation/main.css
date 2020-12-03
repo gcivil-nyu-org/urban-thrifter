@@ -160,6 +160,29 @@ select option:hover, select option:focus, select option:active {
   top: 20% !important;
 }
 
+.tooltip-inner {
+  background-color: #e6e6e6 !important;
+  color: #333 !important;
+  /* box-shadow: 0 0 0 2px #b3b3b3;
+  -webkit-box-shadow: 0 0 0 2px #b3b3b3; */
+}
+
+.tooltip.bs-tooltip-right .arrow:before {
+  border-right-color: #e6e6e6 !important;
+}
+
+.tooltip.bs-tooltip-left .arrow:before {
+  border-left-color: #e6e6e6 !important;
+}
+
+.tooltip.bs-tooltip-bottom .arrow:before {
+  border-bottom-color: #e6e6e6 !important;
+}
+
+.tooltip.bs-tooltip-top .arrow:before {
+  border-top-color: #e6e6e6 !important;
+}
+
 /* site header */
 
 .site-header {
@@ -368,7 +391,7 @@ a.article-title:hover {
 }
 
 .form-group input, .form-group textarea, .form-group select, .form-group select:focus {
-  background: #e6e6e6;
+  background: rgba(0, 0, 0, 0.06);
   border: none;
   border-radius: 5px;
   padding: .25rem .75rem;
