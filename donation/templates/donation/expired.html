@@ -1,28 +1,26 @@
 {% extends 'donation/base.html' %}
 {% block content %}
 {% if user.is_authenticated and user.donorprofile %}
-{% for post in reserved_donation_posts %}
+{% for post in expired_donation_posts %}
         <article class="card donation-card mb-2">
-            <!-- <img class='rounded-circle article-img' src='{{ post.author.profile.image.url }}' > -->
             <div class="card-header">
                 <div class='container'>
                     <div class="row text-center">
                         <div class="col">
                             <p>Title</p>
-                            <p><a href="{% url 'reservation:reservation-detail' post.id %}">{{ post.post.title }}</a>
-                            </p>
+                            <p>{{ post.title }}</p>
                         </div>
                         <div class="col">
                             <p>Quantity</p>
-                            <p>{{ post.post.quantity }}</p>
+                            <p>{{ post.quantity }}</p>
                         </div>
                         <div class="col">
                             <p>Category</p>
-                            <p>{{ post.post.resource_category }}</p>
+                            <p>{{ post.resource_category }}</p>
                         </div>
                         <div class="col">
                             <p>Status</p>
-                            <p>{{ post.post.status }}</p>
+                            <p>EXPIRED</p>
                         </div>
                     </div>
                 </div>
@@ -31,16 +29,23 @@
                 <div class='container'>
                     <div class="row">
                         <div class="col-2">
-                            <p class="article-img img-circle"><img class="img-thumbnail"
-                                    src='{{post.post.image.url}}'></i>
+                            <p class="article-img img-circle"><img class="img-thumbnail" src='{{post.image.url}}'></i>
                             </p>
                         </div>
                         <div class="col-5">
-                            <p>Request Dropoff Time: </p>
+                            <p>Available Dropoff Time: </p>
                             <ul>
-                                <li>{{ post.dropoff_time_request }}</li>
+								{% if post.dropoff_time_1 != None %}
+                                <li>{{ post.dropoff_time_1 }}</li>
+								{% endif %}
+                                {% if post.dropoff_time_2 != None %}
+                                <li>{{ post.dropoff_time_2 }}</li>
+                                {% endif %}
+                                {% if post.dropoff_time_3 != None %}
+                                <li>{{ post.dropoff_time_3 }}</li>
+                                {% endif %}
                             </ul>
-                            <p>{{ post.post.dropoff_location.place}}</p>
+                            <p>{{ post.dropoff_location.place}}</p>
                         </div>
                     </div>
                 </div>

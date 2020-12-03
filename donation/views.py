@@ -38,6 +38,7 @@ def login_redirect_view(request):
 
 def home(request):
     user = request.user
+    current_time = timezone.now()
     post_list = ResourcePost.objects.filter(donor=user).order_by("-date_created")
     reserve_post_list = ReservationPost.objects.filter(donor=user).order_by(
         "-date_created"
@@ -45,7 +46,12 @@ def home(request):
     reserved_donation_posts = reserve_post_list.filter(
         reservationstatus=1, post__status__in=["Reserved", "RESERVED"]
     )
-    available_donation_posts = post_list.filter(status__in=["Available", "AVAILABLE"])
+    available_donation_posts = post_list.filter(
+        status__in=["Available", "AVAILABLE"],
+        dropoff_time_1__gte=current_time,
+        dropoff_time_2__gte=current_time,
+        dropoff_time_3__gte=current_time,
+    )
     closed_donation_posts = post_list.filter(status__in=["Closed", "CLOSED"])
     closed_reservation_posts = reserve_post_list.filter(
         reservationstatus=1, post__status__in=["Closed", "CLOSED"]
@@ -347,14 +353,15 @@ def get_reminder(request):
     
 def donation_expired(request):
     user = request.user
-    post_list = ResourcePost.objects.filter(donor=user).order_by("-date_created")
-    reserve_post_list = ReservationPost.objects.filter(donor=user).order_by(
-        "-date_created"
-    )
-    reserved_donation_posts = reserve_post_list.filter(
-        reservationstatus=1, post__status__in=["Reserved", "RESERVED"]
-    )
+    current_time = timezone.now()
+    expired_donation_posts = ResourcePost.objects.filter(
+        donor=user,
+        status="AVAILABLE",
+        dropoff_time_1__lt=current_time,
+        dropoff_time_2__lt=current_time,
+        dropoff_time_3__lt=current_time,
+    ).order_by("-date_created")
     context = {
-        "reserved_donation_posts": reserved_donation_posts,
+        "expired_donation_posts": expired_donation_posts,
     }
     return render(request, "donation/expired.html", context)
