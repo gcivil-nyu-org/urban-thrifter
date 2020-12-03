@@ -344,3 +344,6 @@ def get_reminder(request):
     # data = posts.count()
     # print(data)
     return render(request, "donation/messages.html", context)
+    
+def donation_expired(request):
+    return render(request, "donation/expired.html", reserved_donation_posts)
