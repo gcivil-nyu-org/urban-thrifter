@@ -7,10 +7,8 @@
 {% bootstrap_javascript jquery='full' %}
 
 <body>
-
 	{% if messages %}
 	{% for message in messages %}
-
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -76,7 +74,8 @@
 				<div class="col-lg-6 col-md-12 col-xs-12">
 					<div class="contents">
 						<h2 class="head-title animated fadeInDown">Urban Thrifter</h2>
-						<p class="animated fadeInDown">Connect the resource to the people in need.</p>
+						<p class="animated fadeInDown">Connect the resource to the people in need in the Great New York
+							Area.</p>
 						<div class="header-button">
 							{% if user.is_authenticated %}
 							{% if user.donorprofile %}
@@ -130,8 +129,13 @@
 							<li>Get notified and confirm donation when you have a reservation request.</li>
 							<li>Get reminder when reservation time is up. And happy giving!</li>
 						</ol>
-						<a class="btn btn-dark btn-wide" href="{% url 'register:helpseeker-register' %}">Join as
-							Helpseeker</a>
+						{% if user.is_authenticated %}
+						{% if user.donorprofile %}
+						<a class="btn btn-dark btn-wide" href="{% url 'donation:donation-home' %}">See your listings</a>
+						{% endif %}
+						{% else %}
+						<a class="btn btn-dark btn-wide" href="{% url 'register:donor-register' %}">Join as Donor</a>
+						{% endif %}
 					</div>
 				</div>
 				<!-- End Col -->
@@ -151,7 +155,15 @@
 								donation.</li>
 							<li>That's it. Happy thrifting!</li>
 						</ol>
-						<a class="btn btn-dark btn-wide" href="{% url 'register:donor-register' %}">Join as Donor</a>
+						{% if user.is_authenticated %}
+						{% if user.helpseekerprofile %}
+						<a class="btn btn-dark btn-wide" href="{% url 'reservation:reservation-home' %}">See other
+							listings</a>
+						{% endif %}
+						{% else %}
+						<a class="btn btn-dark btn-wide" href="{% url 'register:helpseeker-register' %}">Join as
+							Helpseeker</a>
+						{% endif %}
 					</div>
 				</div>
 				<!-- End Col -->
@@ -282,12 +294,13 @@
 				<div class="col-lg-6 col-md-6 col-xs-12 p-0">
 					<!-- Start Fetatures -->
 					<div class="feature-item featured-border2">
-						<div class="feature-icon restroom-icon float-left">
-							<i class="fas fa-restroom"></i>
+						<div class="feature-icon computer-icon float-left">
+							<i class="fas fa-desktop"></i>
 						</div>
 						<div class="feature-info float-left">
-							<h4>Restroom</h4>
-							<p>Directory of Toilets in Public Parks by Department of Parks and Recreation (DPR).</p>
+							<h4>Computer Center</h4>
+							<p>List of public facilities offering computers with internet access, according to
+								administrative data collected by the Mayor's Office of the Chief Technology Officer.</p>
 						</div>
 					</div>
 					<!-- End Fetatures -->
@@ -320,8 +333,7 @@
 						</div>
 						<div class="feature-info float-left">
 							<h4>Electronics</h4>
-							<p>List of public facilities offering computers with internet access, according to
-								administrative data collected by the Mayor's Office of the Chief Technology Officer.</p>
+							<p>Electronics sponsored by personal donors.</p>
 						</div>
 					</div>
 					<!-- End Fetatures -->
@@ -602,16 +614,16 @@
 			<div class="row">
 				<!-- Start Col -->
 				<div class="col-lg-6 col-md-12">
-					<form id="contactForm">
-						<div class="row">
-							<div class="col-md-6">
+					<!-- <form id="contactForm"> -->
+					<div class="row">
+						<!-- <div class="col-md-6">
 								<div class="form-group">
 									<input type="text" class="form-control" id="name" name="name" placeholder="Name"
 										required data-error="Please enter your name">
 									<div class="help-block with-errors"></div>
 								</div>
-							</div>
-							<div class="col-md-6">
+							</div> -->
+						<!-- <div class="col-md-6">
 								<div class="form-group">
 									<input type="text" placeholder="Subject" id="msg_subject" class="form-control"
 										name="msg_subject" required data-error="Please enter your subject">
@@ -631,27 +643,21 @@
 										name="budget" required data-error="Please enter your Budget">
 									<div class="help-block with-errors"></div>
 								</div>
-							</div>
-							<div class="col-md-12">
-								<div class="form-group">
-									<textarea class="form-control" id="message" name="message"
-										placeholder="Write Message" rows="4" data-error="Write your message"
-										required></textarea>
-									<div class="help-block with-errors"></div>
-								</div>
-								<div class="submit-button">
+							</div> -->
+						<div class="col-md-6">
+							<!-- <div class="form-group"> -->
+							<h4 name="message">Please email our team at</h4>
+							<h4><a href="mailto:nyu.django.unchained@gmail.com">NYU.Django.Unchained@gmail.com</a></h4>
+							<!-- <div class="help-block with-errors"></div>
+								</div> -->
+							<!-- <div class="submit-button">
 									<button class="btn btn-wide btn-dark" id="submit" type="submit">Submit</button>
 									<div id="msgSubmit" class="h3 hidden"></div>
 									<div class="clearfix"></div>
-								</div>
-							</div>
+								</div> -->
 						</div>
-					</form>
-				</div>
-				<!-- End Col -->
-				<!-- Start Col -->
-				<div class="col-lg-1">
-
+					</div>
+					<!-- </form> -->
 				</div>
 				<!-- End Col -->
 				<!-- Start Col -->

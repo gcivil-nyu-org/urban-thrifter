@@ -19,17 +19,13 @@
                         <p><i class="fas fa-star" style="color:#0c5460;"></i> New watchlist item in
                             {{ post.resource_category }}</p>
                     </div>
-                    <div class="col">
-                        <p class="btn btn-sm btn-outline-success float-right"><i class="read far fa-envelope"
-                                style="color:#0c5460"></i></p>
-                    </div>
                     {% else %}
                     <div class="col">
                         <p><i class="far fa-star"></i> Watchlist item in {{ post.resource_category }}</p>
                     </div>
                     <div class="col">
-                        <p class="btn btn-sm btn-outline-success float-right"><i class="read far fa-envelope-open"
-                                style="color:green"></i></p>
+                        <p class="btn btn-sm float-right"><i class="read fas fa-check-circle" style="color:green"></i>
+                        </p>
                     </div>
                     {% endif %}
                 </div>

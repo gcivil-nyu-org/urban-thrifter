@@ -76,6 +76,11 @@ urlpatterns = [
         donation_view.watchlist_view,
         name="watchlist-home",
     ),
+    path(
+        "login/redirect/",
+        donation_view.login_redirect_view,
+        name="login-redirect",
+    ),
     # path(
     #     "messages/",
     #     donation_view.MessageListView.as_view(

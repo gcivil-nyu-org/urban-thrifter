@@ -152,3 +152,17 @@ class HelpseekerUpdateForm(forms.ModelForm):
         model = HelpseekerProfile
         # field on the form
         fields = ["borough", "rc_1", "rc_2", "rc_3"]
+
+
+class UserUpdateForm(forms.ModelForm):
+    # Default namespace of EmailField required argument is True
+    email = forms.EmailField()
+
+    # Keep configuration in one place
+    class Meta:
+        model = User
+        # field on the form
+        fields = ["username"]
+        help_texts = {
+            "username": None,
+        }

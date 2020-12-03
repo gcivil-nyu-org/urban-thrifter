@@ -65,7 +65,7 @@ class Notification(models.Model):
     notificationstatus = models.IntegerField(
         choices=NOTIFICATION_STATUS, default=NOTIFICATION_STATUS[2][0]
     )
-    date = models.DateTimeField(auto_now_add=True)
+    date_created = models.DateTimeField(default=timezone.now)
     is_seen = models.BooleanField(default=False)
     __original_notificationstatus = None
 

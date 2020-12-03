@@ -1,9 +1,16 @@
 from django.shortcuts import render, get_object_or_404
-from django.views.generic import ListView, CreateView, DetailView
+from django.views.generic import (
+    ListView,
+    CreateView,
+    DetailView,
+    UpdateView,
+    DeleteView,
+)
 from .models import ResourcePost, User
 from reservation.models import ReservationPost
 from bootstrap_datepicker_plus import DateTimePickerInput
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.messages.views import SuccessMessageMixin
 from django.http import JsonResponse
 from django.contrib import messages
 import os
@@ -24,6 +31,11 @@ def homepage(request):
     return render(request, "donation/homepage.html")
 
 
+def login_redirect_view(request):
+    # Redirect to login page
+    return render(request, "donation/login_redirect.html")
+
+
 def home(request):
     user = request.user
     post_list = ResourcePost.objects.filter(donor=user).order_by("-date_created")
@@ -31,10 +43,13 @@ def home(request):
         "-date_created"
     )
     reserved_donation_posts = reserve_post_list.filter(
-        post__status__in=["Reserved", "RESERVED"]
+        reservationstatus=1, post__status__in=["Reserved", "RESERVED"]
     )
     available_donation_posts = post_list.filter(status__in=["Available", "AVAILABLE"])
     closed_donation_posts = post_list.filter(status__in=["Closed", "CLOSED"])
+    closed_reservation_posts = reserve_post_list.filter(
+        reservationstatus=1, post__status__in=["Closed", "CLOSED"]
+    )
     # page = request.GET.get("page", 1)
     # paginator = Paginator(post_list, 3)
     # try:
@@ -48,6 +63,7 @@ def home(request):
         "reserved_donation_posts": reserved_donation_posts,
         "available_donation_posts": available_donation_posts,
         "closed_donation_posts": closed_donation_posts,
+        "closed_reservation_posts": closed_reservation_posts,
     }
 
     return render(request, "donation/reservation_status_nav.html", context)
@@ -96,6 +112,11 @@ class PostCreateView(LoginRequiredMixin, CreateView):
         form.fields["dropoff_time_1"].widget = DateTimePickerInput()
         form.fields["dropoff_time_2"].widget = DateTimePickerInput()
         form.fields["dropoff_time_3"].widget = DateTimePickerInput()
+        form.fields[
+            "dropoff_time_1"
+        ].label = "<span class='ut-tooltip'>Dropoff Time 1 (EST)<span class='tooltiptext'>Currently our service only supports users in the Greater New York Area</span></span>"
+        form.fields["dropoff_time_2"].label = "Dropoff Time 2 (EST)"
+        form.fields["dropoff_time_3"].label = "Dropoff Time 3 (EST)"
         return form
 
     # Overwrite form valid method
@@ -139,7 +160,7 @@ class PostCreateView(LoginRequiredMixin, CreateView):
 
 
 # Donation Detail View
-class PostDetailView(DetailView):
+class PostDetailView(LoginRequiredMixin, DetailView):
     # Basic detail view
     model = ResourcePost
 
@@ -147,6 +168,56 @@ class PostDetailView(DetailView):
         context = super(PostDetailView, self).get_context_data(**kwargs)
         context["mapbox_access_token"] = "pk." + os.environ.get("MAPBOX_KEY")
         return context
+
+
+# Donation Update View
+class PostUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+    # Basic detail view
+    model = ResourcePost
+    fields = [
+        "title",
+        "quantity",
+        "description",
+        "dropoff_time_1",
+        "resource_category",
+        "dropoff_time_2",
+        "dropoff_time_3",
+        "dropoff_location",
+    ]
+    template_name = "donation/resourcepost_update.html"
+    success_message = "Donation post updated successfully."
+
+    # Overwrite form valid method
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+    def get_form(self):
+        form = super().get_form()
+        form.fields["dropoff_time_1"].widget = DateTimePickerInput()
+        form.fields["dropoff_time_2"].widget = DateTimePickerInput()
+        form.fields["dropoff_time_3"].widget = DateTimePickerInput()
+        form.fields["dropoff_time_1"].label = "Dropoff Time 1 (EST)"
+        form.fields["dropoff_time_2"].label = "Dropoff Time 2 (EST)"
+        form.fields["dropoff_time_3"].label = "Dropoff Time 3 (EST)"
+        return form
+
+
+class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    # Basic delete view
+    model = ResourcePost
+
+    # Redirect to homepage after delete succesfully
+    success_url = "/donation"
+
+    # Make sure the post owner can delete the post
+    def test_func(self):
+        # Retrieve the current post
+        post = self.get_object()
+        # Check if the current user is the author of the post
+        if self.request.user == post.donor:
+            return True
+        return False
 
 
 @login_required
@@ -245,9 +316,8 @@ def watchlist_view(request):
 def get_reminders_count(request):
     posts = ReservationPost.objects.filter(
         reservationstatus=1,
-        dropoff_time_request__gt=datetime.datetime.now(),
-        dropoff_time_request__lte=datetime.datetime.now()
-        + datetime.timedelta(minutes=10),
+        dropoff_time_request__gt=timezone.now(),
+        dropoff_time_request__lte=timezone.now() + datetime.timedelta(minutes=10),
     )
     data = posts.count()
     return HttpResponse(data)
@@ -257,9 +327,8 @@ def get_reminders_count(request):
 def get_reminder(request):
     posts = ReservationPost.objects.filter(
         reservationstatus=1,
-        dropoff_time_request__gt=datetime.datetime.now(),
-        dropoff_time_request__lte=datetime.datetime.now()
-        + datetime.timedelta(minutes=10),
+        dropoff_time_request__gt=timezone.now(),
+        dropoff_time_request__lte=timezone.now() + datetime.timedelta(minutes=10),
     )
     messages = []
     for post in posts:
@@ -272,6 +341,6 @@ def get_reminder(request):
     context = {
         "messages": messages,
     }
-    data = posts.count()
-    print(data)
+    # data = posts.count()
+    # print(data)
     return render(request, "donation/messages.html", context)

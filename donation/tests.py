@@ -143,7 +143,7 @@ class ResourcePostDetailViewTests(TestCase):
         create_resource_post.save()
         url = reverse("donation:donation-detail", args=(create_resource_post.pk,))
         response = self.client.get(url)
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 302)
 
 
 class ResourcePostDeleteViewTests(TestCase):
@@ -266,7 +266,7 @@ class ResourcePost_Ajax_Wathclist_Tests(TestCase):
             dropoff_time_3=timezone.now(),
             date_created=timezone.now(),
             donor=createdonor_3(),
-            resource_category="OTHR",
+            resource_category="OTHERS",
             status="AVAILABLE",
         )
 

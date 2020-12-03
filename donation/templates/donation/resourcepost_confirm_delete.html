@@ -1,0 +1,34 @@
+<!-- Can extend the template from another app as long as they are in the same project -->
+{% extends 'donation/base.html' %}
+{% block content %}
+{% if object.donor == user %}
+{% if object.status == "AVAILABLE" or object.status == "Available" %}
+<div class='content-section'>
+    <!-- Need to add CSRF token, a hidden tag for security required by django -->
+    <form method='POST'>
+        {% csrf_token %}
+        <fieldset class='form-group'>
+            <legend class='border-bottom mb-4'>Are you sure you would like to delete "{{ object.title }}"?</legend>
+            <!-- Crispy filter to style the form -->
+        </fieldset>
+        <div class='form-group'>
+            <button class='btn btn-danger btn-wide' type='submit'>
+                Confirm
+            </button>
+            <a class='btn btn-outline-dark btn-wide' href='{% url "donation:donation-detail" object.id %}'>
+                Back
+            </a>
+        </div>
+    </form>
+</div>
+{% else %}
+<div class="container alert alert-info text-center animated fadeIn">
+    I'm sorry. This donation post is pending, confirmed, or has been
+    closed. Therefore you cannot update any more.</div>
+{% endif %}
+{% else %}
+<div class="container alert alert-info text-center animated fadeIn">
+    You are not authorized to operate on this post.
+</div>
+{% endif %}
+{% endblock content %}
