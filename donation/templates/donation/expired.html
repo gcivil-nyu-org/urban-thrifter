@@ -51,27 +51,9 @@
                 </div>
             </div>
         </article>
-    {% endfor %}
-	{% if expired_donation_posts.has_other_pages %}
-  <ul class="pagination">
-    {% if expired_donation_posts.has_previous %}
-      <li><a href="?page={{ expired_donation_posts.previous_page_number }}">&laquo;</a></li>
-    {% else %}
-      <li class="disabled"><span>&laquo;</span></li>
-    {% endif %}
-    {% for i in expired_donation_posts.paginator.page_range %}
-      {% if expired_donation_posts.number == i %}
-        <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
-      {% else %}
-        <li><a href="?page={{ i }}">{{ i }}</a></li>
-      {% endif %}
-    {% endfor %}
-    {% if expired_donation_posts.has_next %}
-      <li><a href="?page={{ expired_donation_posts.next_page_number }}">&raquo;</a></li>
-    {% else %}
-      <li class="disabled"><span>&raquo;</span></li>
-    {% endif %}
-  </ul>
-{% endif %}	
+{% endfor %}
+	{% if expired_donation_posts.paginator.num_pages > 1 %}
+		{% include 'donation/_pagination.html' with posts=expired_donation_posts %}
 	{% endif %}
+{% endif %}
 {% endblock %}
