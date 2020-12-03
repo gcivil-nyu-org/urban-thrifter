@@ -38,6 +38,7 @@ def login_redirect_view(request):
 
 def home(request):
     user = request.user
+    current_time = timezone.now()
     post_list = ResourcePost.objects.filter(donor=user).order_by("-date_created")
     reserve_post_list = ReservationPost.objects.filter(donor=user).order_by(
         "-date_created"
@@ -45,7 +46,14 @@ def home(request):
     reserved_donation_posts = reserve_post_list.filter(
         reservationstatus=1, post__status__in=["Reserved", "RESERVED"]
     )
-    available_donation_posts = post_list.filter(status__in=["Available", "AVAILABLE"])
+    available_donations = post_list.filter(
+        status__in=["Available", "AVAILABLE"],
+    )
+    available_donation_posts = (
+        available_donations.filter(dropoff_time_1__gte=current_time)
+        | available_donations.filter(dropoff_time_2__gte=current_time)
+        | available_donations.filter(dropoff_time_3__gte=current_time)
+    )
     closed_donation_posts = post_list.filter(status__in=["Closed", "CLOSED"])
     closed_reservation_posts = reserve_post_list.filter(
         reservationstatus=1, post__status__in=["Closed", "CLOSED"]
@@ -344,3 +352,29 @@ def get_reminder(request):
     # data = posts.count()
     # print(data)
     return render(request, "donation/messages.html", context)
+
+
+def donation_expired(request):
+    user = request.user
+    current_time = timezone.now()
+    post_list = ResourcePost.objects.filter(
+        donor=user,
+        status="AVAILABLE",
+        dropoff_time_1__lt=current_time,
+        dropoff_time_2__lt=current_time,
+        dropoff_time_3__lt=current_time,
+    ).order_by("-date_created")
+
+    page = request.GET.get("page", 1)
+    paginator = Paginator(post_list, 5)
+    try:
+        expired_donation_posts = paginator.page(page)
+    except PageNotAnInteger:
+        expired_donation_posts = paginator.page(1)
+    except EmptyPage:
+        expired_donation_posts = paginator.page(paginator.num_pages)
+
+    context = {
+        "expired_donation_posts": expired_donation_posts,
+    }
+    return render(request, "donation/expired.html", context)
