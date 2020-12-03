@@ -354,13 +354,23 @@ def get_reminder(request):
 def donation_expired(request):
     user = request.user
     current_time = timezone.now()
-    expired_donation_posts = ResourcePost.objects.filter(
+    post_list = ResourcePost.objects.filter(
         donor=user,
         status="AVAILABLE",
         dropoff_time_1__lt=current_time,
         dropoff_time_2__lt=current_time,
         dropoff_time_3__lt=current_time,
     ).order_by("-date_created")
+    
+    page = request.GET.get("page", 1)
+    paginator = Paginator(post_list, 5)
+    try:
+        expired_donation_posts = paginator.page(page)
+    except PageNotAnInteger:
+        expired_donation_posts = paginator.page(1)
+    except EmptyPage:
+        expired_donation_posts = paginator.page(paginator.num_pages)
+        
     context = {
         "expired_donation_posts": expired_donation_posts,
     }
