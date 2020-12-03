@@ -3,24 +3,24 @@
 {% if user.is_authenticated and user.donorprofile %}
 <div>
     <ul class="nav nav-pills button-nav animated fadeInDown" id="pills-tab" role="tablist">
-        <li class="nav-item" data-toggle="tooltip" data-placement="bottom" title="Your upcoming reserved donations">
+        <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Upcoming reservation">
             <a class="btn align-middle btn-outline-dark active" id="pills-reserved-tab" data-toggle="pill"
                 href="#pills-reserve" role="tab" aria-controls="pills-reserve" aria-selected="true">Reserved</a>
         </li>
-        <li class="nav-item" data-toggle="tooltip" data-placement="bottom" title="Post a new donation">
+        <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Post a new donation">
             <a class="btn align-middle btn-outline-dark" href='{% url "donation:donation-new" %}'>New</a>
         </li>
-        <li class="nav-item" data-toggle="tooltip" data-placement="bottom" title="All your currently available donation posts">
+        <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Available donation posts">
             <a class="btn align-middle btn-outline-dark" id="pills-available-tab" data-toggle="pill"
                 href="#pills-available" role="tab" aria-controls="pills-available" aria-selected="false">Available</a>
         </li>
-        <li class="nav-item" data-toggle="tooltip" data-placement="bottom" title="Your completed donation posts">
+        <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Completed reservations">
             <a class="btn align-middle btn-outline-dark" id="pills-closed-tab" data-toggle="pill" href="#pills-closed"
                 role="tab" aria-controls="pills-closed" aria-selected="false">Completed</a>
         </li>
     </ul>
 </div>
-<div class="alert alert-dark text-center">
+<div class="alert alert-info text-center">
 	<a href="{% url 'donation:donation-expired' %}">See Expired Donations</a>
 </div>
 <div class="tab-content animated fadeIn" id="pills-tabContent">
