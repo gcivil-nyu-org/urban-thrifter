@@ -346,4 +346,15 @@ def get_reminder(request):
     return render(request, "donation/messages.html", context)
     
 def donation_expired(request):
-    return render(request, "donation/expired.html", reserved_donation_posts)
+    user = request.user
+    post_list = ResourcePost.objects.filter(donor=user).order_by("-date_created")
+    reserve_post_list = ReservationPost.objects.filter(donor=user).order_by(
+        "-date_created"
+    )
+    reserved_donation_posts = reserve_post_list.filter(
+        reservationstatus=1, post__status__in=["Reserved", "RESERVED"]
+    )
+    context = {
+        "reserved_donation_posts": reserved_donation_posts,
+    }
+    return render(request, "donation/expired.html", context)

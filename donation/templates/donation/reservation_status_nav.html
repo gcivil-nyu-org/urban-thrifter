@@ -21,8 +21,9 @@
     </ul>
 </div>
 <div class="row justify-content-center align-self-center">
-<p><a href="{% url 'donation:expired-donation' %}">See Expired Donations</a>
+<p><a href="{% url 'donation:donation-expired' %}">See Expired Donations</a>
 </p>
+</div>
 <div class="tab-content animated fadeIn" id="pills-tabContent">
     <div class="tab-pane fade show active" id="pills-reserve" role="tabpanel" aria-labelledby="pills-reserved-tab">
         {% if user.is_authenticated and user.donorprofile %}
