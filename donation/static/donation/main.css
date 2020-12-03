@@ -339,6 +339,12 @@ select option:hover, select option:focus, select option:active {
   width: 100%;
 }
 
+.profile-nav {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
 .content-section {
   background: #ffffff;
   padding: 10px 20px;
@@ -608,6 +614,7 @@ a.article-title:hover {
 .map-filter li {
   flex-grow: 1;
   width: 100px;
+  height: 70px;
   margin: 0 5px;
 }
 
