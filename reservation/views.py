@@ -207,7 +207,7 @@ def reservation_update(request, **kwargs):
                 redirect("reservation:reservation-detail", kwargs["pk"])
         else:
             messages.error(
-                request, "A reservation for this donation has already been made."
+                request, "Only pending reservation shall be rescheduled."
             )
             return redirect("reservation:reservation-home")
         try:
