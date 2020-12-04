@@ -198,7 +198,13 @@ def reservation_update(request, **kwargs):
                 selected_time = reservation.post.dropoff_time_2
             elif selected_timeslot == "3":
                 selected_time = reservation.post.dropoff_time_3
-            reservation.dropoff_time_request = selected_time
+            if reservation.dropoff_time_request != selected_time:
+                reservation.dropoff_time_request = selected_time
+            else:
+                messages.error(
+                    request, "Please select a different timeslot for reschedule."
+                )
+                redirect("reservation:reservation-detail", kwargs["pk"])
         else:
             messages.error(
                 request, "A reservation for this donation has already been made."
