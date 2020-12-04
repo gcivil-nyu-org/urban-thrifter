@@ -5,7 +5,7 @@ from reservation.models import ReservationPost
 STATUS_CHOICES = (
     ("PENDING", "Pending"),
     ("VALID", "Valid"),
-    ("INVALID", "Invlaid"),
+    ("INVALID", "Invalid"),
 )
 
 

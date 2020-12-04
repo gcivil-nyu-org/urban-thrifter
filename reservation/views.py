@@ -201,7 +201,7 @@ def reservation_update(request, **kwargs):
             reservation.dropoff_time_request = selected_time
         else:
             messages.error(
-                request, "A reservation for this donation has already been made."
+                request, "Only pending reservation shall be rescheduled."
             )
             return redirect("reservation:reservation-home")
         try:

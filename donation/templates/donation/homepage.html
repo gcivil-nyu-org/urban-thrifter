@@ -87,8 +87,8 @@
 							<a href="{% url 'reservation:reservation-home' %}" rel="nofollow"
 								class="btn btn-dark btn-wide animated fadeInUp">See what we have!</a>
 							{% else %}
-							<a href="/admin" rel="nofollow" class="btn btn-dark btn-wide animated fadeInUp">Go to
-								admin</a>
+							<a href="{% url 'complaint' %}" rel="nofollow" class="btn btn-dark btn-wide animated fadeInUp">Admin
+								Portal</a>
 							{% endif %}
 							{% else %}
 							<a href="{% url 'register:register' %}" rel="nofollow"
