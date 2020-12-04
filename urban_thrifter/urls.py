@@ -28,6 +28,7 @@ urlpatterns = [
         include(("reservation.urls", "reservation"), namespace="reservation"),
     ),
     path("admin/", admin.site.urls),
+    path("admin/portal/", views.complaint_portal, name="complaint"),
     path("map/", include("map.urls")),
     path("", donation_view.homepage, name="home"),
     path("issue-complaint/<int:pk>", views.issue_complaint, name="issue-complaint"),

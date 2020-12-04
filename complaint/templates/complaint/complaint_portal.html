@@ -1,0 +1,105 @@
+{% extends 'donation/base.html' %}
+{% load static %}
+{% block content %}
+{% if user.is_authenticated and user.is_superuser %}
+{% include "complaint/complaint_nav.html" %}
+{% if messages %}
+{% for message in messages %}
+<div class="container alert alert-info">
+  {{ message }}
+</div>
+{% endfor %}
+{% endif %}
+<div class="tab-content animated fadeIn" id="pills-tabContent">
+  <div class="tab-pane fade show active" id="pills-complaints" role="tabpanel" aria-labelledby="pills-complaints-tab">
+    {% for post in complaint_posts %}
+    <article class="card donation-card mb-2">
+      <!-- <img class='rounded-circle article-img' src='{{ post.author.profile.image.url }}' > -->
+      <div class="card-header">
+        <p class="pl-4 pb-2 pt-2">{{ post.issuer }} filed a complaint to {{ post.receiver }}</p>
+      </div>
+      <div class="card-body ">
+        <div class='container'>
+          <div class="row">
+            <div class="col-2">
+              {% if post.image  %}
+              <p class="article-img img-circle"><img class="img-thumbnail" src='{{ post.image.url }}'></p>
+              {% else %}
+              <p class="article-img img-circle"><img class="img-thumbnail"
+                  src='{{ post.reservation_post.post.image.url }}'>
+              </p>
+              {% endif %}
+            </div>
+            <div class="col-5">
+              Subject:
+              <p>{{ post.subject }}</p>
+              Description:
+              <p>{{ post.message }}</p>
+            </div>
+            <div class="col-5">
+              <a class="btn btn-wide btn-warning float-right" href="mailto:{{ post.user.email }}">Action</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+    {% empty %}
+    <div class="alert alert-info text-center">You don't have any complaints to resolve.</div>
+    {% endfor %}
+  </div>
+
+  <div class="tab-pane fade" id="pills-warning" role="tabpanel" aria-labelledby="pills-warning-tab">
+    {% for post in hs_warning %}
+    <article class="card donation-card mb-2">
+      <!-- <img class='rounded-circle article-img' src='{{ post.author.profile.image.url }}' > -->
+      <div class="card-header">
+        <p class="pl-4 pb-2 pt-2">{{ post.user.username }} has reached 2 complaints</p>
+      </div>
+      <div class="card-body ">
+        <div class='container'>
+          <div class="row">
+            <div class="col-5">
+              <p>Username: {{ post.user.username }}</p>
+              <p>Email: {{ post.user.email }}</p>
+              <p>ID: {{ post.user.id }}</p>
+              <a class="btn btn-wide btn-warning" href="mailto:{{ post.user.email }}">Warning</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+    {% empty %}
+    <div class="alert alert-info text-center">You don't users to send warnings.</div>
+    {% endfor %}
+  </div>
+
+  <div class="tab-pane fade" id="pills-deactivate" role="tabpanel" aria-labelledby="pills-deactivate-tab">
+    {% for post in donor_deactivate %}
+    <article class="card donation-card mb-2">
+      <!-- <img class='rounded-circle article-img' src='{{ post.author.profile.image.url }}' > -->
+      <div class="card-header">
+        <p class="pl-4 pb-2 pt-2">{{ post.user.username }} has reached 3 complaints</p>
+      </div>
+      <div class="card-body ">
+        <div class='container'>
+          <div class="row">
+            <div class="col-5">
+              <p>Username: {{ post.user.username }}</p>
+              <p>Email: {{ post.user.email }}</p>
+              <p>ID: {{ post.user.id }}</p>
+              <a class="btn btn-wide btn-danger" href="mailto:{{ post.user.email }}">Deactivate Account</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+    {% empty %}
+    <div class="alert alert-info text-center">You don't have users for deactivation.</div>
+    {% endfor %}
+  </div>
+</div>
+{% else %}
+<meta http-equiv="Refresh" content="0; url='/login'" />
+{% endif %}
+<script type="text/javascript" src="{% static 'javascript/search.js' %}"></script>
+{% endblock content %}
