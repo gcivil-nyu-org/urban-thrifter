@@ -39,6 +39,14 @@ def login_redirect_view(request):
 def home(request):
     user = request.user
     current_time = timezone.now()
+
+    expired_donation_posts = ResourcePost.objects.filter(
+        donor=user,
+        status="AVAILABLE",
+        dropoff_time_1__lt=current_time,
+        dropoff_time_2__lt=current_time,
+        dropoff_time_3__lt=current_time,
+    ).first()
     post_list = ResourcePost.objects.filter(donor=user).order_by("-date_created")
     reserve_post_list = ReservationPost.objects.filter(donor=user).order_by(
         "-date_created"
@@ -68,6 +76,7 @@ def home(request):
     #     post_list = paginator.page(paginator.num_pages)
     user = request.user
     context = {
+        "expired_donation_posts": expired_donation_posts,
         "reserved_donation_posts": reserved_donation_posts,
         "available_donation_posts": available_donation_posts,
         "closed_donation_posts": closed_donation_posts,
