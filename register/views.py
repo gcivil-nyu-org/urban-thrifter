@@ -168,6 +168,8 @@ class DonorUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
         user = User.objects.filter(username=username)
         if not user:
             raise Http404
+        elif username != self.request.user.username:
+            raise PermissionDenied
         else:
             return get_object_or_404(
                 DonorProfile, user__username__iexact=self.request.user
