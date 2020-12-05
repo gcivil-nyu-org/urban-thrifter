@@ -20,8 +20,6 @@ class ReservationPost(models.Model):
         choices=Reservation_Status, default=Reservation_Status[2][0]
     )
 
-    # TODO: generate reservation ID token as primary key?
-    # TODO: return reservation ID in __str__
     def __str__(self):
         return str(self.post.title) + " for " + str(self.helpseeker.username)
 

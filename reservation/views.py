@@ -206,12 +206,10 @@ def reservation_update(request, **kwargs):
                 messages.error(
                     request, "Please select a different timeslot for reschedule."
                 )
-                return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+                return HttpResponseRedirect(request.META.get("HTTP_REFERER"))
             reservation.dropoff_time_request = selected_time
         else:
-            messages.error(
-                request, "Only pending reservation shall be rescheduled."
-            )
+            messages.error(request, "Only pending reservation shall be rescheduled.")
             return redirect("reservation:reservation-home")
         try:
             reservation.save()
@@ -227,7 +225,7 @@ def reservation_update(request, **kwargs):
             messages.error(
                 request, "Your reschedule request was unsuccessful. Please try again!"
             )
-            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+            return HttpResponseRedirect(request.META.get("HTTP_REFERER"))
     return redirect("reservation:reservation-detail", kwargs["pk"])
 
 
