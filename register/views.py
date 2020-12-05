@@ -166,8 +166,7 @@ class DonorUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
         self,
     ):
         username = self.kwargs.get("username")
-        user = User.objects.filter(username=username)
-        if not user:
+        if not User.objects.filter(username=username):
             raise Http404
         elif username != self.request.user.username:
             raise PermissionDenied
