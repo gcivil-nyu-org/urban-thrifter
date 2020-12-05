@@ -141,7 +141,7 @@ def confirm_notification(request, id):
             reserve_post.reservationstatus = 2
             reserve_post.save()
             notification.save()
-        return render(request, "donation/notifications_confirm.html")
+        return HttpResponseRedirect(request.META.get("HTTP_REFERER"))
 
 
 def reservation_function(request, id):
@@ -202,6 +202,10 @@ def reservation_update(request, **kwargs):
                 selected_time = reservation.dropoff_time_request
             if reservation.dropoff_time_request != selected_time:
                 reservation.dropoff_time_request = selected_time
+                Notification.objects.filter(
+                    post=reservation, notificationstatus=3
+                ).update(is_seen=True)
+                # change other notification of this post with status pending to is_seen = True
             else:
                 messages.error(
                     request, "Please select a different timeslot for reschedule."
@@ -250,8 +254,8 @@ class ReservationUpdateView(DetailView):
 def show_notifications(request):
     notifications = (
         Notification.objects.filter(receiver=request.user)
-        .order_by("-post_id")
-        .distinct("post_id")
+        .exclude(is_seen=True, notificationstatus=3)
+        .order_by("-date_created")
     )
 
     template = loader.get_template("donation/notifications.html")
@@ -286,9 +290,7 @@ def read_message(request, id):
 @method_decorator(login_required, name="dispatch")
 class NotificationCheck(View):
     def get(self, request):
-        notification = (
-            Notification.objects.order_by("-post_id")
-            # .distinct("post_id")
-            .filter(is_seen=False, receiver=request.user).count()
-        )
+        notification = Notification.objects.filter(
+            is_seen=False, receiver=request.user
+        ).count()
         return HttpResponse(notification)
