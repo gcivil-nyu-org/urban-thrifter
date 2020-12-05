@@ -9,7 +9,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import JsonResponse
 from django.template.loader import render_to_string
 from django.template import loader
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.views import View
 from django.utils.decorators import method_decorator
 
@@ -198,13 +198,16 @@ def reservation_update(request, **kwargs):
                 selected_time = reservation.post.dropoff_time_2
             elif selected_timeslot == "3":
                 selected_time = reservation.post.dropoff_time_3
+            else:
+                selected_time = reservation.dropoff_time_request
             if reservation.dropoff_time_request != selected_time:
                 reservation.dropoff_time_request = selected_time
             else:
                 messages.error(
                     request, "Please select a different timeslot for reschedule."
                 )
-                redirect("reservation:reservation-detail", kwargs["pk"])
+                return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+            reservation.dropoff_time_request = selected_time
         else:
             messages.error(
                 request, "Only pending reservation shall be rescheduled."
@@ -222,9 +225,9 @@ def reservation_update(request, **kwargs):
             reservation.post.save()
             reservation.delete()
             messages.error(
-                request, "Your reservation was unsuccessful. Please try again!"
+                request, "Your reschedule request was unsuccessful. Please try again!"
             )
-            return redirect("reservation:reservation-home")
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
     return redirect("reservation:reservation-detail", kwargs["pk"])
 
 
