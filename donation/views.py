@@ -19,7 +19,8 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 import datetime
-
+from register.models import HelpseekerProfile
+from django.core.exceptions import PermissionDenied
 # , UserPassesTestMixin
 
 
@@ -108,6 +109,8 @@ class PostCreateView(LoginRequiredMixin, CreateView):
     ]
 
     def get_form(self):
+        if HelpseekerProfile.objects.filter(user=self.request.user):
+            raise PermissionDenied
         form = super().get_form()
         form.fields["dropoff_time_1"].widget = DateTimePickerInput()
         form.fields["dropoff_time_2"].widget = DateTimePickerInput()
