@@ -21,6 +21,7 @@ from django.http import HttpResponse
 import datetime
 from register.models import HelpseekerProfile
 from django.core.exceptions import PermissionDenied
+from django.shortcuts import redirect
 # , UserPassesTestMixin
 
 
@@ -36,9 +37,12 @@ def login_redirect_view(request):
     # Redirect to login page
     return render(request, "donation/login_redirect.html")
 
-
 def home(request):
     user = request.user
+    if not user.is_authenticated:
+        return redirect("login")
+    if HelpseekerProfile.objects.filter(user=user):
+            raise PermissionDenied
     post_list = ResourcePost.objects.filter(donor=user).order_by("-date_created")
     reserve_post_list = ReservationPost.objects.filter(donor=user).order_by(
         "-date_created"
