@@ -22,7 +22,7 @@ def home(request):
     return render(request, "reservation/reservation_home.html")
 
 
-@login_required
+@login_required(login_url='/login/')
 def donation_post_list(request):
     # Getting posts based on filters or getting all posts
     post_list = ResourcePost.objects.all()
