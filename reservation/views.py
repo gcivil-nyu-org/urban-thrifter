@@ -24,7 +24,7 @@ def home(request):
     return render(request, "reservation/reservation_home.html")
 
 
-@login_required(login_url='/login/')
+@login_required(login_url="/login/")
 def donation_post_list(request):
     # Getting posts based on filters or getting all posts
     if DonorProfile.objects.filter(user=request.user):
