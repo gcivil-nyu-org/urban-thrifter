@@ -17,16 +17,17 @@ from django.core.exceptions import PermissionDenied
 
 # from donor_notifications.models import Notification
 from django.contrib.auth.decorators import login_required
-
+from django.shortcuts import redirect
 
 # Create your views here.
 def home(request):
     return render(request, "reservation/reservation_home.html")
 
 
-@login_required(login_url="/login/")
 def donation_post_list(request):
     # Getting posts based on filters or getting all posts
+    if not request.user.is_authenticated:
+        return redirect("login")
     if DonorProfile.objects.filter(user=request.user):
         raise PermissionDenied
     post_list = ResourcePost.objects.all()
