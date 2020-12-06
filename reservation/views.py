@@ -17,7 +17,7 @@ from django.core.exceptions import PermissionDenied
 
 # from donor_notifications.models import Notification
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import redirect
+
 
 # Create your views here.
 def home(request):
