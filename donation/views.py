@@ -99,6 +99,8 @@ class PostListView(ListView):
 # Post Donation View
 class PostCreateView(LoginRequiredMixin, CreateView):
     # Basic create view
+    login_url = '/login/'
+    redirect_field_name = ''
     model = ResourcePost
     fields = [
         "title",
