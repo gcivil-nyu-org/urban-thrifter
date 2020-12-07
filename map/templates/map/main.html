@@ -286,11 +286,7 @@
       console.log(button)
     }
     for(j=0; j<resources.length;j++){
-      //var filterClass = recourceCategory + "-marker"
       var shelters = document.getElementsByClassName(resources[j]);
-    //console.log('feature-icon food-icon'.contains('inactive'));
-    //console.log("hello")
-    //console.log(shelters)
       for (i = 0; i < shelters.length; i++) {
         if (shelters[i].classList.contains("hide")) {
           shelters[i].classList.remove("hide");
