@@ -256,9 +256,7 @@
     for(k=0;k<list.length;k++)//deselect all filter buttons
     {
       button=list[k].childNodes[1]
-      if(button.classList.contains('inactive')){
-      }
-      else{
+      if(!button.classList.contains('inactive')){
         button.classList.add('inactive')
       }
     }
