@@ -74,7 +74,7 @@
             </div>
         </article>
         {% empty %}
-        <div class="alert alert-info text-center">You don't have any confirmed donation currently.</div>
+        <div class="alert alert-info text-center">You don't have any reserved donations currently.</div>
         {% endfor %}
         <!-- pagination -->
         <!-- {% if posts.paginator.num_pages > 1 %}
@@ -142,8 +142,8 @@
             </div>
         </article>
         {% empty %}
-        <div class="alert alert-info text-center">You don't have any donation listed currently. If you would like to
-            list your donation, please go to <a href="{%  url 'donation:donation-new' %}">here</a></div>
+        <div class="alert alert-info text-center">You don't have any donations listed currently. If you would like to
+            list a donation, please click <a href="{%  url 'donation:donation-new' %}">here</a>.</div>
         {% endfor %}
         <!-- pagination -->
         <!-- {% if posts.paginator.num_pages > 1 %}
@@ -221,7 +221,7 @@
             </div>
         </article>
         {% empty %}
-        <div class="alert alert-info text-center">You don't have any completed donation currently. </div>
+        <div class="alert alert-info text-center">You don't have any completed donations. </div>
         {% endfor %}
     </div>
 </div>
