@@ -48,7 +48,7 @@ class ReservationPost(models.Model):
 
 
 class Notification(models.Model):
-    NOTIFICATION_STATUS = ((1, "ACCEPT"), (2, "REJECT"), (3, "PENDING"))
+    NOTIFICATION_STATUS = ((1, "ACCEPT"), (2, "REJECT"), (3, "PENDING"), (4, "EXPIRED"))
     post = models.ForeignKey(
         ReservationPost,
         on_delete=models.CASCADE,

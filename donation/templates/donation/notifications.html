@@ -30,6 +30,12 @@
                             <b>{{ notification.post.post.title}}</b>
                         </a>
                         * {{ notification.post.post.quantity}}</p>
+					{% elif notification.notificationstatus == 4 %}
+                    <p><i class="fas fa-box-open"></i>
+                        <a href="{% url 'donation:donation-detail' notification.post.post.id %}">
+                            <b>{{ notification.post.post.title}}</b>
+                        </a>
+                        * {{ notification.post.post.quantity}} request has <span style="color:red;">expired</span></p>
                     {% endif %}
                     <!-- <span class="float-right"><i class="fas fa-check-circle" style="color:green"></i></span> -->
                 </div>

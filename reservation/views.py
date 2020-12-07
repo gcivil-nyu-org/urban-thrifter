@@ -254,7 +254,6 @@ def show_notifications(request):
     notifications = (
         Notification.objects.filter(receiver=request.user)
         .order_by("-post_id")
-        .distinct("post_id")
     )
 
     template = loader.get_template("donation/notifications.html")

@@ -20,6 +20,11 @@
                     <b>Your reservation request has been declined.</b>
                     <!-- <p>{{ notification.msg }}</p> -->
                 </div>
+				{% elif notification.notificationstatus == 4 %}
+                <div class="col"><i class="fas fa-reply"></i>
+                    <b>Your reservation request has expired.</b>
+                    <!-- <p>{{ notification.msg }}</p> -->
+                </div>
                 {% endif %}
                 <div class="col mr-3">
                     {% if notification.is_seen == False %}
