@@ -8,6 +8,8 @@ from .views import (
     PostDeleteView,
 )
 import reservation.views as reservation_views
+from django.contrib.auth import views as auth_views
+
 
 urlpatterns = [
     path("", views.home, name="donation-home"),

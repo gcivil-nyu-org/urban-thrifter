@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.views.generic import (
     ListView,
     CreateView,
@@ -19,6 +19,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 import datetime
+
 
 # , UserPassesTestMixin
 
@@ -70,7 +71,10 @@ def home(request):
 
 
 # All Donations View
-class PostListView(ListView):
+class PostListView(LoginRequiredMixin, ListView):
+    
+    login_url = '/login/'
+
     # Basic list view
     model = ResourcePost
     # Assign tempalte otherwise it would look for post_list.html
@@ -93,6 +97,9 @@ class PostListView(ListView):
 
 # Post Donation View
 class PostCreateView(LoginRequiredMixin, CreateView):
+
+    login_url = '/login/'
+    
     # Basic create view
     model = ResourcePost
     fields = [
