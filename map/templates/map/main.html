@@ -249,6 +249,18 @@
       }
     }
   }
+  function resetFilter(elem){
+    var resources=['food-marker','ppe-marker','clothes-marker','electronics-marker','others-marker','shelter-marker','computer-marker','wifi-marker','reeducation-marker']
+    for(j=0; j<resources.length;j++){
+      var shelters = document.getElementsByClassName(resources[j]);
+      for (i = 0; i < shelters.length; i++) {
+        if (shelters[i].classList.contains("hide")) {
+        }  else {
+          shelters[i].classList.add("hide");
+        }
+      }
+    }
+  }
 </script>
 {% elif user.donorprofile %}
 
