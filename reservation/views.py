@@ -230,11 +230,12 @@ class PostDetailView(DetailView):
     # Basic detail view
     model = ResourcePost
     template_name = "reservation/reservation_request.html"
-    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['current_time'] = timezone.now()
+        context["current_time"] = timezone.now()
         return context
+
 
 class ReservationDetailView(DetailView):
     # Basic detail view
@@ -246,10 +247,10 @@ class ReservationUpdateView(DetailView):
     # Basic detail view
     model = ReservationPost
     template_name = "reservation/reservation_update.html"
-    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['current_time'] = timezone.now()
+        context["current_time"] = timezone.now()
         return context
 
 
@@ -297,11 +298,9 @@ class NotificationCheck(View):
             dropoff_time_2__lt=current_time,
             dropoff_time_3__lt=current_time,
         ).update(status="EXPIRED")
-        
+
         # Update reservation and notification to expired if post is expired
-        notifications = Notification.objects.all().order_by(
-        "-post_id"
-        )
+        notifications = Notification.objects.all().order_by("-post_id")
         for notification in notifications:
             if (
                 notification.post.post.status in ["EXPIRED", "Expired"]
@@ -324,7 +323,7 @@ class NotificationCheck(View):
                 notification.save()
                 notification.post.save()
                 notification.post.post.save()
-        
+
         # Notification count
         notification_count = (
             Notification.objects.order_by("-post_id")

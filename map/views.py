@@ -3,7 +3,6 @@ import requests
 from django.shortcuts import render
 from django.apps import apps
 import geojson
-from donation.models import ResourcePost
 
 
 def shelter_json_geojson(json_obj):
