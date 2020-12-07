@@ -73,15 +73,18 @@ def home(request):
 
 
 def close_reservation_15_min(reserved_donation_posts):
-    for reserve_post in reserved_donation_posts:
-        if (
-            reserve_post.post.status != "CLOSED"
-            and reserve_post.dropoff_time_request + datetime.timedelta(minutes=15)
-            <= timezone.now()
-        ):
-            reserve_post.post.status = "CLOSED"
-            reserve_post.post.save()
-    return
+    try:
+        for reserve_post in reserved_donation_posts:
+            if (
+                reserve_post.post.status != "CLOSED"
+                and reserve_post.dropoff_time_request + datetime.timedelta(minutes=15)
+                <= timezone.now()
+            ):
+                reserve_post.post.status = "CLOSED"
+                reserve_post.post.save()
+        return
+    except Exception as e:
+        print(e)
 
 
 # All Donations View
