@@ -240,10 +240,8 @@
     } else {
       elem.classList.add('inactive');
     }
-
     var filterClass = recourceCategory + "-marker"
     var shelters = document.getElementsByClassName(filterClass);
-    // console.log(x);
     for (i = 0; i < shelters.length; i++) {
       if (shelters[i].classList.contains("hide")) {
         shelters[i].classList.remove("hide");
@@ -283,7 +281,6 @@
       if(button.classList.contains('inactive')){
         button.classList.remove('inactive')
       }
-      console.log(button)
     }
     for(j=0; j<resources.length;j++){
       var shelters = document.getElementsByClassName(resources[j]);
