@@ -19,6 +19,9 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 import datetime
+import pytz
+import os
+from django.utils import timezone
 
 # , UserPassesTestMixin
 
@@ -46,6 +49,9 @@ def home(request):
         reservationstatus=1, post__status__in=["Reserved", "RESERVED"]
     )
     available_donation_posts = post_list.filter(status__in=["Available", "AVAILABLE"])
+
+    close_reservation_15_min(reserved_donation_posts)
+
     closed_donation_posts = post_list.filter(status__in=["Closed", "CLOSED"])
     closed_reservation_posts = reserve_post_list.filter(
         reservationstatus=1, post__status__in=["Closed", "CLOSED"]
@@ -68,6 +74,13 @@ def home(request):
 
     return render(request, "donation/reservation_status_nav.html", context)
 
+def close_reservation_15_min(reserved_donation_posts):
+    for reserve_post in reserved_donation_posts:
+        if reserve_post.post.status != "CLOSED" and reserve_post.dropoff_time_request + datetime.timedelta(minutes=15) <= timezone.now():
+            reserve_post.post.status = "CLOSED"
+            reserve_post.post.save()
+    return
+                
 
 # All Donations View
 class PostListView(ListView):
