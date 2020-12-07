@@ -246,6 +246,11 @@ class ReservationUpdateView(DetailView):
     # Basic detail view
     model = ReservationPost
     template_name = "reservation/reservation_update.html"
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['current_time'] = timezone.now()
+        return context
 
 
 def show_notifications(request):

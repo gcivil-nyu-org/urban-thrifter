@@ -7,9 +7,7 @@ from .views import (
     NotificationCheck,
 )
 import reservation.views as reservation_views
-from django.utils import timezone
 
-current_time = timezone.now()
 urlpatterns = [
     path("confirmed/", views.confirmation, name="reservation-confirmation"),
     path("", views.donation_post_list, name="reservation-home"),
