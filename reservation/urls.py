@@ -15,6 +15,7 @@ urlpatterns = [
     path("post/<int:pk>", PostDetailView.as_view(), name="reservation-request"),
     path("detail/<int:pk>", ReservationDetailView.as_view(), name="reservation-detail"),
     path("update/<int:pk>", ReservationUpdateView.as_view(), name="reservation-update"),
+    path("cancel/<int:pk>", views.reservation_cancel, name="reservation-cancel"),
     path(
         "update/request/<int:pk>",
         views.reservation_update,

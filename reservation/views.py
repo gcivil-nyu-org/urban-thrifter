@@ -186,6 +186,16 @@ def reservation_function(request, id):
     return redirect("reservation:reservation-confirmation")
 
 
+def reservation_cancel(request, id):
+    print(request.method)
+    if request.method == "POST":
+        reserve_post = ReservationPost.objects.get(id=id)
+        resource_post = reserve_post.post
+        resource_post.status = "AVAILABLE"
+        reserve_post.delete()
+    return HttpResponseRedirect(request.META.get("HTTP_REFERER"))
+
+
 def reservation_update(request, **kwargs):
     if request.method == "GET":
         selected_timeslot = request.GET.get("dropoff_time")
