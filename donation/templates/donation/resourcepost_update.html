@@ -11,6 +11,13 @@
                 class="fas fa-user-circle"></i></a> to set your default address.</h6>
 </div>
 {% endif %}
+{% if messages %}
+{% for message in messages %}
+<div class="container alert alert-info text-center">
+    {{ message }}
+</div>
+{% endfor %}
+{% endif %}
 <div class='content-section animated fadeIn'>
     <!-- Need to add CSRF token, a hidden tag for security required by django -->
     {{ form.media }}

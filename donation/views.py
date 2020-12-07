@@ -193,8 +193,8 @@ class PostUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
         "title",
         "quantity",
         "description",
-        "dropoff_time_1",
         "resource_category",
+        "dropoff_time_1",
         "dropoff_time_2",
         "dropoff_time_3",
         "dropoff_location",
@@ -204,7 +204,41 @@ class PostUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
 
     # Overwrite form valid method
     def form_valid(self, form):
-        form.instance.author = self.request.user
+        form.instance.donor = self.request.user
+        if (
+            not form.cleaned_data["dropoff_location"]
+            and not form.instance.donor.donorprofile.dropoff_location
+        ):
+            messages.error(self.request, "Please input your dropoff location.")
+            return super().form_invalid(form)
+
+        dropoff_time_1 = form.cleaned_data["dropoff_time_1"]
+        dropoff_time_2 = form.cleaned_data["dropoff_time_2"]
+        dropoff_time_3 = form.cleaned_data["dropoff_time_3"]
+        if (
+            dropoff_time_1
+            and dropoff_time_1 <= timezone.now()
+            or dropoff_time_2
+            and dropoff_time_2 <= timezone.now()
+            or dropoff_time_3
+            and dropoff_time_3 <= timezone.now()
+        ):
+            messages.error(
+                self.request, "Please ensure your dropoff time is in the future."
+            )
+            return super().form_invalid(form)
+        if (
+            dropoff_time_1 == dropoff_time_2
+            or dropoff_time_2
+            and dropoff_time_3
+            and dropoff_time_2 == dropoff_time_3
+            or dropoff_time_3 == dropoff_time_1
+        ):
+            messages.error(
+                self.request, "Please ensure your dropoff times aren't repetitive."
+            )
+            return super().form_invalid(form)
+        form.instance.status = "AVAILABLE"
         return super().form_valid(form)
 
     def get_form(self):
