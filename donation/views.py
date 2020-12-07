@@ -13,15 +13,12 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.http import JsonResponse
 from django.contrib import messages
-import os
 from django.utils import timezone
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
-import datetime
-import pytz
 import os
-from django.utils import timezone
+import datetime
 
 # , UserPassesTestMixin
 
@@ -74,13 +71,18 @@ def home(request):
 
     return render(request, "donation/reservation_status_nav.html", context)
 
+
 def close_reservation_15_min(reserved_donation_posts):
     for reserve_post in reserved_donation_posts:
-        if reserve_post.post.status != "CLOSED" and reserve_post.dropoff_time_request + datetime.timedelta(minutes=15) <= timezone.now():
+        if (
+            reserve_post.post.status != "CLOSED"
+            and reserve_post.dropoff_time_request + datetime.timedelta(minutes=15)
+            <= timezone.now()
+        ):
             reserve_post.post.status = "CLOSED"
             reserve_post.post.save()
     return
-                
+
 
 # All Donations View
 class PostListView(ListView):
