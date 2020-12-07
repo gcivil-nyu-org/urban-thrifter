@@ -162,6 +162,16 @@ class DonorUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     fields = ["dropoff_location"]
     success_message = "Account updated successfully."
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        username=self.kwargs.get("username")
+        user=User.objects.filter(username=username)
+        context['username'] = user[0].username
+        context['email']=user[0].email
+        print(user)
+        print(user.email)
+        return context
+
     def get_object(
         self,
     ):
