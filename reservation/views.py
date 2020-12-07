@@ -13,8 +13,6 @@ from django.http import HttpResponse
 from django.views import View
 from django.utils.decorators import method_decorator
 import datetime
-import pytz
-import os
 from django.utils import timezone
 
 # from donor_notifications.models import Notification
@@ -92,12 +90,19 @@ def donation_post_list(request):
         },
     )
 
+
 def close_reservation_15_min(reserved_donation_posts):
     for reserve_post in reserved_donation_posts:
-        if reserve_post.post.status != "CLOSED" and reserve_post.dropoff_time_request + datetime.timedelta(minutes=15) <= timezone.now():
+        if (
+            reserve_post.post.status != "CLOSED"
+            and reserve_post.dropoff_time_request + datetime.timedelta(minutes=15)
+            <= timezone.now()
+        ):
             reserve_post.post.status = "CLOSED"
             reserve_post.post.save()
     return
+
+
 # class ReservationPostListView(ListView):
 # # Basic list view
 # model = ReservationPost
@@ -252,8 +257,7 @@ class ReservationUpdateView(DetailView):
 
 def show_notifications(request):
     notifications = (
-        Notification.objects.filter(receiver=request.user)
-        .order_by("-post_id")
+        Notification.objects.filter(receiver=request.user).order_by("-post_id")
         # .distinct("post_id")
     )
 
