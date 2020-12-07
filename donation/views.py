@@ -99,7 +99,7 @@ class PostListView(LoginRequiredMixin, ListView):
 class PostCreateView(LoginRequiredMixin, CreateView):
 
     login_url = '/login/'
-    
+
     # Basic create view
     model = ResourcePost
     fields = [
@@ -168,6 +168,9 @@ class PostCreateView(LoginRequiredMixin, CreateView):
 
 # Donation Detail View
 class PostDetailView(LoginRequiredMixin, DetailView):
+
+    login_url = '/login/'
+
     # Basic detail view
     model = ResourcePost
 
@@ -179,6 +182,9 @@ class PostDetailView(LoginRequiredMixin, DetailView):
 
 # Donation Update View
 class PostUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+
+    login_url = '/login/'
+
     # Basic detail view
     model = ResourcePost
     fields = [
@@ -211,6 +217,9 @@ class PostUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
 
 
 class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+
+    login_url = '/login/'
+
     # Basic delete view
     model = ResourcePost
 
@@ -254,7 +263,7 @@ def get_resource_post(request):
 
     return JsonResponse(context)
 
-
+@login_required
 # funciton based view version of messagelistview
 def watchlist_view(request):
     user = request.user
@@ -297,28 +306,6 @@ def watchlist_view(request):
     return render(request, "donation/messages_home.html", context)
 
 
-# # class based view version of messagelistview
-# class MessageListView(ListView):
-#     # Basic list view
-#     model = ResourcePost
-#     # Assign tempalte otherwise it would look for post_list.html
-#     # as default template
-#     template_name = "donation/messages_home.html"
-
-#     # Set context_attribute to post object
-#     context_object_name = "resource_posts"
-
-#     # Add ordering attribute to put most recent post to top
-#     ordering = ["-date_created"]
-
-#     # Add pagination
-#     paginate_by = 3
-
-#     def get_context_data(self, **kwargs):
-#         context = super(MessageListView, self).get_context_data(**kwargs)
-#         context["mapbox_access_token"] = "pk." + os.environ.get("MAPBOX_KEY")
-#         context["timestamp_now"] = datetime.datetime.now()
-#         return context
 @login_required
 def get_reminders_count(request):
     posts = ReservationPost.objects.filter(
