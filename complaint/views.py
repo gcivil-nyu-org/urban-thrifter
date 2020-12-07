@@ -5,7 +5,7 @@ from django.contrib import messages
 from reservation.models import ReservationPost
 
 
-@login_required
+@login_required(login_url='/login/')
 def issue_complaint(request, **kwargs):
     user = request.user
     reservation_post = ReservationPost.objects.get(id=kwargs["pk"])
