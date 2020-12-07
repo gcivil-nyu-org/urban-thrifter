@@ -121,7 +121,9 @@
                         <div class="col-5">
                             <p>Available Dropoff Time: </p>
                             <ul>
+								{% if post.dropoff_time_1 != None %}
                                 <li>{{ post.dropoff_time_1 }}</li>
+                                {% endif %}
                                 {% if post.dropoff_time_2 != None %}
                                 <li>{{ post.dropoff_time_2 }}</li>
                                 {% endif %}

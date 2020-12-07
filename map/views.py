@@ -4,7 +4,6 @@ from django.shortcuts import render
 from django.apps import apps
 import geojson
 from donation.models import ResourcePost
-from django.utils import timezone
 
 
 def shelter_json_geojson(json_obj):

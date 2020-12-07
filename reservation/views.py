@@ -26,7 +26,7 @@ def home(request):
 @login_required
 def donation_post_list(request):
     # Getting posts based on filters or getting all posts
-
+    current_time = timezone.now()
     post_list = ResourcePost.objects.all()
 
     url_parameter = request.GET.get("q")
@@ -87,6 +87,7 @@ def donation_post_list(request):
             "reservation_reserved_posts": reservation_reserved_list,
             "reservation_pending_posts": reservation_pending_list,
             "reservation_closed_posts": reservation_closed_list,
+            "current_time": current_time,
         },
     )
 
@@ -229,7 +230,11 @@ class PostDetailView(DetailView):
     # Basic detail view
     model = ResourcePost
     template_name = "reservation/reservation_request.html"
-
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['current_time'] = timezone.now()
+        return context
 
 class ReservationDetailView(DetailView):
     # Basic detail view

@@ -57,8 +57,10 @@
             <form method="GET" action="{% url 'reservation:reservation-update-request' object.id %}">
                 {% csrf_token %}
                 <p>Drop-off Time*</p>
+				{% if object.post.dropoff_time_1 != None%}
                 <input type="radio" id="dropoff_time_1" name="dropoff_time" value=1>
                 <label class="graybox" for="dropoff_time_1">{{ object.post.dropoff_time_1 }}</label>
+				{% endif %}
                 {% if object.post.dropoff_time_2 != None %}
                 <input type="radio" id="dropoff_time_2" name="dropoff_time" value=2>
                 <label class="graybox" for="dropoff_time_2">{{ object.post.dropoff_time_2 }}</label>
