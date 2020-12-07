@@ -21,9 +21,6 @@ from django.http import HttpResponse
 import datetime
 
 
-# , UserPassesTestMixin
-
-
 # Create your views here.
 
 
@@ -37,6 +34,7 @@ def login_redirect_view(request):
     return render(request, "donation/login_redirect.html")
 
 
+@login_required(login_url='/login/')
 def home(request):
     user = request.user
     post_list = ResourcePost.objects.filter(donor=user).order_by("-date_created")
@@ -236,7 +234,7 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         return False
 
 
-@login_required
+@login_required(login_url='/login/')
 def get_resource_post(request):
     user = request.user
 
@@ -263,7 +261,7 @@ def get_resource_post(request):
 
     return JsonResponse(context)
 
-@login_required
+@login_required(login_url='/login/')
 # funciton based view version of messagelistview
 def watchlist_view(request):
     user = request.user
@@ -306,7 +304,7 @@ def watchlist_view(request):
     return render(request, "donation/messages_home.html", context)
 
 
-@login_required
+@login_required(login_url='/login/')
 def get_reminders_count(request):
     posts = ReservationPost.objects.filter(
         reservationstatus=1,
@@ -317,7 +315,7 @@ def get_reminders_count(request):
     return HttpResponse(data)
 
 
-@login_required
+@login_required(login_url='/login/')
 def get_reminder(request):
     posts = ReservationPost.objects.filter(
         reservationstatus=1,
