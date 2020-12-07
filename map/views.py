@@ -3,6 +3,8 @@ import requests
 from django.shortcuts import render
 from django.apps import apps
 import geojson
+from donation.models import ResourcePost
+from django.utils import timezone
 
 
 def shelter_json_geojson(json_obj):
@@ -38,6 +40,14 @@ def shelter_json_geojson(json_obj):
 
 
 def main_map(request):
+    # Change to expired function
+    current_time = timezone.now()
+    ResourcePost.objects.filter(
+        status__in=["Pending", "PENDING", "Available", "AVAILABLE"],
+        dropoff_time_1__lt=current_time,
+        dropoff_time_2__lt=current_time,
+        dropoff_time_3__lt=current_time
+    ).update(status="EXPIRED")
 
     mapbox_access_token = "pk." + os.environ.get("MAPBOX_KEY")
 
