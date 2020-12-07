@@ -46,7 +46,7 @@ def main_map(request):
         status__in=["Pending", "PENDING", "Available", "AVAILABLE"],
         dropoff_time_1__lt=current_time,
         dropoff_time_2__lt=current_time,
-        dropoff_time_3__lt=current_time
+        dropoff_time_3__lt=current_time,
     ).update(status="EXPIRED")
 
     mapbox_access_token = "pk." + os.environ.get("MAPBOX_KEY")

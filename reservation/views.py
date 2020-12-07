@@ -31,11 +31,11 @@ def donation_post_list(request):
         status__in=["Pending", "PENDING", "Available", "AVAILABLE"],
         dropoff_time_1__lt=current_time,
         dropoff_time_2__lt=current_time,
-        dropoff_time_3__lt=current_time
+        dropoff_time_3__lt=current_time,
     ).update(status="EXPIRED")
-    
+
     post_list = ResourcePost.objects.all()
-    
+
     url_parameter = request.GET.get("q")
     if url_parameter:
         combined_list = ResourcePost.objects.filter(
@@ -256,22 +256,24 @@ def show_notifications(request):
         status__in=["Pending", "PENDING", "Available", "AVAILABLE"],
         dropoff_time_1__lt=current_time,
         dropoff_time_2__lt=current_time,
-        dropoff_time_3__lt=current_time
+        dropoff_time_3__lt=current_time,
     ).update(status="EXPIRED")
-    
-    notifications = (
-        Notification.objects.filter(receiver=request.user)
-        .order_by("-post_id")
+
+    notifications = Notification.objects.filter(receiver=request.user).order_by(
+        "-post_id"
     )
-    
+
     for notification in notifications:
-        if notification.post.post.status in ["EXPIRED", "Expired"] and notification.notificationstatus == 3:
-            notification.is_seen=True
+        if (
+            notification.post.post.status in ["EXPIRED", "Expired"]
+            and notification.notificationstatus == 3
+        ):
+            notification.is_seen = True
             notification.notificationstatus = 4
             notification.post.reservationstatus = 4
             notification.save()
             notification.post.save()
-    
+
     template = loader.get_template("donation/notifications.html")
     context = {
         "donor_notifications": notifications,
