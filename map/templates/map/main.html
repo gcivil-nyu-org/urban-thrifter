@@ -278,8 +278,7 @@
   function selectAllFilter(elem){
     var resources=['food-marker','ppe-marker','clothes-marker','electronics-marker','others-marker','shelter-marker','computer-marker','wifi-marker','reeducation-marker']
     var list = document.getElementsByClassName("ut-tooltip");
-    for(k=0;k<list.length;k++)
-    {
+    for(k=0;k<list.length;k++){
       button=list[k].childNodes[1]
       if(button.classList.contains('inactive')){
         button.classList.remove('inactive')
