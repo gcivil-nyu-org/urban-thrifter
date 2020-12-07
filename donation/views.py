@@ -40,19 +40,17 @@ def home(request):
     user = request.user
     current_time = timezone.now()
     
-    post_list = ResourcePost.objects.filter(donor=user).order_by("-date_created")
-    
-    expired_donations = post_list.filter(
+    ResourcePost.objects.filter(
         status__in=["Pending", "PENDING", "Available", "AVAILABLE"],
         dropoff_time_1__lt=current_time,
         dropoff_time_2__lt=current_time,
         dropoff_time_3__lt=current_time
     ).update(status="EXPIRED")
     
+    post_list = ResourcePost.objects.filter(donor=user).order_by("-date_created")
+    
     expired_donation_posts = post_list.filter(
-        donor=user,
-        status="EXPIRED",
-    ).first()
+        status="EXPIRED",).first()
     
     reserve_post_list = ReservationPost.objects.filter(donor=user).order_by(
         "-date_created"

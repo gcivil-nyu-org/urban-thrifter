@@ -12,6 +12,7 @@ from django.template import loader
 from django.http import HttpResponse
 from django.views import View
 from django.utils.decorators import method_decorator
+from django.utils import timezone
 
 # from donor_notifications.models import Notification
 from django.contrib.auth.decorators import login_required
@@ -25,7 +26,16 @@ def home(request):
 @login_required
 def donation_post_list(request):
     # Getting posts based on filters or getting all posts
+    current_time = timezone.now()
+    ResourcePost.objects.filter(
+        status__in=["Pending", "PENDING", "Available", "AVAILABLE"],
+        dropoff_time_1__lt=current_time,
+        dropoff_time_2__lt=current_time,
+        dropoff_time_3__lt=current_time
+    ).update(status="EXPIRED")
+    
     post_list = ResourcePost.objects.all()
+    
     url_parameter = request.GET.get("q")
     if url_parameter:
         combined_list = ResourcePost.objects.filter(
