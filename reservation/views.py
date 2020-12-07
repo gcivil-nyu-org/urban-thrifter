@@ -265,7 +265,7 @@ def show_notifications(request):
     )
     
     for notification in notifications:
-        if notification.post.post.status in ["EXPIRED", "Expired"]:
+        if notification.post.post.status in ["EXPIRED", "Expired"] and notification.notificationstatus == 3:
             notification.is_seen=True
             notification.notificationstatus = 4
             notification.post.reservationstatus = 4
