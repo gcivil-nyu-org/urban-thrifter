@@ -16,6 +16,8 @@ import datetime
 from django.utils import timezone
 from register.models import DonorProfile
 from django.core.exceptions import PermissionDenied
+from django.core.mail import EmailMessage
+import os
 
 # from donor_notifications.models import Notification
 from django.contrib.auth.decorators import login_required
@@ -223,11 +225,33 @@ def reservation_cancel(request, pk):
                 post=resource_post, notificationstatus=3
             ).update(is_seen=True)
         # Send email to both side
-        print(request.user)
+        email_sub = "[Cancellation] " + str(reserve_post)
+        email_host = os.environ.get("EMAIL_HOST_USER")
+        email_header = (
+            "Your reservation <b>" + str(reserve_post) + "</b> was cancelled. "
+        )
+        email_signature = "please go to <a href='https://urban-thrifter.herokuapp.com/'>our website</a><br><br>Urban Thrifter Team"
+        msg = EmailMessage(
+            email_sub,
+            email_header
+            + "If you would like to check out more listings, "
+            + email_signature,
+            email_host,
+            [reserve_post.helpseeker.email],
+        )
+        msg.content_subtype = "html"
+        msg.send()
+
+        msg_donor = EmailMessage(
+            email_sub,
+            email_header + "If you would like to post more listings" + email_signature,
+            email_host,
+            [reserve_post.donor.email],
+        )
+        msg_donor.content_subtype = "html"
+        msg_donor.send()
         reserve_post.delete()
         resource_post.save()
-        print(reserve_post)
-        print(resource_post)
     return HttpResponseRedirect(request.META.get("HTTP_REFERER"))
 
 
