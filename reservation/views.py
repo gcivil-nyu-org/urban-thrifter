@@ -12,6 +12,8 @@ from django.template import loader
 from django.http import HttpResponse
 from django.views import View
 from django.utils.decorators import method_decorator
+import datetime
+from django.utils import timezone
 from register.models import DonorProfile
 from django.core.exceptions import PermissionDenied
 
@@ -55,6 +57,7 @@ def donation_post_list(request):
     reservation_reserved_list = reservation_list.filter(
         reservationstatus=1, post__status__in=["Reserved", "RESERVED"]
     )
+    close_reservation_15_min(reservation_reserved_list)
     reservation_pending_list = reservation_list.filter(
         reservationstatus=3, post__status__in=["Pending", "PENDING"]
     )
@@ -91,6 +94,21 @@ def donation_post_list(request):
             "reservation_closed_posts": reservation_closed_list,
         },
     )
+
+
+def close_reservation_15_min(reserved_donation_posts):
+    try:
+        for reserve_post in reserved_donation_posts:
+            if (
+                reserve_post.post.status != "CLOSED"
+                and reserve_post.dropoff_time_request + datetime.timedelta(minutes=15)
+                <= timezone.now()
+            ):
+                reserve_post.post.status = "CLOSED"
+                reserve_post.post.save()
+        return
+    except Exception as e:
+        print(e)
 
 
 # class ReservationPostListView(ListView):
@@ -247,9 +265,8 @@ class ReservationUpdateView(DetailView):
 
 def show_notifications(request):
     notifications = (
-        Notification.objects.filter(receiver=request.user)
-        .order_by("-post_id")
-        .distinct("post_id")
+        Notification.objects.filter(receiver=request.user).order_by("-post_id")
+        # .distinct("post_id")
     )
 
     template = loader.get_template("donation/notifications.html")
