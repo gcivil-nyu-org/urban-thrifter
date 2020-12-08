@@ -92,13 +92,6 @@ urlpatterns = [
         donation_view.login_redirect_view,
         name="login-redirect",
     ),
-    # path(
-    #     "messages/",
-    #     donation_view.MessageListView.as_view(
-    #         template_name="donation/messages_home.html"
-    #     ),
-    #     name="messages-home",
-    # ),
 ]
 
 

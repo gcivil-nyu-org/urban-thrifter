@@ -12,6 +12,7 @@ from django.template import loader
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views import View
 from django.utils.decorators import method_decorator
+from django.contrib.auth.mixins import LoginRequiredMixin
 import datetime
 from django.utils import timezone
 from register.models import DonorProfile
@@ -28,6 +29,7 @@ def home(request):
     return render(request, "reservation/reservation_home.html")
 
 
+@login_required(login_url="/login/")
 def donation_post_list(request):
     # Getting posts based on filters or getting all posts
     if not request.user.is_authenticated:
@@ -141,10 +143,12 @@ def close_reservation_15_min(reserved_donation_posts):
 #     return context
 
 
+@login_required(login_url="/login/")
 def confirmation(request):
     return render(request, "reservation/reservation_confirmation.html")
 
 
+@login_required(login_url="/login/")
 def confirm_notification(request, id):
     if request.method == "POST":
         notification = Notification.objects.get(id=id)
@@ -171,6 +175,7 @@ def confirm_notification(request, id):
         return HttpResponseRedirect(request.META.get("HTTP_REFERER"))
 
 
+@login_required(login_url="/login/")
 def reservation_function(request, id):
     if request.method == "POST":
         selected_timeslot = request.POST.get("dropoff_time")
@@ -255,6 +260,7 @@ def reservation_cancel(request, pk):
     return HttpResponseRedirect(request.META.get("HTTP_REFERER"))
 
 
+@login_required(login_url="/login/")
 def reservation_update(request, **kwargs):
     if request.method == "GET":
         selected_timeslot = request.GET.get("dropoff_time")
@@ -302,7 +308,10 @@ def reservation_update(request, **kwargs):
     return redirect("reservation:reservation-detail", kwargs["pk"])
 
 
-class PostDetailView(DetailView):
+class PostDetailView(LoginRequiredMixin, DetailView):
+
+    login_url = "/login/"
+
     # Basic detail view
     model = ResourcePost
     template_name = "reservation/reservation_request.html"
@@ -313,13 +322,19 @@ class PostDetailView(DetailView):
         return context
 
 
-class ReservationDetailView(DetailView):
+class ReservationDetailView(LoginRequiredMixin, DetailView):
+
+    login_url = "/login/"
+
     # Basic detail view
     model = ReservationPost
     template_name = "reservation/reservation_detail.html"
 
 
-class ReservationUpdateView(DetailView):
+class ReservationUpdateView(LoginRequiredMixin, DetailView):
+
+    login_url = "/login/"
+
     # Basic detail view
     model = ReservationPost
     template_name = "reservation/reservation_update.html"
@@ -330,6 +345,7 @@ class ReservationUpdateView(DetailView):
         return context
 
 
+@login_required(login_url="/login/")
 def show_notifications(request):
     notifications = (
         Notification.objects.filter(receiver=request.user)
@@ -344,6 +360,7 @@ def show_notifications(request):
     return HttpResponse(template.render(context, request))
 
 
+@login_required(login_url="/login/")
 def helpseeker_notifications(request):
     notifications = Notification.objects.filter(receiver=request.user).order_by(
         "-date_created"
@@ -357,6 +374,7 @@ def helpseeker_notifications(request):
     return HttpResponse(template.render(context, request))
 
 
+@login_required(login_url="/login/")
 def read_message(request, id):
     if request.method == "POST":
         notification = Notification.objects.get(id=id)

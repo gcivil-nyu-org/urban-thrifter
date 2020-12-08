@@ -39,7 +39,7 @@ def complaint_portal(request):
         return redirect("home")
 
 
-@login_required
+@login_required(login_url="/login/")
 def issue_complaint(request, **kwargs):
     user = request.user
     reservation_post = ReservationPost.objects.get(id=kwargs["pk"])
