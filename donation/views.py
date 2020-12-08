@@ -93,7 +93,7 @@ def close_reservation_15_min(reserved_donation_posts):
     except Exception as e:
         print(e)
 
-        
+
 # Post Donation View
 class PostCreateView(LoginRequiredMixin, CreateView):
 

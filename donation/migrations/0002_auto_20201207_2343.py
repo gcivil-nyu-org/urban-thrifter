@@ -6,13 +6,23 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('donation', '0001_initial'),
+        ("donation", "0001_initial"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='resourcepost',
-            name='status',
-            field=models.CharField(choices=[('AVAILABLE', 'Available'), ('RESERVED', 'Reserved'), ('PENDING', 'Pending'), ('CLOSED', 'Closed'), ('EXPIRED', 'Expired')], default='AVAILABLE', max_length=100),
+            model_name="resourcepost",
+            name="status",
+            field=models.CharField(
+                choices=[
+                    ("AVAILABLE", "Available"),
+                    ("RESERVED", "Reserved"),
+                    ("PENDING", "Pending"),
+                    ("CLOSED", "Closed"),
+                    ("EXPIRED", "Expired"),
+                ],
+                default="AVAILABLE",
+                max_length=100,
+            ),
         ),
     ]
