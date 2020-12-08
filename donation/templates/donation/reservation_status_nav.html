@@ -10,7 +10,8 @@
         <li class="nav-item" data-toggle="tooltip" data-placement="bottom" title="Post a new donation">
             <a class="btn align-middle btn-outline-dark" href='{% url "donation:donation-new" %}'>New</a>
         </li>
-        <li class="nav-item" data-toggle="tooltip" data-placement="bottom" title="All your currently available donation posts">
+        <li class="nav-item" data-toggle="tooltip" data-placement="bottom"
+            title="All your currently available donation posts">
             <a class="btn align-middle btn-outline-dark" id="pills-available-tab" data-toggle="pill"
                 href="#pills-available" role="tab" aria-controls="pills-available" aria-selected="false">Available</a>
         </li>
@@ -63,6 +64,11 @@
                                 <li>{{ post.dropoff_time_request }}</li>
                             </ul>
                             <p>{{ post.post.dropoff_location.place}}</p>
+                        </div>
+                        <div class="col-5">
+                            <button type="button" class="btn btn-wide float-right btn-danger btn-delete"
+                                data-toggle="modal" data-target="#cancelReservation"
+                                onclick="confirmCancel('{{post.id}}')">Cancel</button>
                         </div>
                     </div>
                 </div>
@@ -253,4 +259,34 @@
 
 </html>
 {% endif %}
+<!--Reservation Cancellation Modal-->
+<div class="modal fade" id="cancelReservation" tabindex="-1" role="dialog" aria-labelledby="cancelReservationLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <p>Your reservation is about to be cancelled.
+                </p>
+                <b>Are you sure?</b>
+            </div>
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col">
+                        <button type="button" class="btn btn-success btn-wide" id="deleteNo"
+                            data-dismiss="modal">Cancel</button>
+                    </div>
+                    <div class="col">
+                        <a class="btn btn-outline-danger btn-wide" id="cancelConfirm" type="button" href="">Confirm</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function confirmCancel(poseId) {
+        document.getElementById("cancelConfirm").href = "{% url 'reservation:reservation-home' %}" + "cancel/" + poseId;
+        return false;
+    };
+</script>
 {% endblock content %}

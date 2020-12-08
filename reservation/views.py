@@ -186,13 +186,17 @@ def reservation_function(request, id):
     return redirect("reservation:reservation-confirmation")
 
 
-def reservation_cancel(request, id):
+def reservation_cancel(request, pk):
     print(request.method)
-    if request.method == "POST":
-        reserve_post = ReservationPost.objects.get(id=id)
+    if request.method == "GET":
+        reserve_post = ReservationPost.objects.get(id=pk)
         resource_post = reserve_post.post
         resource_post.status = "AVAILABLE"
         reserve_post.delete()
+        # if pending -> change all pending notification to seen
+        # for pending + reserved send the other party with new notification about cancellation
+        print(reserve_post)
+        print(resource_post)
     return HttpResponseRedirect(request.META.get("HTTP_REFERER"))
 
 
