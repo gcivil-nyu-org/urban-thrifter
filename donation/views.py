@@ -13,12 +13,15 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.http import JsonResponse
 from django.contrib import messages
-import os
 from django.utils import timezone
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
+import os
 import datetime
+from register.models import HelpseekerProfile
+from django.core.exceptions import PermissionDenied
+from django.shortcuts import redirect
 
 # , UserPassesTestMixin
 
@@ -38,6 +41,10 @@ def login_redirect_view(request):
 
 def home(request):
     user = request.user
+    if not user.is_authenticated:
+        return redirect("login")
+    if HelpseekerProfile.objects.filter(user=user):
+        raise PermissionDenied
     post_list = ResourcePost.objects.filter(donor=user).order_by("-date_created")
 
     expired_donation_posts = post_list.filter(
@@ -50,11 +57,11 @@ def home(request):
     reserved_donation_posts = reserve_post_list.filter(
         reservationstatus=1, post__status__in=["Reserved", "RESERVED"]
     )
+    available_donation_posts = post_list.filter(status__in=["Available", "AVAILABLE"])
 
-    available_donation_posts = post_list.filter(
-        status__in=["Available", "AVAILABLE"],
-    )
+    close_reservation_15_min(reserved_donation_posts)
 
+    closed_donation_posts = post_list.filter(status__in=["Closed", "CLOSED"])
     closed_reservation_posts = reserve_post_list.filter(
         reservationstatus=1, post__status__in=["Closed", "CLOSED"]
     )
@@ -74,6 +81,21 @@ def home(request):
     }
 
     return render(request, "donation/reservation_status_nav.html", context)
+
+
+def close_reservation_15_min(reserved_donation_posts):
+    try:
+        for reserve_post in reserved_donation_posts:
+            if (
+                reserve_post.post.status != "CLOSED"
+                and reserve_post.dropoff_time_request + datetime.timedelta(minutes=15)
+                <= timezone.now()
+            ):
+                reserve_post.post.status = "CLOSED"
+                reserve_post.post.save()
+        return
+    except Exception as e:
+        print(e)
 
 
 # All Donations View
@@ -101,6 +123,8 @@ class PostListView(ListView):
 # Post Donation View
 class PostCreateView(LoginRequiredMixin, CreateView):
     # Basic create view
+    login_url = "/login/"
+    redirect_field_name = ""
     model = ResourcePost
     fields = [
         "title",
@@ -115,6 +139,8 @@ class PostCreateView(LoginRequiredMixin, CreateView):
     ]
 
     def get_form(self):
+        if HelpseekerProfile.objects.filter(user=self.request.user):
+            raise PermissionDenied
         form = super().get_form()
         form.fields["dropoff_time_1"].widget = DateTimePickerInput()
         form.fields["dropoff_time_2"].widget = DateTimePickerInput()

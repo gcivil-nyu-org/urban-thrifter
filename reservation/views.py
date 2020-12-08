@@ -12,7 +12,10 @@ from django.template import loader
 from django.http import HttpResponse
 from django.views import View
 from django.utils.decorators import method_decorator
+import datetime
 from django.utils import timezone
+from register.models import DonorProfile
+from django.core.exceptions import PermissionDenied
 
 # from donor_notifications.models import Notification
 from django.contrib.auth.decorators import login_required
@@ -23,12 +26,14 @@ def home(request):
     return render(request, "reservation/reservation_home.html")
 
 
-@login_required
 def donation_post_list(request):
     # Getting posts based on filters or getting all posts
+    if not request.user.is_authenticated:
+        return redirect("login")
+    if DonorProfile.objects.filter(user=request.user):
+        raise PermissionDenied
     current_time = timezone.now()
     post_list = ResourcePost.objects.all()
-
     url_parameter = request.GET.get("q")
     if url_parameter:
         combined_list = ResourcePost.objects.filter(
@@ -53,6 +58,7 @@ def donation_post_list(request):
     reservation_reserved_list = reservation_list.filter(
         reservationstatus=1, post__status__in=["Reserved", "RESERVED"]
     )
+    close_reservation_15_min(reservation_reserved_list)
     reservation_pending_list = reservation_list.filter(
         reservationstatus=3, post__status__in=["Pending", "PENDING"]
     )
@@ -90,6 +96,21 @@ def donation_post_list(request):
             "current_time": current_time,
         },
     )
+
+
+def close_reservation_15_min(reserved_donation_posts):
+    try:
+        for reserve_post in reserved_donation_posts:
+            if (
+                reserve_post.post.status != "CLOSED"
+                and reserve_post.dropoff_time_request + datetime.timedelta(minutes=15)
+                <= timezone.now()
+            ):
+                reserve_post.post.status = "CLOSED"
+                reserve_post.post.save()
+        return
+    except Exception as e:
+        print(e)
 
 
 # class ReservationPostListView(ListView):
@@ -255,8 +276,8 @@ class ReservationUpdateView(DetailView):
 
 
 def show_notifications(request):
-    notifications = Notification.objects.filter(receiver=request.user).order_by(
-        "-post_id"
+    notifications = (
+        Notification.objects.filter(receiver=request.user).order_by("-post_id")
     )
     template = loader.get_template("donation/notifications.html")
     context = {

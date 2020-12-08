@@ -1,7 +1,6 @@
 {% extends 'donation/base.html' %}
 {% load static %}
 {% block content %}
-{% if user.is_authenticated and user.helpseekerprofile %}
 {% include "reservation/reservation_status_nav.html" %}
 {% if messages %}
 {% for message in messages %}
@@ -168,8 +167,5 @@
     {% endfor %}
   </div>
 </div>
-{% else %}
-<meta http-equiv="Refresh" content="0; url='/login'" />
-{% endif %}
 <script type="text/javascript" src="{% static 'javascript/search.js' %}"></script>
 {% endblock content %}
