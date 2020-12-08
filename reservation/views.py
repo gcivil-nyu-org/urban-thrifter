@@ -14,6 +14,8 @@ from django.views import View
 from django.utils.decorators import method_decorator
 import datetime
 from django.utils import timezone
+from register.models import DonorProfile
+from django.core.exceptions import PermissionDenied
 
 # from donor_notifications.models import Notification
 from django.contrib.auth.decorators import login_required
@@ -24,9 +26,12 @@ def home(request):
     return render(request, "reservation/reservation_home.html")
 
 
-@login_required
 def donation_post_list(request):
     # Getting posts based on filters or getting all posts
+    if not request.user.is_authenticated:
+        return redirect("login")
+    if DonorProfile.objects.filter(user=request.user):
+        raise PermissionDenied
     post_list = ResourcePost.objects.all()
     url_parameter = request.GET.get("q")
     if url_parameter:
