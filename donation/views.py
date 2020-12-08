@@ -46,6 +46,11 @@ def home(request):
     if HelpseekerProfile.objects.filter(user=user):
         raise PermissionDenied
     post_list = ResourcePost.objects.filter(donor=user).order_by("-date_created")
+
+    expired_donation_posts = post_list.filter(
+        status="EXPIRED",
+    ).first()
+
     reserve_post_list = ReservationPost.objects.filter(donor=user).order_by(
         "-date_created"
     )
@@ -55,8 +60,6 @@ def home(request):
     available_donation_posts = post_list.filter(status__in=["Available", "AVAILABLE"])
 
     close_reservation_15_min(reserved_donation_posts)
-
-    closed_donation_posts = post_list.filter(status__in=["Closed", "CLOSED"])
     closed_reservation_posts = reserve_post_list.filter(
         reservationstatus=1, post__status__in=["Closed", "CLOSED"]
     )
@@ -68,11 +71,10 @@ def home(request):
     #     post_list = paginator.page(1)
     # except EmptyPage:
     #     post_list = paginator.page(paginator.num_pages)
-    user = request.user
     context = {
+        "expired_donation_posts": expired_donation_posts,
         "reserved_donation_posts": reserved_donation_posts,
         "available_donation_posts": available_donation_posts,
-        "closed_donation_posts": closed_donation_posts,
         "closed_reservation_posts": closed_reservation_posts,
     }
 
@@ -207,8 +209,8 @@ class PostUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
         "title",
         "quantity",
         "description",
-        "dropoff_time_1",
         "resource_category",
+        "dropoff_time_1",
         "dropoff_time_2",
         "dropoff_time_3",
         "dropoff_location",
@@ -218,7 +220,41 @@ class PostUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
 
     # Overwrite form valid method
     def form_valid(self, form):
-        form.instance.author = self.request.user
+        form.instance.donor = self.request.user
+        if (
+            not form.cleaned_data["dropoff_location"]
+            and not form.instance.donor.donorprofile.dropoff_location
+        ):
+            messages.error(self.request, "Please input your dropoff location.")
+            return super().form_invalid(form)
+
+        dropoff_time_1 = form.cleaned_data["dropoff_time_1"]
+        dropoff_time_2 = form.cleaned_data["dropoff_time_2"]
+        dropoff_time_3 = form.cleaned_data["dropoff_time_3"]
+        if (
+            dropoff_time_1
+            and dropoff_time_1 <= timezone.now()
+            or dropoff_time_2
+            and dropoff_time_2 <= timezone.now()
+            or dropoff_time_3
+            and dropoff_time_3 <= timezone.now()
+        ):
+            messages.error(
+                self.request, "Please ensure your dropoff time is in the future."
+            )
+            return super().form_invalid(form)
+        if (
+            dropoff_time_1 == dropoff_time_2
+            or dropoff_time_2
+            and dropoff_time_3
+            and dropoff_time_2 == dropoff_time_3
+            or dropoff_time_3 == dropoff_time_1
+        ):
+            messages.error(
+                self.request, "Please ensure your dropoff times aren't repetitive."
+            )
+            return super().form_invalid(form)
+        form.instance.status = "AVAILABLE"
         return super().form_valid(form)
 
     def get_form(self):
@@ -373,3 +409,25 @@ def get_reminder(request):
     # data = posts.count()
     # print(data)
     return render(request, "donation/messages.html", context)
+
+
+def donation_expired(request):
+    user = request.user
+    post_list = ResourcePost.objects.filter(
+        donor=user,
+        status="EXPIRED",
+    ).order_by("-date_created")
+
+    page = request.GET.get("page", 1)
+    paginator = Paginator(post_list, 5)
+    try:
+        expired_donation_posts = paginator.page(page)
+    except PageNotAnInteger:
+        expired_donation_posts = paginator.page(1)
+    except EmptyPage:
+        expired_donation_posts = paginator.page(paginator.num_pages)
+
+    context = {
+        "expired_donation_posts": expired_donation_posts,
+    }
+    return render(request, "donation/expired.html", context)

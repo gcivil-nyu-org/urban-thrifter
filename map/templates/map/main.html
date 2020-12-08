@@ -177,15 +177,19 @@
 {% for post in post_context %}
 <script>
   // console.log({{post.resource_category}})
+  var dropoff_time_1 = "";
   var dropoff_time_2 = "";
   var dropoff_time_3 = "";
 
-  if ("{{ post.dropoff_time_2 }}" != "None") {
-    dropoff_time_2 = "<p>{{ post.dropoff_time_2 }}</p>";
-  }
-  if ("{{ post.dropoff_time_3 }}" != "None") {
-    dropoff_time_3 = "<p>{{ post.dropoff_time_3 }}</p>";
-  }
+  {% if post.dropoff_time_1 != None and post.dropoff_time_1 >= current_time %}
+	dropoff_time_1 = "<p>{{ post.dropoff_time_1 }}</p>";
+  {% endif %}
+  {% if post.dropoff_time_2 != None and post.dropoff_time_2 >= current_time %}
+	dropoff_time_2 = "<p>{{ post.dropoff_time_2 }}</p>";
+  {% endif %}
+  {% if post.dropoff_time_3 != None and post.dropoff_time_3 >= current_time %}
+	dropoff_time_3 = "<p>{{ post.dropoff_time_3 }}</p>";
+  {% endif %}
   var personalEl = document.createElement('div');
   personal_donation_html = "<div class='container donation-popup'>" +
     "<h5 class='mb-3'><b>{{ post.title }}</b> * {{ post.quantity }}</h5>" +
@@ -194,7 +198,7 @@
     "<p>{{ post.description }}</p>" +
     "<p><img src='{{ post.image.url }}' /></p>" +
     "</div><div class='col'>" +
-    "<p>{{ post.dropoff_time_1 }}</p>" +
+    dropoff_time_1 +
     dropoff_time_2 +
     dropoff_time_3 +
     "</div></div>" +

@@ -2,7 +2,7 @@
 {% load crispy_forms_tags %}
 {% block content %}
 {% if object.donor == user %}
-{% if object.status == "AVAILABLE" or object.status == "Available" %}
+{% if object.status == "AVAILABLE" or object.status == "Available" or object.status == "EXPIRED" or object.status == "Expired" %}
 {% if not user.donorprofile.dropoff_location.place %}
 <div class="container alert alert-info text-center">
     <h4>No Default Address Given.</h4>
@@ -10,6 +10,13 @@
     <h6>Please go to your <a href="{% url 'register:donor-profile' user.username %}">Profile <i
                 class="fas fa-user-circle"></i></a> to set your default address.</h6>
 </div>
+{% endif %}
+{% if messages %}
+{% for message in messages %}
+<div class="container alert alert-info text-center">
+    {{ message }}
+</div>
+{% endfor %}
 {% endif %}
 <div class='content-section animated fadeIn'>
     <!-- Need to add CSRF token, a hidden tag for security required by django -->
