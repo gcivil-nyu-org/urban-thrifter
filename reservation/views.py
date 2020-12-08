@@ -13,6 +13,10 @@ from django.http import HttpResponse
 from django.views import View
 from django.utils.decorators import method_decorator
 from django.contrib.auth.mixins import LoginRequiredMixin
+import datetime
+from django.utils import timezone
+from register.models import DonorProfile
+from django.core.exceptions import PermissionDenied
 
 # from donor_notifications.models import Notification
 from django.contrib.auth.decorators import login_required
@@ -26,6 +30,11 @@ def home(request):
 @login_required(login_url="/login/")
 def donation_post_list(request):
     # Getting posts based on filters or getting all posts
+    if not request.user.is_authenticated:
+        return redirect("login")
+    if DonorProfile.objects.filter(user=request.user):
+        raise PermissionDenied
+    current_time = timezone.now()
     post_list = ResourcePost.objects.all()
     url_parameter = request.GET.get("q")
     if url_parameter:
@@ -51,6 +60,7 @@ def donation_post_list(request):
     reservation_reserved_list = reservation_list.filter(
         reservationstatus=1, post__status__in=["Reserved", "RESERVED"]
     )
+    close_reservation_15_min(reservation_reserved_list)
     reservation_pending_list = reservation_list.filter(
         reservationstatus=3, post__status__in=["Pending", "PENDING"]
     )
@@ -85,8 +95,24 @@ def donation_post_list(request):
             "reservation_reserved_posts": reservation_reserved_list,
             "reservation_pending_posts": reservation_pending_list,
             "reservation_closed_posts": reservation_closed_list,
+            "current_time": current_time,
         },
     )
+
+
+def close_reservation_15_min(reserved_donation_posts):
+    try:
+        for reserve_post in reserved_donation_posts:
+            if (
+                reserve_post.post.status != "CLOSED"
+                and reserve_post.dropoff_time_request + datetime.timedelta(minutes=15)
+                <= timezone.now()
+            ):
+                reserve_post.post.status = "CLOSED"
+                reserve_post.post.save()
+        return
+    except Exception as e:
+        print(e)
 
 
 # class ReservationPostListView(ListView):
@@ -205,9 +231,7 @@ def reservation_update(request, **kwargs):
                 selected_time = reservation.post.dropoff_time_3
             reservation.dropoff_time_request = selected_time
         else:
-            messages.error(
-                request, "A reservation for this donation has already been made."
-            )
+            messages.error(request, "Only pending reservation shall be rescheduled.")
             return redirect("reservation:reservation-home")
         try:
             reservation.save()
@@ -235,6 +259,11 @@ class PostDetailView(LoginRequiredMixin, DetailView):
     model = ResourcePost
     template_name = "reservation/reservation_request.html"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["current_time"] = timezone.now()
+        return context
+
 
 class ReservationDetailView(LoginRequiredMixin, DetailView):
 
@@ -253,15 +282,17 @@ class ReservationUpdateView(LoginRequiredMixin, DetailView):
     model = ReservationPost
     template_name = "reservation/reservation_update.html"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["current_time"] = timezone.now()
+        return context
+
 
 @login_required(login_url="/login/")
 def show_notifications(request):
     notifications = (
-        Notification.objects.filter(receiver=request.user)
-        .order_by("-post_id")
-        .distinct("post_id")
+        Notification.objects.filter(receiver=request.user).order_by("-post_id")
     )
-
     template = loader.get_template("donation/notifications.html")
     context = {
         "donor_notifications": notifications,
@@ -296,9 +327,44 @@ def read_message(request, id):
 @method_decorator(login_required, name="dispatch")
 class NotificationCheck(View):
     def get(self, request):
-        notification = (
+        # Update posts to expired
+        current_time = timezone.now()
+        ResourcePost.objects.filter(
+            status__in=["Pending", "PENDING", "Available", "AVAILABLE"],
+            dropoff_time_1__lt=current_time,
+            dropoff_time_2__lt=current_time,
+            dropoff_time_3__lt=current_time,
+        ).update(status="EXPIRED")
+
+        # Update reservation and notification to expired if post is expired
+        notifications = Notification.objects.all().order_by("-post_id")
+        for notification in notifications:
+            if (
+                notification.post.post.status in ["EXPIRED", "Expired"]
+                and notification.notificationstatus == 3
+            ):
+                notification.is_seen = True
+                notification.notificationstatus = 4
+                notification.post.reservationstatus = 4
+                notification.save()
+                notification.post.save()
+            elif (
+                notification.post.post.status in ["PENDING", "Pending"]
+                and notification.notificationstatus == 3
+                and notification.post.dropoff_time_request < current_time
+            ):
+                notification.is_seen = True
+                notification.notificationstatus = 4
+                notification.post.reservationstatus = 4
+                notification.post.post.status = "AVAILABLE"
+                notification.save()
+                notification.post.save()
+                notification.post.post.save()
+
+        # Notification count
+        notification_count = (
             Notification.objects.order_by("-post_id")
             # .distinct("post_id")
             .filter(is_seen=False, receiver=request.user).count()
         )
-        return HttpResponse(notification)
+        return HttpResponse(notification_count)

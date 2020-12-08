@@ -47,7 +47,7 @@
             <label>Quantity</label>
             <p class="graybox">{{ object.quantity }}</p>
             <label>Description</label>
-            <p class="graybox">{{ object.description }}</p>
+            <p class="graybox text-box">{{ object.description }}</p>
         </div>
     </div>
     <div class="row justify-content-around">
@@ -56,13 +56,15 @@
             <form method="POST" action="{% url 'reservation:reservation-function' object.id %}">
                 {% csrf_token %}
                 <p>Drop-off Time*</p>
+				{% if object.dropoff_time_1 != None and object.dropoff_time_1 >= current_time %}
                 <input type="radio" id="dropoff_time_1" name="dropoff_time" value=1>
                 <label class="graybox" for="dropoff_time_1">{{ object.dropoff_time_1 }}</label>
-                {% if object.dropoff_time_2 != None %}
+				{% endif %}
+                {% if object.dropoff_time_2 != None and object.dropoff_time_2 >= current_time %}
                 <input type="radio" id="dropoff_time_2" name="dropoff_time" value=2>
                 <label class="graybox" for="dropoff_time_2">{{ object.dropoff_time_2 }}</label>
                 {% endif %}
-                {% if object.dropoff_time_3 != None %}
+                {% if object.dropoff_time_3 != None and object.dropoff_time_3 >= current_time %}
                 <input type="radio" id="dropoff_time_3" name="dropoff_time" value=3>
                 <label class="graybox" for="dropoff_time_3">{{ object.dropoff_time_3 }}</label>
                 {% endif %}

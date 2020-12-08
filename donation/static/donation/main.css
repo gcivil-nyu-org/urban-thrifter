@@ -183,6 +183,10 @@ select option:hover, select option:focus, select option:active {
   border-top-color: #e6e6e6 !important;
 }
 
+.text-box{
+  max-width: 450px;
+  word-wrap: break-word;
+}
 /* site header */
 
 .site-header {
@@ -609,6 +613,11 @@ a.article-title:hover {
   margin-left: auto;
   margin-right: auto;
   margin-top: 15px;
+}
+
+.reset-filter button {
+  width: 100px;
+  text-align: center;
 }
 
 .map-filter li {

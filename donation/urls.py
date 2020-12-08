@@ -23,4 +23,5 @@ urlpatterns = [
     ),
     path("reminder/", views.get_reminder, name="get-reminder"),
     path("ajax/getremindercount", views.get_reminders_count, name="get-reminder-count"),
+    path("expired/", views.donation_expired, name="donation-expired"),
 ]
