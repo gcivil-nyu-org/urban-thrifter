@@ -168,8 +168,6 @@ class DonorUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
         user=User.objects.filter(username=username)
         context['username'] = user[0].username
         context['email']=user[0].email
-        print(user)
-        print(user.email)
         return context
 
     def get_object(
