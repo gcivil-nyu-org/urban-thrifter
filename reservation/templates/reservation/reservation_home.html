@@ -49,10 +49,10 @@
               <p>{{ post.dropoff_time_request }}</p>
               <p>{{ post.post.dropoff_location.place}}</p>
             </div>
-            <!-- <div class="col-5">
-              <button class='btn btn-outline-dark btn-wide mb-1 float-right'>Update</button>
-              <button class='btn btn-danger btn-wide float-right'>Delete</button>
-            </div> -->
+            <div class="col-5">
+              <button type="button" class="btn btn-wide float-right btn-danger btn-delete" data-toggle="modal"
+                data-target="#cancelReservation" onclick="confirmCancel('{{post.id}}')">Cancel</button>
+            </div>
           </div>
         </div>
       </div>
@@ -105,7 +105,8 @@
               <a class='btn btn-outline-dark btn-wide mb-1 float-right'
                 href="{% url 'reservation:reservation-update' post.id %}">Reschedule</a>
               {% endif %}
-              <!-- <button class='btn btn-danger btn-wide float-right'>Cancel</button> -->
+              <button type="button" class="btn btn-wide float-right btn-danger btn-delete" data-toggle="modal"
+                data-target="#cancelReservation" onclick="confirmCancel('{{post.id}}')">Cancel</button>
             </div>
           </div>
         </div>
@@ -167,5 +168,34 @@
     {% endfor %}
   </div>
 </div>
+<!--Reservation Cancellation Modal-->
+<div class="modal fade" id="cancelReservation" tabindex="-1" role="dialog" aria-labelledby="cancelReservationLabel"
+  aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <p>Your reservation is about to be cancelled.
+        </p>
+        <b>Are you sure?</b>
+      </div>
+      <div class="modal-footer">
+        <div class="row">
+          <div class="col">
+            <button type="button" class="btn btn-success btn-wide" id="deleteNo" data-dismiss="modal">Cancel</button>
+          </div>
+          <div class="col">
+            <a class="btn btn-outline-danger btn-wide" id="cancelConfirm" type="button" href="">Confirm</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  function confirmCancel(poseId) {
+    document.getElementById("cancelConfirm").href = "{% url 'reservation:reservation-home' %}" + "cancel/" + poseId;
+    return false;
+  };
+</script>
 <script type="text/javascript" src="{% static 'javascript/search.js' %}"></script>
 {% endblock content %}

@@ -231,7 +231,7 @@
   new mapboxgl.Marker(personalEl)
     .setLngLat([{{ post.dropoff_location.longitude }},
     {{ post.dropoff_location.latitude }}])
-    .setPopup(new mapboxgl.Popup({ offset: 25 })
+    .setPopup(new mapboxgl.Popup({ offset: [-20, -20], closeOnClick: true })
       .setHTML(personal_donation_html))
     .addTo(map)
 </script>

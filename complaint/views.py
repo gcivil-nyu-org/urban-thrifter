@@ -7,7 +7,6 @@ from .models import Complaint
 from register.models import HelpseekerProfile, DonorProfile
 from django.contrib.auth.models import User
 
-
 @login_required
 def complaint_portal(request):
     user = request.user

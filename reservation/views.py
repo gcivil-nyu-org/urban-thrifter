@@ -9,7 +9,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import JsonResponse
 from django.template.loader import render_to_string
 from django.template import loader
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.views import View
 from django.utils.decorators import method_decorator
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -17,6 +17,8 @@ import datetime
 from django.utils import timezone
 from register.models import DonorProfile
 from django.core.exceptions import PermissionDenied
+from django.core.mail import EmailMessage
+import os
 
 # from donor_notifications.models import Notification
 from django.contrib.auth.decorators import login_required
@@ -170,7 +172,7 @@ def confirm_notification(request, id):
             reserve_post.reservationstatus = 2
             reserve_post.save()
             notification.save()
-        return render(request, "donation/notifications_confirm.html")
+        return HttpResponseRedirect(request.META.get("HTTP_REFERER"))
 
 
 @login_required(login_url="/login/")
@@ -216,6 +218,48 @@ def reservation_function(request, id):
     return redirect("reservation:reservation-confirmation")
 
 
+def reservation_cancel(request, pk):
+    print(request.method)
+    if request.method == "GET":
+        reserve_post = ReservationPost.objects.get(id=pk)
+        resource_post = reserve_post.post
+        resource_post.status = "AVAILABLE"
+        # if pending -> change all pending notification to seen
+        if reserve_post.reservationstatus == "PENDING":
+            Notification.objects.filter(
+                post=resource_post, notificationstatus=3
+            ).update(is_seen=True)
+        # Send email to both side
+        email_sub = "[Cancellation] " + str(reserve_post)
+        email_host = os.environ.get("EMAIL_HOST_USER")
+        email_header = (
+            "Your reservation <b>" + str(reserve_post) + "</b> was cancelled. "
+        )
+        email_signature = "please go to <a href='https://urban-thrifter.herokuapp.com/'>our website</a><br><br>Urban Thrifter Team"
+        msg = EmailMessage(
+            email_sub,
+            email_header
+            + "If you would like to check out more listings, "
+            + email_signature,
+            email_host,
+            [reserve_post.helpseeker.email],
+        )
+        msg.content_subtype = "html"
+        msg.send()
+
+        msg_donor = EmailMessage(
+            email_sub,
+            email_header + "If you would like to post more listings" + email_signature,
+            email_host,
+            [reserve_post.donor.email],
+        )
+        msg_donor.content_subtype = "html"
+        msg_donor.send()
+        reserve_post.delete()
+        resource_post.save()
+    return HttpResponseRedirect(request.META.get("HTTP_REFERER"))
+
+
 @login_required(login_url="/login/")
 def reservation_update(request, **kwargs):
     if request.method == "GET":
@@ -229,6 +273,19 @@ def reservation_update(request, **kwargs):
                 selected_time = reservation.post.dropoff_time_2
             elif selected_timeslot == "3":
                 selected_time = reservation.post.dropoff_time_3
+            else:
+                selected_time = reservation.dropoff_time_request
+            if reservation.dropoff_time_request != selected_time:
+                reservation.dropoff_time_request = selected_time
+                Notification.objects.filter(
+                    post=reservation, notificationstatus=3
+                ).update(is_seen=True)
+                # change other notification of this post with status pending to is_seen = True
+            else:
+                messages.error(
+                    request, "Please select a different timeslot for reschedule."
+                )
+                return HttpResponseRedirect(request.META.get("HTTP_REFERER"))
             reservation.dropoff_time_request = selected_time
         else:
             messages.error(request, "Only pending reservation shall be rescheduled.")
@@ -245,9 +302,9 @@ def reservation_update(request, **kwargs):
             reservation.post.save()
             reservation.delete()
             messages.error(
-                request, "Your reservation was unsuccessful. Please try again!"
+                request, "Your reschedule request was unsuccessful. Please try again!"
             )
-            return redirect("reservation:reservation-home")
+            return HttpResponseRedirect(request.META.get("HTTP_REFERER"))
     return redirect("reservation:reservation-detail", kwargs["pk"])
 
 
@@ -291,7 +348,9 @@ class ReservationUpdateView(LoginRequiredMixin, DetailView):
 @login_required(login_url="/login/")
 def show_notifications(request):
     notifications = (
-        Notification.objects.filter(receiver=request.user).order_by("-post_id")
+        Notification.objects.filter(receiver=request.user)
+        .exclude(is_seen=True, notificationstatus=3)
+        .order_by("-date_created")
     )
     template = loader.get_template("donation/notifications.html")
     context = {

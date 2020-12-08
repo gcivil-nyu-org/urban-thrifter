@@ -10,7 +10,8 @@
         <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Post a new donation">
             <a class="btn align-middle btn-outline-dark" href='{% url "donation:donation-new" %}'>New</a>
         </li>
-        <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Available donation posts">
+        <li class="nav-item" data-toggle="tooltip" data-placement="top"
+            title="All your currently available donation posts">
             <a class="btn align-middle btn-outline-dark" id="pills-available-tab" data-toggle="pill"
                 href="#pills-available" role="tab" aria-controls="pills-available" aria-selected="false">Available</a>
         </li>
@@ -22,7 +23,7 @@
 </div>
 {% if user.is_authenticated and user.donorprofile and expired_donation_posts %}
 <div class="alert alert-info text-center">
-	<a href="{% url 'donation:donation-expired' %}">See Expired Donations</a>
+    <a href="{% url 'donation:donation-expired' %}">See Expired Donations</a>
 </div>
 {% endif %}
 <div class="tab-content animated fadeIn" id="pills-tabContent">
@@ -68,6 +69,11 @@
                                 <li>{{ post.dropoff_time_request }}</li>
                             </ul>
                             <p>{{ post.post.dropoff_location.place}}</p>
+                        </div>
+                        <div class="col-5">
+                            <button type="button" class="btn btn-wide float-right btn-danger btn-delete"
+                                data-toggle="modal" data-target="#cancelReservation"
+                                onclick="confirmCancel('{{post.id}}')">Cancel</button>
                         </div>
                     </div>
                 </div>
@@ -121,7 +127,7 @@
                         <div class="col-5">
                             <p>Available Dropoff Time: </p>
                             <ul>
-								{% if post.dropoff_time_1 != None %}
+                                {% if post.dropoff_time_1 != None %}
                                 <li>{{ post.dropoff_time_1 }}</li>
                                 {% endif %}
                                 {% if post.dropoff_time_2 != None %}
@@ -260,4 +266,34 @@
 
 </html>
 {% endif %}
+<!--Reservation Cancellation Modal-->
+<div class="modal fade" id="cancelReservation" tabindex="-1" role="dialog" aria-labelledby="cancelReservationLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <p>Your reservation is about to be cancelled.
+                </p>
+                <b>Are you sure?</b>
+            </div>
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col">
+                        <button type="button" class="btn btn-success btn-wide" id="deleteNo"
+                            data-dismiss="modal">Cancel</button>
+                    </div>
+                    <div class="col">
+                        <a class="btn btn-outline-danger btn-wide" id="cancelConfirm" type="button" href="">Confirm</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function confirmCancel(poseId) {
+        document.getElementById("cancelConfirm").href = "{% url 'reservation:reservation-home' %}" + "cancel/" + poseId;
+        return false;
+    };
+</script>
 {% endblock content %}
