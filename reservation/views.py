@@ -205,8 +205,9 @@ def reservation_cancel(request, pk):
         #     # new notification to donor
         #     notification_receiver = reserve_post.donor
         print(request.user)
-        print(notification_receiver)
-        # reserve_post.delete()
+        # print(notification_receiver)
+        reserve_post.delete()
+        resource_post.save()
         print(reserve_post)
         print(resource_post)
     return HttpResponseRedirect(request.META.get("HTTP_REFERER"))
