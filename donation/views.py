@@ -60,8 +60,6 @@ def home(request):
     available_donation_posts = post_list.filter(status__in=["Available", "AVAILABLE"])
 
     close_reservation_15_min(reserved_donation_posts)
-
-    closed_donation_posts = post_list.filter(status__in=["Closed", "CLOSED"])
     closed_reservation_posts = reserve_post_list.filter(
         reservationstatus=1, post__status__in=["Closed", "CLOSED"]
     )
