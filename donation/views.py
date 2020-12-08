@@ -1,12 +1,11 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render
 from django.views.generic import (
-    ListView,
     CreateView,
     DetailView,
     UpdateView,
     DeleteView,
 )
-from .models import ResourcePost, User
+from .models import ResourcePost
 from reservation.models import ReservationPost
 from bootstrap_datepicker_plus import DateTimePickerInput
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
