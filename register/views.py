@@ -19,6 +19,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.http import Http404
 from reservation.models import ReservationPost
+from django.http import HttpResponseRedirect
+
+
 
 
 def register(request):
@@ -121,8 +124,11 @@ def activate_account(request, uidb64, token):
         return render(request, "register/activate_confirmation.html")
     return render(request, "register/activate_failure.html")
 
-
+##Need
 def email_sent(request):
+    if request.user.is_authenticated:
+        messages.warning(request, "Not an authorized user to enter this page.")
+        return render(request, "complaint/wrong_user.html")
     if request.method == "GET":
         return render(request, "register/email_sent.html")
 

@@ -5,7 +5,6 @@ from django.apps import apps
 import geojson
 from django.contrib.auth.decorators import login_required
 
-@login_required(login_url='/login/')
 def shelter_json_geojson(json_obj):
     geojson_obj = []
     for data in json_obj:
