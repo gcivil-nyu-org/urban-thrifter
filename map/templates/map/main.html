@@ -7,12 +7,6 @@
 <section role="main animated fadeIn">
   <div class="row">
     <ul class='map-filter'>
-      <li class="ut-tooltip"><span class="map-tooltiptext">All Selections</span><button
-        class="feature-icon" onclick="selectAllFilter(this)">Select All</br><i
-          class="fas fa-lg"></i></button></li>
-      <li class="ut-tooltip"><span class="map-tooltiptext">Reset Selections</span><button
-        class="feature-icon" onclick="resetFilter(this)">Reset</br><i
-          class="fas fa-lg"></i></button></li>
       <li class="ut-tooltip"><span class="map-tooltiptext">Reservation Available</span><button
           class="feature-icon food-icon" onclick="resourceFilter('food', this)">Food</br><i
             class="fas fa-apple-alt fa-lg"></i></button></li>
@@ -42,6 +36,12 @@
           class="feature-icon reeducation-icon" onclick="resourceFilter('reeducation', this)">Program</br><i
             class="fas fa-book-open fa-lg"></i></button></li>
     </ul>
+    <nav class="reset-filter navbar fixed-bottom justify-content-center">
+      <button class="nav-item mr-1 btn btn-secondary" onclick="selectAllFilter(this)">Select All</br><i
+          class="fas fa-lg"></i></button>
+      <button class="nav-item ml-1 btn btn-secondary" onclick="resetFilter(this)">Reset</br><i
+          class="fas fa-lg"></i></button>
+    </nav>
     <div id='map'></div>
   </div>
 </section>
@@ -250,17 +250,17 @@
       }
     }
   }
-  function resetFilter(elem){
-    var resources=['food-marker','ppe-marker','clothes-marker','electronics-marker','others-marker','shelter-marker','computer-marker','wifi-marker','reeducation-marker']
+  function resetFilter(elem) {
+    var resources = ['food-marker', 'ppe-marker', 'clothes-marker', 'electronics-marker', 'others-marker', 'shelter-marker', 'computer-marker', 'wifi-marker', 'reeducation-marker']
     var list = document.getElementsByClassName("ut-tooltip");
-    for(k=0;k<list.length;k++)//deselect all filter buttons
+    for (k = 0; k < list.length; k++)//deselect all filter buttons
     {
-      button=list[k].childNodes[1]
-      if(!button.classList.contains('inactive')){
+      button = list[k].childNodes[1]
+      if (!button.classList.contains('inactive')) {
         button.classList.add('inactive')
       }
     }
-    for(j=0; j<resources.length;j++){
+    for (j = 0; j < resources.length; j++) {
       var shelters = document.getElementsByClassName(resources[j]);
       for (i = 0; i < shelters.length; i++) {
         if (!shelters[i].classList.contains("hide")) {
@@ -269,21 +269,21 @@
       }
     }
   }
-  function selectAllFilter(elem){
-    var resources=['food-marker','ppe-marker','clothes-marker','electronics-marker','others-marker','shelter-marker','computer-marker','wifi-marker','reeducation-marker']
+  function selectAllFilter(elem) {
+    var resources = ['food-marker', 'ppe-marker', 'clothes-marker', 'electronics-marker', 'others-marker', 'shelter-marker', 'computer-marker', 'wifi-marker', 'reeducation-marker']
     var list = document.getElementsByClassName("ut-tooltip");
-    for(k=0;k<list.length;k++){//select all filter buttons
-      button=list[k].childNodes[1]
-      if(button.classList.contains('inactive')){
+    for (k = 0; k < list.length; k++) {//select all filter buttons
+      button = list[k].childNodes[1]
+      if (button.classList.contains('inactive')) {
         button.classList.remove('inactive')
       }
     }
-    for(j=0; j<resources.length;j++){
+    for (j = 0; j < resources.length; j++) {
       var shelters = document.getElementsByClassName(resources[j]);
       for (i = 0; i < shelters.length; i++) {
         if (shelters[i].classList.contains("hide")) {
           shelters[i].classList.remove("hide");
-        } 
+        }
       }
     }
   }
