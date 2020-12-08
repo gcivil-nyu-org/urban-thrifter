@@ -138,7 +138,8 @@
               <p>ID: {{ post.user.id }}</p>
             </div>
             <div class="col-2">
-              <a class="btn btn-wide btn-warning float-right" href="mailto:{{ post.user.email }}">Warning</a>
+              <a class="btn btn-wide btn-warning float-right"
+                href="mailto:{{ post.user.email }}?subject=[Urban Thrifter] Please comply with our community guideline&body=Dear {{ post.user.username }},%0d%0a%0d%0aOur record suggests that you currently stands two violations. Please be aware of our community guideline. We appreciate your understanding and support!%0d%0a%0d%0aBest Regards,%0d%0aUrban Thrifter">Warning</a>
             </div>
           </div>
         </div>
