@@ -88,22 +88,6 @@ class ResourcePostCreateViewTests(TestCase):
     #     self.assertEqual(response.status_code, 200)
 
 
-class ResourcePostListViewTests(TestCase):
-    def test_no_post(self):
-        """
-        If no post exist, an appropriate message is displayed.
-        """
-        response = self.client.get(reverse("donation:donation-all"))
-        self.assertEqual(response.status_code, 404)
-
-    # def test_donation_home(self):
-    #     """
-    #     If no post exist, an appropriate message is displayed.
-    #     """
-    #     response = self.client.get(reverse("donation-home"))
-    #     self.assertEqual(response.status_code, 200)
-
-
 class HomepageViewTests(TestCase):
     def test_homepage(self):
         """
