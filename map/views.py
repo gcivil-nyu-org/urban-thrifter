@@ -5,6 +5,7 @@ from django.apps import apps
 import geojson
 from django.contrib.auth.decorators import login_required
 
+
 def shelter_json_geojson(json_obj):
     geojson_obj = []
     for data in json_obj:
@@ -36,7 +37,8 @@ def shelter_json_geojson(json_obj):
 
 # Create your views here.
 
-@login_required(login_url='/login/')
+
+@login_required(login_url="/login/")
 def main_map(request):
 
     mapbox_access_token = "pk." + os.environ.get("MAPBOX_KEY")

@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, reverse, get_object_or_404
+from django.shortcuts import render, get_object_or_404
 from django.views.generic import (
     ListView,
     CreateView,
@@ -34,7 +34,7 @@ def login_redirect_view(request):
     return render(request, "donation/login_redirect.html")
 
 
-@login_required(login_url='/login/')
+@login_required(login_url="/login/")
 def home(request):
     user = request.user
     post_list = ResourcePost.objects.filter(donor=user).order_by("-date_created")
@@ -68,35 +68,10 @@ def home(request):
     return render(request, "donation/reservation_status_nav.html", context)
 
 
-# All Donations View
-class PostListView(LoginRequiredMixin, ListView):
-    
-    login_url = '/login/'
-
-    # Basic list view
-    model = ResourcePost
-    # Assign tempalte otherwise it would look for post_list.html
-    # as default template
-    template_name = "donation/reservation_status_nav.html"
-
-    # Set context_attribute to post object
-    context_object_name = "donation_posts_2"
-
-    # Add ordering attribute to put most recent post to top
-    ordering = ["-date_created"]
-
-    # Add pagination
-    paginate_by = 5
-
-    def get_queryset(self):
-        user = get_object_or_404(User, username=self.kwargs.get("username"))
-        return ResourcePost.objects.filter(donor=user).order_by("-date_created")
-
-
 # Post Donation View
 class PostCreateView(LoginRequiredMixin, CreateView):
 
-    login_url = '/login/'
+    login_url = "/login/"
 
     # Basic create view
     model = ResourcePost
@@ -167,7 +142,7 @@ class PostCreateView(LoginRequiredMixin, CreateView):
 # Donation Detail View
 class PostDetailView(LoginRequiredMixin, DetailView):
 
-    login_url = '/login/'
+    login_url = "/login/"
 
     # Basic detail view
     model = ResourcePost
@@ -181,7 +156,7 @@ class PostDetailView(LoginRequiredMixin, DetailView):
 # Donation Update View
 class PostUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
 
-    login_url = '/login/'
+    login_url = "/login/"
 
     # Basic detail view
     model = ResourcePost
@@ -216,7 +191,7 @@ class PostUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
 
 class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
-    login_url = '/login/'
+    login_url = "/login/"
 
     # Basic delete view
     model = ResourcePost
@@ -234,7 +209,7 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         return False
 
 
-@login_required(login_url='/login/')
+@login_required(login_url="/login/")
 def get_resource_post(request):
     user = request.user
 
@@ -261,7 +236,8 @@ def get_resource_post(request):
 
     return JsonResponse(context)
 
-@login_required(login_url='/login/')
+
+@login_required(login_url="/login/")
 # funciton based view version of messagelistview
 def watchlist_view(request):
     user = request.user
@@ -304,7 +280,7 @@ def watchlist_view(request):
     return render(request, "donation/messages_home.html", context)
 
 
-@login_required(login_url='/login/')
+@login_required(login_url="/login/")
 def get_reminders_count(request):
     posts = ReservationPost.objects.filter(
         reservationstatus=1,
@@ -315,7 +291,7 @@ def get_reminders_count(request):
     return HttpResponse(data)
 
 
-@login_required(login_url='/login/')
+@login_required(login_url="/login/")
 def get_reminder(request):
     posts = ReservationPost.objects.filter(
         reservationstatus=1,

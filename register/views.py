@@ -4,7 +4,6 @@ from .forms import HelpseekerForm, DonorForm, HelpseekerUpdateForm
 
 # , UserUpdateForm
 from .models import HelpseekerProfile, DonorProfile
-from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.contrib.auth.models import User
 from django.template.loader import render_to_string
@@ -20,8 +19,6 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.http import Http404
 from reservation.models import ReservationPost
 from django.http import HttpResponseRedirect
-
-
 
 
 def register(request):
@@ -124,7 +121,7 @@ def activate_account(request, uidb64, token):
         return render(request, "register/activate_confirmation.html")
     return render(request, "register/activate_failure.html")
 
-##Need
+
 def email_sent(request):
     if request.user.is_authenticated:
         messages.warning(request, "Not an authorized user to enter this page.")
@@ -133,7 +130,7 @@ def email_sent(request):
         return render(request, "register/email_sent.html")
 
 
-@login_required(login_url='/login/')
+@login_required(login_url="/login/")
 def helpseeker_edit_profile(request):
     if request.method == "POST":
         # instance=request.user can prefill the existing information in the form
@@ -164,7 +161,7 @@ def helpseeker_edit_profile(request):
 
 class DonorUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
 
-    login_url = '/login/'
+    login_url = "/login/"
 
     model = DonorProfile
     fields = ["dropoff_location"]
@@ -179,7 +176,7 @@ class DonorUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
         return get_object_or_404(DonorProfile, user__username__iexact=username)
 
 
-@login_required(login_url='/login/')
+@login_required(login_url="/login/")
 def delete_profile(request):
     # user = request.user
     if DonorProfile.objects.filter(user=request.user):
