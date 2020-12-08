@@ -183,6 +183,10 @@ select option:hover, select option:focus, select option:active {
   border-top-color: #e6e6e6 !important;
 }
 
+.text-box{
+  max-width: 450px;
+  word-wrap: break-word;
+}
 /* site header */
 
 .site-header {
