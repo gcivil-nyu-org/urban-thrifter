@@ -164,10 +164,10 @@ class DonorUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        username=self.kwargs.get("username")
-        user=User.objects.filter(username=username)
-        context['username'] = user[0].username
-        context['email']=user[0].email
+        username = self.kwargs.get("username")
+        user = User.objects.filter(username=username)
+        context["username"] = user[0].username
+        context["email"] = user[0].email
         return context
 
     def get_object(
