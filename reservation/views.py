@@ -192,9 +192,21 @@ def reservation_cancel(request, pk):
         reserve_post = ReservationPost.objects.get(id=pk)
         resource_post = reserve_post.post
         resource_post.status = "AVAILABLE"
-        reserve_post.delete()
         # if pending -> change all pending notification to seen
+        if reserve_post.reservationstatus == "PENDING":
+            Notification.objects.filter(
+                post=resource_post, notificationstatus=3
+            ).update(is_seen=True)
         # for pending + reserved send the other party with new notification about cancellation
+        # if request.user == reserve_post.donor.username:
+        #     # new notification to helpseeker
+        #     notification_receiver = reserve_post.helpseeker
+        # elif request.user == reserve_post.helpseeker.username:
+        #     # new notification to donor
+        #     notification_receiver = reserve_post.donor
+        print(request.user)
+        print(notification_receiver)
+        # reserve_post.delete()
         print(reserve_post)
         print(resource_post)
     return HttpResponseRedirect(request.META.get("HTTP_REFERER"))
