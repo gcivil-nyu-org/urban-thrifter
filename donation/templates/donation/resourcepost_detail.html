@@ -2,7 +2,14 @@
 {% load static %}
 {% block content %}
 {% if user.is_authenticated %}
-{% if object.donor == user %}
+{% if user.helpseekerprofile or user.donorprofile %}
+{% if messages %}
+{% for message in messages %}
+<div class="container alert alert-info text-center">
+    {{ message }}
+</div>
+{% endfor %}
+{% endif %}
 <div class="content-section container animated fadeInUp">
     <!-- <img class='rounded-circle article-img' src='{% static "donation/asset/user.svg" %}'> -->
     <!--  p>{{ object.image.url }}</p-->
@@ -40,23 +47,23 @@
             <label>Quantity</label>
             <p class="graybox">{{ object.quantity }}</p>
             <label>Description</label>
-            <p class="graybox">{{ object.description }}</p>
+            <p class="graybox text-box">{{ object.description }}</p>
         </div>
     </div>
     <div class="row justify-content-around">
         <div class="col-md-10">
             <div id="dropoff-location" class="mt-3"></div>
         </div>
-        {% if object.donor == user %}
+        {% if object.donor == user and object.status == "AVAILABLE"%}
         <div>
-            <a class='btn btn-outline-dark mt-5 mb-3 btn-wide' href=''>Update</a>
-            <a class='btn btn-danger mt-5 mb-3 btn-wide' href=''>Delete</a>
+            <a class='btn btn-outline-dark mt-5 mb-3 btn-wide' href='{% url "donation:donation-update" object.id %}'>Update</a>
+            <a class='btn btn-danger mt-5 mb-3 btn-wide' href='{% url "donation:donation-delete" object.id %}'>Delete</a>
         </div>
         {% endif %}
     </div>
 </div>
 {% else %}
-<div class="content-section container animated fadeInUp">
+<div class="container animated fadeInUp">
     <div class="alert alert-info text-center">You do not have authorization to view this post.</div>
 </div>
 {% endif %}

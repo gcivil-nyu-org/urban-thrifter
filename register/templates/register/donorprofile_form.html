@@ -1,7 +1,6 @@
 {% extends 'donation/base.html' %}
 {% load crispy_forms_tags %}
 {% block content %}
-{% if user.donorprofile %}
 {% include "register/profile_nav.html" %}
 {% if messages %}
 {% for message in messages %}
@@ -20,11 +19,11 @@
     <div class="row justify-content-around">
       <div class="col-4">
         <label>Username:</label>
-        <p class="graybox">{{ user.username }}</p>
+        <p class="graybox">{{ username }}</p>
       </div>
       <div class="col-4">
         <label>Email:</label>
-        <p class="graybox">{{ user.email }}</p>
+        <p class="graybox">{{ email }}</p>
       </div>
     </div>
   </div>
@@ -49,13 +48,14 @@
               }
             }, true);
           </script>
-          <button class='btn btn-dark btn-wide' type='submit'>
-            Save
-          </button>
+          <div class="pb-3 text-center">
+            <button class='btn btn-dark btn-wide center' type='submit'>
+              Save
+            </button>
+          </div>
         </div>
       </form>
     </div>
   </div>
 </div>
-{% endif %}
 {% endblock content %}

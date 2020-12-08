@@ -160,6 +160,33 @@ select option:hover, select option:focus, select option:active {
   top: 20% !important;
 }
 
+.tooltip-inner {
+  background-color: #e6e6e6 !important;
+  color: #333 !important;
+  /* box-shadow: 0 0 0 2px #b3b3b3;
+  -webkit-box-shadow: 0 0 0 2px #b3b3b3; */
+}
+
+.tooltip.bs-tooltip-right .arrow:before {
+  border-right-color: #e6e6e6 !important;
+}
+
+.tooltip.bs-tooltip-left .arrow:before {
+  border-left-color: #e6e6e6 !important;
+}
+
+.tooltip.bs-tooltip-bottom .arrow:before {
+  border-bottom-color: #e6e6e6 !important;
+}
+
+.tooltip.bs-tooltip-top .arrow:before {
+  border-top-color: #e6e6e6 !important;
+}
+
+.text-box{
+  max-width: 450px;
+  word-wrap: break-word;
+}
 /* site header */
 
 .site-header {
@@ -190,6 +217,41 @@ select option:hover, select option:focus, select option:active {
   font-weight: 500;
 }
 
+.site-header .nav-item, .ut-tooltip {
+  position: relative;
+}
+
+.site-header .nav-item .tooltiptext, .ut-tooltip .tooltiptext, .ut-tooltip .map-tooltiptext {
+  visibility: hidden;
+  width: 200px;
+  background-color: #fff;
+  color: #b3b3b3;
+  padding: 5px;
+  margin-top: 30px;
+  border-radius: 5px;
+  /* Position the tooltip */
+  position: absolute;
+  font-size: 12px;
+  z-index: 1;
+}
+
+.ut-tooltip .map-tooltiptext {
+  margin-top: 75px;
+  width: auto;
+  text-align: center;
+  font-size: 14px;
+  color: #333;
+  background: #fff;
+}
+
+.site-header .navbar-brand .tooltiptext {
+  margin-top: 50px !important;
+}
+
+.nav-item:hover .tooltiptext, .ut-tooltip:hover .tooltiptext, .ut-tooltip:hover .map-tooltiptext {
+  visibility: visible;
+}
+
 .side-bar .list-group {
   border-radius: 0;
 }
@@ -203,9 +265,10 @@ select option:hover, select option:focus, select option:active {
   font-weight: 900;
 }
 
-.side-bar .list-group-item:first-child{
+.side-bar .list-group-item:first-child {
   margin-top: 0px;
 }
+
 .side-bar a, .side-bar a:hover {
   color: #333;
   text-decoration: none;
@@ -224,16 +287,16 @@ select option:hover, select option:focus, select option:active {
   right: 10px;
 }
 
-#display, #donor-notification, #helpseeker-notification {
+#display, #display1, #donor-notification, #helpseeker-notification {
   position: relative;
 }
 
-#display i, #donor-notification i, #helpseeker-notification i {
+#display i, #display1 i, #donor-notification i, #helpseeker-notification i {
   position: absolute;
   left: -15px;
 }
 
-#display span, #donor-notification span, #helpseeker-notification span {
+#display span, #display1 span, #donor-notification span, #helpseeker-notification span {
   position: absolute;
   top: 0;
   left: -8px;
@@ -252,7 +315,7 @@ select option:hover, select option:focus, select option:active {
   font-size: 13px;
 }
 
-#display:hover .message-number, #donor-notification:hover .message-number, #helpseeker-notification:hover .message-number {
+#display:hover .message-number, #donor-notification:hover .message-number, #helpseeker-notification:hover .message-number, #display1:hover .message-number {
   background-color: #f8d7da;
 }
 
@@ -278,6 +341,12 @@ select option:hover, select option:focus, select option:active {
 
 .button-nav .nav-item a {
   width: 100%;
+}
+
+.profile-nav .btn {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
 }
 
 .content-section {
@@ -332,7 +401,7 @@ a.article-title:hover {
 }
 
 .form-group input, .form-group textarea, .form-group select, .form-group select:focus {
-  background: #e6e6e6;
+  background: rgba(0, 0, 0, 0.06);
   border: none;
   border-radius: 5px;
   padding: .25rem .75rem;
@@ -451,7 +520,7 @@ a.article-title:hover {
   /* Full height */
   overflow: auto;
   /* Enable scroll if needed */
-  background-color:#333;
+  background-color: #333;
   /* Fallback color */
   background-color: #333;
   /* Black w/ opacity */
@@ -521,7 +590,6 @@ a.article-title:hover {
   }
 }
 
-
 /* Reservation app style end */
 
 /* Map app style */
@@ -547,15 +615,20 @@ a.article-title:hover {
   margin-top: 15px;
 }
 
+.reset-filter button {
+  width: 100px;
+  text-align: center;
+}
+
 .map-filter li {
   flex-grow: 1;
   width: 100px;
+  height: 70px;
   margin: 0 5px;
 }
 
 .map-filter i {
-  font-size: 25px;
-  padding-top: 5px;
+  padding: 5px 0;
 }
 
 .map-filter li button {
@@ -575,10 +648,28 @@ a.article-title:hover {
   border: 1px solid #C66257;
 }
 
+.map-filter li:hover .food-icon {
+  background: #8f413a;
+  border: 1px solid #8f413a;
+  -webkit-transition: all 200ms ease-in;
+  -ms-transition: all 200ms ease-in;
+  -moz-transition: all 200ms ease-in;
+  transition: all 200ms ease-in;
+}
+
 .map-filter li .shelter-icon {
   background: #D6A77E;
   color: white;
   border: 1px solid #D6A77E;
+}
+
+.map-filter li:hover .shelter-icon {
+  background: #b1845e;
+  border: 1px solid #b1845e;
+  -webkit-transition: all 200ms ease-in;
+  -ms-transition: all 200ms ease-in;
+  -moz-transition: all 200ms ease-in;
+  transition: all 200ms ease-in;
 }
 
 .map-filter li .ppe-icon {
@@ -587,10 +678,28 @@ a.article-title:hover {
   border: 1px solid #6DB1C7;
 }
 
+.map-filter li:hover .ppe-icon {
+  background: #4d8ba0;
+  border: 1px solid #4d8ba0;
+  -webkit-transition: all 200ms ease-in;
+  -ms-transition: all 200ms ease-in;
+  -moz-transition: all 200ms ease-in;
+  transition: all 200ms ease-in;
+}
+
 .map-filter li .electronics-icon {
   background: #484848;
   color: white;
   border: 1px solid #484848;
+}
+
+.map-filter li:hover .electronics-icon {
+  background: #1d1b1b;
+  border: 1px solid #1d1b1b;
+  -webkit-transition: all 200ms ease-in;
+  -ms-transition: all 200ms ease-in;
+  -moz-transition: all 200ms ease-in;
+  transition: all 200ms ease-in;
 }
 
 .map-filter li .cloth-icon {
@@ -599,10 +708,28 @@ a.article-title:hover {
   border: 1px solid #E0C35C;
 }
 
-.map-filter li .restroom-icon {
+.map-filter li:hover .cloth-icon {
+  background: #b3993d;
+  border: 1px solid #b3993d;
+  -webkit-transition: all 200ms ease-in;
+  -ms-transition: all 200ms ease-in;
+  -moz-transition: all 200ms ease-in;
+  transition: all 200ms ease-in;
+}
+
+.map-filter li .computer-icon {
   background: #155889;
   color: white;
   border: 1px solid #155889;
+}
+
+.map-filter li:hover .computer-icon {
+  background: #073455;
+  border: 1px solid #073455;
+  -webkit-transition: all 200ms ease-in;
+  -ms-transition: all 200ms ease-in;
+  -moz-transition: all 200ms ease-in;
+  transition: all 200ms ease-in;
 }
 
 .map-filter li .wifi-icon {
@@ -611,10 +738,28 @@ a.article-title:hover {
   border: 1px solid #72B163;
 }
 
+.map-filter li:hover .wifi-icon {
+  background: #407035;
+  border: 1px solid #407035;
+  -webkit-transition: all 200ms ease-in;
+  -ms-transition: all 200ms ease-in;
+  -moz-transition: all 200ms ease-in;
+  transition: all 200ms ease-in;
+}
+
 .map-filter li .reeducation-icon {
   background: #8DA0D0;
   color: white;
   border: 1px solid #8DA0D0;
+}
+
+.map-filter li:hover .reeducation-icon {
+  background: #55658f;
+  border: 1px solid #55658f;
+  -webkit-transition: all 200ms ease-in;
+  -ms-transition: all 200ms ease-in;
+  -moz-transition: all 200ms ease-in;
+  transition: all 200ms ease-in;
 }
 
 .map-filter li .others-icon {
@@ -623,55 +768,64 @@ a.article-title:hover {
   border: 1px solid #B65C87;
 }
 
-.map-filter li:hover .food-icon, .map-filter .food-icon.inactive {
+.map-filter li:hover .others-icon {
+  background: #88395f;
+  border: 1px solid #88395f;
+  -webkit-transition: all 200ms ease-in;
+  -ms-transition: all 200ms ease-in;
+  -moz-transition: all 200ms ease-in;
+  transition: all 200ms ease-in;
+}
+
+.map-filter .food-icon.inactive {
   color: #C66257;
   background-color: #fff;
 }
 
-.map-filter li:hover .shelter-icon, .map-filter .shelter-icon.inactive {
+.map-filter .shelter-icon.inactive {
   color: #D6A77E;
   background-color: #fff;
 }
 
-.map-filter li:hover .ppe-icon, .map-filter .ppe-icon.inactive {
+.map-filter .ppe-icon.inactive {
   color: #6DB1C7;
   background-color: #fff;
 }
 
-.map-filter li:hover .electronics-icon, .map-filter .electronics-icon.inactive {
+.map-filter .electronics-icon.inactive {
   color: #484848;
   background-color: #fff;
 }
 
-.map-filter li:hover .cloth-icon, .map-filter .cloth-icon.inactive {
+.map-filter .cloth-icon.inactive {
   color: #E0C35C;
   background-color: #fff;
 }
 
-.map-filter li:hover .restroom-icon, .map-filter .restroom-icon.inactive {
+.map-filter .computer-icon.inactive {
   color: #155889;
   background-color: #fff;
 }
 
-.map-filter li:hover .wifi-icon, .map-filter .wifi-icon.inactive {
+.map-filter .wifi-icon.inactive {
   color: #72B163;
   background-color: #fff;
 }
 
-.map-filter li:hover .reeducation-icon, .map-filter .reeducation-icon.inactive {
+.map-filter .reeducation-icon.inactive {
   color: #8DA0D0;
   background-color: #fff;
 }
 
-.map-filter li:hover .others-icon, .map-filter .others-icon.inactive {
+.map-filter .others-icon.inactive {
   color: #B65C87;
   background-color: #fff;
 }
 
 .map-filter li .feature-icon {
-  -moz-transition: all .8s ease;
-  -webkit-transition: all .8s ease;
-  transition: all .8s ease;
+  -moz-transition: all .4s ease;
+  -webkit-transition: all .4s ease;
+  transition: all .4s ease;
 }
 
 .mapboxgl-popup {
@@ -720,8 +874,8 @@ a.article-title:hover {
   cursor: pointer;
 }
 
-.restroom-marker {
-  background-image: url('./mapicons/restroom.svg');
+.computer-marker {
+  background-image: url('./mapicons/computer.svg');
   background-size: cover;
   width: 25px;
   height: 30px;
@@ -739,7 +893,7 @@ a.article-title:hover {
 .wifi-marker {
   background-image: url('./mapicons/wifi.svg');
   background-size: cover;
-  width: 25px;
+  width: 28px;
   height: 30px;
   cursor: pointer;
 }
@@ -821,6 +975,16 @@ a.article-title:hover {
   column-gap: 20px;
 }
 
+select#id_borough, #id_resource_category, #id_rc_1, #id_rc_2, #id_rc_3 {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23000000%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E') !important;
+  background-repeat: no-repeat, repeat !important;
+  background-position: right .7em top 50%, 0 0 !important;
+  background-size: .65em auto, 100% !important;
+}
+
 #div_id_resource label {
   display: block;
 }
@@ -839,3 +1003,29 @@ a.article-title:hover {
 }
 
 /* Register app style end */
+
+/* Responsive Design */
+
+@media only screen and (max-width: 1000px) {
+  .col-lg-2 {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .card .col-2 {
+    width: 500px;
+    max-width: 100%;
+    flex: none
+  }
+  .card .col-2 .article-img {
+    height: 100%;
+    width: 100%;
+  }
+  .card .col-2 .article-img img {
+    width: 100%;
+    display: block;
+    max-height: 100%;
+    max-width: 100%;
+  }
+}

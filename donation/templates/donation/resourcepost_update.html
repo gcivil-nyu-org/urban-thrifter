@@ -1,8 +1,8 @@
-{% extends 'donation/reservation_status_nav.html' %}
+{% extends 'donation/base.html' %}
 {% load crispy_forms_tags %}
-
 {% block content %}
-{% if user.donorprofile %}
+{% if object.donor == user %}
+{% if object.status == "AVAILABLE" or object.status == "Available" or object.status == "EXPIRED" or object.status == "Expired" %}
 {% if not user.donorprofile.dropoff_location.place %}
 <div class="container alert alert-info text-center">
     <h4>No Default Address Given.</h4>
@@ -27,32 +27,7 @@
             <div class="row justify-content-around">
                 <div class="col-md-10">
                     <legend class='mb-4 font-weight-bold'>Donation Details</legend>
-                </div>
-            </div>
-            <!-- Crispy filter to style the form -->
-            <div class="row justify-content-around">
-                <div class="col-4">
-                    {{ form.title| as_crispy_field }}
-                    {{ form.resource_category| as_crispy_field }}
-                    {{ form.dropoff_time_1| as_crispy_field }}
-                    {{ form.dropoff_time_2| as_crispy_field }}
-                    {{ form.dropoff_time_3| as_crispy_field }}
-                </div>
-                <div class="col-4">
-                    {{ form.quantity| as_crispy_field }}
-                    {{ form.description| as_crispy_field }}
-                </div>
-            </div>
-            <div class="row justify-content-around">
-                <div class="col-md-10">
-                    {{ form.image| as_crispy_field }}
-                    {% if user.donorprofile.dropoff_location.place %}
-                    <p>Your default dropoff location is: </p>
-                    <p class="graybox">{{user.donorprofile.dropoff_location.place}}</p>
-                    {% else %}
-                    <p class="alert alert-danger text-center">Need to specify a dropoff location.</p>
-                    {% endif %}
-                    {{ form.dropoff_location| as_crispy_field }}
+                    {{ form| crispy }}
                 </div>
             </div>
         </fieldset>
@@ -68,12 +43,24 @@
         </script>
         <div class="row justify-content-around">
             <div class='form-group'>
+                <a class='btn btn-outline-dark btn-wide' href='{% url "donation:donation-detail" object.id %}'>
+                    Back
+                </a>
                 <button class='btn btn-dark btn-wide center' type='submit'>
                     Save
                 </button>
             </div>
         </div>
     </form>
+</div>
+{% else %}
+<div class="container alert alert-info text-center animated fadeIn">
+    I'm sorry. This donation post is pending, confirmed, or has been
+    closed. Therefore you cannot update any more.</div>
+{% endif %}
+{% else %}
+<div class="container alert alert-info text-center animated fadeIn">
+    You are not authorized to operate on this post.
 </div>
 {% endif %}
 {% endblock content %}

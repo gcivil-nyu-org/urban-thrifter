@@ -8,7 +8,7 @@ from django.db.models.signals import post_save
 
 # Create your models here.
 class ReservationPost(models.Model):
-    Reservation_Status = ((1, "accept"), (2, "reject"), (3, "pending"))
+    Reservation_Status = ((1, "accept"), (2, "reject"), (3, "pending"), (4, "expired"))
     dropoff_time_request = models.DateTimeField(default=timezone.now)
     post = models.ForeignKey(ResourcePost, on_delete=models.CASCADE)
     donor = models.ForeignKey(User, on_delete=models.CASCADE, related_name="donor_id")
@@ -20,8 +20,6 @@ class ReservationPost(models.Model):
         choices=Reservation_Status, default=Reservation_Status[2][0]
     )
 
-    # TODO: generate reservation ID token as primary key?
-    # TODO: return reservation ID in __str__
     def __str__(self):
         return str(self.post.title) + " for " + str(self.helpseeker.username)
 
@@ -30,6 +28,7 @@ class ReservationPost(models.Model):
         if (
             reservationpost.reservationstatus == 1
             or reservationpost.reservationstatus == 2
+            or reservationpost.reservationstatus == 4
         ):
             return
         reservepost = reservationpost.post
@@ -48,7 +47,7 @@ class ReservationPost(models.Model):
 
 
 class Notification(models.Model):
-    NOTIFICATION_STATUS = ((1, "ACCEPT"), (2, "REJECT"), (3, "PENDING"))
+    NOTIFICATION_STATUS = ((1, "ACCEPT"), (2, "REJECT"), (3, "PENDING"), (4, "EXPIRED"))
     post = models.ForeignKey(
         ReservationPost,
         on_delete=models.CASCADE,
@@ -65,7 +64,7 @@ class Notification(models.Model):
     notificationstatus = models.IntegerField(
         choices=NOTIFICATION_STATUS, default=NOTIFICATION_STATUS[2][0]
     )
-    date = models.DateTimeField(auto_now_add=True)
+    date_created = models.DateTimeField(default=timezone.now)
     is_seen = models.BooleanField(default=False)
     __original_notificationstatus = None
 

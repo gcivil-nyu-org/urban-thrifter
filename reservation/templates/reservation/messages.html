@@ -10,25 +10,31 @@
         <div class="card-header">
             {% endif %}
             <div class="row pt-2 pb-2 pl-4">
+                {% if notification.notificationstatus == 1 %}
                 <div class="col"><i class="fas fa-reply"></i>
-                    {% if notification.notificationstatus == 1 %}
                     <b>Your reservation request has been accepted.</b>
-                    {% elif notification.notificationstatus == 2 %}
-                    <b>Your reservation request has been declined.</b>
-                    {% endif %}
                     <!-- <p>{{ notification.msg }}</p> -->
                 </div>
+                {% elif notification.notificationstatus == 2 %}
+                <div class="col"><i class="fas fa-reply"></i>
+                    <b>Your reservation request has been declined.</b>
+                    <!-- <p>{{ notification.msg }}</p> -->
+                </div>
+				{% elif notification.notificationstatus == 4 %}
+                <div class="col"><i class="fas fa-reply"></i>
+                    <b>Your reservation request has expired.</b>
+                    <!-- <p>{{ notification.msg }}</p> -->
+                </div>
+                {% endif %}
                 <div class="col mr-3">
                     {% if notification.is_seen == False %}
                     <form method="POST" action="{% url 'reservation:read-message' notification.id %}">
                         {% csrf_token %}
-                        <button name="read" class="btn btn-sm btn-outline-success float-right read-button"
-                            type="submit"><i class="unread far fa-envelope"></i><i
-                                class="read far fa-envelope-open"></i></button>
+                        <button name="read" class="btn btn-sm btn-outline-info float-right read-button" type="submit"><i
+                                class="unread far fa-envelope"></i><i class="read far fa-envelope-open"></i></button>
                     </form>
-                    {% else %}
-                    <p class="btn btn-sm btn-outline-success float-right"><i class="read far fa-envelope-open"
-                            style="color:green"></i></p>
+                    {% else %} 
+                    <p class="btn btn-sm float-right"><i class="read fas fa-check-circle" style="color:green"></i></p>
                     {% endif %}
                 </div>
             </div>
@@ -51,13 +57,6 @@
                     <div class="col">
                         <b>Dropoff Location:</b>
                         <p>{{ notification.post.post.dropoff_location.place }}</p>
-                    </div>
-                    <div class="col">
-                        {% if notification.notificationstatus == 1 %}
-                        <p class="btn btn-wide btn-success float-right">Accepted</p>
-                        {% elif notification.notificationstatus == 2 %}
-                        <p class="btn btn-wide btn-danger float-right">Denied</p>
-                        {% endif %}
                     </div>
                 </div>
             </div>

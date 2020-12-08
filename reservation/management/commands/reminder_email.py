@@ -5,6 +5,7 @@ import datetime
 import pytz
 import os
 from django.core.mail import send_mail
+from django.utils import timezone
 
 
 class Command(BaseCommand):
@@ -14,8 +15,8 @@ class Command(BaseCommand):
         try:
             acceptedposts = ReservationPost.objects.filter(
                 reservationstatus=1,
-                dropoff_time_request__gt=datetime.datetime.now(),
-                dropoff_time_request__lte=datetime.datetime.now()
+                dropoff_time_request__gt=timezone.now(),
+                dropoff_time_request__lte=timezone.now()
                 + datetime.timedelta(minutes=10),
             )
             email_subject = "Reminder for your incoming donation dropoff"

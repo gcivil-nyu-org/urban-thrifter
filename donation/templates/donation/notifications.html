@@ -1,19 +1,42 @@
 {% extends 'donation/base.html' %}
 {% block content %}
 {% if user.is_authenticated and user.donorprofile %}
-{% for notification in notifications %}
-{% if notification.receiver == user %}
+{% for notification in donor_notifications %}
 <article class="card donation-card mb-2 animated fadeIn">
     <!-- <img class='rounded-circle article-img' src='{{ post.author.profile.image.url }}' > -->
     <div class="card-header">
         <div class='container'>
             <div class="row">
                 <div class="col pl-4 pb-2 pt-2">
+                    {% if notification.notificationstatus == 1 %}
+                    <p><i class="fas fa-box-open"></i> You <b><span style="color:green;">confirmed</span></b> the
+                        request from
+                        <b>{{ notification.sender }}</b> for
+                        <a href="{% url 'donation:donation-detail' notification.post.post.id %}">
+                            <b>{{ notification.post.post.title}}</b>
+                        </a>
+                        * {{ notification.post.post.quantity}}</p>
+                    {% elif notification.notificationstatus == 2 %}
+                    <p><i class="fas fa-box-open"></i> You <b><span style="color:red;">declined</span></b> the request
+                        from <b>{{ notification.sender }}</b>
+                        for
+                        <a href="{% url 'donation:donation-detail' notification.post.post.id %}">
+                            <b>{{ notification.post.post.title}}</b>
+                        </a>
+                        * {{ notification.post.post.quantity}}</p>
+                    {% elif notification.notificationstatus == 3 %}
                     <p><i class="fas fa-box-open"></i> <b>{{ notification.sender }}</b> just requested your
                         <a href="{% url 'donation:donation-detail' notification.post.post.id %}">
                             <b>{{ notification.post.post.title}}</b>
                         </a>
                         * {{ notification.post.post.quantity}}</p>
+					{% elif notification.notificationstatus == 4 %}
+                    <p><i class="fas fa-box-open"></i>
+                        <a href="{% url 'donation:donation-detail' notification.post.post.id %}">
+                            <b>{{ notification.post.post.title}}</b>
+                        </a>
+                        * {{ notification.post.post.quantity}} request has <span style="color:red;">expired</span></p>
+                    {% endif %}
                     <!-- <span class="float-right"><i class="fas fa-check-circle" style="color:green"></i></span> -->
                 </div>
             </div>
@@ -40,10 +63,6 @@
                             type="submit">Accept</button>
                         <button name="deny" class="btn btn-outline-danger btn-wide float-right"
                             type="submit">Decline</button>
-                        {% elif notification.notificationstatus == 1 %}
-                        <p class="btn btn-wide btn-success float-right">Accepted</p>
-                        {% else %}
-                        <p class="btn btn-wide btn-danger float-right">Denied</p>
                         {% endif %}
                     </form>
                 </div>
@@ -51,9 +70,8 @@
         </div>
     </div>
 </article>
-{% endif %}
 {% empty %}
-<div class="alert alert-info text-center">You have not received any messages yet.</div>
+<div class="alert alert-info text-center">You haven't received any messages yet.</div>
 {% endfor %}
 {% endif %}
 {% endblock %}

@@ -1,0 +1,55 @@
+{% if user.is_authenticated %}
+{% if user.helpseekerprofile %}
+<html>
+<head>
+    <script type="text/javascript">
+        function Redirect() {
+            window.location = "{{DOMAIN_NAME}}" + "/map/";
+        }
+        setTimeout('Redirect()', 0);
+    </script>
+</head>
+<body>
+</body>
+</html>
+{% elif user.donorprofile %}
+<html>
+<head>
+    <script type="text/javascript">
+        function Redirect() {
+            window.location = "{{DOMAIN_NAME}}" + "/donation/";
+        }
+        setTimeout('Redirect()', 0);
+    </script>
+</head>
+<body>
+</body>
+</html>
+{% else %}
+<html>
+<head>
+    <script type="text/javascript">
+        function Redirect() {
+            window.location = "{{DOMAIN_NAME}}" + "/admin/portal";
+        }
+        setTimeout('Redirect()', 0);
+    </script>
+</head>
+<body>
+</body>
+</html>
+{% endif %}
+{% else %}
+<html>
+<head>
+    <script type="text/javascript">
+        function Redirect() {
+            window.location = "{{DOMAIN_NAME}}/login/";
+        }
+        setTimeout('Redirect()', 0);
+    </script>
+</head>
+<body>
+</body>
+</html>
+{% endif %}

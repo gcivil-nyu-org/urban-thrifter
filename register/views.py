@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
 import os
 from .forms import HelpseekerForm, DonorForm, HelpseekerUpdateForm
+
+# , UserUpdateForm
 from .models import HelpseekerProfile, DonorProfile
-from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.contrib.auth.models import User
 from django.template.loader import render_to_string
@@ -16,7 +17,9 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.http import Http404
+from django.core.exceptions import PermissionDenied
 from reservation.models import ReservationPost
+from django.http import HttpResponseRedirect
 
 
 def register(request):
@@ -121,46 +124,72 @@ def activate_account(request, uidb64, token):
 
 
 def email_sent(request):
+    if request.user.is_authenticated:
+        messages.warning(request, "Not an authorized user to enter this page.")
+        return render(request, "complaint/wrong_user.html")
     if request.method == "GET":
         return render(request, "register/email_sent.html")
 
 
-@login_required
+@login_required(login_url="/login/")
 def helpseeker_edit_profile(request):
     if request.method == "POST":
         # instance=request.user can prefill the existing information in the form
         hs_form = HelpseekerUpdateForm(
             request.POST, instance=request.user.helpseekerprofile
         )
-
+        # hs_user_form = UserUpdateForm(request.POST, instance=request.user)
         if hs_form.is_valid():
             hs_form.save()
+            # hs_user_form.save()
             messages.success(request, "Account updated successfully.")
             return redirect("register:helpseeker-profile")
         else:
-            messages.warning(request, "Repetitive resource category.")
+            if not hs_form.is_valid():
+                messages.warning(request, "Repetitive resource category.")
+            # if not hs_user_form.is_valid():
+            #     messages.warning(request, "Invalid Email Entry.")
     else:
         hs_form = HelpseekerUpdateForm(instance=request.user.helpseekerprofile)
+        # hs_user_form = UserUpdateForm(instance=request.user)
 
-    context = {"hs_form": hs_form}
+    context = {
+        "hs_form": hs_form
+        # "hs_user_form": hs_user_form
+    }
     return render(request, "register/helpseekerprofile_form.html", context)
 
 
 class DonorUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+
+    login_url = "/login/"
+
     model = DonorProfile
     fields = ["dropoff_location"]
     success_message = "Account updated successfully."
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        username = self.kwargs.get("username")
+        user = User.objects.filter(username=username)
+        context["username"] = user[0].username
+        context["email"] = user[0].email
+        return context
 
     def get_object(
         self,
     ):
         username = self.kwargs.get("username")
-        if username is None:
+        user = User.objects.filter(username=username)
+        if not user:
             raise Http404
-        return get_object_or_404(DonorProfile, user__username__iexact=username)
+        elif username != self.request.user.username and not self.request.user.is_staff:
+            raise PermissionDenied
+        else:
+            return get_object_or_404(DonorProfile, user__username__iexact=username)
 
 
-@login_required
+@login_required(login_url="/login/")
 def delete_profile(request):
     # user = request.user
     if DonorProfile.objects.filter(user=request.user):
