@@ -148,7 +148,6 @@ class ResourcePostDetailViewTests(TestCase):
             resource_category="FOOD",
             status="AVAILABLE",
         )
-        print(create_resource_post.donor.username)
         create_resource_post.save()
         self.user = create_resource_post.donor
         self.client.force_login(self.user, backend=None)
