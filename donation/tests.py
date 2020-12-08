@@ -47,6 +47,30 @@ def createdonor():
     return donor
 
 
+def createdonor2():
+    subuser = User(
+        username="donor_unit_test2",
+        password="Unittestpassword123!",
+        is_active=True,
+        email="unittest2@unittest.com",
+    )
+    donor = User(
+        username="donor_unit_test2",
+        password="Unittestpassword123!",
+        is_active=True,
+        email="unittest2@unittest.com",
+        donorprofile=DonorProfile(
+            user=subuser,
+            complaint_count=0,
+            donation_count=0,
+            dropoff_location="MetroTech Center, Brooklyn New York USA, \
+                40.6930882, -73.9853095",
+        ),
+    )
+    donor.save()
+    return donor
+
+
 class ResourcePostCreateViewTests(TestCase):
     def test_quantity_correct_input(self):
         create_post = ResourcePost(
@@ -125,9 +149,11 @@ class ResourcePostDetailViewTests(TestCase):
             status="AVAILABLE",
         )
         create_resource_post.save()
+        self.user = create_resource_post.donor
+        self.client.force_login(self.user, backend=None)
         url = reverse("donation:donation-detail", args=(create_resource_post.pk,))
         response = self.client.get(url)
-        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.status_code, 200)
 
 
 class ResourcePostDeleteViewTests(TestCase):

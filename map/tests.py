@@ -26,9 +26,9 @@ class MapConfigTest(TestCase):
         self.assertEqual(MapConfig.name, "map")
 
 
-# this fails
 class MapViewTests(TestCase):
     def test_map_view_works(self):
         self.user = creathelpseeker()
-        response = self.client.get(reverse("main-map"))
-        self.assertEqual(response.status_code, 200)
+        self.client.force_login(self.user, backend=None)
+        self.response = self.client.get(reverse("main-map"))
+        self.assertEqual(self.response.status_code, 200)
