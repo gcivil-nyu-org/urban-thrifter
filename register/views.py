@@ -18,6 +18,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.http import Http404
+from django.core.exceptions import PermissionDenied
 from reservation.models import ReservationPost
 
 
@@ -161,13 +162,25 @@ class DonorUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     fields = ["dropoff_location"]
     success_message = "Account updated successfully."
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        username = self.kwargs.get("username")
+        user = User.objects.filter(username=username)
+        context["username"] = user[0].username
+        context["email"] = user[0].email
+        return context
+
     def get_object(
         self,
     ):
         username = self.kwargs.get("username")
-        if username is None:
+        user = User.objects.filter(username=username)
+        if not user:
             raise Http404
-        return get_object_or_404(DonorProfile, user__username__iexact=username)
+        elif username != self.request.user.username and not self.request.user.is_staff:
+            raise PermissionDenied
+        else:
+            return get_object_or_404(DonorProfile, user__username__iexact=username)
 
 
 @login_required
