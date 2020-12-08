@@ -1,7 +1,6 @@
 {% extends 'donation/base.html' %}
 {% load static %}
 {% block content %}
-{% if user.is_authenticated and user.helpseekerprofile %}
 {% include "reservation/reservation_status_nav.html" %}
 {% if messages %}
 {% for message in messages %}
@@ -169,9 +168,6 @@
     {% endfor %}
   </div>
 </div>
-{% else %}
-<meta http-equiv="Refresh" content="0; url='/login'" />
-{% endif %}
 <!--Reservation Cancellation Modal-->
 <div class="modal fade" id="cancelReservation" tabindex="-1" role="dialog" aria-labelledby="cancelReservationLabel"
   aria-hidden="true">

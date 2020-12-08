@@ -45,11 +45,13 @@
 						<div class="col-5">
 							<p>Available Dropoff Time: </p>
 							<ul>
+								{% if post.dropoff_time_1 != None and post.dropoff_time_1 >= current_time %}
 								<li>{{ post.dropoff_time_1 }}</li>
-								{% if post.dropoff_time_2 != None %}
+								{% endif %}
+								{% if post.dropoff_time_2 != None and post.dropoff_time_2 >= current_time %}
 								<li>{{ post.dropoff_time_2 }}</li>
 								{% endif %}
-								{% if post.dropoff_time_3 != None %}
+								{% if post.dropoff_time_3 != None and post.dropoff_time_3 >= current_time %}
 								<li>{{ post.dropoff_time_3 }}</li>
 								{% endif %}
 							</ul>
