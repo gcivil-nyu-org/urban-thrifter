@@ -3,6 +3,7 @@ import requests
 from django.shortcuts import render
 from django.apps import apps
 import geojson
+from django.utils import timezone
 
 
 def shelter_json_geojson(json_obj):
@@ -79,6 +80,8 @@ def main_map(request):
     after_school_prgms_r = requests.get(url=after_school_prgms_URL)
     after_school_prgms = after_school_prgms_r.json()
 
+    current_time = timezone.now()
+    
     return render(
         request,
         "map/main.html",
@@ -90,5 +93,6 @@ def main_map(request):
             "computer_centers": computer_centers,
             "after_school_prgms": after_school_prgms,
             "shelter_geojson": shelter_geojson,
+            "current_time": current_time,
         },
     )
