@@ -81,7 +81,7 @@ def main_map(request):
     after_school_prgms = after_school_prgms_r.json()
 
     current_time = timezone.now()
-    
+
     return render(
         request,
         "map/main.html",
