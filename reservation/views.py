@@ -200,9 +200,7 @@ def reservation_update(request, **kwargs):
                 selected_time = reservation.post.dropoff_time_3
             reservation.dropoff_time_request = selected_time
         else:
-            messages.error(
-                request, "Only pending reservation shall be rescheduled."
-            )
+            messages.error(request, "Only pending reservation shall be rescheduled.")
             return redirect("reservation:reservation-home")
         try:
             reservation.save()

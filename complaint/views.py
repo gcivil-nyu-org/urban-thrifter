@@ -6,7 +6,6 @@ from reservation.models import ReservationPost
 from .models import Complaint
 from register.models import HelpseekerProfile, DonorProfile
 from django.contrib.auth.models import User
-from django.http import Http404, HttpResponseRedirect
 
 
 @login_required
@@ -19,18 +18,12 @@ def complaint_portal(request):
         complaint_posts_resolved = Complaint.objects.exclude(
             status__in=["PENDING", "Pending"]
         )
-        helpseeker_profile_warning = HelpseekerProfile.objects.filter(
-            complaint_count=2
-        )
+        helpseeker_profile_warning = HelpseekerProfile.objects.filter(complaint_count=2)
         helpseeker_profile_deactivate = HelpseekerProfile.objects.filter(
             complaint_count__gte=3
         )
-        donor_profile_warning = DonorProfile.objects.filter(
-            complaint_count=2
-        )
-        donor_profile_deactivate = DonorProfile.objects.filter(
-            complaint_count__gte=3
-        )
+        donor_profile_warning = DonorProfile.objects.filter(complaint_count=2)
+        donor_profile_deactivate = DonorProfile.objects.filter(complaint_count__gte=3)
         # print(Complaint.objects.all())
         context_complaint = {
             "complaint_posts_pending": complaint_posts_pending,
@@ -90,15 +83,13 @@ def issue_complaint(request, **kwargs):
 
 @login_required
 def deactivate_helpseeker(request, **kwargs):
-    user = request.user
+    # user = request.user
     helpseeker_profile = User.objects.get(id=kwargs["pk"])
     try:
         helpseeker_profile.is_active = False
         helpseeker_profile.save()
     except Exception:
-        messages.error(
-            request, "User deactivation was unsuccessful. Please try again!"
-        )
+        messages.error(request, "User deactivation was unsuccessful. Please try again!")
     # print(user)
     # print("helpseeker_profile: ", helpseeker_profile)
     return redirect("complaint")
@@ -119,7 +110,7 @@ def complaint_decision(request, **kwargs):
             donor.complaint_count += 1
             donor.save()
         elif hs_profile:
-            helpseeker = HelpseekerProfile.objects.get(user_id = complaint_receiver.id)
+            helpseeker = HelpseekerProfile.objects.get(user_id=complaint_receiver.id)
             helpseeker.complaint_count += 1
             helpseeker.save()
     elif "invalid" in request.POST:

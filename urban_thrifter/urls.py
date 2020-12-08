@@ -29,8 +29,16 @@ urlpatterns = [
     ),
     path("admin/", admin.site.urls),
     path("admin/portal/", views.complaint_portal, name="complaint"),
-    path("admin/portal/deactivate/<int:pk>", views.deactivate_helpseeker, name="deactivate-hs"),
-    path("admin/portal/decision/<int:pk>", views.complaint_decision, name="complaint-decision"),
+    path(
+        "admin/portal/deactivate/<int:pk>",
+        views.deactivate_helpseeker,
+        name="deactivate-hs",
+    ),
+    path(
+        "admin/portal/decision/<int:pk>",
+        views.complaint_decision,
+        name="complaint-decision",
+    ),
     path("map/", include("map.urls")),
     path("", donation_view.homepage, name="home"),
     path("issue-complaint/<int:pk>", views.issue_complaint, name="issue-complaint"),
