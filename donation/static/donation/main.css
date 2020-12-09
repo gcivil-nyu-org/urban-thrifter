@@ -183,10 +183,17 @@ select option:hover, select option:focus, select option:active {
   border-top-color: #e6e6e6 !important;
 }
 
-.text-box{
+.tooltip-underline {
+  text-decoration-line: underline;
+  text-decoration-style: dotted;
+  text-decoration-color: #333;
+}
+
+.text-box {
   max-width: 450px;
   word-wrap: break-word;
 }
+
 /* site header */
 
 .site-header {
