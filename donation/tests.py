@@ -1,11 +1,13 @@
-from django.test import TestCase
+from django.test import TestCase, RequestFactory
 from django.urls import reverse
 from .models import ResourcePost, User
 from register.models import DonorProfile, HelpseekerProfile
 from reservation.models import ReservationPost
 from django.utils import timezone
 from django.http import HttpResponse
+from .views import PostUpdateView, PostDeleteView
 
+# from django.contrib.auth.models import AnonymousUser
 
 # from django.core.files.uploadedfile import SimpleUploadedFile
 # import tempfile
@@ -344,4 +346,26 @@ class Donor_Ajax_Reminder_Tests(TestCase):
         self.user = createhelpseeker()
         self.client.force_login(self.user, backend=None)
         response = self.client.get(reverse("donation:get-reminder-count"))
+        self.assertEqual(response.status_code, 200)
+
+
+class Class_Based_View_Tests(TestCase):
+    def test_post_update_view(self):
+        request = RequestFactory().get("/")
+        view = PostUpdateView()
+        view.setup(request)
+        view.get_form()
+
+    def test_post_delete_view(self):
+        request = RequestFactory().get("/")
+        view = PostDeleteView()
+        view.setup(request)
+        # view.get_form()
+
+
+class Expired_Donation_Tests(TestCase):
+    def test_expired_donations(self):
+        self.user = createdonor()
+        self.client.force_login(self.user, backend=None)
+        response = self.client.get(reverse("donation:donation-expired"))
         self.assertEqual(response.status_code, 200)
