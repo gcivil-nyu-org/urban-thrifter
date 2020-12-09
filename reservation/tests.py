@@ -432,7 +432,7 @@ class DonationTests(TestCase):
 
 
 class ReservationTests(TestCase):
-    def test_reservation_function(self):
+    def test_reservation_function_slot1(self):
         self.client = Client()
         donor = createdonor()
         createdonation(donor)
@@ -441,3 +441,33 @@ class ReservationTests(TestCase):
         holder = self.client.post("/reservation/function/1", data={"dropoff_time": 1})
         self.assertEqual(holder.status_code, 302)
         self.assertEqual(holder["Location"], "/reservation/confirmed/")
+        
+    def test_reservation_function_slot2(self):
+        self.client = Client()
+        donor = createdonor()
+        createdonation(donor)
+        user = creathelpseeker()
+        self.client.force_login(user, backend=None)
+        holder = self.client.post("/reservation/function/1", data={"dropoff_time": 2})
+        self.assertEqual(holder.status_code, 302)
+        self.assertEqual(holder["Location"], "/reservation/confirmed/")
+        
+    def test_reservation_function_slot3(self):
+        self.client = Client()
+        donor = createdonor()
+        createdonation(donor)
+        user = creathelpseeker()
+        self.client.force_login(user, backend=None)
+        holder = self.client.post("/reservation/function/1", data={"dropoff_time": 3})
+        self.assertEqual(holder.status_code, 302)
+        self.assertEqual(holder["Location"], "/reservation/confirmed/")
+        
+    def test_reservation_function_none(self):
+        self.client = Client()
+        donor = createdonor()
+        createdonation(donor)
+        user = creathelpseeker()
+        self.client.force_login(user, backend=None)
+        holder = self.client.post("/reservation/function/1")
+        self.assertEqual(holder.status_code, 302)
+        self.assertEqual(holder["Location"], "/reservation/post/1")
