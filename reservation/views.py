@@ -385,12 +385,20 @@ class NotificationCheck(View):
     def get(self, request):
         # Update posts to expired
         current_time = timezone.now()
-        ResourcePost.objects.filter(
-            status__in=["Pending", "PENDING", "Available", "AVAILABLE"],
-            dropoff_time_1__lt=current_time,
-            dropoff_time_2__lt=current_time,
-            dropoff_time_3__lt=current_time,
-        ).update(status="EXPIRED")
+        resource_posts = ResourcePost.objects.filter(
+            status__in=["Pending", "PENDING", "Available", "AVAILABLE"])
+        for post in resource_posts:
+            holder = []
+            holder.append(post.dropoff_time_1)
+            holder.append(post.dropoff_time_2)
+            holder.append(post.dropoff_time_3)
+            all_expired = True
+            for x in holder:
+                if x is not None and x >= current_time:
+                    all_expired = False
+            if all_expired == True:
+                post.status = "EXPIRED"
+                post.save()
 
         # Update reservation and notification to expired if post is expired
         notifications = Notification.objects.all().order_by("-post_id")
