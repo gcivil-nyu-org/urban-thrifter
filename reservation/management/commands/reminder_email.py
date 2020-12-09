@@ -32,7 +32,7 @@ class Command(BaseCommand):
                     "https://"
                     + str(os.environ.get("DOMAIN_NAME"))
                     + "/donation/post/"
-                    + str(acceptedpost.pk)
+                    + str(acceptedpost.post.pk)
                 )
                 message = (
                     "<h1>DONATION DROP-OFF REMINDER</h1><p><h3>Just a quick reminder. The dropoff time for donation of <strong>"
