@@ -547,7 +547,7 @@ class ReservationTests(TestCase):
             post=reservation,
             sender=helpseeker,
             receiver=donor,
-            date_created=timezon e.now(),
+            date_created=timezone.now(),
         )
         notification.save()
         self.client.force_login(donor, backend=None)
