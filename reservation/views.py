@@ -26,6 +26,7 @@ from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
+
 @login_required(login_url="/login/")
 def donation_post_list(request):
     # Getting posts based on filters or getting all posts

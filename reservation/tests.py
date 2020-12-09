@@ -23,6 +23,7 @@ def createdonor():
     donor_prof.save()
     return donor
 
+
 def creathelpseeker():
     helpseeker = User(
         username="hs_unit_test",
@@ -54,7 +55,8 @@ def createdonation(donor):
     )
     donation.save()
     return donation
-    
+
+
 def createdonation2(donor):
     donation = ResourcePost(
         title="test",
@@ -70,7 +72,8 @@ def createdonation2(donor):
     )
     donation.save()
     return donation
-    
+
+
 def createdonation3(donor):
     donation = ResourcePost(
         title="test",
@@ -189,14 +192,12 @@ class NotificationTests(TestCase):
         )
         reservation.save()
         self.client.force_login(donor, backend=None)
-        holder = self.client.post(
-            reverse("reservation:read-message", kwargs={'id':1})
-        )
+        holder = self.client.post(reverse("reservation:read-message", kwargs={"id": 1}))
         self.assertEqual(holder.status_code, 302)
         self.assertEqual(holder["Location"], "/reservation/messages/")
         test = Notification.objects.get(id=1)
         self.assertEqual(test.is_seen, True)
-        
+
     def test_notification_expire(self):
         self.client = Client()
         donor = createdonor()
@@ -226,7 +227,8 @@ class NotificationTests(TestCase):
         donation_post = createdonation2(donor)
         helpseeker = creathelpseeker()
         reservation = ReservationPost(
-            dropoff_time_request=donation_post.dropoff_time_1 - timezone.timedelta(seconds=3),
+            dropoff_time_request=donation_post.dropoff_time_1
+            - timezone.timedelta(seconds=3),
             post=donation_post,
             donor=donor,
             helpseeker=helpseeker,
@@ -423,19 +425,19 @@ class ReservationViewTests(TestCase):
         holder = self.client.get(reverse("reservation:reservation-home"))
         self.assertEqual(holder.status_code, 200)
         self.assertContains(holder, "Available")
-        
+
     def test_reservation_home_notlogged(self):
         holder = self.client.get(reverse("reservation:reservation-home"))
         self.assertEqual(holder.status_code, 302)
         self.assertEqual(holder["Location"], "/login/?next=/reservation/")
-        
+
     def test_reservation_home_donor(self):
         self.client = Client()
         user = createdonor()
         self.client.force_login(user, backend=None)
         holder = self.client.get(reverse("reservation:reservation-home"))
         self.assertEqual(holder.status_code, 403)
-        
+
     def test_reservation_confirmation_page(self):
         self.client = Client()
         user = creathelpseeker()
@@ -470,7 +472,7 @@ class ReservationTests(TestCase):
         holder = self.client.post("/reservation/function/1", data={"dropoff_time": 1})
         self.assertEqual(holder.status_code, 302)
         self.assertEqual(holder["Location"], "/reservation/confirmed/")
-        
+
     def test_reservation_function_slot2(self):
         self.client = Client()
         donor = createdonor()
@@ -480,7 +482,7 @@ class ReservationTests(TestCase):
         holder = self.client.post("/reservation/function/1", data={"dropoff_time": 2})
         self.assertEqual(holder.status_code, 302)
         self.assertEqual(holder["Location"], "/reservation/confirmed/")
-        
+
     def test_reservation_function_slot3(self):
         self.client = Client()
         donor = createdonor()
@@ -490,7 +492,7 @@ class ReservationTests(TestCase):
         holder = self.client.post("/reservation/function/1", data={"dropoff_time": 3})
         self.assertEqual(holder.status_code, 302)
         self.assertEqual(holder["Location"], "/reservation/confirmed/")
-        
+
     def test_reservation_function_none(self):
         self.client = Client()
         donor = createdonor()
@@ -500,7 +502,7 @@ class ReservationTests(TestCase):
         holder = self.client.post("/reservation/function/1")
         self.assertEqual(holder.status_code, 302)
         self.assertEqual(holder["Location"], "/reservation/post/1")
-        
+
     def test_reservation_accept(self):
         self.client = Client()
         donor = createdonor()
@@ -522,13 +524,13 @@ class ReservationTests(TestCase):
         notification.save()
         self.client.force_login(donor, backend=None)
         confirmation = self.client.post(
-            reverse("reservation:confirm-notification", kwargs={'id':1}),
+            reverse("reservation:confirm-notification", kwargs={"id": 1}),
             data={
                 "accept": True,
             },
         )
         self.assertEqual(confirmation.status_code, 302)
-        
+
     def test_reservation_deny(self):
         self.client = Client()
         donor = createdonor()
@@ -550,13 +552,13 @@ class ReservationTests(TestCase):
         notification.save()
         self.client.force_login(donor, backend=None)
         confirmation = self.client.post(
-            reverse("reservation:confirm-notification", kwargs={'id':1}),
+            reverse("reservation:confirm-notification", kwargs={"id": 1}),
             data={
                 "deny": True,
             },
         )
         self.assertEqual(confirmation.status_code, 302)
-        
+
     def test_reservation_cancel(self):
         self.client = Client()
         donor = createdonor()
@@ -579,7 +581,7 @@ class ReservationTests(TestCase):
         self.client.force_login(helpseeker, backend=None)
         holder = self.client.get("/reservation/cancel/1")
         self.assertEqual(holder.status_code, 302)
-    
+
     def test_reservation_update_slot1(self):
         self.client = Client()
         donor = createdonor()
@@ -601,14 +603,14 @@ class ReservationTests(TestCase):
         notification.save()
         self.client.force_login(helpseeker, backend=None)
         holder = self.client.get(
-            reverse("reservation:reservation-update-request", kwargs={'pk':1}),
+            reverse("reservation:reservation-update-request", kwargs={"pk": 1}),
             data={
                 "dropoff_time": 1,
             },
         )
         self.assertEqual(holder.status_code, 302)
         self.assertEqual(holder["Location"], "/reservation/detail/1")
-        
+
     def test_reservation_update_slot2(self):
         self.client = Client()
         donor = createdonor()
@@ -630,14 +632,14 @@ class ReservationTests(TestCase):
         notification.save()
         self.client.force_login(helpseeker, backend=None)
         holder = self.client.get(
-            reverse("reservation:reservation-update-request", kwargs={'pk':1}),
+            reverse("reservation:reservation-update-request", kwargs={"pk": 1}),
             data={
                 "dropoff_time": 2,
             },
         )
         self.assertEqual(holder.status_code, 302)
         self.assertEqual(holder["Location"], "/reservation/detail/1")
-        
+
     def test_reservation_update_slot3(self):
         self.client = Client()
         donor = createdonor()
@@ -659,10 +661,9 @@ class ReservationTests(TestCase):
         notification.save()
         self.client.force_login(helpseeker, backend=None)
         holder = self.client.get(
-            reverse("reservation:reservation-update-request", kwargs={'pk':1}),
+            reverse("reservation:reservation-update-request", kwargs={"pk": 1}),
             data={
                 "dropoff_time": 3,
             },
         )
         self.assertEqual(holder.status_code, 302)
-        
