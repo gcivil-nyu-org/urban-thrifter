@@ -22,6 +22,7 @@ STATUS_CHOICES = (
     ("RESERVED", "Reserved"),
     ("PENDING", "Pending"),
     ("CLOSED", "Closed"),
+    ("EXPIRED", "Expired"),
 )
 
 

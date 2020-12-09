@@ -58,6 +58,14 @@ def createhelpseeker():
     return helpseeker
 
 
+def createsuperuser():
+    admin_test = User.objects.create_superuser(
+        username="admin_test", email="admin@test.com", password="Unittestpassword123!"
+    )
+    admin_test.save()
+    return admin_test
+
+
 def createdonation(donor):
     donation = ResourcePost(
         title="test",
@@ -193,3 +201,12 @@ class ComplaintModelTests(TestCase):
         form.issuer = form.reservation_post.helpseeker
         form.receiver = form.reservation_post.donor
         self.assertFalse(form.save())
+
+
+class ComplaintPortalTests(TestCase):
+    def test_complaint_portal(self):
+        admin_test = createsuperuser()
+        self.user = admin_test
+        self.client.force_login(self.user, backend=None)
+        response = self.client.get(reverse("complaint"))
+        self.assertEqual(response.status_code, 200)

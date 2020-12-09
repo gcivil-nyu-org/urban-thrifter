@@ -183,6 +183,17 @@ select option:hover, select option:focus, select option:active {
   border-top-color: #e6e6e6 !important;
 }
 
+.tooltip-underline {
+  text-decoration-line: underline;
+  text-decoration-style: dotted;
+  text-decoration-color: #333;
+}
+
+.text-box {
+  max-width: 450px;
+  word-wrap: break-word;
+}
+
 /* site header */
 
 .site-header {
@@ -337,6 +348,12 @@ select option:hover, select option:focus, select option:active {
 
 .button-nav .nav-item a {
   width: 100%;
+}
+
+.profile-nav .btn {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
 }
 
 .content-section {
@@ -605,9 +622,15 @@ a.article-title:hover {
   margin-top: 15px;
 }
 
+.reset-filter button {
+  width: 100px;
+  text-align: center;
+}
+
 .map-filter li {
   flex-grow: 1;
   width: 100px;
+  height: 70px;
   margin: 0 5px;
 }
 
@@ -959,6 +982,16 @@ a.article-title:hover {
   column-gap: 20px;
 }
 
+select#id_borough, #id_resource_category, #id_rc_1, #id_rc_2, #id_rc_3 {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23000000%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E') !important;
+  background-repeat: no-repeat, repeat !important;
+  background-position: right .7em top 50%, 0 0 !important;
+  background-size: .65em auto, 100% !important;
+}
+
 #div_id_resource label {
   display: block;
 }
@@ -981,8 +1014,17 @@ a.article-title:hover {
 /* Responsive Design */
 
 @media only screen and (max-width: 1000px) {
-  .col-lg-2 {
+  .side-bar {
     display: none;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .donation-card .card-body .container .row div:nth-child(2){
+    padding-left: 40px;
+  }
+  .donation-card .card-body .container .row div:nth-child(3){
+    display: inline-table;
   }
 }
 

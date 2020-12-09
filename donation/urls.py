@@ -2,16 +2,17 @@ from django.urls import path
 from . import views
 from .views import (
     PostCreateView,
-    PostListView,
+    # PostListView,
     PostDetailView,
     PostUpdateView,
     PostDeleteView,
 )
 import reservation.views as reservation_views
 
+
 urlpatterns = [
     path("", views.home, name="donation-home"),
-    path("all/", PostListView.as_view(), name="donation-all"),
+    # path("all/", PostListView.as_view(), name="donation-all"),
     path("new/", PostCreateView.as_view(), name="donation-new"),
     path("post/<int:pk>", PostDetailView.as_view(), name="donation-detail"),
     path("post/<int:pk>/update", PostUpdateView.as_view(), name="donation-update"),
@@ -22,4 +23,5 @@ urlpatterns = [
     ),
     path("reminder/", views.get_reminder, name="get-reminder"),
     path("ajax/getremindercount", views.get_reminders_count, name="get-reminder-count"),
+    path("expired/", views.donation_expired, name="donation-expired"),
 ]

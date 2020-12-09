@@ -11,10 +11,10 @@ import reservation.views as reservation_views
 urlpatterns = [
     path("confirmed/", views.confirmation, name="reservation-confirmation"),
     path("", views.donation_post_list, name="reservation-home"),
-    # path("new/", PostCreateView.as_view(), name="reservation-new"),
     path("post/<int:pk>", PostDetailView.as_view(), name="reservation-request"),
     path("detail/<int:pk>", ReservationDetailView.as_view(), name="reservation-detail"),
     path("update/<int:pk>", ReservationUpdateView.as_view(), name="reservation-update"),
+    path("cancel/<int:pk>", views.reservation_cancel, name="reservation-cancel"),
     path(
         "update/request/<int:pk>",
         views.reservation_update,

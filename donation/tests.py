@@ -1,11 +1,13 @@
-from django.test import TestCase
+from django.test import TestCase, RequestFactory
 from django.urls import reverse
 from .models import ResourcePost, User
 from register.models import DonorProfile, HelpseekerProfile
 from reservation.models import ReservationPost
 from django.utils import timezone
 from django.http import HttpResponse
+from .views import PostUpdateView, PostDeleteView
 
+# from django.contrib.auth.models import AnonymousUser
 
 # from django.core.files.uploadedfile import SimpleUploadedFile
 # import tempfile
@@ -35,6 +37,30 @@ def createdonor():
         password="Unittestpassword123!",
         is_active=True,
         email="unittest@unittest.com",
+        donorprofile=DonorProfile(
+            user=subuser,
+            complaint_count=0,
+            donation_count=0,
+            dropoff_location="MetroTech Center, Brooklyn New York USA, \
+                40.6930882, -73.9853095",
+        ),
+    )
+    donor.save()
+    return donor
+
+
+def createdonor2():
+    subuser = User(
+        username="donor_unit_test2",
+        password="Unittestpassword123!",
+        is_active=True,
+        email="unittest2@unittest.com",
+    )
+    donor = User(
+        username="donor_unit_test2",
+        password="Unittestpassword123!",
+        is_active=True,
+        email="unittest2@unittest.com",
         donorprofile=DonorProfile(
             user=subuser,
             complaint_count=0,
@@ -88,22 +114,6 @@ class ResourcePostCreateViewTests(TestCase):
     #     self.assertEqual(response.status_code, 200)
 
 
-class ResourcePostListViewTests(TestCase):
-    def test_no_post(self):
-        """
-        If no post exist, an appropriate message is displayed.
-        """
-        response = self.client.get(reverse("donation:donation-all"))
-        self.assertEqual(response.status_code, 404)
-
-    # def test_donation_home(self):
-    #     """
-    #     If no post exist, an appropriate message is displayed.
-    #     """
-    #     response = self.client.get(reverse("donation-home"))
-    #     self.assertEqual(response.status_code, 200)
-
-
 class HomepageViewTests(TestCase):
     def test_homepage(self):
         """
@@ -141,9 +151,11 @@ class ResourcePostDetailViewTests(TestCase):
             status="AVAILABLE",
         )
         create_resource_post.save()
+        self.user = create_resource_post.donor
+        self.client.force_login(self.user, backend=None)
         url = reverse("donation:donation-detail", args=(create_resource_post.pk,))
         response = self.client.get(url)
-        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.status_code, 200)
 
 
 class ResourcePostDeleteViewTests(TestCase):
@@ -334,4 +346,26 @@ class Donor_Ajax_Reminder_Tests(TestCase):
         self.user = createhelpseeker()
         self.client.force_login(self.user, backend=None)
         response = self.client.get(reverse("donation:get-reminder-count"))
+        self.assertEqual(response.status_code, 200)
+
+
+class Class_Based_View_Tests(TestCase):
+    def test_post_update_view(self):
+        request = RequestFactory().get("/")
+        view = PostUpdateView()
+        view.setup(request)
+        view.get_form()
+
+    def test_post_delete_view(self):
+        request = RequestFactory().get("/")
+        view = PostDeleteView()
+        view.setup(request)
+        # view.get_form()
+
+
+class Expired_Donation_Tests(TestCase):
+    def test_expired_donations(self):
+        self.user = createdonor()
+        self.client.force_login(self.user, backend=None)
+        response = self.client.get(reverse("donation:donation-expired"))
         self.assertEqual(response.status_code, 200)
