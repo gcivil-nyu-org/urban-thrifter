@@ -331,7 +331,7 @@ class ReservationPostListDeleteTests(TestCase):
         self.assertEqual(len(noti), 0)
 
 
-class ReservationPostViewTests(TestCase):
+class ReservationViewTests(TestCase):
     def test_reservation_home(self):
         self.client = Client()
         user = creathelpseeker()
@@ -384,6 +384,34 @@ class ReservationPostViewTests(TestCase):
             reverse("reservation:confirm-notification", kwargs={'id':1}),
             data={
                 "accept": True,
+            },
+        )
+        self.assertEqual(confirmation.status_code, 302)
+        
+    def test_reservation_deny(self):
+        self.client = Client()
+        donor = createdonor()
+        donation_post = createdonation(donor)
+        helpseeker = creathelpseeker()
+        reservation = ReservationPost(
+            dropoff_time_request=donation_post.dropoff_time_3,
+            post=donation_post,
+            donor=donor,
+            helpseeker=helpseeker,
+        )
+        reservation.save()
+        notification = Notification(
+            post=reservation,
+            sender=helpseeker,
+            receiver=donor,
+            date_created=timezone.now(),
+        )
+        notification.save()
+        self.client.force_login(donor, backend=None)
+        confirmation = self.client.post(
+            reverse("reservation:confirm-notification", kwargs={'id':1}),
+            data={
+                "deny": True,
             },
         )
         self.assertEqual(confirmation.status_code, 302)
