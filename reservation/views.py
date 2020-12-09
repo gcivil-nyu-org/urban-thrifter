@@ -401,11 +401,10 @@ class NotificationCheck(View):
                 post.save()
 
         # Update reservation and notification to expired if post is expired
-        notifications = Notification.objects.all().order_by("-post_id")
+        notifications = Notification.objects.filter(notificationstatus=3)
         for notification in notifications:
             if (
                 notification.post.post.status in ["EXPIRED", "Expired"]
-                and notification.notificationstatus == 3
             ):
                 notification.is_seen = True
                 notification.notificationstatus = 4
@@ -414,7 +413,6 @@ class NotificationCheck(View):
                 notification.post.save()
             elif (
                 notification.post.post.status in ["PENDING", "Pending"]
-                and notification.notificationstatus == 3
                 and notification.post.dropoff_time_request < current_time
             ):
                 notification.is_seen = True
