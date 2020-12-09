@@ -346,9 +346,10 @@ class Donor_Ajax_Reminder_Tests(TestCase):
         response = self.client.get(reverse("donation:get-reminder-count"))
         self.assertEqual(response.status_code, 200)
 
+
 class Class_Based_View_Tests(TestCase):
     def test_my_method(self):
-        request = RequestFactory().get('/')
+        request = RequestFactory().get("/")
         view = PostUpdateView()
         view.setup(request)
         view.get_form()
