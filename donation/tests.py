@@ -356,12 +356,6 @@ class Class_Based_View_Tests(TestCase):
         view.setup(request)
         view.get_form()
 
-    """def test_post_create_view(self):
-        request = RequestFactory().get("/")
-        view = PostCreateView()
-        view.setup(request)
-        view.get_form()"""
-
     def test_post_delete_view(self):
         request = RequestFactory().get("/")
         view = PostDeleteView()
