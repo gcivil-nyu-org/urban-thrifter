@@ -5,8 +5,8 @@ from register.models import DonorProfile, HelpseekerProfile
 from reservation.models import ReservationPost
 from django.utils import timezone
 from django.http import HttpResponse
-from .views import PostUpdateView, PostCreateView
-
+from .views import PostUpdateView, PostCreateView, PostDeleteView
+from django.contrib.auth.models import AnonymousUser
 # from django.core.files.uploadedfile import SimpleUploadedFile
 # import tempfile
 # from django.test import override_settings
@@ -354,8 +354,35 @@ class Class_Based_View_Tests(TestCase):
         view.setup(request)
         view.get_form()
 
-    def test_post_create_view(self):
+    '''def test_post_create_view(self):
         request = RequestFactory().get("/")
         view = PostCreateView()
         view.setup(request)
-        view.get_form()
+        view.get_form()'''
+
+    '''def test_post_delete_view(self):
+        donor = createdonor_1()
+        helpseeker = createhelpseeker()
+        donation_post = createdonation(donor)
+        reservation = ReservationPost(
+            dropoff_time_request=timezone.now(),
+            post=donation_post,
+            donor=donor,
+            helpseeker=helpseeker,
+            reservationstatus=1,
+        )
+        reservation.save()
+        request = RequestFactory().get("/")
+        print(request)
+        request.user=AnonymousUser()
+        view = PostDeleteView()(request,pk=reservation.pk)
+        view.setup(request)
+        user=createdonor()
+        view.test_func()'''
+
+class Expired_Donation_Tests(TestCase):
+    def test_expired_donations(self):
+        self.user = createdonor()
+        self.client.force_login(self.user, backend=None)
+        response = self.client.get(reverse("donation:donation-expired"))
+        self.assertEqual(response.status_code, 200)
