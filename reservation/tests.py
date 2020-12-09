@@ -339,19 +339,19 @@ class ReservationPostViewTests(TestCase):
         holder = self.client.get(reverse("reservation:reservation-home"))
         self.assertEqual(holder.status_code, 200)
         self.assertContains(holder, "Available")
-        
+
     def test_reservation_home_notlogged(self):
         holder = self.client.get(reverse("reservation:reservation-home"))
         self.assertEqual(holder.status_code, 302)
         self.assertEqual(holder["Location"], "/login/?next=/reservation/")
-        
+
     def test_reservation_home_donor(self):
         self.client = Client()
         user = createdonor()
         self.client.force_login(user, backend=None)
         holder = self.client.get(reverse("reservation:reservation-home"))
         self.assertEqual(holder.status_code, 403)
-        
+
     def test_reservation_confirmation_page(self):
         self.client = Client()
         user = creathelpseeker()
@@ -359,7 +359,7 @@ class ReservationPostViewTests(TestCase):
         holder = self.client.get(reverse("reservation:reservation-confirmation"))
         self.assertEqual(holder.status_code, 200)
         self.assertContains(holder, "sent successfully")
-        
+
     def test_reservation_accept(self):
         self.client = Client()
         donor = createdonor()
@@ -381,13 +381,14 @@ class ReservationPostViewTests(TestCase):
         notification.save()
         self.client.force_login(donor, backend=None)
         confirmation = self.client.post(
-            reverse("reservation:confirm-notification", kwargs={'id':1}),
+            reverse("reservation:confirm-notification", kwargs={"id": 1}),
             data={
                 "accept": True,
             },
         )
         self.assertEqual(confirmation.status_code, 302)
-        
+
+
 class DonationTests(TestCase):
     def test_donation_post_list(self):
         self.client = Client()

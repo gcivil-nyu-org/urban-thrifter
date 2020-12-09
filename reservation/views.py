@@ -26,6 +26,7 @@ from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
+
 @login_required(login_url="/login/")
 def donation_post_list(request):
     # Getting posts based on filters or getting all posts
@@ -386,7 +387,8 @@ class NotificationCheck(View):
         # Update posts to expired
         current_time = timezone.now()
         resource_posts = ResourcePost.objects.filter(
-            status__in=["Pending", "PENDING", "Available", "AVAILABLE"])
+            status__in=["Pending", "PENDING", "Available", "AVAILABLE"]
+        )
         for post in resource_posts:
             holder = []
             holder.append(post.dropoff_time_1)
@@ -396,16 +398,14 @@ class NotificationCheck(View):
             for x in holder:
                 if x is not None and x >= current_time:
                     all_expired = False
-            if all_expired == True:
+            if all_expired is True:
                 post.status = "EXPIRED"
                 post.save()
 
         # Update reservation and notification to expired if post is expired
         notifications = Notification.objects.filter(notificationstatus=3)
         for notification in notifications:
-            if (
-                notification.post.post.status in ["EXPIRED", "Expired"]
-            ):
+            if notification.post.post.status in ["EXPIRED", "Expired"]:
                 notification.is_seen = True
                 notification.notificationstatus = 4
                 notification.post.reservationstatus = 4
