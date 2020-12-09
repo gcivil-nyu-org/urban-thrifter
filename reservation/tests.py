@@ -176,6 +176,27 @@ class ReservationPostTests(TestCase):
 
 
 class NotificationTests(TestCase):
+    def test_notification_read(self):
+        self.client = Client()
+        donor = createdonor()
+        donation_post = createdonation(donor)
+        helpseeker = creathelpseeker()
+        reservation = ReservationPost(
+            dropoff_time_request=donation_post.dropoff_time_3,
+            post=donation_post,
+            donor=donor,
+            helpseeker=helpseeker,
+        )
+        reservation.save()
+        self.client.force_login(donor, backend=None)
+        holder = self.client.post(
+            reverse("reservation:read-message", kwargs={'id':1})
+        )
+        self.assertEqual(holder.status_code, 302)
+        self.assertEqual(holder["Location"], "/reservation/messages/")
+        test = Notification.objects.get(id=1)
+        self.assertEqual(test.is_seen, True)
+        
     def test_notification_expire(self):
         self.client = Client()
         donor = createdonor()
