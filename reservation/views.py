@@ -81,7 +81,7 @@ def donation_post_list(request):
     # Ajax code
     if request.is_ajax():
         html = render_to_string(
-            template_name="reservation/donation_list.html", context={"posts": posts}
+            template_name="reservation/donation_list.html", context={"posts": posts, "current_time": current_time,}
         )
         data_dict = {"html_from_view": html}
         return JsonResponse(data=data_dict, safe=False)
