@@ -5,7 +5,7 @@ from register.models import DonorProfile, HelpseekerProfile
 from reservation.models import ReservationPost
 from django.utils import timezone
 from django.http import HttpResponse
-from .views import PostUpdateView
+from .views import PostUpdateView, PostCreateView
 
 # from django.core.files.uploadedfile import SimpleUploadedFile
 # import tempfile
@@ -348,8 +348,14 @@ class Donor_Ajax_Reminder_Tests(TestCase):
 
 
 class Class_Based_View_Tests(TestCase):
-    def test_my_method(self):
+    def test_post_update_view(self):
         request = RequestFactory().get("/")
         view = PostUpdateView()
+        view.setup(request)
+        view.get_form()
+
+    def test_post_create_view(self):
+        request = RequestFactory().get("/")
+        view = PostCreateView()
         view.setup(request)
         view.get_form()
