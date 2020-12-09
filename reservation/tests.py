@@ -54,6 +54,22 @@ def createdonation(donor):
     )
     donation.save()
     return donation
+    
+def createdonation2(donor):
+    donation = ResourcePost(
+        title="test",
+        description="hi",
+        quantity=1,
+        dropoff_time_1=timezone.now() + timezone.timedelta(seconds=1),
+        dropoff_time_2=timezone.now() + timezone.timedelta(seconds=2),
+        dropoff_time_3=timezone.now() + timezone.timedelta(minutes=3),
+        date_created=timezone.now(),
+        resource_category="FOOD",
+        donor=donor,
+        status="PENDING",
+    )
+    donation.save()
+    return donation
 
 
 class ReservationPostTests(TestCase):
@@ -461,7 +477,7 @@ class ReservationTests(TestCase):
     def test_reservation_cancel(self):
         self.client = Client()
         donor = createdonor()
-        donation_post = createdonation(donor)
+        donation_post = createdonation2(donor)
         helpseeker = creathelpseeker()
         reservation = ReservationPost(
             dropoff_time_request=donation_post.dropoff_time_3,
@@ -478,13 +494,13 @@ class ReservationTests(TestCase):
         )
         notification.save()
         self.client.force_login(helpseeker, backend=None)
-        holder = self.client.post("/reservation/cancel/1")
+        holder = self.client.get("/reservation/cancel/1")
         self.assertEqual(holder.status_code, 302)
     
     def test_reservation_update_slot1(self):
         self.client = Client()
         donor = createdonor()
-        donation_post = createdonation(donor)
+        donation_post = createdonation2(donor)
         helpseeker = creathelpseeker()
         reservation = ReservationPost(
             dropoff_time_request=donation_post.dropoff_time_3,
@@ -501,10 +517,10 @@ class ReservationTests(TestCase):
         )
         notification.save()
         self.client.force_login(helpseeker, backend=None)
-        holder = self.client.post(
+        holder = self.client.get(
             reverse("reservation:reservation-update-request", kwargs={'pk':1}),
             data={
-                "dropoff_time": "1",
+                "dropoff_time": 1,
             },
         )
         self.assertEqual(holder.status_code, 302)
@@ -513,7 +529,7 @@ class ReservationTests(TestCase):
     def test_reservation_update_slot2(self):
         self.client = Client()
         donor = createdonor()
-        donation_post = createdonation(donor)
+        donation_post = createdonation2(donor)
         helpseeker = creathelpseeker()
         reservation = ReservationPost(
             dropoff_time_request=donation_post.dropoff_time_3,
@@ -530,10 +546,10 @@ class ReservationTests(TestCase):
         )
         notification.save()
         self.client.force_login(helpseeker, backend=None)
-        holder = self.client.post(
+        holder = self.client.get(
             reverse("reservation:reservation-update-request", kwargs={'pk':1}),
             data={
-                "dropoff_time": "2",
+                "dropoff_time": 2,
             },
         )
         self.assertEqual(holder.status_code, 302)
@@ -542,7 +558,7 @@ class ReservationTests(TestCase):
     def test_reservation_update_slot3(self):
         self.client = Client()
         donor = createdonor()
-        donation_post = createdonation(donor)
+        donation_post = createdonation2(donor)
         helpseeker = creathelpseeker()
         reservation = ReservationPost(
             dropoff_time_request=donation_post.dropoff_time_3,
@@ -559,12 +575,11 @@ class ReservationTests(TestCase):
         )
         notification.save()
         self.client.force_login(helpseeker, backend=None)
-        holder = self.client.post(
+        holder = self.client.get(
             reverse("reservation:reservation-update-request", kwargs={'pk':1}),
             data={
-                "dropoff_time": "3",
+                "dropoff_time": 3,
             },
         )
         self.assertEqual(holder.status_code, 302)
-        self.assertEqual(holder["Location"], "/reservation/detail/1")
         
