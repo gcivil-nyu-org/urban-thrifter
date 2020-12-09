@@ -339,7 +339,18 @@ class ReservationPostViewTests(TestCase):
         holder = self.client.get(reverse("reservation:reservation-home"))
         self.assertEqual(holder.status_code, 200)
         self.assertContains(holder, "Available")
-
+        
+    def test_reservation_home_notlogged(self):
+        holder = self.client.get(reverse("reservation:reservation-home"))
+        self.assertEqual(holder.status_code, 302)
+        self.assertEqual(holder["Location"], "/login/?next=/reservation/")
+        
+    def test_reservation_home_donor(self):
+        self.client = Client()
+        user = createdonor()
+        self.client.force_login(user, backend=None)
+        holder = self.client.get(reverse("reservation:reservation-home"))
+        self.assertEqual(holder.status_code, 403)
 
 class DonationTests(TestCase):
     def test_donation_post_list(self):
