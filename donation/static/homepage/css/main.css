@@ -1899,6 +1899,18 @@ button:focus {
   transition: all 300ms;
 }
 
+@media only screen and (max-width: 992px) {
+  #how-to-share .business-item-img {
+    display: none;
+  }
+  #how-to-share .container .pl-4, #how-to-share .container .pl-5 {
+    padding-left: 0 !important;
+  }
+  #team {
+    padding-top: 150px;
+  }
+}
+
 @media only screen and (max-width: 768px) {
   #team .row:nth-child(2) .col {
     min-width: 50%;
