@@ -1,11 +1,11 @@
-from django.test import TestCase
+from django.test import TestCase, RequestFactory
 from django.urls import reverse
 from .models import ResourcePost, User
 from register.models import DonorProfile, HelpseekerProfile
 from reservation.models import ReservationPost
 from django.utils import timezone
 from django.http import HttpResponse
-
+from .views import PostUpdateView
 
 # from django.core.files.uploadedfile import SimpleUploadedFile
 # import tempfile
@@ -345,3 +345,10 @@ class Donor_Ajax_Reminder_Tests(TestCase):
         self.client.force_login(self.user, backend=None)
         response = self.client.get(reverse("donation:get-reminder-count"))
         self.assertEqual(response.status_code, 200)
+
+class Class_Based_View_Tests(TestCase):
+    def test_my_method(self):
+        request = RequestFactory().get('/')
+        view = PostUpdateView()
+        view.setup(request)
+        view.get_form()
