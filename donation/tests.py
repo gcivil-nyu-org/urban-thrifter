@@ -5,9 +5,9 @@ from register.models import DonorProfile, HelpseekerProfile
 from reservation.models import ReservationPost
 from django.utils import timezone
 from django.http import HttpResponse
-from .views import PostUpdateView  # , PostCreateView, PostDeleteView
+from .views import PostUpdateView  , PostCreateView, PostDeleteView
 
-# from django.contrib.auth.models import AnonymousUser
+from django.contrib.auth.models import AnonymousUser
 
 # from django.core.files.uploadedfile import SimpleUploadedFile
 # import tempfile
@@ -356,31 +356,17 @@ class Class_Based_View_Tests(TestCase):
         view.setup(request)
         view.get_form()
 
-    """def test_post_create_view(self):
+    '''def test_post_create_view(self):
         request = RequestFactory().get("/")
         view = PostCreateView()
         view.setup(request)
-        view.get_form()"""
+        view.get_form()'''
 
-    """def test_post_delete_view(self):
-        donor = createdonor_1()
-        helpseeker = createhelpseeker()
-        donation_post = createdonation(donor)
-        reservation = ReservationPost(
-            dropoff_time_request=timezone.now(),
-            post=donation_post,
-            donor=donor,
-            helpseeker=helpseeker,
-            reservationstatus=1,
-        )
-        reservation.save()
+    def test_post_delete_view(self):
         request = RequestFactory().get("/")
-        print(request)
-        request.user=AnonymousUser()
-        view = PostDeleteView()(request,pk=reservation.pk)
+        view = PostDeleteView()
         view.setup(request)
-        user=createdonor()
-        view.test_func()"""
+        #view.get_form()
 
 
 class Expired_Donation_Tests(TestCase):
