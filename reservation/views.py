@@ -25,8 +25,6 @@ from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
-def home(request):
-    return render(request, "reservation/reservation_home.html")
 
 
 @login_required(login_url="/login/")
@@ -388,20 +386,26 @@ class NotificationCheck(View):
     def get(self, request):
         # Update posts to expired
         current_time = timezone.now()
-        ResourcePost.objects.filter(
-            status__in=["Pending", "PENDING", "Available", "AVAILABLE"],
-            dropoff_time_1__lt=current_time,
-            dropoff_time_2__lt=current_time,
-            dropoff_time_3__lt=current_time,
-        ).update(status="EXPIRED")
+        resource_posts = ResourcePost.objects.filter(
+            status__in=["Pending", "PENDING", "Available", "AVAILABLE"]
+        )
+        for post in resource_posts:
+            holder = []
+            holder.append(post.dropoff_time_1)
+            holder.append(post.dropoff_time_2)
+            holder.append(post.dropoff_time_3)
+            all_expired = True
+            for x in holder:
+                if x is not None and x >= current_time:
+                    all_expired = False
+            if all_expired is True:
+                post.status = "EXPIRED"
+                post.save()
 
         # Update reservation and notification to expired if post is expired
-        notifications = Notification.objects.all().order_by("-post_id")
+        notifications = Notification.objects.filter(notificationstatus=3)
         for notification in notifications:
-            if (
-                notification.post.post.status in ["EXPIRED", "Expired"]
-                and notification.notificationstatus == 3
-            ):
+            if notification.post.post.status in ["EXPIRED", "Expired"]:
                 notification.is_seen = True
                 notification.notificationstatus = 4
                 notification.post.reservationstatus = 4
@@ -409,7 +413,6 @@ class NotificationCheck(View):
                 notification.post.save()
             elif (
                 notification.post.post.status in ["PENDING", "Pending"]
-                and notification.notificationstatus == 3
                 and notification.post.dropoff_time_request < current_time
             ):
                 notification.is_seen = True

@@ -93,7 +93,7 @@ def close_reservation_15_min(reserved_donation_posts):
     except Exception as e:
         print(e)
 
-        
+
 # Post Donation View
 class PostCreateView(LoginRequiredMixin, CreateView):
 
@@ -124,9 +124,13 @@ class PostCreateView(LoginRequiredMixin, CreateView):
         form.fields["dropoff_time_3"].widget = DateTimePickerInput()
         form.fields[
             "dropoff_time_1"
-        ].label = "<span class='ut-tooltip'>Dropoff Time 1 (EST)<span class='tooltiptext'>Currently our service only supports users in the Greater New York Area</span></span>"
+        ].label = "<span class='tooltip-underline' data-toggle='tooltip' data-placement='top' title='Currently our service only supports users in the Greater New York Area'>Dropoff Time 1 (EST)</span>"
         form.fields["dropoff_time_2"].label = "Dropoff Time 2 (EST)"
         form.fields["dropoff_time_3"].label = "Dropoff Time 3 (EST)"
+        form.fields[
+            "dropoff_location"
+        ].label = "<span class='tooltip-underline' data-toggle='tooltip' data-placement='top' title='Please avoid using your home address. Try to use a public space such as park.'>Dropoff location</span>"
+
         return form
 
     # Overwrite form valid method
